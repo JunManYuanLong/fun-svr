@@ -2,14 +2,12 @@ package com.okay.family.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.okay.family.fun.base.bean.AbstractBean;
+import com.okay.family.Bean.DemoBean;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.fun.config.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.Serializable;
 
 @RestController
 @RequestMapping(value = "/test")
@@ -24,53 +22,17 @@ public class TestController {
     }
 
     @PostMapping(value = "/d")
-    public Result demo(@RequestBody Demo bean) {
+    public Result demo(@RequestBody DemoBean bean) {
         JSONObject jsonObject = bean.toJson();
         return Result.success(jsonObject);
     }
 
     @PostMapping(value = "/dd")
-    public Result demo2(Demo bean) {
+    public Result demo2(DemoBean bean) {
         JSONObject jsonObject = bean.toJson();
-        logger.info(bean.name + "55555555");
-        logger.info(bean.age + "333333");
+        logger.info(bean.getName() + "55555555");
+        logger.info(bean.getAge() + "333333");
         return Result.success(jsonObject);
-    }
-
-    static class Demo extends AbstractBean implements Serializable {
-
-        private static final long serialVersionUID = -5504602047112523781L;
-
-        public int age;
-
-        public String name;
-
-        public Demo(int age, String name) {
-            this.age = age;
-            this.name = name;
-        }
-
-        public Demo() {
-
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Integer getAge() {
-            return age;
-        }
-
-        public void setAge(Integer age) {
-            this.age = age;
-        }
-
-
     }
 
 

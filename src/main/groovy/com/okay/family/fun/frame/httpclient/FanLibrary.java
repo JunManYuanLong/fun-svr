@@ -337,6 +337,7 @@ public class FanLibrary extends SourceCode {
                 new AlertOver("响应状态码错误：" + status, "状态码错误：" + status, requestInfo.getUrl(), requestInfo).sendSystemMessage();
             //todo:完成记录功能
 //            MySqlTest.saveApiTestDate(requestInfo, data_size, elapsed_time, status, getMark(), code, LOCAL_IP, COMPUTER_USER_NAME);
+            //todo:异步添加保存任务
             if (SAVE_KEY) FunRequest.save(request, res);
         } catch (Exception e) {
             logger.warn("获取请求相应失败！", e);

@@ -18,10 +18,18 @@ def env = System.getProperty("env") ?: "dev"
 sourceSets {
     main {
         resources {
-            srcDirs = ["src/main/resources", "src/main/profile/$env"]
+            srcDirs = ["src/main/profile/$env", "src/main/resources"]
         }
     }
 }
+
+//sourceSets {
+//    main {
+//        resources {
+//            srcDirs = ["src/main/resources", "src/main/profile/$env"]
+//        }
+//    }
+//}
 
 repositories {
     mavenLocal()
@@ -42,6 +50,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.1.1'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
     compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.5'
