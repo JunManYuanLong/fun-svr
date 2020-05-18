@@ -1,5 +1,6 @@
 package com.okay.family.common;
 
+import com.okay.family.constants.bean.RequestSaveBean;
 import com.okay.family.fun.config.SqlConstant;
 import com.okay.family.fun.frame.SourceCode;
 import org.slf4j.Logger;
@@ -12,11 +13,11 @@ public class RequestSave extends SourceCode {
 
     public static Logger logger = LoggerFactory.getLogger(RequestSave.class);
 
-    static LinkedBlockingQueue<String> sqls = new LinkedBlockingQueue<>();
+    static LinkedBlockingQueue<RequestSaveBean> sqls = new LinkedBlockingQueue<>();
 
-    public static boolean addWork(String sql) {
+    public static boolean addWork(RequestSaveBean requestSaveBean) {
         try {
-            sqls.put(sql);
+            sqls.put(requestSaveBean);
         } catch (InterruptedException e) {
             logger.warn("添加数据库存储任务失败！", e);
             return false;
@@ -29,14 +30,16 @@ public class RequestSave extends SourceCode {
      *
      * @return
      */
-    static String getWork() {
-        String sql = null;
+    public static RequestSaveBean getWork() {
+        RequestSaveBean requestSaveBean = null;
         try {
-            sql = sqls.poll(SqlConstant.MYSQLWORK_TIMEOUT, TimeUnit.MILLISECONDS);
+            requestSaveBean = sqls.poll(SqlConstant.MYSQLWORK_TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             logger.warn("获取存储任务失败！", e);
         } finally {
-            return sql;
+            return requestSaveBean;
         }
     }
+
+
 }

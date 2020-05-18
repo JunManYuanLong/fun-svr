@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
 
+import com.okay.family.constants.bean.RequestSaveBean;
+import com.okay.family.common.RequestSave;
 import com.okay.family.fun.base.bean.RequestInfo;
 import com.okay.family.fun.base.exception.ParamException;
 import com.okay.family.fun.base.exception.RequestException;
@@ -335,9 +337,7 @@ public class FanLibrary extends SourceCode {
             int code = iBase == null ? -2 : iBase.checkCode(res, requestInfo);
             if (iBase != null && !iBase.isRight(res))
                 new AlertOver("响应状态码错误：" + status, "状态码错误：" + status, requestInfo.getUrl(), requestInfo).sendSystemMessage();
-            //todo:完成记录功能
-//            MySqlTest.saveApiTestDate(requestInfo, data_size, elapsed_time, status, getMark(), code, LOCAL_IP, COMPUTER_USER_NAME);
-            //todo:异步添加保存任务
+            RequestSave.addWork(new RequestSaveBean(requestInfo, data_size, elapsed_time, code, status));
             if (SAVE_KEY) FunRequest.save(request, res);
         } catch (Exception e) {
             logger.warn("获取请求相应失败！", e);

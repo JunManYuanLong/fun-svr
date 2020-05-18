@@ -1,6 +1,7 @@
-package com.okay.family.Bean
+package com.okay.family.constants.bean
 
 import com.okay.family.fun.base.bean.AbstractBean
+import com.okay.family.fun.base.bean.RequestInfo
 import com.okay.family.fun.config.RequestType
 
 class RequestSaveBean extends AbstractBean {
@@ -43,8 +44,8 @@ class RequestSaveBean extends AbstractBean {
      */
     int data_size
     /**
-    * 响应耗时
-    */
+     * 响应耗时
+     */
     long elapsed_time
     /**
      * 响应状态码
@@ -55,5 +56,18 @@ class RequestSaveBean extends AbstractBean {
      */
     int code
 
+    public RequestSaveBean(RequestInfo requestInfo, int data_size, long elapsed_time, int code, int status) {
+        this.apiName = requestInfo.getApiName()
+        this.url = requestInfo.getUrl()
+        this.uri = requestInfo.getUri()
+        this.method = requestInfo.getMethod()
+        this.host = requestInfo.getHost()
+        this.type = requestInfo.getType()
+        this.params = requestInfo.getParams()
+        this.data_size = data_size
+        this.elapsed_time = elapsed_time
+        this.status = status
+        this.code = code
+    }
 
 }

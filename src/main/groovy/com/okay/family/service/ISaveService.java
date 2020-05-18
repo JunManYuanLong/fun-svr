@@ -1,6 +1,6 @@
 package com.okay.family.service;
 
-import com.okay.family.Bean.RequestSaveBean;
+import com.okay.family.constants.bean.RequestSaveBean;
 
 public interface ISaveService {
 
