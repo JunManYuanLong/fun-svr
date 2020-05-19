@@ -1,7 +1,8 @@
 package com.okay.family.common;
 
 
-import com.okay.family.fun.base.bean.Result;
+import com.okay.family.fun.config.Constant;
+import com.okay.family.fun.frame.SourceCode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,10 +57,12 @@ public class WrappingFilter implements Filter {
 
         //增加requestid验证
         if (StringUtils.isBlank(requestId)) {
-            resp.setHeader("Content-type", "application/json;charset=UTF-8");
-            resp.getWriter().write(Result.fail("校验失败").toString());
-            resp.flushBuffer();
-            return;
+            MDC.put("id", SourceCode.getMark() + Constant.EMPTY);
+
+//            resp.setHeader("Content-type", "application/json;charset=UTF-8");
+//            resp.getWriter().write(Result.fail("校验失败").toString());
+//            resp.flushBuffer();
+//            return;
         }
         chain.doFilter(request, responseWrapper);
 
