@@ -1,4 +1,7 @@
 package com.okay.family.fun.base.bean
+
+import com.okay.family.fun.base.interfaces.ErrorCode
+
 /**
  * 通用的返回体
  * 配合moco框架使用
@@ -49,6 +52,10 @@ class Result<T> extends AbstractBean {
         new Result<T>(TEST_ERROR_CODE, data)
     }
 
+    Result(ErrorCode errorCode) {
+        this.code = errorCode.getcode()
+        this.data = errorCode.getDesc()
+    }
 /**
  * 是否成功响应
  * @return
