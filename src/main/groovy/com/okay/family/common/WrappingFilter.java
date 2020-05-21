@@ -64,15 +64,17 @@ public class WrappingFilter implements Filter {
 //            resp.flushBuffer();
 //            return;
         }
+        LOGGER.info("header paramters Accept-Encoding:{} Api-Gzip:{} UID:{} RequestURL:{},FROM:{}", ae, apiGzip, uid, requestURL + "?" + queryArgs, from);
+
         chain.doFilter(request, responseWrapper);
 
         byte[] bytes = responseWrapper.getContent();
         String respContent = new String(bytes);
-        if (respContent != null) {
-            /*http转https*/
-            respContent = respContent.replace("http://", "https://");
-        }
-        //将数据重新写入返回数据流中
+//        if (respContent != null) {
+//            /*http转https*/
+//            respContent = respContent.replace("http://", "https://");
+//        }
+//        //将数据重新写入返回数据流中
         response.getOutputStream().write(respContent.getBytes());
     }
 
