@@ -5,7 +5,6 @@ import com.okay.family.fun.base.interfaces.ErrorCode
 /**
  * 通用的返回体
  * 配合moco框架使用
- * @param <T >
  */
 class Result<T> extends AbstractBean {
 
@@ -30,7 +29,8 @@ class Result<T> extends AbstractBean {
         this.code = c
     }
 
-
+    def Result() {
+    }
 /**
  * 返回成功响应内容
  * @param data
@@ -40,7 +40,12 @@ class Result<T> extends AbstractBean {
         new Result<>(0, data)
     }
 
-    def Result() {
+    static <T> Result<T> build(ErrorCode errorCode) {
+        new Result(errorCode)
+    }
+
+    static <T> Result<T> build(int code, String desc) {
+        new Result(code, desc)
     }
 
 /**
@@ -50,6 +55,10 @@ class Result<T> extends AbstractBean {
  */
     static <T> Result<T> fail(T data) {
         new Result<T>(TEST_ERROR_CODE, data)
+    }
+
+    static <T> Result<T> fail(ErrorCode errorCode) {
+        new Result<T>(errorCode)
     }
 
     Result(ErrorCode errorCode) {
