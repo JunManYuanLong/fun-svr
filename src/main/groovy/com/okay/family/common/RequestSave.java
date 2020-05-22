@@ -13,11 +13,11 @@ public class RequestSave extends SourceCode {
 
     public static Logger logger = LoggerFactory.getLogger(RequestSave.class);
 
-    static LinkedBlockingQueue<RequestSaveBean> sqls = new LinkedBlockingQueue<>();
+    static LinkedBlockingQueue<RequestSaveBean> beans = new LinkedBlockingQueue<>();
 
     public static boolean addWork(RequestSaveBean requestSaveBean) {
         try {
-            sqls.put(requestSaveBean);
+            beans.put(requestSaveBean);
         } catch (InterruptedException e) {
             logger.warn("添加数据库存储任务失败！", e);
             return false;
@@ -33,7 +33,7 @@ public class RequestSave extends SourceCode {
     public static RequestSaveBean getWork() {
         RequestSaveBean requestSaveBean = null;
         try {
-            requestSaveBean = sqls.poll(SqlConstant.MYSQLWORK_TIMEOUT, TimeUnit.MILLISECONDS);
+            requestSaveBean = beans.poll(SqlConstant.MYSQLWORK_TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             logger.warn("获取存储任务失败！", e);
         } finally {
@@ -42,4 +42,7 @@ public class RequestSave extends SourceCode {
     }
 
 
+    public static int getWorkNum() {
+        return beans.size();
+    }
 }
