@@ -56,7 +56,9 @@ class RequestSaveBean extends AbstractBean {
      */
     int code
 
-    public RequestSaveBean(RequestInfo requestInfo, int data_size, long elapsed_time, int code, int status) {
+    int request_uid
+
+    public RequestSaveBean(RequestInfo requestInfo, int data_size, long elapsed_time, int code, int status, int request_uid) {
         this.apiName = requestInfo.getApiName()
         this.url = requestInfo.getUrl()
         this.uri = requestInfo.getUri()
@@ -68,6 +70,8 @@ class RequestSaveBean extends AbstractBean {
         this.elapsed_time = elapsed_time
         this.status = status
         this.code = code
+        this.code = code
+        this.request_uid = request_uid
     }
 
 }

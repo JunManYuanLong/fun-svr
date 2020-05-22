@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
 
+import com.okay.family.common.FamilyConstant;
 import com.okay.family.constants.bean.RequestSaveBean;
 import com.okay.family.common.RequestSave;
 import com.okay.family.fun.base.bean.RequestInfo;
@@ -50,17 +51,6 @@ public class FanLibrary extends SourceCode {
      * ibase实现类，需要用来校验响应是否正确的响应体，获取响应的code码，code码默认-2，对于不同的项目ibase的isright方法不一样
      */
     private static IBase iBase;
-
-    /**
-     * 打印请求头和响应头，一次有效，在请求之前使用该方法
-     */
-    public static void printHeader() {
-        HEADER_KEY = true;
-    }
-
-    public static void noHeader() {
-        HEADER_KEY = false;
-    }
 
     /**
      * 最近发送的请求
@@ -320,10 +310,11 @@ public class FanLibrary extends SourceCode {
      */
     public static JSONObject getHttpResponse(HttpRequestBase request) {
         if (!isRightRequest(request)) RequestException.fail(request);
+        Header header = request.getFirstHeader(FamilyConstant.REQUEST_UID);
+        int request_uid = header == null ? 0 : changeStringToInt(header.getValue());
         beforeRequest(request);
         JSONObject res = new JSONObject();
         RequestInfo requestInfo = new RequestInfo(request);
-        if (HEADER_KEY) output("===========request header===========", Arrays.asList(request.getAllHeaders()));
         long start = Time.getTimeStamp();
         try (CloseableHttpResponse response = ClientManage.httpsClient.execute(request)) {
             long end = Time.getTimeStamp();
@@ -334,20 +325,16 @@ public class FanLibrary extends SourceCode {
             String content = getContent(response);
             int data_size = content.length();
             res.putAll(getJsonResponse(content, setCookies));
+            //todo:实现一个统一的code获取方式
             int code = iBase == null ? -2 : iBase.checkCode(res, requestInfo);
-            if (iBase != null && !iBase.isRight(res))
-                new AlertOver("响应状态码错误：" + status, "状态码错误：" + status, requestInfo.getUrl(), requestInfo).sendSystemMessage();
-            RequestSave.addWork(new RequestSaveBean(requestInfo, data_size, elapsed_time, code, status));
+//            if (iBase != null && !iBase.isRight(res))
+//                new AlertOver("响应状态码错误：" + status, "状态码错误：" + status, requestInfo.getUrl(), requestInfo).sendSystemMessage();
+            RequestSave.addWork(new RequestSaveBean(requestInfo, data_size, elapsed_time, code, status, request_uid));
             if (SAVE_KEY) FunRequest.save(request, res);
         } catch (Exception e) {
             logger.warn("获取请求相应失败！", e);
             if (!requestInfo.isBlack())
                 new AlertOver("接口请求失败", requestInfo.toString(), requestInfo.getUrl(), requestInfo).sendSystemMessage();
-        } finally {
-            HEADER_KEY = false;
-            if (!requestInfo.isBlack()) {
-                lastRequest = request;
-            }
         }
         return res;
     }
@@ -374,29 +361,6 @@ public class FanLibrary extends SourceCode {
         params.keySet().forEach(x -> formparams.add(new BasicNameValuePair(x.toString(), params.getString(x.toString()))));
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, DEFAULT_CHARSET);
         httpPost.setEntity(entity);
-    }
-
-    /**
-     * 解析response，使用char数组，注意编码格式
-     * <p>自定义解析响应实体的方法，暂不采用</p>
-     *
-     * @param response 传入的response，非closedresponse
-     * @return string类型的response
-     */
-    @Deprecated
-    private static String parseResponeEntityByChar(HttpResponse response) {
-        StringBuffer buffer = new StringBuffer();// 创建并实例化stringbuffer，存放响应信息
-        try (InputStream input = response.getEntity().getContent(); InputStreamReader reader = new InputStreamReader(input, DEFAULT_CHARSET)) {
-            char[] buff = new char[1024];// 创建并实例化字符数组
-            int length = 0;// 声明变量length，表示读取长度
-            while ((length = reader.read(buff)) != -1) {// 循环读取字符输入流
-                String x = new String(buff, 0, length);// 获取读取到的有效内容
-                buffer.append(x);// 将读取到的内容添加到stringbuffer中
-            }
-        } catch (IOException e) {
-            logger.warn("解析响应实体失败！", e);
-        }
-        return buffer.toString();
     }
 
     /**
@@ -492,15 +456,6 @@ public class FanLibrary extends SourceCode {
     public static void excuteSync(HttpRequestBase request) {
         if (!ClientManage.httpAsyncClient.isRunning()) ClientManage.httpAsyncClient.start();
         ClientManage.httpAsyncClient.execute(request, null);
-    }
-
-    /**
-     * 获取最后一个发出的请求
-     *
-     * @return
-     */
-    public static HttpRequestBase getLastRequest() {
-        return lastRequest;
     }
 
     /**
