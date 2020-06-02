@@ -310,8 +310,10 @@ public class FanLibrary extends SourceCode {
      */
     public static JSONObject getHttpResponse(HttpRequestBase request) {
         if (!isRightRequest(request)) RequestException.fail(request);
-        Header header = request.getFirstHeader(FamilyConstant.REQUEST_UID);
-        int request_uid = header == null ? 0 : changeStringToInt(header.getValue());
+        Header header1 = request.getFirstHeader(FamilyConstant.REQUEST_UID);
+        Header header2 = request.getFirstHeader(FamilyConstant.REQUEST_ID);
+        int request_uid = header1 == null ? 0 : changeStringToInt(header1.getValue());
+        int request_id = header2 == null ? 0 : changeStringToInt(header2.getValue());
         beforeRequest(request);
         JSONObject res = new JSONObject();
         RequestInfo requestInfo = new RequestInfo(request);
@@ -329,7 +331,7 @@ public class FanLibrary extends SourceCode {
             int code = iBase == null ? -2 : iBase.checkCode(res, requestInfo);
 //            if (iBase != null && !iBase.isRight(res))
 //                new AlertOver("响应状态码错误：" + status, "状态码错误：" + status, requestInfo.getUrl(), requestInfo).sendSystemMessage();
-            RequestSave.addWork(new RequestSaveBean(requestInfo, data_size, elapsed_time, code, status, request_uid));
+            RequestSave.addWork(new RequestSaveBean(requestInfo, data_size, elapsed_time, code, status, request_uid, request_id));
             if (SAVE_KEY) FunRequest.save(request, res);
         } catch (Exception e) {
             logger.warn("获取请求相应失败！", e);
