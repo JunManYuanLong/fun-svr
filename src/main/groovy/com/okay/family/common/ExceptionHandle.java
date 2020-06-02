@@ -23,7 +23,7 @@ public class ExceptionHandle {
         if (e instanceof MethodArgumentNotValidException) {
             String defaultMessage = ((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getDefaultMessage();
             logger.error("参数异常:", defaultMessage);
-            return Result.build(RetrunCode.PARAMS_ERROR.getCode(), defaultMessage);
+            return Result.build(CommonCode.PARAMS_ERROR.getCode(), defaultMessage);
         }
 
         return Result.fail(e.getMessage());
