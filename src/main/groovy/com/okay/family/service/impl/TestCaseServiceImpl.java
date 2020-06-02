@@ -6,6 +6,8 @@ import com.okay.family.service.ITestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TestCaseServiceImpl implements ITestCaseService {
 
@@ -15,6 +17,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
     @Override
     public int saveCase(TestCaseBean bean) {
         return testCaseMapper.saveCase(bean);
+    }
+
+    @Override
+    public List<TestCaseBean> findMy(int uid, int api_id) {
+        List<TestCaseBean> my = testCaseMapper.findMy(uid, api_id);
+        return my;
     }
 
 
