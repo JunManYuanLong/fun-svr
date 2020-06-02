@@ -40,6 +40,10 @@ class Result<T> extends AbstractBean {
         new Result<>(0, data)
     }
 
+    static <T> Result<T> success() {
+        new Result<>(0)
+    }
+
     static <T> Result<T> build(ErrorCode errorCode) {
         new Result(errorCode)
     }
