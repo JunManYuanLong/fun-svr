@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.okay.family.mapper.TestUserMapper">
+    <sql id="BASE_TABLE">
+        t_user
+    </sql>
+    <!--    <include refid="BASE_TABLE"/>-->
+
+    <select id="findUsers" parameterType="com.okay.family.constants.bean.TestUserBean"
+            resultType="com.okay.family.constants.bean.TestUserBean">
+     select * from family_test_user;
+    </select>
+
+    <insert id="add" parameterType="com.okay.family.constants.bean.TestUserBean">
+      INSERT INTO family_test_user(owner,environment,uname,pwd,phone,identity)
+      values (#{owner},#{environment},#{uname},#{pwd},#{phone},#{identity})
+    </insert>
+
+</mapper>
