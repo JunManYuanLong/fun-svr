@@ -10,7 +10,7 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoder 默认配置为PatternLayoutEncoder -->
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}] %msg%n</pattern>
+            <pattern> %level %class:%line %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -18,7 +18,7 @@
 
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}] %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] %msg%n</pattern>
         </encoder>
         <!-- 只输出level级别以上的日志 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -36,7 +36,7 @@
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${LOG_HOME}/${SEVER_NAME}-error.log</File>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}] %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] %msg%n</pattern>
         </encoder>
         <!-- 只输出level级别以上的日志 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
