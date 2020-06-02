@@ -1,4 +1,4 @@
-package com.okay.family.common;
+package com.okay.family.common.wapper;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
@@ -8,12 +8,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
- * 功能描述：
- *
- * @DATE 2020-04-28
- * @AUTHOR zhanglisheng
- **/
 public class ResponseWrapper extends HttpServletResponseWrapper {
     private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
