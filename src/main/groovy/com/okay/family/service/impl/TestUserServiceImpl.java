@@ -6,7 +6,7 @@ import com.okay.family.common.bean.testuser.TestUserBean;
 import com.okay.family.fun.base.interfaces.ReturnCode;
 import com.okay.family.mapper.TestUserMapper;
 import com.okay.family.service.ITestUserService;
-import com.okay.family.utils.CheckUserStatus;
+import com.okay.family.utils.CheckUserStatusUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +40,7 @@ public class TestUserServiceImpl implements ITestUserService {
 
     @Override
     public ReturnCode checkUser(TestUserBean bean) {
-        boolean b = CheckUserStatus.checkUser(bean);
+        boolean b = CheckUserStatusUtil.checkUser(bean);
         if (b) {
             int i = testUserMapper.updateUser(bean);
             return i == 1 ? CommonCode.SUCCESS : TestUserCode.UPDATE_USER_FAIL;

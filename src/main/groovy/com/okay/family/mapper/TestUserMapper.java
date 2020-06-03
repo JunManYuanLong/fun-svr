@@ -14,5 +14,14 @@ public interface TestUserMapper {
 
     int updateUser(TestUserBean user);
 
+    /**
+     * 获取用户凭据
+     *
+     * @param environment
+     * @param una
+     * @return
+     */
+    String getCertificate(int environment, String una);
+
 
 }

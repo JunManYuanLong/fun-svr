@@ -1,6 +1,6 @@
 package com.okay.family.controller;
 
-import com.okay.family.common.bean.TestCaseBean;
+import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.service.ITestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class CaseController {
     }
 
     @GetMapping(value = "/findcase")
-    public Result saveCase() {
+    public Result findCase() {
         List<TestCaseBean> my = service.findMy(2, 2);
         return Result.success(my);
     }
