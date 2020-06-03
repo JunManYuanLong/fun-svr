@@ -1,11 +1,14 @@
-package com.okay.family.constants.enums;
+package com.okay.family.common.basedata;
 
 /**
  * 接口请求方式,get postform, postjson,枚举类
  */
 public enum RequestMethod {
 
-    GET(1), POST_JSON(2), POST_FORM(3), NONE(4);
+    GET(1),
+    POST_JSON(2),
+    POST_FORM(3),
+    NONE(4);
 
     int code;
 
