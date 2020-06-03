@@ -58,7 +58,11 @@ public class WrappingFilter implements Filter {
 //            return;
 //        }
         RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
-
+//        RequestWrapper requestWrapper = new RequestWrapper(request);
+        String url = requestWrapper.getRequestURL().toString();
+        String queryArgs = requestWrapper.getQueryString();
+        queryArgs = queryArgs == null ? requestWrapper.getBody() : queryArgs;
+        logger.info("请求url:{},参数:{}", url, queryArgs);
 //        chain.doFilter(request, response);
         chain.doFilter(requestWrapper == null ? request : requestWrapper, response);
 //        byte[] bytes = responseWrapper.getContent();
