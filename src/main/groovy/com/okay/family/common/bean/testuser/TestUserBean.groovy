@@ -40,7 +40,7 @@ class TestUserBean extends AbstractBean {
     /**
      * 用例描述
      */
-    @Length(min = 0, max = 128)
+    @Length(min = 0, max = 128, message = "用户描述内容长度错误!")
     String userdesc
     /**
      * 用户凭证

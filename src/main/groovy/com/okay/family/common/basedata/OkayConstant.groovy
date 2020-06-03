@@ -4,4 +4,6 @@ class OkayConstant {
 
     public static final String REQUEST_ID = "requestid"
 
+    public static final String USER_CERTIFICATE_KEY = "uid="
+
 }

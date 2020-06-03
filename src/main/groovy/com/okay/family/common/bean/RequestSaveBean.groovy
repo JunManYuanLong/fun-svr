@@ -57,7 +57,9 @@ class RequestSaveBean extends AbstractBean {
     int code
 
     int request_uid
-
+    /**
+     * header
+     */
     int request_id
 
     public RequestSaveBean(RequestInfo requestInfo, int data_size, long elapsed_time, int code, int status, int request_uid, int request_id) {
