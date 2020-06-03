@@ -1,6 +1,6 @@
 package com.okay.family.common
 
-import com.okay.family.constants.bean.RequestSaveBean
+import com.okay.family.common.bean.RequestSaveBean
 import com.okay.family.mapper.SaveMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -16,7 +16,7 @@ class Task {
     @Autowired
     SaveMapper saveMapper
 
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     def saveRequestBean() {
         while (true) {
             if (RequestSave.getWorkNum() == 0) break

@@ -28,8 +28,4 @@ enum CommonCode implements ReturnCode {
         return desc
     }
 
-    @Override
-    boolean success() {
-        return code == 0
-    }
 }
