@@ -1,11 +1,12 @@
-package com.okay.family.common
+package com.okay.family.common.code
 
-import com.okay.family.fun.base.interfaces.ErrorCode
+import com.okay.family.fun.base.interfaces.ReturnCode
 
-enum CommonCode implements ErrorCode {
+enum CommonCode implements ReturnCode {
 
+    SUCCESS(0, "参数校验失败"),
     PARAMS_ERROR(100, "参数校验失败"),
-    ADD_USER_ERROR(101,"添加用户失败!")
+    ADD_USER_ERROR(101, "添加用户失败!")
 
     int code
 
@@ -25,5 +26,10 @@ enum CommonCode implements ErrorCode {
     @Override
     String getDesc() {
         return desc
+    }
+
+    @Override
+    boolean success() {
+        return code == 0
     }
 }

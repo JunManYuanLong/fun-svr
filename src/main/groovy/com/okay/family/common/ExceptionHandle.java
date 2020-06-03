@@ -1,6 +1,7 @@
 package com.okay.family.common;
 
 
+import com.okay.family.common.code.CommonCode;
 import com.okay.family.fun.base.bean.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.okay.family.constants.bean
+package com.okay.family.common.bean
 
 import com.alibaba.fastjson.JSONObject
 import com.okay.family.fun.base.bean.AbstractBean

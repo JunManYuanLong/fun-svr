@@ -1,6 +1,7 @@
-package com.okay.family.constants.bean
+package com.okay.family.common.bean.testuser
 
 import com.okay.family.fun.base.bean.AbstractBean
+import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.Range
 
 import javax.validation.constraints.Min
@@ -17,7 +18,7 @@ class TestUserBean extends AbstractBean {
     /**
      * 账号
      */
-    int uname
+    String uname
     /**
      * 身份信息,包含项目
      */
@@ -34,11 +35,17 @@ class TestUserBean extends AbstractBean {
     /**
      * 环境
      */
+    @Range(min = 1L, max = 4L, message = "环境配置错误!")
     int environment
     /**
-     * 用例秒速
+     * 用例描述
      */
-    String desc
+    @Length(min = 0, max = 128)
+    String userdesc
+    /**
+     * 用户凭证
+     */
+    String certificate
 
     /**
      * 状态,默认0

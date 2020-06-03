@@ -1,6 +1,6 @@
 package com.okay.family.common;
 
-import com.okay.family.constants.bean.RequestSaveBean;
+import com.okay.family.common.bean.RequestSaveBean;
 import com.okay.family.fun.config.SqlConstant;
 import com.okay.family.fun.frame.SourceCode;
 import org.slf4j.Logger;

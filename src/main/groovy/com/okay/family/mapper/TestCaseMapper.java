@@ -1,6 +1,6 @@
 package com.okay.family.mapper;
 
-import com.okay.family.constants.bean.TestCaseBean;
+import com.okay.family.common.bean.TestCaseBean;
 
 import java.util.List;
 

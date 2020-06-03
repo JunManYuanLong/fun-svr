@@ -1,6 +1,6 @@
 package com.okay.family.fun.base.bean
 
-import com.okay.family.fun.base.interfaces.ErrorCode
+import com.okay.family.fun.base.interfaces.ReturnCode
 
 /**
  * 通用的返回体
@@ -44,7 +44,7 @@ class Result<T> extends AbstractBean {
         new Result<>(0)
     }
 
-    static <T> Result<T> build(ErrorCode errorCode) {
+    static <T> Result<T> build(ReturnCode errorCode) {
         new Result(errorCode)
     }
 
@@ -61,11 +61,11 @@ class Result<T> extends AbstractBean {
         new Result<T>(TEST_ERROR_CODE, data)
     }
 
-    static <T> Result<T> fail(ErrorCode errorCode) {
+    static <T> Result<T> fail(ReturnCode errorCode) {
         new Result<T>(errorCode)
     }
 
-    Result(ErrorCode errorCode) {
+    Result(ReturnCode errorCode) {
         this.code = errorCode.getcode()
         this.data = errorCode.getDesc()
     }

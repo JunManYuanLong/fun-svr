@@ -4,7 +4,7 @@
 
 
     <!--<insertDetail >-->
-    <insert id="saveRequest" parameterType="com.okay.family.constants.bean.RequestSaveBean">
+    <insert id="saveRequest" parameterType="com.okay.family.common.bean.RequestSaveBean">
       INSERT INTO add_user_detail(ID,HISTORYID,ACCOUNT,PWD,TOKEN,COOKIES)
       values (#{id},#{historyId},#{account},#{pwd},#{token},#{cookies})
     </insert>

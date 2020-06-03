@@ -1,4 +1,4 @@
-package com.okay.family.constants.bean
+package com.okay.family.common.bean
 
 import com.okay.family.fun.base.bean.AbstractBean
 import com.okay.family.fun.base.bean.RequestInfo

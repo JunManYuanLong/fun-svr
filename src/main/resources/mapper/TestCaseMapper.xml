@@ -4,7 +4,7 @@
 
 
     <!--<insertDetail >-->
-    <insert id="saveCase" parameterType="com.okay.family.constants.bean.TestCaseBean">
+    <insert id="saveCase" parameterType="com.okay.family.common.bean.TestCaseBean">
       INSERT INTO add_user_detail(ID,HISTORYID,ACCOUNT,PWD,TOKEN,COOKIES)
       values (#{id},#{historyId},#{account},#{pwd},#{token},#{cookies})
     </insert>

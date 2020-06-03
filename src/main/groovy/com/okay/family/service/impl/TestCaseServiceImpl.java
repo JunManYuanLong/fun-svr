@@ -1,6 +1,6 @@
 package com.okay.family.service.impl;
 
-import com.okay.family.constants.bean.TestCaseBean;
+import com.okay.family.common.bean.TestCaseBean;
 import com.okay.family.mapper.TestCaseMapper;
 import com.okay.family.service.ITestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;

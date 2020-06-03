@@ -5,7 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 
 
 import com.okay.family.common.FamilyConstant;
-import com.okay.family.constants.bean.RequestSaveBean;
+import com.okay.family.common.basedata.OkayConstant;
+import com.okay.family.common.bean.RequestSaveBean;
 import com.okay.family.common.RequestSave;
 import com.okay.family.fun.base.bean.RequestInfo;
 import com.okay.family.fun.base.exception.ParamException;
@@ -227,6 +228,8 @@ public class FanLibrary extends SourceCode {
      */
     protected static void beforeRequest(HttpRequestBase request) {
         HttpClientConstant.COMMON_HEADER.forEach(header -> request.addHeader(header));
+        if (!request.containsHeader(OkayConstant.REQUEST_ID))
+            request.addHeader(OkayConstant.REQUEST_ID, "family" + getMark());
     }
 
     /**
@@ -310,11 +313,11 @@ public class FanLibrary extends SourceCode {
      */
     public static JSONObject getHttpResponse(HttpRequestBase request) {
         if (!isRightRequest(request)) RequestException.fail(request);
+        beforeRequest(request);
         Header header1 = request.getFirstHeader(FamilyConstant.REQUEST_UID);
         Header header2 = request.getFirstHeader(FamilyConstant.REQUEST_ID);
         int request_uid = header1 == null ? 0 : changeStringToInt(header1.getValue());
         int request_id = header2 == null ? 0 : changeStringToInt(header2.getValue());
-        beforeRequest(request);
         JSONObject res = new JSONObject();
         RequestInfo requestInfo = new RequestInfo(request);
         long start = Time.getTimeStamp();

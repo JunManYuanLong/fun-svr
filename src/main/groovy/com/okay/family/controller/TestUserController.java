@@ -1,8 +1,10 @@
 package com.okay.family.controller;
 
-import com.okay.family.common.CommonCode;
-import com.okay.family.constants.bean.TestUserBean;
+import com.okay.family.common.code.CommonCode;
+import com.okay.family.common.code.TestUserCode;
+import com.okay.family.common.bean.testuser.TestUserBean;
 import com.okay.family.fun.base.bean.Result;
+import com.okay.family.fun.base.interfaces.ReturnCode;
 import com.okay.family.service.ITestUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,15 @@ public class TestUserController {
     public Result findUsers(@RequestBody @Valid TestUserBean bean) {
         int add = testUserService.add(bean);
         return add == 0 ? Result.fail(CommonCode.ADD_USER_ERROR) : Result.success();
+    }
+
+    @PostMapping(value = "/check/{id}")
+    public Result check(@PathVariable(value = "id", required = true) int id) {
+        TestUserBean user = testUserService.findUser(id);
+        if (user == null)
+            return Result.fail(TestUserCode.NO_USER);
+        ReturnCode returnCode = testUserService.checkUser(user);
+        return Result.build(returnCode);
     }
 
 

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory
 /**
  * bean的基类
  */
-abstract class AbstractBean extends SourceCode {
+abstract class AbstractBean {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractBean.class)
 

@@ -6,14 +6,32 @@
     </sql>
     <!--    <include refid="BASE_TABLE"/>-->
 
-    <select id="findUsers" parameterType="com.okay.family.constants.bean.TestUserBean"
-            resultType="com.okay.family.constants.bean.TestUserBean">
-     select * from family_test_user;
+    <select id="findUsers" parameterType="com.okay.family.common.bean.testuser.TestUserBean"
+            resultType="com.okay.family.common.bean.testuser.TestUserBean">
+        select * from
+        <include refid="BASE_TABLE"/>
     </select>
 
-    <insert id="add" parameterType="com.okay.family.constants.bean.TestUserBean">
-      INSERT INTO family_test_user(owner,environment,uname,pwd,phone,identity)
-      values (#{owner},#{environment},#{uname},#{pwd},#{phone},#{identity})
+    <select id="findUser" parameterType="java.lang.Integer"
+            resultType="com.okay.family.common.bean.testuser.TestUserBean">
+        select * from
+        <include refid="BASE_TABLE"/>
+        where id = #{0}
+    </select>
+
+    <update id="updateUser" parameterType="com.okay.family.common.bean.testuser.TestUserBean">
+        UPDATE
+        <include refid="BASE_TABLE"/>
+        SET
+        status=#{status},certificate=#{certificate}
+        WHERE environment=#{environment} and uname=#{uname}
+    </update>
+
+    <insert id="add" parameterType="com.okay.family.common.bean.testuser.TestUserBean">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        (owner,environment,uname,pwd,phone,identity,userdesc)
+        values (#{owner},#{environment},#{uname},#{pwd},#{phone},#{identity},#{userdesc})
     </insert>
 
 </mapper>
