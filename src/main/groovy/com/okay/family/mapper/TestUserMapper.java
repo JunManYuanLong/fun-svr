@@ -12,16 +12,22 @@ public interface TestUserMapper {
 
     TestUserBean findUser(int id);
 
+    /**
+     * 更新测试用户状态和用户凭据
+     *
+     * @param user
+     * @return
+     */
     int updateUser(TestUserBean user);
 
     /**
-     * 获取用户凭据
+     * 获取user信息
      *
      * @param environment
-     * @param una
+     * @param name
      * @return
      */
-    String getCertificate(int environment, String una);
+    TestUserBean getUser(int environment, String name);
 
 
 }

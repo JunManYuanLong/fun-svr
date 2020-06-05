@@ -20,8 +20,8 @@
         where id = #{0}
     </select>
 
-    <select id="getCertificate" resultType="java.lang.String">
-        select certificate from
+    <select id="getUser" resultType="com.okay.family.common.bean.testuser.TestUserBean">
+        select * from
         <include refid="BASE_TABLE"/>
         where environment = #{0} and uname = #{1}
     </select>

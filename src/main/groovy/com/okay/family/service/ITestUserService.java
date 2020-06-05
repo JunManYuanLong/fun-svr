@@ -15,7 +15,21 @@ public interface ITestUserService {
 
     int updateUser(TestUserBean bean);
 
+    /**
+     * 验证测试用户是否可用
+     *
+     * @param bean
+     * @return
+     */
     ReturnCode checkUser(TestUserBean bean);
+
+    /**
+     * 获取用户凭据
+     *
+     * @param id
+     * @return
+     */
+    public String getCertificate(int id);
 
 
 }
