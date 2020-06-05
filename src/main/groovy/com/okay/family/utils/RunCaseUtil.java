@@ -46,10 +46,10 @@ public class RunCaseUtil {
         JSONObject response = request.getResponse();
         historyBean.setResponse(response.toString());
 
-        //todo:验证功能暂缺
-
+        VerifyResponseUtil.verify(response, bean.getVerifyBeans());
 
         historyBean.setStatus(1);
+
         return historyBean;
 
     }

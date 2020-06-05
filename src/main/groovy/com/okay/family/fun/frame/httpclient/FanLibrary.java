@@ -17,6 +17,7 @@ import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.fun.utils.DecodeEncode;
 import com.okay.family.fun.utils.Time;
 import com.okay.family.fun.utils.message.AlertOver;
+import com.okay.family.utils.VerifyResponseUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.*;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -330,10 +331,7 @@ public class FanLibrary extends SourceCode {
             String content = getContent(response);
             int data_size = content.length();
             res.putAll(getJsonResponse(content, setCookies));
-            //todo:实现一个统一的code获取方式
-            int code = iBase == null ? -2 : iBase.checkCode(res, requestInfo);
-//            if (iBase != null && !iBase.isRight(res))
-//                new AlertOver("响应状态码错误：" + status, "状态码错误：" + status, requestInfo.getUrl(), requestInfo).sendSystemMessage();
+            int code = VerifyResponseUtil.getCode(res);
             RequestSave.addWork(new RequestSaveBean(requestInfo, data_size, elapsed_time, code, status, request_uid, request_id));
             if (SAVE_KEY) FunRequest.save(request, res);
         } catch (Exception e) {
