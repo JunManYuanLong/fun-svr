@@ -1,4 +1,4 @@
-package com.okay.family.common;
+package com.okay.family.common.basedata;
 
 public class FamilyConstant {
 

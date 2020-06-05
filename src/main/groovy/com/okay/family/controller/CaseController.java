@@ -1,5 +1,6 @@
 package com.okay.family.controller;
 
+import com.okay.family.common.bean.testcase.RunCaseHistoryBean;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.service.ITestCaseService;
@@ -22,10 +23,31 @@ public class CaseController {
         return Result.success(i == 1 ? true : false);
     }
 
-    @GetMapping(value = "/findcase")
-    public Result findCase() {
+    @GetMapping(value = "/findcase/{id}")
+    public Result findCaseByid() {
         List<TestCaseBean> my = service.findMy(2, 2);
         return Result.success(my);
+    }
+
+    @GetMapping(value = "/findmycase/{uid}/{apiid}")
+    public Result findMyCaseByid(@PathVariable(value = "uid", required = true) int uid,
+                                 @PathVariable(value = "apiid", required = true) int apiid) {
+        List<TestCaseBean> my = service.findMy(uid, apiid);
+        return Result.success(my);
+    }
+
+    @GetMapping(value = "/runcase/{id}")
+    public Result runCase(@PathVariable(value = "id", required = true) int id) {
+        RunCaseHistoryBean runCaseHistoryBean = service.runCase(id);
+
+        return Result.success(runCaseHistoryBean);
+    }
+
+    @GetMapping(value = "/info/{id}")
+    public Result getInfo(@PathVariable(value = "id", required = true) int id) {
+        TestCaseBean caseBean = service.getCase(id);
+
+        return Result.success(caseBean);
     }
 
 

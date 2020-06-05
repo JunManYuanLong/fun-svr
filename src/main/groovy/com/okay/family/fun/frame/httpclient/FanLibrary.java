@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
 
-import com.okay.family.common.FamilyConstant;
+import com.okay.family.common.basedata.FamilyConstant;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.RequestSaveBean;
 import com.okay.family.common.RequestSave;

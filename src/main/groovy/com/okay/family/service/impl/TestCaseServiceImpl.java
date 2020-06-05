@@ -46,6 +46,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
     }
 
     @Override
+    public TestCaseBean getCase(int id) {
+        TestCaseBean caseBean = testCaseMapper.findCase(id);
+        return caseBean;
+    }
+
+    @Override
     public RunCaseHistoryBean runCase(int id) {
 
         RunCaseHistoryBean run = new RunCaseHistoryBean();

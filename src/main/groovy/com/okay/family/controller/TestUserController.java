@@ -37,7 +37,7 @@ public class TestUserController {
         return add == 0 ? Result.fail(CommonCode.ADD_USER_ERROR) : Result.success();
     }
 
-    @PostMapping(value = "/check/{id}")
+    @GetMapping(value = "/check/{id}")
     public Result check(@PathVariable(value = "id", required = true) int id) {
         TestUserBean user = testUserService.findUser(id);
         if (user == null)
