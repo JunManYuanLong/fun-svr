@@ -16,7 +16,7 @@ enum Environment {
         this.desc = desc
     }
 
-    int getcode() {
+    int getCode() {
         code
     }
 

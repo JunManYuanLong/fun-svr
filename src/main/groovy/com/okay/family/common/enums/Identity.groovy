@@ -15,7 +15,7 @@ enum Identity {
         this.desc = desc
     }
 
-    int getcode() {
+    int getCode() {
         code
     }
 

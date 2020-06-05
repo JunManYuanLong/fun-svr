@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.okay.family.mapper.PubDataMapper">
+    <sql id="table">
+        pub_data
+    </sql>
+
+    <insert id="saveData" parameterType="com.okay.family.common.bean.pubdata.PubDataBean">
+        INSERT INTO
+        <include refid="table"/>
+        (sss,2222)
+        values
+        (#{owner})
+
+    </insert>
+</mapper>

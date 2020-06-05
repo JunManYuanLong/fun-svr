@@ -19,11 +19,6 @@ class RequestSaveBean extends AbstractBean {
     String url
 
     /**
-     * 请求的uri
-     */
-    String uri
-
-    /**
      * 方法，get/post
      */
     RequestType method

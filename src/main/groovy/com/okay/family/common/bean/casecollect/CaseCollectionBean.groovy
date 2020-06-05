@@ -10,5 +10,7 @@ class CaseCollectionBean extends AbstractBean{
 
     int owner
 
+    List<Integer> caseids
+
 
 }

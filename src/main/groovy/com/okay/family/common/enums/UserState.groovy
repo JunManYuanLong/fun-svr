@@ -16,7 +16,7 @@ enum UserState {
         this.desc = desc
     }
 
-    int getcode() {
+    int getCode() {
         code
     }
 

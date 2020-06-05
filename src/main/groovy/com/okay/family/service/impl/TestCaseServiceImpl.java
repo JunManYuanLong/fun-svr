@@ -68,7 +68,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
             handleParams(headers);
         } catch (FailException e) {
             logger.error("处理参数中表达式发生错误!", e);
-            run.setStatus(CaseStatus.USER_EROOR.getcode());
+            run.setStatus(CaseStatus.USER_EROOR.getCode());
         }
         run = RunCaseUtil.run(testCaseBean);
         testCaseMapper.saveCaseRunHistory(run);

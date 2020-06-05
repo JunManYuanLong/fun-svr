@@ -67,7 +67,7 @@ class Result<T> extends AbstractBean {
     }
 
     Result(ReturnCode errorCode) {
-        this.code = errorCode.getcode()
+        this.code = errorCode.getCode()
         this.data = errorCode.getDesc()
     }
 /**

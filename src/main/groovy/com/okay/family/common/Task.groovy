@@ -16,7 +16,7 @@ class Task {
     @Autowired
     SaveMapper saveMapper
 
-    @Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "* 30 * * * ?")
     def saveRequestBean() {
         while (true) {
             if (RequestSave.getWorkNum() == 0) break

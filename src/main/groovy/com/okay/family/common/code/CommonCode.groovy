@@ -1,16 +1,16 @@
-package com.okay.family.common.code
+package com.okay.family.common.code;
 
-import com.okay.family.fun.base.interfaces.ReturnCode
+import com.okay.family.fun.base.interfaces.ReturnCode;
 
-enum CommonCode implements ReturnCode {
+public enum CommonCode implements ReturnCode {
 
-    SUCCESS(0, "参数校验失败"),
-    PARAMS_ERROR(100, "参数校验失败"),
-    ADD_USER_ERROR(101, "添加用户失败!")
+
+    SUCCESS(0, "成功"),
+    PARAMS_ERROR(100, "参数校验失败")
 
     int code
 
-    String name
+    String desc
 
     CommonCode(int coe, String desc) {
         this.code = code
@@ -19,7 +19,7 @@ enum CommonCode implements ReturnCode {
 
 
     @Override
-    int getcode() {
+    int getCode() {
         return code
     }
 
@@ -27,5 +27,4 @@ enum CommonCode implements ReturnCode {
     String getDesc() {
         return desc
     }
-
 }

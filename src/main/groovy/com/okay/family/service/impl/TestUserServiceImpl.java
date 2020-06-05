@@ -1,6 +1,7 @@
 package com.okay.family.service.impl;
 
 import com.okay.family.common.basedata.UserCertificate;
+import com.okay.family.common.bean.testuser.DelUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.TestUserCode;
@@ -16,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TestUserServiceImpl implements ITestUserService {
@@ -26,8 +29,10 @@ public class TestUserServiceImpl implements ITestUserService {
     TestUserMapper testUserMapper;
 
     @Override
-    public List<TestUserBean> findUsers(int owner) {
-        return testUserMapper.findUsers(owner);
+    public Map<Integer, List<TestUserBean>> findUsers(int owner) {
+        List<TestUserBean> users = testUserMapper.findUsers(owner);
+        Map<Integer, List<TestUserBean>> collect = users.stream().collect(Collectors.groupingBy(x -> x.getEnvironment()));
+        return collect;
     }
 
     @Override
@@ -56,7 +61,7 @@ public class TestUserServiceImpl implements ITestUserService {
     @Override
     public String getCertificate(int id) {
         TestUserBean user = testUserMapper.findUser(id);
-        if (user.getStatus() != UserState.OK.getcode())
+        if (user.getStatus() != UserState.OK.getCode())
             UserStatusException.fail();
         return user.getCertificate();
 
@@ -67,7 +72,7 @@ public class TestUserServiceImpl implements ITestUserService {
 //        {
 //            if (value == null) {
 //                TestUserBean user = testUserMapper.findUser(id);
-//                if (user.getStatus() == UserState.OK.getcode())
+//                if (user.getStatus() == UserState.OK.getCode())
 //                    return user;
 //                else UserStatusException.fail();
 //            }
@@ -80,11 +85,18 @@ public class TestUserServiceImpl implements ITestUserService {
     }
 
     @Override
+    public ReturnCode delUsr(DelUserBean bean) {
+        int i = testUserMapper.delUser(bean);
+
+        return i == 1 ? CommonCode.SUCCESS : TestUserCode.DEL_USER_FAIL;
+    }
+
+    @Override
     public ReturnCode checkUser(TestUserBean bean) {
         boolean b = UserUtil.checkUserLoginStatus(bean);
         if (b) {
             int i = testUserMapper.updateUser(bean);
-            return i == 1 ? CommonCode.SUCCESS : TestUserCode.UPDATE_USER_FAIL;
+            return i == 1 ? CommonCode.SUCCESS : TestUserCode.DEL_USER_FAIL;
         } else {
             return TestUserCode.CHECK_FAIL;
         }

@@ -41,4 +41,10 @@
         values (#{owner},#{environment},#{uname},#{pwd},#{phone},#{identity},#{userdesc})
     </insert>
 
+    <delete id="delUser" parameterType="com.okay.family.common.bean.testuser.DelUserBean">
+        delete from
+        <include refid="BASE_TABLE"/>
+        where id = #{id} and owner = #{owner} and uname = #{uname}
+    </delete>
+
 </mapper>

@@ -2,11 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.okay.family.mapper.SaveMapper">
 
+    <sql id="save_table">
+        family_test_user
+    </sql>
 
     <!--<insertDetail >-->
     <insert id="saveRequest" parameterType="com.okay.family.common.bean.RequestSaveBean">
-      INSERT INTO add_user_detail(ID,HISTORYID,ACCOUNT,PWD,TOKEN,COOKIES)
-      values (#{id},#{historyId},#{account},#{pwd},#{token},#{cookies})
+        INSERT INTO
+        <include refid="save_table"/>
+        (ID,HISTORYID,ACCOUNT,PWD,TOKEN,COOKIES)
+        values (#{id},#{historyId},#{account},#{pwd},#{token},#{cookies})
     </insert>
 
 

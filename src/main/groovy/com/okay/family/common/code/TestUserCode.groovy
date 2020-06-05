@@ -4,22 +4,24 @@ import com.okay.family.fun.base.interfaces.ReturnCode
 
 enum TestUserCode implements ReturnCode {
 
-    NO_USER(1000, "用户不存在!"),
-    CHECK_FAIL(1001, "用户校验失败!"),
-    UPDATE_USER_FAIL(1002, "更新用户凭证失败!")
+    NO_USER(1000, "用户不存在"),
+    CHECK_FAIL(1001, "用户校验失败"),
+    UPDATE_USER_FAIL(1002, "更新用户凭证失败"),
+    DEL_USER_FAIL(1003, "删除用户失败"),
+    ADD_USER_FAIL(1004, "添加用户失败")
 
     int code
 
-    String name
+    String desc
 
-    TestUserCode(int coe, String desc) {
+    TestUserCode(int code, String desc) {
         this.code = code
         this.desc = desc
     }
 
 
     @Override
-    int getcode() {
+    int getCode() {
         return code
     }
 

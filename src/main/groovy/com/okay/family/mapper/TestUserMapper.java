@@ -1,5 +1,6 @@
 package com.okay.family.mapper;
 
+import com.okay.family.common.bean.testuser.DelUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
 
 import java.util.List;
@@ -28,6 +29,8 @@ public interface TestUserMapper {
      * @return
      */
     TestUserBean getUser(int environment, String name);
+
+    int delUser(DelUserBean bean);
 
 
 }

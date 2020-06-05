@@ -12,12 +12,12 @@ enum CaseStatus {
 
     private String desc
 
-    UserState(int code, String desc) {
+    CaseStatus(int code, String desc) {
         this.code = code
         this.desc = desc
     }
 
-    int getcode() {
+    int getCode() {
         code
     }
 
