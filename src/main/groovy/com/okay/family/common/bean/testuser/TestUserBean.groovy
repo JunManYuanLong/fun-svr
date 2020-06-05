@@ -10,6 +10,11 @@ import javax.validation.constraints.Min
  * 测试用户
  */
 class TestUserBean extends AbstractBean {
+
+    private static final long serialVersionUID = -15924867071153477L;
+
+    int id;
+
     /**
      * 拥有者
      */

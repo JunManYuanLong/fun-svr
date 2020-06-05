@@ -10,6 +10,8 @@ import javax.validation.constraints.Pattern
 
 class TestCaseBean extends AbstractBean {
 
+    private static final long serialVersionUID = -159592567071153477L;
+
     int id
     /**
      * 创建人的id
@@ -53,14 +55,9 @@ class TestCaseBean extends AbstractBean {
      */
     @Range(min = 1L, max = 2L)
     int apiType
-    /**
-     * 0:默认,1:成功;2:失败,3:无法运行
-     */
+
     int last
 
-    /**
-     * 1:get,2:post-json;3:post-form
-     */
     @Range(min = 1L, max = 3L)
     int method
 
@@ -70,6 +67,7 @@ class TestCaseBean extends AbstractBean {
     @NotNull
     JSONObject params
 
+    @NotNull
     List<CaseVerifyBean> verifyBeans
 
 }

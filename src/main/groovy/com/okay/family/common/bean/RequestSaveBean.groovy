@@ -5,6 +5,9 @@ import com.okay.family.fun.base.bean.RequestInfo
 import com.okay.family.fun.config.RequestType
 
 class RequestSaveBean extends AbstractBean {
+
+    private static final long serialVersionUID = -15959429531153477L;
+
     /**
      * 接口地址
      */
