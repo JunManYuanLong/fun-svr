@@ -1,5 +1,6 @@
 package com.okay.family.mapper;
 
+import com.okay.family.common.bean.testcase.RunCaseHistoryBean;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 
 import java.util.List;
@@ -30,6 +31,9 @@ public interface TestCaseMapper {
      * @return
      */
     TestCaseBean findCase(int id);
+
+    //todo:待完成
+    int saveCaseRunHistory(RunCaseHistoryBean bean);
 
 
 }
