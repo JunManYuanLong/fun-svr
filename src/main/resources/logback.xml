@@ -10,13 +10,14 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoder 默认配置为PatternLayoutEncoder -->
         <encoder>
-            <pattern> %level %class:%line %msg%n</pattern>
+            <pattern>%level %class:%line %msg%n</pattern>
         </encoder>
     </appender>
 
     <!-- <conversionRule conversionWord="requestId" converterClass="com.noriental.utils.ParametersConvert" />-->
 
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${SEVER_NAME}-log.log</File>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] %msg%n</pattern>
         </encoder>
@@ -28,7 +29,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_HOME}/${SEVER_NAME}-info.log.%d{yyyy-MM-dd}</fileNamePattern>
             <!--日志文件保留天数-->
-            <MaxHistory>30</MaxHistory>
+            <MaxHistory>10</MaxHistory>
         </rollingPolicy>
     </appender>
 
@@ -48,7 +49,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_HOME}/${SEVER_NAME}-error.log.%d{yyyy-MM-dd}</fileNamePattern>
             <!--日志文件保留天数-->
-            <MaxHistory>30</MaxHistory>
+            <MaxHistory>10</MaxHistory>
         </rollingPolicy>
     </appender>
 
