@@ -25,8 +25,12 @@ public class TestUserServiceImpl implements ITestUserService {
 
     private static Logger logger = LoggerFactory.getLogger(TestUserServiceImpl.class);
 
-    @Autowired
     TestUserMapper testUserMapper;
+
+    @Autowired
+    public TestUserServiceImpl(TestUserMapper testUserMapper) {
+        this.testUserMapper = testUserMapper;
+    }
 
     @Override
     public Map<Integer, List<TestUserBean>> findUsers(int owner) {

@@ -25,14 +25,18 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
     private static Logger logger = LoggerFactory.getLogger(TestCaseServiceImpl.class);
 
-    @Autowired
     TestCaseMapper testCaseMapper;
 
-    @Autowired
     TestUserMapper testUserMapper;
 
-    @Autowired
     ITestUserService testUserService;
+
+    @Autowired
+    public TestCaseServiceImpl(TestCaseMapper testCaseMapper, TestUserMapper testUserMapper, ITestUserService testUserService) {
+        this.testCaseMapper = testCaseMapper;
+        this.testUserMapper = testUserMapper;
+        this.testUserService = testUserService;
+    }
 
     @Override
     public int saveCase(TestCaseBean bean) {

@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class SaveServiceimpl implements ISaveService {
 
-    @Autowired
     SaveMapper saveMapper;
+
+    @Autowired
+    public SaveServiceimpl(SaveMapper saveMapper) {
+        this.saveMapper = saveMapper;
+    }
 
     @Override
     public void saveRequest(RequestSaveBean info) {
