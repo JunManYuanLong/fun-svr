@@ -4,6 +4,8 @@ import com.okay.family.common.bean.testcase.RunCaseHistoryBean;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.service.ITestCaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +16,14 @@ import java.util.List;
 @RequestMapping(value = "/case")
 public class CaseController {
 
-    @Autowired
+    private static Logger logger = LoggerFactory.getLogger(CaseController.class);
+
     ITestCaseService service;
+
+    @Autowired
+    public CaseController(ITestCaseService service) {
+        this.service = service;
+    }
 
     @PostMapping(value = "/save")
     public Result saveCase(@RequestBody @Valid TestCaseBean bean) {

@@ -21,8 +21,12 @@ public class TestUserController {
 
     public static Logger logger = LoggerFactory.getLogger(TestUserController.class);
 
-    @Autowired
     ITestUserService testUserService;
+
+    @Autowired
+    public TestUserController(ITestUserService testUserService) {
+        this.testUserService = testUserService;
+    }
 
     @GetMapping(value = "/find/{owner}")
     public Result findUsers(@PathVariable(value = "owner", required = true) int owner) {

@@ -19,8 +19,13 @@ public class CaseCollectionController {
 
     private static Logger logger = LoggerFactory.getLogger(CaseCollectionController.class);
 
-    @Autowired
     ICaseCollectionService service;
+
+    @Autowired
+    public CaseCollectionController(ICaseCollectionService service) {
+        this.service = service;
+    }
+
 
     @PostMapping(value = "/add")
     public Result addCaseCollection(@RequestBody @Valid CaseCollectionBean bean) {
