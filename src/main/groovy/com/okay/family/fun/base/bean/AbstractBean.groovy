@@ -37,8 +37,13 @@ abstract class AbstractBean implements Serializable {
         logger.info(this.getClass().toString() + "：" + this.toString());
     }
 
+    def initFrom(String str) {
+        return JSONObject.parseObject(str, this.getClass())
+    }
+
     @Override
     String toString() {
         JSONObject.toJSONString(this)
     }
+
 }
