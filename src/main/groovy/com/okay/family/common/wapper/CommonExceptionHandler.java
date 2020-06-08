@@ -1,4 +1,4 @@
-package com.okay.family.common;
+package com.okay.family.common.wapper;
 
 
 import com.okay.family.fun.base.bean.Result;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-public class ExceptionHandle {
+public class CommonExceptionHandler {
 
-    public static Logger logger = LoggerFactory.getLogger(ExceptionHandle.class);
+    public static Logger logger = LoggerFactory.getLogger(CommonExceptionHandler.class);
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
