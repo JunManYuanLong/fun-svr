@@ -6,12 +6,10 @@ import com.okay.family.service.ICaseCollectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/casecollect")
@@ -48,4 +46,18 @@ public class CaseCollectionController {
     }
 
 
+    @GetMapping(value = "/collections/{uid}")
+    public Result getCollections(@PathVariable(value = "uid", required = true) int uid) {
+        List<CaseCollectionBean> collections = service.getCollections(uid);
+
+
+        return Result.success(collections);
+    }
+
+    @GetMapping(value = "/collection/{id}")
+    public Result getCollection(@PathVariable(value = "id",required = true)int id) {
+        CaseCollectionBean collectionInfo = service.getCollectionInfo(id);
+
+        return Result.success(collectionInfo);
+    }
 }

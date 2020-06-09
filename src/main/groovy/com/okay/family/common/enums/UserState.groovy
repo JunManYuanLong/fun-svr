@@ -7,21 +7,13 @@ enum UserState {
     NO(2, "不可用状态"),
     CANNOT(3, "无法验证状态")
 
-    private int code
+     int code
 
-    private String desc
+     String desc
 
     UserState(int code, String desc) {
         this.code = code
         this.desc = desc
-    }
-
-    int getCode() {
-        code
-    }
-
-    String getDesc() {
-        desc
     }
 
 }

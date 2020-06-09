@@ -13,10 +13,16 @@ class Task {
 
     static Logger logger = LoggerFactory.getLogger(Task.class)
 
-    @Autowired
     SaveMapper saveMapper
 
-    @Scheduled(cron = "* 30 * * * ?")
+    Task(SaveMapper saveMapper) {
+        this.saveMapper = saveMapper
+    }
+
+    @Autowired
+
+
+    @Scheduled(cron = "30 * * * * ?")
     def saveRequestBean() {
         while (true) {
             if (RequestSave.getWorkNum() == 0) break

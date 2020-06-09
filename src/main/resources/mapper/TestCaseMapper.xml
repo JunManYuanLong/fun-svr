@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.okay.family.mapper.SaveMapper">
+<mapper namespace="com.okay.family.mapper.TestCaseMapper">
 
     <sql id="BASE_TABLE">
-        family_test_user
+        family_test_case
     </sql>
 
 
@@ -15,5 +15,12 @@
         values (#{id},#{historyId},#{account},#{pwd},#{token},#{cookies})
     </insert>
 
+    <select id="search" parameterType="java.lang.String"
+            resultType="com.okay.family.common.bean.testcase.TestCaseBean">
+        <bind name="pattern" value="'%' + #{0} + '%'"/>
+        select * from
+        <include refid="BASE_TABLE"/>
+        where name like concat('%', #{0}, '%')
+    </select>
 
 </mapper>

@@ -1,10 +1,13 @@
 package com.okay.family.service.impl;
 
 import com.okay.family.common.bean.casecollect.CaseCollectionBean;
+import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.mapper.TestCaseMapper;
 import com.okay.family.service.ICaseCollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CaseCollectionServiceImpl implements ICaseCollectionService {
@@ -24,6 +27,21 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public int update(CaseCollectionBean bean) {
         return 0;
+    }
+
+    @Override
+    public List<CaseCollectionBean> getCollections(int uid) {
+        return null;
+    }
+
+    @Override
+    public CaseCollectionBean getCollectionInfo(int collectionid) {
+        return null;
+    }
+
+    @Override
+    public List<TestCaseBean> getCases(int id) {
+        return null;
     }
 
 

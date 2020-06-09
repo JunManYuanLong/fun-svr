@@ -1,8 +1,9 @@
 package com.okay.family.controller;
 
-import com.okay.family.common.bean.testcase.RunCaseHistoryBean;
+import com.okay.family.common.bean.testcase.RunCaseRecordBean;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.fun.base.bean.Result;
+import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.service.ITestCaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ public class CaseController {
 
     @GetMapping(value = "/runcase/{id}")
     public Result runCase(@PathVariable(value = "id", required = true) int id) {
-        RunCaseHistoryBean runCaseHistoryBean = service.runCase(id);
+        RunCaseRecordBean runCaseHistoryBean = service.runCase(id);
 
         return Result.success(runCaseHistoryBean);
     }
@@ -54,8 +55,17 @@ public class CaseController {
     @GetMapping(value = "/info/{id}")
     public Result getInfo(@PathVariable(value = "id", required = true) int id) {
         TestCaseBean caseBean = service.getCase(id);
-
         return Result.success(caseBean);
+    }
+
+
+    @GetMapping(value = "/search/{str}")
+    public Result search(@PathVariable(value = "str", required = true) String str) {
+        if (SourceCode.isNumber(str)) {
+            return Result.success(service.getCase(SourceCode.changeStringToInt(str)));
+        }
+        List<TestCaseBean> search = service.search(str);
+        return Result.success(search);
     }
 
 

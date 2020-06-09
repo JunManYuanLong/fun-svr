@@ -2,7 +2,7 @@ package com.okay.family.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.ServiceHost;
-import com.okay.family.common.bean.testcase.RunCaseHistoryBean;
+import com.okay.family.common.bean.testcase.RunCaseRecordBean;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.fun.frame.httpclient.FunRequest;
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ public class RunCaseUtil {
 
     static Logger logger = LoggerFactory.getLogger(RunCaseUtil.class);
 
-    public static RunCaseHistoryBean run(TestCaseBean bean) {
+    public static RunCaseRecordBean run(TestCaseBean bean) {
         int environment = bean.getEnvironment();
         int server = bean.getServer();
         /*
@@ -20,7 +20,7 @@ public class RunCaseUtil {
          */
         bean.setHost(ServiceHost.getHost(environment, server));
 
-        RunCaseHistoryBean historyBean = new RunCaseHistoryBean();
+        RunCaseRecordBean historyBean = new RunCaseRecordBean();
         historyBean.setCaseid(bean.getId());
         historyBean.setHeaders(bean.getHeaders().toString());
         historyBean.setParams(bean.getParams().toJSONString());
@@ -46,7 +46,7 @@ public class RunCaseUtil {
         JSONObject response = request.getResponse();
         historyBean.setResponse(response.toString());
 
-        VerifyResponseUtil.verify(response, bean.getVerifyBeans());
+        VerifyResponseUtil.verify(response, bean.getVerify());
 
         historyBean.setStatus(1);
 

@@ -1,6 +1,6 @@
 package com.okay.family.service;
 
-import com.okay.family.common.bean.testcase.RunCaseHistoryBean;
+import com.okay.family.common.bean.testcase.RunCaseRecordBean;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 
 import java.util.List;
@@ -32,7 +32,13 @@ public interface ITestCaseService {
      * @param id
      * @return
      */
-    RunCaseHistoryBean runCase(int id);
+    RunCaseRecordBean runCase(int id);
 
+
+    void editCase(TestCaseBean bean);
+
+    void addRunCaseRecord(RunCaseRecordBean bean);
+
+    List<TestCaseBean> search(String name);
 
 }

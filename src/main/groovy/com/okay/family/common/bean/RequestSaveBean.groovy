@@ -34,17 +34,13 @@ class RequestSaveBean extends AbstractBean {
     String type
 
     /**
-     * 参数
-     */
-    String params
-    /**
      * 响应大小
      */
-    int data_size
+    int datasize
     /**
      * 响应耗时
      */
-    long elapsed_time
+    long elapsedtime
     /**
      * 响应状态码
      */
@@ -54,27 +50,24 @@ class RequestSaveBean extends AbstractBean {
      */
     int code
 
-    int request_uid
-    /**
-     * header
-     */
-    int request_id
+    int requestid
 
-    public RequestSaveBean(RequestInfo requestInfo, int data_size, long elapsed_time, int code, int status, int request_uid, int request_id) {
+    int uid
+
+    public RequestSaveBean(RequestInfo requestInfo, int datasize, long elapsed_time, int code, int status, int requestid, int uid) {
         this.apiName = requestInfo.getApiName()
         this.url = requestInfo.getUrl()
         this.uri = requestInfo.getUri()
         this.method = requestInfo.getMethod()
         this.host = requestInfo.getHost()
         this.type = requestInfo.getType()
-        this.params = requestInfo.getParams()
-        this.data_size = data_size
-        this.elapsed_time = elapsed_time
+        this.datasize = datasize
+        this.elapsedtime = elapsedtime
         this.status = status
         this.code = code
         this.code = code
-        this.request_uid = request_uid
-        this.request_id = request_id
+        this.requestid = requestid
+        this.uid = uid
     }
 
 }

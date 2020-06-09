@@ -7,21 +7,14 @@ enum Environment {
     STRESS(3, "stress测试环境"),
     ONLINE(4, "线上环境")
 
-    private int code
+    int code
 
-    private String desc
+    String desc
 
     Environment(int code, String desc) {
         this.code = code
         this.desc = desc
     }
 
-    int getCode() {
-        code
-    }
-
-    String getDesc() {
-        desc
-    }
 
 }

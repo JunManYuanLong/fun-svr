@@ -8,21 +8,14 @@ enum CaseStatus {
     UNRUN(3, "无法运行"),
     USER_EROOR(4, "用户错误")
 
-    private int code
+    int code
 
-    private String desc
+    String desc
 
     CaseStatus(int code, String desc) {
         this.code = code
         this.desc = desc
     }
 
-    int getCode() {
-        code
-    }
-
-    String getDesc() {
-        desc
-    }
 
 }

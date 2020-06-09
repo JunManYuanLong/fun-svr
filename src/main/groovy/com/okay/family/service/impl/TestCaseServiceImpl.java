@@ -2,7 +2,7 @@ package com.okay.family.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
-import com.okay.family.common.bean.testcase.RunCaseHistoryBean;
+import com.okay.family.common.bean.testcase.RunCaseRecordBean;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.common.enums.CaseStatus;
 import com.okay.family.fun.base.exception.FailException;
@@ -16,6 +16,7 @@ import com.okay.family.utils.RunCaseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,9 +57,9 @@ public class TestCaseServiceImpl implements ITestCaseService {
     }
 
     @Override
-    public RunCaseHistoryBean runCase(int id) {
+    public RunCaseRecordBean runCase(int id) {
 
-        RunCaseHistoryBean run = new RunCaseHistoryBean();
+        RunCaseRecordBean run = new RunCaseRecordBean();
 
         TestCaseBean testCaseBean = testCaseMapper.findCase(id);
 
@@ -75,8 +76,26 @@ public class TestCaseServiceImpl implements ITestCaseService {
             run.setStatus(CaseStatus.USER_EROOR.getCode());
         }
         run = RunCaseUtil.run(testCaseBean);
-        testCaseMapper.saveCaseRunHistory(run);
+        addRunCaseRecord(run);
         return run;
+    }
+
+    @Override
+    public void editCase(TestCaseBean bean) {
+        testCaseMapper.edit(bean);
+    }
+
+    @Async
+    @Override
+    public void addRunCaseRecord(RunCaseRecordBean bean) {
+        testCaseMapper.saveCaseRunRecord(bean);
+    }
+
+    @Override
+    public List<TestCaseBean> search(String name) {
+        List<TestCaseBean> search = testCaseMapper.search(name);
+
+        return search;
     }
 
 

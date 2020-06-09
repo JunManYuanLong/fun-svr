@@ -17,7 +17,7 @@ class TestCaseBean extends AbstractBean {
      * 创建人的id
      */
     @Min(value = 1L, message = "uid错误")
-    int uid
+    int owner
 
     int lasteditor
 
@@ -28,46 +28,67 @@ class TestCaseBean extends AbstractBean {
      * 关联项目id
      */
     String project
+
     /**
      * 关联服务id
      */
     int server
+
+    String servername
+
+    /**
+     * 关联服务模块id
+     */
+    int module
+
+    String modulename
+
     /**
      * 关联接口id
      */
-    int apiId
-    /**
-     * 域名
-     */
-    String host
-    /**
-     * 用例名
-     */
-    @NotNull
-    String name
+    int apiid
+
     /**
      * 接口地址
      */
     @Pattern(regexp = "/.+", message = "接口名称应该以/开头!")
     String apipath
+
+    /**
+     * 域名
+     */
+    String host
+
+    /**
+     * 用例名
+     */
+    @NotNull
+    String name
+
     /**
      * 接口类型,1:读;2:写
      */
     @Range(min = 1L, max = 2L)
-    int apiType
+    int apitype
 
     int last
 
     @Range(min = 1L, max = 3L)
     int method
 
-    @NotNull
     JSONObject headers
 
-    @NotNull
     JSONObject params
 
+    @Range(min = 0L, max = 4L, message = "用例等级错误")
+    int level
+
+    /**
+     * 是否可以被当前用户运行
+     */
+    boolean runstatus
+
     @NotNull
-    List<CaseVerifyBean> verifyBeans
+    List<CaseVerifyBean> verify
 
 }
