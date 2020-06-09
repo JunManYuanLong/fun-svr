@@ -12,7 +12,7 @@ class PerformanceResultBean extends AbstractBean {
      * 测试用例描述
      */
 
-    String desc
+    String mark
     /**
      * 开始时间
      */
