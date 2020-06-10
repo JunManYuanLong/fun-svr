@@ -19,27 +19,28 @@ class TestCaseBean extends AbstractBean {
     @Min(value = 1L, message = "uid错误")
     int owner
 
-    int lasteditor
-
     @Range(min = 1L, max = 5L, message = "环境设置错误")
     int environment
 
     /**
      * 关联项目id
      */
+    //TODO:看数据结构做判断
+    @Pattern(regexp = "(\\d*,)*\\d*", message = "关联项目ID格式错误")
     String project
 
     /**
      * 关联服务id
      */
-    int server
+    int serverid
 
     String servername
 
     /**
      * 关联服务模块id
      */
-    int module
+    @Min(value = 1L)
+    int moduleid
 
     String modulename
 
@@ -71,7 +72,10 @@ class TestCaseBean extends AbstractBean {
     @Range(min = 1L, max = 2L)
     int apitype
 
-    int last
+    /**
+     * 最后一次运行结果
+     */
+    int lastresult
 
     @Range(min = 1L, max = 3L)
     int method
@@ -84,9 +88,9 @@ class TestCaseBean extends AbstractBean {
     int level
 
     /**
-     * 是否可以被当前用户运行
+     * 是否可以被当前用户编辑
      */
-    boolean runstatus
+    boolean editable
 
     @NotNull
     List<CaseVerifyBean> verify

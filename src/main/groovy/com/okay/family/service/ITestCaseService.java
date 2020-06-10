@@ -1,6 +1,6 @@
 package com.okay.family.service;
 
-import com.okay.family.common.bean.testcase.RunCaseRecordBean;
+import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 
 import java.util.List;
@@ -8,16 +8,17 @@ import java.util.List;
 public interface ITestCaseService {
 
 
-    int saveCase(TestCaseBean bean);
+    int addCase(TestCaseBean bean);
 
     /**
      * 获取当前用户某个接口的用例详情
      *
-     * @param uid
+     * @param environment
      * @param api_id
      * @return
      */
-    List<TestCaseBean> findMy(int uid, int api_id);
+    //TODO:未完成
+    List<TestCaseBean> findMy(int environment, int api_id);
 
     /**
      * 获取某个用例详情
@@ -32,12 +33,12 @@ public interface ITestCaseService {
      * @param id
      * @return
      */
-    RunCaseRecordBean runCase(int id);
+    CaseRunRecord runCase(int id);
 
 
     void editCase(TestCaseBean bean);
 
-    void addRunCaseRecord(RunCaseRecordBean bean);
+    void addRunCaseRecord(CaseRunRecord bean);
 
     List<TestCaseBean> search(String name);
 

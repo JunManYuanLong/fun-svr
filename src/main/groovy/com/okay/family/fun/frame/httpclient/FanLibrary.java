@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
 
-import com.okay.family.common.basedata.FamilyConstant;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.RequestSaveBean;
 import com.okay.family.common.RequestSave;
@@ -315,10 +314,10 @@ public class FanLibrary extends SourceCode {
     public static JSONObject getHttpResponse(HttpRequestBase request) {
         if (!isRightRequest(request)) RequestException.fail(request);
         beforeRequest(request);
-        Header header1 = request.getFirstHeader(FamilyConstant.REQUEST_UID);
-        Header header2 = request.getFirstHeader(FamilyConstant.REQUEST_ID);
-        int request_uid = header1 == null ? 0 : changeStringToInt(header1.getValue());
-        int request_id = header2 == null ? 0 : changeStringToInt(header2.getValue());
+        Header reqidheader = request.getFirstHeader(OkayConstant.REQUEST_ID);
+        Header markheader = request.getFirstHeader(OkayConstant.MARK_HEADER);
+        int request_id = reqidheader == null ? 0 : changeStringToInt(reqidheader.getValue());
+        int mark = changeStringToInt(markheader.getValue());
         JSONObject res = new JSONObject();
         RequestInfo requestInfo = new RequestInfo(request);
         long start = Time.getTimeStamp();
@@ -332,7 +331,7 @@ public class FanLibrary extends SourceCode {
             int data_size = content.length();
             res.putAll(getJsonResponse(content, setCookies));
             int code = VerifyResponseUtil.getCode(res);
-            RequestSave.addWork(new RequestSaveBean(requestInfo, data_size, elapsed_time, code, status, request_uid, request_id));
+            RequestSave.addWork(new RequestSaveBean(requestInfo, data_size, elapsed_time, code, status, request_id, mark));
             if (SAVE_KEY) FunRequest.save(request, res);
         } catch (Exception e) {
             logger.warn("获取请求相应失败！", e);

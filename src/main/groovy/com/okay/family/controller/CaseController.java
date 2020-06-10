@@ -1,7 +1,8 @@
 package com.okay.family.controller;
 
-import com.okay.family.common.bean.testcase.RunCaseRecordBean;
+import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.TestCaseBean;
+import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.service.ITestCaseService;
@@ -26,15 +27,16 @@ public class CaseController {
         this.service = service;
     }
 
-    @PostMapping(value = "/save")
-    public Result saveCase(@RequestBody @Valid TestCaseBean bean) {
-        int i = service.saveCase(bean);
-        return Result.success(i == 1 ? true : false);
+    @PostMapping(value = "/add")
+    public Result add(@RequestBody @Valid TestCaseBean bean) {
+        int i = service.addCase(bean);
+        return i == 1 ? Result.success() : Result.fail(TestCaseCode.ADD_CASE_FAIL);
     }
 
-    @GetMapping(value = "/findcase/{id}")
-    public Result findCaseByid() {
-        List<TestCaseBean> my = service.findMy(2, 2);
+    @GetMapping(value = "/findcase/{uid}/{environment}")
+    public Result findCaseByid(@PathVariable(value = "id", required = true) int id,
+                               @PathVariable(value = "environment", required = true) int environment) {
+        List<TestCaseBean> my = service.findMy(environment, id);
         return Result.success(my);
     }
 
@@ -47,7 +49,7 @@ public class CaseController {
 
     @GetMapping(value = "/runcase/{id}")
     public Result runCase(@PathVariable(value = "id", required = true) int id) {
-        RunCaseRecordBean runCaseHistoryBean = service.runCase(id);
+        CaseRunRecord runCaseHistoryBean = service.runCase(id);
 
         return Result.success(runCaseHistoryBean);
     }

@@ -260,8 +260,7 @@ class FunRequest extends FanLibrary implements Serializable, Cloneable {
      * @return
      */
     JSONObject getResponse() {
-        response = response.isEmpty() ? getHttpResponse(request == null ? getRequest() : request) : response
-        response
+        response.isEmpty() ? getHttpResponse(request == null ? getRequest() : request) : response
     }
 
 

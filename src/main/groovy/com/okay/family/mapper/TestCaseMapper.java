@@ -1,6 +1,6 @@
 package com.okay.family.mapper;
 
-import com.okay.family.common.bean.testcase.RunCaseRecordBean;
+import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface TestCaseMapper {
      * @param bean
      * @return
      */
-    int saveCase(TestCaseBean bean);
+    int addCase(TestCaseBean bean);
 
     /**
      * 查找我的测试用例
@@ -36,10 +36,10 @@ public interface TestCaseMapper {
     void edit(TestCaseBean record);
 
     //todo:待完成
-    int saveCaseRunRecord(RunCaseRecordBean bean);
+    int saveCaseRunRecord(CaseRunRecord bean);
 
     //todo:待完成
-    void addEditReord(RunCaseRecordBean record);
+    void addEditReord(CaseRunRecord record);
 
     List<TestCaseBean> search(String str);
 

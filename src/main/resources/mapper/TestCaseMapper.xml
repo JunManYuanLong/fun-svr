@@ -2,24 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.okay.family.mapper.TestCaseMapper">
 
-    <sql id="BASE_TABLE">
-        family_test_case
+    <sql id="CASE_TABLE">
+        test_case
     </sql>
 
+    <sql id="RECORD_TABLE">
+        case_edit_record
+    </sql>
 
-    <!--<insertDetail >-->
-    <insert id="saveCase" parameterType="com.okay.family.common.bean.testcase.TestCaseBean">
+    <resultMap id="entityMap" type="com.okay.family.common.bean.testcase.CaseVerifyBean">
+        <!-- 实体类的json字段，typeHandler指定自定义的typeHandler -->
+        <result column="verify" property="verify"
+                typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
+    </resultMap>
+
+    <insert id="addCase" parameterType="com.okay.family.common.bean.testcase.TestCaseBean">
         INSERT INTO
-        <include refid="BASE_TABLE"/>
-        (ID,HISTORYID,ACCOUNT,PWD,TOKEN,COOKIES)
-        values (#{id},#{historyId},#{account},#{pwd},#{token},#{cookies})
+        <include refid="CASE_TABLE"/>
+        (owner,environment,project,serverid,servername,moduleid,modulename,apiid,apipath,host,name,apitype,lastresult,method,headers,params,level,verify)
+        values
+        (#{owner},#{environment},#{project},#{serverid},#{servername},#{moduleid},#{modulename},#{apiid},#{apipath},#{host},#{name},#{apitype},#{lastresult},#{method},#{headers},#{params},#{level},#{verify,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler})
     </insert>
 
     <select id="search" parameterType="java.lang.String"
             resultType="com.okay.family.common.bean.testcase.TestCaseBean">
         <bind name="pattern" value="'%' + #{0} + '%'"/>
         select * from
-        <include refid="BASE_TABLE"/>
+        <include refid="CASE_TABLE"/>
         where name like concat('%', #{0}, '%')
     </select>
 

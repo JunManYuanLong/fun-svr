@@ -13,6 +13,8 @@ class RequestSaveBean extends AbstractBean {
      */
     String apiName
 
+    int mark
+
     /**
      * 请求的url
      */
@@ -52,9 +54,7 @@ class RequestSaveBean extends AbstractBean {
 
     int requestid
 
-    int uid
-
-    public RequestSaveBean(RequestInfo requestInfo, int datasize, long elapsed_time, int code, int status, int requestid, int uid) {
+    public RequestSaveBean(RequestInfo requestInfo, int datasize, long elapsed_time, int code, int status, int requestid,int mark) {
         this.apiName = requestInfo.getApiName()
         this.url = requestInfo.getUrl()
         this.uri = requestInfo.getUri()
@@ -67,7 +67,7 @@ class RequestSaveBean extends AbstractBean {
         this.code = code
         this.code = code
         this.requestid = requestid
-        this.uid = uid
+        this.mark = mark
     }
 
 }

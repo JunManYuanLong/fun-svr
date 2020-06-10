@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.okay.family.mapper.PubDataMapper">
+
     <sql id="table">
         pub_data
     </sql>
 
-    <insert id="saveData" parameterType="com.okay.family.common.bean.pubdata.PubDataBean">
+    <resultMap id="entityMap" type="com.alibaba.fastjson.JSONObject">
+        <!-- 实体类的json字段，typeHandler指定自定义的typeHandler -->
+        <result column="pubdata" property="pubdata" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
+    </resultMap>
+
+    <select id="getAllDatas" parameterType="java.lang.Integer"
+            resultType="com.okay.family.common.bean.pubdata.PubDataBean">
+        select * from
+        <include refid="table"/>
+        where owner = #{0}
+    </select>
+
+    <select id="getEnvDatas" resultType="com.okay.family.common.bean.pubdata.PubDataBean">
+        select * from
+        <include refid="table"/>
+        where owner = #{0} and environment = #{1}
+    </select>
+
+    <update id="updateData" parameterType="com.okay.family.common.bean.pubdata.PubDataBean">
+        UPDATE
+        <include refid="table"/>
+        SET
+        pubdata=#{pubdata,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},name=#{name}
+        WHERE id=#{id}
+    </update>
+
+
+    <insert id="add" parameterType="com.okay.family.common.bean.pubdata.PubDataBean">
         INSERT INTO
         <include refid="table"/>
-        (sss,2222)
+        (owner,name,pubdata)
         values
-        (#{owner})
-
+        (#{owner},#{name},#{pubdata,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler})
     </insert>
+
+    <delete id="delData" parameterType="com.okay.family.common.bean.pubdata.DelDataBean">
+        delete from
+        <include refid="table"/>
+        where id = #{id} and owner = #{owner}
+    </delete>
+
 </mapper>

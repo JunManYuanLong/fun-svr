@@ -2,7 +2,7 @@ package com.okay.family.common.code;
 
 import com.okay.family.fun.base.interfaces.ReturnCode;
 
-public enum CommonCode implements ReturnCode {
+enum CommonCode implements ReturnCode {
 
 
     SUCCESS(0, "成功"),
@@ -12,7 +12,7 @@ public enum CommonCode implements ReturnCode {
 
     String desc
 
-    CommonCode(int coe, String desc) {
+    CommonCode(int code, String desc) {
         this.code = code
         this.desc = desc
     }

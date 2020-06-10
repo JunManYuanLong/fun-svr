@@ -36,7 +36,7 @@ class TestUserBean extends AbstractBean {
     /**
      * 手机号
      */
-    long phone
+    String phone
     /**
      * 环境
      */
@@ -57,5 +57,6 @@ class TestUserBean extends AbstractBean {
      */
     @Range(min = 0L, max = 2L, message = "测试用户状态错误!")
     int status
+
 
 }

@@ -3,14 +3,14 @@
 <mapper namespace="com.okay.family.mapper.TestUserMapper">
 
     <sql id="BASE_TABLE">
-        family_test_user
+        test_user
     </sql>
 
     <select id="findUsers" parameterType="java.lang.Integer"
             resultType="com.okay.family.common.bean.testuser.TestUserBean">
         select * from
         <include refid="BASE_TABLE"/>
-        where owner = #{0} order by environment
+        where owner = #{0}
     </select>
 
     <select id="findUser" parameterType="java.lang.Integer"

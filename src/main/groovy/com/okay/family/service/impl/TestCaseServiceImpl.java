@@ -2,7 +2,8 @@ package com.okay.family.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
-import com.okay.family.common.bean.testcase.RunCaseRecordBean;
+import com.okay.family.common.basedata.ServiceHost;
+import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.common.enums.CaseStatus;
 import com.okay.family.fun.base.exception.FailException;
@@ -40,8 +41,9 @@ public class TestCaseServiceImpl implements ITestCaseService {
     }
 
     @Override
-    public int saveCase(TestCaseBean bean) {
-        return testCaseMapper.saveCase(bean);
+    public int addCase(TestCaseBean bean) {
+        bean.setHost(ServiceHost.getHost(bean.getEnvironment(), bean.getServerid()));
+        return testCaseMapper.addCase(bean);
     }
 
     @Override
@@ -57,13 +59,13 @@ public class TestCaseServiceImpl implements ITestCaseService {
     }
 
     @Override
-    public RunCaseRecordBean runCase(int id) {
+    public CaseRunRecord runCase(int id) {
 
-        RunCaseRecordBean run = new RunCaseRecordBean();
+        CaseRunRecord run = new CaseRunRecord();
 
         TestCaseBean testCaseBean = testCaseMapper.findCase(id);
 
-        int server = testCaseBean.getServer();
+        int server = testCaseBean.getServerid();
 
         JSONObject headers = testCaseBean.getHeaders();
 
@@ -87,7 +89,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
     @Async
     @Override
-    public void addRunCaseRecord(RunCaseRecordBean bean) {
+    public void addRunCaseRecord(CaseRunRecord bean) {
         testCaseMapper.saveCaseRunRecord(bean);
     }
 

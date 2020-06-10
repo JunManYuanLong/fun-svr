@@ -18,8 +18,14 @@ class CaseCollectionBean extends AbstractBean {
     @Pattern(regexp = "(\\d+,)+\\d+", message = "用例id集格式错误!")
     String caseids
 
+    String name
+
     /**
-     * 是否被共享
+     * 是否被共享,默认0不同享,1共享
      */
     int pub
+    /**
+     * 是否被共享,默认0不同享,1共享
+     */
+    int isdel
 }

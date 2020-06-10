@@ -15,7 +15,7 @@ class ServiceHost extends SourceCode {
 
     public static String getHost(int environment, String serverName) {
         try {
-            return hostlist.get(environment).get(serverName)
+            hostlist.get(environment).get(serverName)
         } catch (Exception e) {
             logger.error("获取域名发生错误!,环境:{},服务名:{}", environment, serverName, e)
         }
@@ -23,10 +23,9 @@ class ServiceHost extends SourceCode {
 
     public static String getHost(int environment, int serverid) {
         try {
-            return hostlist2.get(environment).get(serverid)
+            hostlist2.get(environment).get(serverid)
         } catch (Exception e) {
             logger.error("获取域名发生错误!,环境:{},服务id:{}", environment, serverid, e)
-            return null
         }
     }
 }

@@ -16,6 +16,6 @@ class CaseEditRecord extends AbstractBean {
 
     int editor
 
-    TestCaseBean bean
+    String bean
 
 }

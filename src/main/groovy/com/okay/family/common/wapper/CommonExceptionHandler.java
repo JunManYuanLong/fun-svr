@@ -5,6 +5,7 @@ import com.okay.family.common.code.CommonCode;
 import com.okay.family.fun.base.bean.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,7 +27,12 @@ public class CommonExceptionHandler {
             logger.error("参数异常:{}", defaultMessage);
             return Result.build(CommonCode.PARAMS_ERROR.getCode(), defaultMessage);
         }
-
+        if (e instanceof DuplicateKeyException) {
+            String message = e.getMessage();
+            logger.error("唯一性校验异常:{}", message);
+            return Result.fail(message);
+        }
+        logger.warn("未记录异常类:{}", e.getClass().getName());
         return Result.fail(e.getMessage());
     }
 
