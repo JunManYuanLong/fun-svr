@@ -4,7 +4,7 @@ package com.okay.family.common.wapper;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.DataBaseCode;
 import com.okay.family.fun.base.bean.Result;
-import org.apache.ibatis.binding.BindingException;
+import org.apache.ibatis.exceptions.IbatisException;
 import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,12 +40,12 @@ public class CommonExceptionHandler {
             logger.error("mybatis系统异常", e);
             return Result.fail(DataBaseCode.MYBATIS_FAIL);
         }
-        if (e instanceof BindingException) {
+        if (e instanceof IbatisException) {
             String message = e.getMessage();
             logger.error("mybatis配置错误", e);
             return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR);
         }
-        logger.warn("未记录异常类:{}", e.getClass().getName());
+        logger.warn("未记录异常类:{}", e);
         return Result.fail(e.getMessage());
     }
 

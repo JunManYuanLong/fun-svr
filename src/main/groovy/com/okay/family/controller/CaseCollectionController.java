@@ -28,21 +28,17 @@ public class CaseCollectionController {
     @PostMapping(value = "/add")
     public Result addCaseCollection(@RequestBody @Valid CaseCollectionBean bean) {
 
-        service.add(bean);
+        int i = service.addCollection(bean);
 
-        return Result.success();
+        return Result.success(i);
 
 
     }
 
     @PostMapping(value = "/update")
     public Result updateCaseCollection(@RequestBody @Valid CaseCollectionBean bean) {
-
         service.update(bean);
-
         return Result.success();
-
-
     }
 
 

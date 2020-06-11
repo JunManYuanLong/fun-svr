@@ -1,14 +1,16 @@
 package com.okay.family.service;
 
 import com.okay.family.common.bean.casecollect.CaseCollectionBean;
+import com.okay.family.common.bean.casecollect.CaseCollectionRelationBean;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 
 import java.util.List;
 
 public interface ICaseCollectionService {
 
-    //todo:待完成
-    int add(CaseCollectionBean bean);
+    int addCollection(CaseCollectionBean beans);
+
+    int addCollectionRelation(List<CaseCollectionRelationBean> bean);
 
     /**
      * 这里需要先删除用例集和用例的依赖关系,然后重建,需要记录record
@@ -27,4 +29,6 @@ public interface ICaseCollectionService {
     CaseCollectionBean getCollectionInfo(int collectionid);
 
     List<TestCaseBean> getCases(int id);
+
+
 }

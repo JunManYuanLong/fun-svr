@@ -2,13 +2,16 @@ package com.okay.family.mapper;
 
 import com.okay.family.common.bean.casecollect.CaseCollectionBean;
 import com.okay.family.common.bean.casecollect.CaseCollectionRecord;
+import com.okay.family.common.bean.casecollect.CaseCollectionRelationBean;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
 
 import java.util.List;
 
 public interface CaseCollectionMapper {
 
-    int add(CaseCollectionBean records);
+    int addCollection(CaseCollectionBean records);
+
+    int addRelation(List<CaseCollectionRelationBean> records);
 
     int share(CaseCollectionBean bean);
 

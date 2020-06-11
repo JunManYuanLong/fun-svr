@@ -6,24 +6,33 @@
         case_collection
     </sql>
 
+    <sql id="relation">
+        collection_case_relation
+    </sql>
 
-
-
-    <insert id="add" parameterType="java.util.List">
-        insert into
+    <insert id="addCollection"  useGeneratedKeys="true" keyProperty="id" parameterType="com.okay.family.common.bean.casecollect.CaseCollectionBean">
+        INSERT INTO
         <include refid="table"/>
-        (bach_id, code, type, facevalue,create_user,create_time)
+        (owner,environment,name,last)
         values
-        <foreach collection="list" item="caseCollectionRecord" index="index" separator=",">
+        (#{owner},#{environment},#{name},#{owner})
+    </insert>
+
+
+    <insert id="addRelation" parameterType="java.util.List">
+        insert into
+        <include refid="relation"/>
+        (collectionid, caseid)
+        values
+        <foreach collection="list" item="CaseCollectionRelationBean" index="index" separator=",">
             (
-            #{reddemCode.batchId}, #{reddemCode.code},
-            #{reddemCode.type},
-            #{reddemCode.facevalue},
-            #{reddemCode.createUser}, #{reddemCode.createTime}
+            #{CaseCollectionRelationBean.collectionid}, #{CaseCollectionRelationBean.caseid}
             )
         </foreach>
     </insert>
 
-
+    <!--    <if test="phone != null">-->
+    <!--        phone,-->
+    <!--    </if>-->
 
 </mapper>
