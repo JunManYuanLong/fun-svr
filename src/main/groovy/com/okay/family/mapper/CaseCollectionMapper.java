@@ -18,7 +18,6 @@ public interface CaseCollectionMapper {
     //todo:待完成
     int update(CaseCollectionBean bean);
 
-    //todo:待完成
     int addEditReord(CaseCollectionRecord bean);
 
     //todo:待完成

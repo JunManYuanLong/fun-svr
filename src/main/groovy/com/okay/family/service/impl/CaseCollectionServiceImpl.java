@@ -1,6 +1,7 @@
 package com.okay.family.service.impl;
 
 import com.okay.family.common.bean.casecollect.CaseCollectionBean;
+import com.okay.family.common.bean.casecollect.CaseCollectionRecord;
 import com.okay.family.common.bean.casecollect.CaseCollectionRelationBean;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.common.exception.CaseCollecionException;
@@ -49,12 +50,18 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
 
     @Override
     public int addCollectionRelation(List<CaseCollectionRelationBean> beans) {
-        caseCollectionMapper.addRelation(beans);
-        return 0;
+        int i = caseCollectionMapper.addRelation(beans);
+        return i;
     }
 
     @Override
     public int update(CaseCollectionBean bean) {
+        return 0;
+    }
+
+    @Override
+    public int addEditReord(CaseCollectionRecord record) {
+        caseCollectionMapper.addEditReord(record);
         return 0;
     }
 

@@ -1,6 +1,7 @@
 package com.okay.family.service;
 
 import com.okay.family.common.bean.casecollect.CaseCollectionBean;
+import com.okay.family.common.bean.casecollect.CaseCollectionRecord;
 import com.okay.family.common.bean.casecollect.CaseCollectionRelationBean;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 
@@ -21,6 +22,7 @@ public interface ICaseCollectionService {
     //todo:待完成
     int update(CaseCollectionBean bean);
 
+    int addEditReord(CaseCollectionRecord record);
 
     //todo:待完成
     List<CaseCollectionBean> getCollections(int uid);

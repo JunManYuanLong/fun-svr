@@ -9,7 +9,9 @@
     <sql id="relation">
         collection_case_relation
     </sql>
-
+    <sql id="record">
+        case_edit_record
+    </sql>
     <insert id="addCollection"  useGeneratedKeys="true" keyProperty="id" parameterType="com.okay.family.common.bean.casecollect.CaseCollectionBean">
         INSERT INTO
         <include refid="table"/>
@@ -30,6 +32,8 @@
             )
         </foreach>
     </insert>
+
+
 
     <!--    <if test="phone != null">-->
     <!--        phone,-->
