@@ -3,8 +3,7 @@ package com.okay.family.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.basedata.ServiceHost;
-import com.okay.family.common.bean.testcase.CaseRunRecord;
-import com.okay.family.common.bean.testcase.TestCaseBean;
+import com.okay.family.common.bean.testcase.*;
 import com.okay.family.common.enums.CaseStatus;
 import com.okay.family.fun.base.exception.FailException;
 import com.okay.family.fun.config.Constant;
@@ -47,14 +46,20 @@ public class TestCaseServiceImpl implements ITestCaseService {
     }
 
     @Override
-    public List<TestCaseBean> findMy(int uid, int api_id) {
-        List<TestCaseBean> my = testCaseMapper.findMy(uid, api_id);
+    public List<TestCaseBean> findCasesByApi(int environment, int api_id) {
+        List<TestCaseBean> my = testCaseMapper.findCasesByApi(environment, api_id);
         return my;
     }
 
     @Override
-    public TestCaseBean getCase(int id) {
-        TestCaseBean caseBean = testCaseMapper.findCase(id);
+    public List<TestCaseBean> findMyCases(int uid) {
+        List<TestCaseBean> myCase = testCaseMapper.findMyCases(uid);
+        return myCase;
+    }
+
+    @Override
+    public TestCaseBean getCaseInfo(int id) {
+        TestCaseBean caseBean = testCaseMapper.getCaseInfo(id);
         return caseBean;
     }
 
@@ -63,7 +68,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
         CaseRunRecord run = new CaseRunRecord();
 
-        TestCaseBean testCaseBean = testCaseMapper.findCase(id);
+        TestCaseBean testCaseBean = testCaseMapper.getCaseInfo(id);
 
         int server = testCaseBean.getServerid();
 
@@ -83,14 +88,27 @@ public class TestCaseServiceImpl implements ITestCaseService {
     }
 
     @Override
-    public void editCase(TestCaseBean bean) {
-        testCaseMapper.edit(bean);
+    public int editCaseAttribute(CaseAttributeBean bean) {
+        int i = testCaseMapper.editAttribute(bean);
+        return i;
+    }
+
+    @Override
+    public int editCaseData(CaseDataBean bean) {
+        int i = testCaseMapper.editData(bean);
+        return i;
     }
 
     @Async
     @Override
     public void addRunCaseRecord(CaseRunRecord bean) {
         testCaseMapper.saveCaseRunRecord(bean);
+    }
+
+    @Async
+    @Override
+    public void addEditCaseRecord(CaseEditRecord record) {
+        testCaseMapper.saveEditReord(record);
     }
 
     @Override

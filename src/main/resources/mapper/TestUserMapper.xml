@@ -23,7 +23,7 @@
     <select id="getUser" resultType="com.okay.family.common.bean.testuser.TestUserBean">
         select * from
         <include refid="BASE_TABLE"/>
-        where environment = #{0} and uname = #{1}
+        where environment = #{arg0} and uname = #{arg1}
     </select>
 
     <update id="updateUser" parameterType="com.okay.family.common.bean.testuser.TestUserBean">

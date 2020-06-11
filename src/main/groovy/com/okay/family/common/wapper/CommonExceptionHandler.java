@@ -2,7 +2,10 @@ package com.okay.family.common.wapper;
 
 
 import com.okay.family.common.code.CommonCode;
+import com.okay.family.common.code.DataBaseCode;
 import com.okay.family.fun.base.bean.Result;
+import org.apache.ibatis.binding.BindingException;
+import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
@@ -29,8 +32,18 @@ public class CommonExceptionHandler {
         }
         if (e instanceof DuplicateKeyException) {
             String message = e.getMessage();
-            logger.error("唯一性校验异常:{}", message);
-            return Result.fail(message);
+            logger.error("唯一性校验异常", e);
+            return Result.build(DataBaseCode.ONLY_KEY_FAIL);
+        }
+        if (e instanceof MyBatisSystemException) {
+            String message = e.getMessage();
+            logger.error("mybatis系统异常", e);
+            return Result.fail(DataBaseCode.MYBATIS_FAIL);
+        }
+        if (e instanceof BindingException) {
+            String message = e.getMessage();
+            logger.error("mybatis配置错误", e);
+            return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR);
         }
         logger.warn("未记录异常类:{}", e.getClass().getName());
         return Result.fail(e.getMessage());

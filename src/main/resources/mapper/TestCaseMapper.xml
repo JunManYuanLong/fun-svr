@@ -16,20 +16,62 @@
                 typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
     </resultMap>
 
-    <insert id="addCase" parameterType="com.okay.family.common.bean.testcase.TestCaseBean">
+    <resultMap type="com.okay.family.common.bean.testcase.TestCaseBean" id="TestCaseBean">
+        <result property="id" column="id"/>
+        <result property="owner" column="owner"/>
+        <result property="environment" column="environment"/>
+        <result property="project" column="project"/>
+        <result property="serverid" column="serverid"/>
+        <result property="servername" column="servername"/>
+        <result property="moduleid" column="moduleid"/>
+        <result property="modulename" column="modulename"/>
+        <result property="apiid" column="apiid"/>
+        <result property="apipath" column="apipath"/>
+        <result property="host" column="host"/>
+        <result property="name" column="name"/>
+        <result property="apitype" column="apitype"/>
+        <result property="lastresult" column="lastresult"/>
+        <result property="method" column="method"/>
+        <result property="headers" column="headers" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
+        <result property="params" column="params" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
+        <result property="level" column="level"/>
+        <result property="verify" column="verify"
+                typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
+    </resultMap>
+
+    <select id="findCasesByApi" resultMap="TestCaseBean">
+        select * from
+        <include refid="CASE_TABLE"/>
+        WHERE environment=#{arg0} and apiid = #{arg1}
+    </select>
+
+    <select id="findMyCases" parameterType="java.lang.Integer" resultMap="TestCaseBean">
+        select * from
+        <include refid="CASE_TABLE"/>
+        WHERE owner=#{0}
+    </select>
+
+    <select id="getCaseInfo" parameterType="java.lang.Integer" resultMap="TestCaseBean">
+        select * from
+        <include refid="CASE_TABLE"/>
+        WHERE id=#{0}
+    </select>
+
+
+    <select id="search" parameterType="java.lang.String"
+            resultType="com.okay.family.common.bean.testcase.TestCaseBean">
+        <!--        <bind name="pattern" value="'%' + #{0} + '%'"/>-->
+        select * from
+        <include refid="CASE_TABLE"/>
+        where name like concat('%', #{0}, '%')
+    </select>
+
+    <insert id="addCase" useGeneratedKeys="true"  parameterType="com.okay.family.common.bean.testcase.TestCaseBean">
         INSERT INTO
         <include refid="CASE_TABLE"/>
         (owner,environment,project,serverid,servername,moduleid,modulename,apiid,apipath,host,name,apitype,lastresult,method,headers,params,level,verify)
         values
         (#{owner},#{environment},#{project},#{serverid},#{servername},#{moduleid},#{modulename},#{apiid},#{apipath},#{host},#{name},#{apitype},#{lastresult},#{method},#{headers},#{params},#{level},#{verify,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler})
     </insert>
-
-    <select id="search" parameterType="java.lang.String"
-            resultType="com.okay.family.common.bean.testcase.TestCaseBean">
-        <bind name="pattern" value="'%' + #{0} + '%'"/>
-        select * from
-        <include refid="CASE_TABLE"/>
-        where name like concat('%', #{0}, '%')
-    </select>
 
 </mapper>

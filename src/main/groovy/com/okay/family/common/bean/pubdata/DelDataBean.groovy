@@ -6,7 +6,7 @@ import javax.validation.constraints.Min
 
 class DelDataBean extends AbstractBean {
 
-    private static final long serialVersionUID = -629048126822729332L;
+    private static final long serialVersionUID = -629048126822369332L;
 
     @Min(value = 1L)
     int id

@@ -4,50 +4,12 @@ import com.alibaba.fastjson.JSONObject
 import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Range
 
-import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
-class TestCaseBean extends AbstractBean {
+class CaseDataBean extends AbstractBean{
 
-    private static final long serialVersionUID = -1595563071153477L;
-
-    int id
-    /**
-     * 创建人的id
-     */
-    @Min(value = 1L, message = "uid错误")
-    int owner
-
-    @Range(min = 1L, max = 5L, message = "环境设置错误")
-    int environment
-
-    /**
-     * 关联项目id
-     */
-    //TODO:看数据结构做判断
-    @Pattern(regexp = "(\\d*,)*\\d*", message = "关联项目ID格式错误")
-    String project
-
-    /**
-     * 关联服务id
-     */
-    int serverid
-
-    String servername
-
-    /**
-     * 关联服务模块id
-     */
-    @Min(value = 1L)
-    int moduleid
-
-    String modulename
-
-    /**
-     * 关联接口id
-     */
-    int apiid
+    private static final long serialVersionUID = -629048686822729332L;
 
     /**
      * 接口地址
@@ -82,8 +44,6 @@ class TestCaseBean extends AbstractBean {
 
     JSONObject headers
 
-    JSONObject paramsjson
-
     JSONObject params
 
     @Range(min = 0L, max = 4L, message = "用例等级错误")
@@ -93,13 +53,7 @@ class TestCaseBean extends AbstractBean {
      * 是否可以被当前用户编辑
      */
     boolean editable
-    /**
-     * 是否完成
-     */
-    boolean done
 
     @NotNull
     List<CaseVerifyBean> verify
-
-
 }

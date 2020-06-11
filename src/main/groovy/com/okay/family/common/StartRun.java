@@ -11,10 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class StartRun implements CommandLineRunner {
 
-    private Logger logger = LoggerFactory.getLogger(StartRun.class);
+    private static Logger logger = LoggerFactory.getLogger(StartRun.class);
+
+    IDemoService demoService;
 
     @Autowired
-    IDemoService demoService;
+    public StartRun(IDemoService demoService) {
+        this.demoService = demoService;
+    }
 
     @Override
     public void run(String... args) {

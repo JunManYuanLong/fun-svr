@@ -7,7 +7,7 @@ import com.okay.family.fun.base.bean.AbstractBean
  */
 class CaseEditRecord extends AbstractBean {
 
-    private static final long serialVersionUID = -629048126822729332L;
+    private static final long serialVersionUID = -6290432268998729332L;
 
 
     int id

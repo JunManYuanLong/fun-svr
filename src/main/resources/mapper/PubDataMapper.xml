@@ -21,7 +21,7 @@
     <select id="getEnvDatas" resultType="com.okay.family.common.bean.pubdata.PubDataBean">
         select * from
         <include refid="table"/>
-        where owner = #{0} and environment = #{1}
+        where owner = #{arg0} and environment = #{arg1}
     </select>
 
     <update id="updateData" parameterType="com.okay.family.common.bean.pubdata.PubDataBean">

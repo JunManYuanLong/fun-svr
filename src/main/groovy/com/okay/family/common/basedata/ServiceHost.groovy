@@ -17,7 +17,8 @@ class ServiceHost extends SourceCode {
         try {
             hostlist.get(environment).get(serverName)
         } catch (Exception e) {
-            logger.error("获取域名发生错误!,环境:{},服务名:{}", environment, serverName, e)
+//            logger.error("获取域名发生错误!,环境:{},服务名:{}", environment, serverName, e)
+            "http://pic.automancloud.com"
         }
     }
 
@@ -25,7 +26,8 @@ class ServiceHost extends SourceCode {
         try {
             hostlist2.get(environment).get(serverid)
         } catch (Exception e) {
-            logger.error("获取域名发生错误!,环境:{},服务id:{}", environment, serverid, e)
+//            logger.error("获取域名发生错误!,环境:{},服务id:{}", environment, serverid, e)
+            "http://pic.automancloud.com"
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.okay.family.common.typehandler;
 
 import com.alibaba.fastjson.JSON;
+import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.testcase.CaseVerifyBean;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.utils.Join;
@@ -23,15 +24,14 @@ public class ListCaseVerifyBeanHandler extends BaseTypeHandler<List<CaseVerifyBe
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, List<CaseVerifyBean> parameter, JdbcType jdbcType) throws SQLException {
-        ps.setString(i, Join.join(parameter, Constant.PART));
+        ps.setString(i, Join.join(parameter, OkayConstant.MYSQL_SEPARATE));
     }
 
     @Override
     public List<CaseVerifyBean> getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String str = rs.getString(columnName);
         if (null != str) {
-
-            List<String> beans = Arrays.asList(str.split(Constant.PART));
+            List<String> beans = Arrays.asList(str.split(OkayConstant.MYSQL_SEPARATE));
             return beans.stream().map(x -> JSON.parseObject(x, CaseVerifyBean.class)).collect(Collectors.toList());
         }
         return null;

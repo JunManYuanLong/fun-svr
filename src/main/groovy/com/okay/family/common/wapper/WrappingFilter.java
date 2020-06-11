@@ -1,6 +1,7 @@
 package com.okay.family.common.wapper;
 
 
+import com.okay.family.fun.utils.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -62,9 +63,12 @@ public class WrappingFilter implements Filter {
         String url = requestWrapper.getRequestURL().toString();
         String queryArgs = requestWrapper.getQueryString();
         queryArgs = queryArgs == null ? requestWrapper.getBody() : queryArgs;
-        logger.info("请求url:{},参数:{}", url, queryArgs);
+
 //        chain.doFilter(request, response);
+        long start = Time.getTimeStamp();
         chain.doFilter(requestWrapper == null ? request : requestWrapper, response);
+        long end = Time.getTimeStamp();
+        logger.info("请求url:{},参数:{}", url, queryArgs);
 //        byte[] bytes = responseWrapper.getContent();
 //        String respContent = new String(bytes);
 //        if (respContent != null) {

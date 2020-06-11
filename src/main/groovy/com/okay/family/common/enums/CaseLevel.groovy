@@ -9,12 +9,13 @@ enum CaseLevel {
     LOW(3, "低运行等级")
 
 
-    int level
+    int code
 
     String desc
 
-    CaseLevel(int level, String desc) {
-        this.level = level
+    CaseLevel(int code, String desc) {
+        this.code = code
         this.desc = desc
     }
+
 }

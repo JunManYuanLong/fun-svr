@@ -4,7 +4,7 @@ import com.okay.family.fun.base.bean.AbstractBean
 
 class CaseCollectionRecordBean extends AbstractBean{
 
-    private static final long serialVersionUID = -629048126822729332L;
+    private static final long serialVersionUID = -629048356822729332L;
 
     int id
 

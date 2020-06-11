@@ -42,20 +42,20 @@ public class PubDataController {
     public Result addData(@RequestBody @Valid PubDataBean bean) {
         int i = pubDataService.addData(bean);
         Output.output(i);
-        return i == 1 ? Result.success() : Result.fail(PubDataCode.ADD_FAIL);
+        return i > 0 ? Result.success() : Result.fail(PubDataCode.ADD_FAIL);
     }
 
     @PostMapping(value = "/del")
     public Result delData(@RequestBody @Valid DelDataBean bean) {
         int i = pubDataService.delData(bean);
 
-        return i == 1 ? Result.success() : Result.fail(PubDataCode.NO_MATCH_FAIL);
+        return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_MATCH_FAIL);
     }
 
     @PostMapping(value = "/update")
     public Result updateData(@RequestBody @Valid PubDataBean bean) {
         int i = pubDataService.updateData(bean);
-        return i == 1 ? Result.success() : Result.fail(PubDataCode.NO_CHANGE_FAIL);
+        return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_CHANGE_FAIL);
     }
 
 

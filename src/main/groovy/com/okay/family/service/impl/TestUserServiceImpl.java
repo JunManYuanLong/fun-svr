@@ -55,7 +55,7 @@ public class TestUserServiceImpl implements ITestUserService {
     public int updateUser(TestUserBean bean) {
         UserUtil.updateUserStatus(bean);
         int i = testUserMapper.updateUser(bean);
-        if (i == 1) {
+        if (i > 0) {
             UserCertificate.certificates.put(bean.getId(), bean);
         }
         return i;
@@ -92,7 +92,7 @@ public class TestUserServiceImpl implements ITestUserService {
     public ReturnCode delUsr(DelUserBean bean) {
         int i = testUserMapper.delUser(bean);
 
-        return i == 1 ? CommonCode.SUCCESS : TestUserCode.DEL_USER_FAIL;
+        return i > 0 ? CommonCode.SUCCESS : TestUserCode.DEL_USER_FAIL;
     }
 
     @Override
@@ -100,7 +100,7 @@ public class TestUserServiceImpl implements ITestUserService {
         boolean b = UserUtil.checkUserLoginStatus(bean);
         if (b) {
             int i = testUserMapper.updateUser(bean);
-            return i == 1 ? CommonCode.SUCCESS : TestUserCode.DEL_USER_FAIL;
+            return i > 0 ? CommonCode.SUCCESS : TestUserCode.DEL_USER_FAIL;
         } else {
             return TestUserCode.CHECK_FAIL;
         }

@@ -4,7 +4,7 @@ import com.okay.family.fun.base.bean.AbstractBean
 
 class CaseRunRecord extends AbstractBean {
 
-    private static final long serialVersionUID = -159594259821153477L;
+    private static final long serialVersionUID = -1595949821153477L;
 
     int id
 

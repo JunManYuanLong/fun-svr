@@ -1,7 +1,6 @@
 package com.okay.family.mapper;
 
-import com.okay.family.common.bean.testcase.CaseRunRecord;
-import com.okay.family.common.bean.testcase.TestCaseBean;
+import com.okay.family.common.bean.testcase.*;
 
 import java.util.List;
 
@@ -15,6 +14,8 @@ public interface TestCaseMapper {
      */
     int addCase(TestCaseBean bean);
 
+    List<TestCaseBean> findCasesByApi(int environment, int apiid);
+
     /**
      * 查找我的测试用例
      *
@@ -22,7 +23,7 @@ public interface TestCaseMapper {
      * @param aip_id 接口ID
      * @return
      */
-    List<TestCaseBean> findMy(int uid, int aip_id);
+    List<TestCaseBean> findMyCases(int uid);
 
     /**
      * 查找测试用例
@@ -30,16 +31,29 @@ public interface TestCaseMapper {
      * @param id 测试用例ID
      * @return
      */
-    TestCaseBean findCase(int id);
+    TestCaseBean getCaseInfo(int id);
 
+    /**
+     * 编辑测试用例属性
+     *
+     * @param bean
+     */
     //todo:待完成
-    void edit(TestCaseBean record);
+    int editAttribute(CaseAttributeBean bean);
+
+    /**
+     * 编辑测试用例数据
+     *
+     * @param bean
+     */
+    //todo:待完成
+    int editData(CaseDataBean bean);
 
     //todo:待完成
     int saveCaseRunRecord(CaseRunRecord bean);
 
     //todo:待完成
-    void addEditReord(CaseRunRecord record);
+    void saveEditReord(CaseEditRecord record);
 
     List<TestCaseBean> search(String str);
 

@@ -70,11 +70,6 @@ class Result<T> extends AbstractBean {
         this.code = errorCode.getCode()
         this.data = errorCode.getDesc()
     }
-/**
- * 是否成功响应
- * @return
- */
-    boolean isSuccess() {
-        code == 0
-    }
+
+
 }

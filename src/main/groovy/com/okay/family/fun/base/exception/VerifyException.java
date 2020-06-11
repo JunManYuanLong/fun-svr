@@ -7,7 +7,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 
 public class VerifyException extends FailException {
 
-    private static final long serialVersionUID = 7916010541762451964L;
+    private static final long serialVersionUID = 79160101017624564L;
 
     private VerifyException() {
         super("验证失败!");
