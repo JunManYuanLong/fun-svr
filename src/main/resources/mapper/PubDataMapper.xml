@@ -3,7 +3,7 @@
 <mapper namespace="com.okay.family.mapper.PubDataMapper">
 
     <sql id="table">
-        pub_data
+        qa_pub_data
     </sql>
 
     <resultMap id="entityMap" type="com.alibaba.fastjson.JSONObject">

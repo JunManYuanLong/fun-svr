@@ -3,7 +3,7 @@
 <mapper namespace="com.okay.family.mapper.SaveMapper">
 
     <sql id="save_table">
-        request_record
+        qa_request_record
     </sql>
 
     <insert id="saveRequest" parameterType="com.okay.family.common.bean.RequestSaveBean">

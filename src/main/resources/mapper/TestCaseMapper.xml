@@ -3,11 +3,11 @@
 <mapper namespace="com.okay.family.mapper.TestCaseMapper">
 
     <sql id="CASE_TABLE">
-        test_case
+        qa_test_case
     </sql>
 
     <sql id="RECORD_TABLE">
-        case_edit_record
+        qa_case_edit_record
     </sql>
 
     <resultMap id="entityMap" type="com.okay.family.common.bean.testcase.CaseVerifyBean">

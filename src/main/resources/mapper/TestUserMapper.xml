@@ -3,7 +3,7 @@
 <mapper namespace="com.okay.family.mapper.TestUserMapper">
 
     <sql id="BASE_TABLE">
-        test_user
+        qa_test_user
     </sql>
 
     <select id="findUsers" parameterType="java.lang.Integer"

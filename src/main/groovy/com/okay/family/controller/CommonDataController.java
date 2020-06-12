@@ -1,6 +1,6 @@
 package com.okay.family.controller;
 
-import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.enums.*;
 import com.okay.family.fun.base.bean.Result;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class CommonDataController {
 
     @GetMapping(value = "/identity")
     public Result getIdentity() {
-        JSONArray all = Identity.getAll();
+        JSONObject all = Identity.getAll();
         return Result.success(all);
     }
 

@@ -40,7 +40,6 @@ class TestCaseBean extends AbstractBean {
     @Min(value = 1L)
     int moduleid
 
-
     /**
      * 关联接口id
      */

@@ -1,12 +1,13 @@
 package com.okay.family.common.bean.testcase
 
+import com.okay.family.common.bean.pub.ProjectBean
 import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Range
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.Pattern
 
-class CaseAttributeBean extends AbstractBean{
+class CaseAttributeBean extends AbstractBean {
 
     private static final long serialVersionUID = -629015126822729332L;
 
@@ -16,10 +17,10 @@ class CaseAttributeBean extends AbstractBean{
      * 创建人的id
      */
     @Min(value = 1L, message = "uid错误")
-    int owner
+    int uid
 
     @Range(min = 1L, max = 5L, message = "环境设置错误")
-    int environment
+    int envId
 
     /**
      * 关联项目id
@@ -39,14 +40,15 @@ class CaseAttributeBean extends AbstractBean{
      * 关联服务模块id
      */
     @Min(value = 1L)
-    int moduleid
+    int moduleId
 
-    String modulename
+    String name
 
+    List<Integer> projectList
 
     /**
      * 关联接口id
      */
-    int apiid
+    int apiId
 
 }

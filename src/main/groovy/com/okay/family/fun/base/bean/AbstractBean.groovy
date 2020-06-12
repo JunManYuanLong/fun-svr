@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject
 import com.okay.family.fun.frame.SourceCode
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.BeanUtils
 
 /**
  * bean的基类
@@ -44,6 +45,10 @@ abstract class AbstractBean implements Serializable {
     @Override
     String toString() {
         JSONObject.toJSONString(this)
+    }
+
+    def copy(AbstractBean source, AbstractBean target) {
+        BeanUtils.copyProperties(source,target)
     }
 
 }

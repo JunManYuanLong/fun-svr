@@ -3,15 +3,17 @@
 <mapper namespace="com.okay.family.mapper.CaseCollectionMapper">
 
     <sql id="table">
-        case_collection
+        qa_case_collection
     </sql>
 
     <sql id="relation">
-        collection_case_relation
+        qa_collection_case_relation
     </sql>
+
     <sql id="record">
-        case_edit_record
+        qa_case_edit_record
     </sql>
+
     <insert id="addCollection"  useGeneratedKeys="true" keyProperty="id" parameterType="com.okay.family.common.bean.casecollect.CaseCollectionBean">
         INSERT INTO
         <include refid="table"/>
