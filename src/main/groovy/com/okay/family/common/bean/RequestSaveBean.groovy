@@ -57,7 +57,6 @@ class RequestSaveBean extends AbstractBean {
     public RequestSaveBean(RequestInfo requestInfo, int datasize, long elapsed_time, int code, int status, int requestid,int mark) {
         this.apiName = requestInfo.getApiName()
         this.url = requestInfo.getUrl()
-        this.uri = requestInfo.getUri()
         this.method = requestInfo.getMethod()
         this.host = requestInfo.getHost()
         this.type = requestInfo.getType()

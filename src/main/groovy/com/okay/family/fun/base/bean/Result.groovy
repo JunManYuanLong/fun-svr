@@ -1,5 +1,6 @@
 package com.okay.family.fun.base.bean
 
+import com.okay.family.common.code.CommonCode
 import com.okay.family.fun.base.interfaces.ReturnCode
 import com.okay.family.fun.config.Constant
 
@@ -13,22 +14,28 @@ class Result<T> extends AbstractBean {
      * code码
      */
     int code
+
+    String msg
+
     /**
      * 返回信息
      */
     T data
 
-    Result(int code, T data) {
+    Result(int code, String msg, T data) {
         this.code = code
+        this.msg = msg
         this.data = data
+    }
+
+    Result(int code, String msg) {
+        this.code = code
+        this.msg = msg
     }
 /**
  * 返回简单的响应
  * @param c
  */
-    Result(int c) {
-        this.code = c
-    }
 
     def Result() {
     }
@@ -38,19 +45,19 @@ class Result<T> extends AbstractBean {
  * @return
  */
     static <T> Result<T> success(T data) {
-        new Result<>(0, data)
+        new Result<>(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc(), data)
     }
 
     static <T> Result<T> success() {
-        new Result<>(0)
+        new Result<>(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc())
     }
 
     static <T> Result<T> build(ReturnCode errorCode) {
         new Result(errorCode)
     }
 
-    static <T> Result<T> build(int code, String desc) {
-        new Result(code, desc)
+    static <T> Result<T> build(int code, String msg) {
+        new Result(code, msg)
     }
 
 /**
@@ -68,7 +75,7 @@ class Result<T> extends AbstractBean {
 
     Result(ReturnCode errorCode) {
         this.code = errorCode.getCode()
-        this.data = errorCode.getDesc()
+        this.msg = errorCode.getDesc()
     }
 
 

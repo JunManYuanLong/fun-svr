@@ -1,20 +1,20 @@
 package com.okay.family.controller;
 
-import com.okay.family.common.bean.pubdata.DelDataBean;
-import com.okay.family.common.bean.pubdata.PubDataBean;
-import com.okay.family.common.code.PubDataCode;
-import com.okay.family.fun.base.bean.Result;
-import com.okay.family.fun.frame.Output;
-import com.okay.family.service.IPubDataService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+        import com.okay.family.common.bean.pubdata.EditPubBean;
+        import com.okay.family.common.bean.pubdata.PubDataBean;
+        import com.okay.family.common.code.PubDataCode;
+        import com.okay.family.fun.base.bean.Result;
+        import com.okay.family.fun.frame.Output;
+        import com.okay.family.service.IPubDataService;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+        import javax.validation.Valid;
+        import java.util.List;
+        import java.util.Map;
+        import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/pubdata")
@@ -33,7 +33,7 @@ public class PubDataController {
     @GetMapping(value = "/getdatas/{uid}")
     public Result getDatas(@PathVariable(value = "uid", required = true) int uid) {
         List<PubDataBean> datas = pubDataService.getAllDatas(uid);
-        Map<Integer, List<PubDataBean>> collect = datas.stream().collect(Collectors.groupingBy(x -> x.getEnvironment()));
+        Map<Integer, List<PubDataBean>> collect = datas.stream().collect(Collectors.groupingBy(x -> x.getEnvId()));
 
         return Result.success(collect);
     }
@@ -45,10 +45,16 @@ public class PubDataController {
         return i > 0 ? Result.success() : Result.fail(PubDataCode.ADD_FAIL);
     }
 
-    @PostMapping(value = "/del")
-    public Result delData(@RequestBody @Valid DelDataBean bean) {
-        int i = pubDataService.delData(bean);
+    @PostMapping(value = "/edit")
+    public Result delData(@RequestBody @Valid EditPubBean bean) {
+        int i = 0;
+        if (bean.getType().equalsIgnoreCase("del")) {
+            i = pubDataService.delData(bean);
+        } else if (bean.getType().equalsIgnoreCase("update")) {
 
+        } else if (bean.getType().equalsIgnoreCase("add")) {
+
+        }
         return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_MATCH_FAIL);
     }
 

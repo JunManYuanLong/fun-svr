@@ -1,6 +1,6 @@
 package com.okay.family.service.impl;
 
-import com.okay.family.common.bean.pubdata.DelDataBean;
+import com.okay.family.common.bean.pubdata.EditPubBean;
 import com.okay.family.common.bean.pubdata.PubDataBean;
 import com.okay.family.mapper.PubDataMapper;
 import com.okay.family.service.IPubDataService;
@@ -38,7 +38,7 @@ public class PubDataServiceImpl implements IPubDataService {
     }
 
     @Override
-    public int delData(DelDataBean bean) {
+    public int delData(EditPubBean bean) {
         int i = pubDataMapper.delData(bean);
         return i;
     }

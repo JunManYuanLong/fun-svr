@@ -1,6 +1,6 @@
 package com.okay.family.common.bean.pubdata
 
-import com.alibaba.fastjson.JSONObject
+
 import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.Range
@@ -16,14 +16,14 @@ class PubDataBean extends AbstractBean {
     int id
 
     @Range(min = 1L, max = 5L, message = "环境设置错误")
-    int environment
+    int envId
 
     @Min(value = 1L)
-    int owner
+    int uid
 
     @NotNull(message = "公共数据不能为空")
     @Size(min = 1, message = "数据长度错误")
-    JSONObject pubdata
+    List<PubDataDetailBean> list
 
     @Length(min = 1, max = 16, message = "名字长度错误")
     String name

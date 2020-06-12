@@ -1,6 +1,6 @@
 package com.okay.family.mapper;
 
-import com.okay.family.common.bean.pubdata.DelDataBean;
+import com.okay.family.common.bean.pubdata.EditPubBean;
 import com.okay.family.common.bean.pubdata.PubDataBean;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface PubDataMapper {
 
     int updateData(PubDataBean bean);
 
-    int delData(DelDataBean bean);
+    int delData(EditPubBean bean);
 
 
 }

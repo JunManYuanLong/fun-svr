@@ -34,15 +34,12 @@ class TestCaseBean extends AbstractBean {
      */
     int serverid
 
-    String servername
-
     /**
      * 关联服务模块id
      */
     @Min(value = 1L)
     int moduleid
 
-    String modulename
 
     /**
      * 关联接口id
@@ -93,6 +90,7 @@ class TestCaseBean extends AbstractBean {
      * 是否可以被当前用户编辑
      */
     boolean editable
+
     /**
      * 是否完成
      */
