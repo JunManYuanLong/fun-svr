@@ -1,7 +1,6 @@
 package com.okay.family.common.enums
 
 import com.alibaba.fastjson.JSONObject
-import com.okay.family.fun.frame.Output
 
 import java.util.stream.Collectors
 
@@ -22,13 +21,7 @@ enum Identity {
     }
 
     static JSONObject getAll() {
-        Identity.values().stream().collect(Collectors.toMap({x -> x.getCode()}, {x -> x.getDesc()}))
-    }
-
-    public static void main(String[] args) {
-        Output.output getAll()
-
-
+        Identity.values().stream().collect(Collectors.toMap({x -> x.getCode() as String}, {x -> x.getDesc()})) as JSONObject
     }
 
 }

@@ -30,7 +30,7 @@ public class PubDataController {
         this.pubDataService = pubDataService;
     }
 
-    @GetMapping(value = "/getdatas/{envId}/{uid}")
+    @GetMapping(value = "/get/{envId}/{uid}")
     public Result getDatas(@PathVariable(value = "uid", required = true) int uid,
                            @PathVariable(value = "envId", required = true) int envId) {
         List<PubDataBean> datas = pubDataService.getDatasByEnv(uid, envId);

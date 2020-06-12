@@ -14,7 +14,7 @@
     <resultMap type="com.okay.family.common.bean.pubdata.PubDataBean" id="PubDataBean">
         <result property="id" column="id"/>
         <result property="uid" column="uid"/>
-        <result property="envId" column="environment"/>
+        <result property="envId" column="envId"/>
         <result property="name" column="name"/>
         <result property="list" column="list" typeHandler="com.okay.family.common.typehandler.ListPubDetailHandler"/>
     </resultMap>

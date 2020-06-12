@@ -51,7 +51,7 @@ public class CommonExceptionHandler {
             logger.error("数据格式错误!", e);
             return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR);
         }
-        logger.warn("未记录异常类:{}", e);
+        logger.warn("未记录异常类", e);
         return Result.fail(e.getMessage());
     }
 
