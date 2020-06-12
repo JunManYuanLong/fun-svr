@@ -15,11 +15,11 @@ class Task {
 
     SaveMapper saveMapper
 
+    @Autowired
     Task(SaveMapper saveMapper) {
         this.saveMapper = saveMapper
     }
 
-    @Autowired
 
 
     @Scheduled(cron = "30 * * * * ?")

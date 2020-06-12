@@ -11,7 +11,7 @@ public interface PubDataMapper {
 
     List<PubDataBean> getAllDatas(int uid);
 
-    int add(PubDataBean bean);
+    int add(EditPubBean bean);
 
     int updateData(PubDataBean bean);
 

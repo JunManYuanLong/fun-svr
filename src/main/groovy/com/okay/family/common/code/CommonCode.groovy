@@ -6,7 +6,7 @@ enum CommonCode implements ReturnCode {
 
 
     SUCCESS(0, "成功"),
-    PARAMS_ERROR(100, "参数校验失败")
+    PARAMS_ERROR(100, "常用参数错误!")
 
     int code
 
@@ -27,4 +27,5 @@ enum CommonCode implements ReturnCode {
     String getDesc() {
         return desc
     }
+
 }

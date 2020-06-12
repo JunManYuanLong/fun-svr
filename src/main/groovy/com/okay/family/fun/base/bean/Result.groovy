@@ -1,5 +1,6 @@
 package com.okay.family.fun.base.bean
 
+import com.alibaba.fastjson.JSONObject
 import com.okay.family.common.code.CommonCode
 import com.okay.family.fun.base.interfaces.ReturnCode
 import com.okay.family.fun.config.Constant
@@ -60,6 +61,10 @@ class Result<T> extends AbstractBean {
         new Result(code, msg)
     }
 
+    static <T> Result<T> build(List listData) {
+        success([list: listData] as JSONObject)
+    }
+    
 /**
  * 返回通用失败的响应内容
  * @param data

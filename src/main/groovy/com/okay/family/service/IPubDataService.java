@@ -11,9 +11,13 @@ public interface IPubDataService {
 
     List<PubDataBean> getAllDatas(int uid);
 
-    int addData(PubDataBean bean);
+    List<PubDataBean> getDatasByEnv(int envId, int uid);
+
+    int addData(EditPubBean bean);
 
     int delData(EditPubBean bean);
+
+    int updateDataAttribute(EditPubBean bean);
 
     int updateData(PubDataBean bean);
 

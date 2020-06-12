@@ -32,7 +32,12 @@ public class PubDataServiceImpl implements IPubDataService {
     }
 
     @Override
-    public int addData(PubDataBean bean) {
+    public List<PubDataBean> getDatasByEnv(int envId, int uid) {
+        return null;
+    }
+
+    @Override
+    public int addData(EditPubBean bean) {
         int add = pubDataMapper.add(bean);
         return add;
     }
@@ -41,6 +46,11 @@ public class PubDataServiceImpl implements IPubDataService {
     public int delData(EditPubBean bean) {
         int i = pubDataMapper.delData(bean);
         return i;
+    }
+
+    @Override
+    public int updateDataAttribute(EditPubBean bean) {
+        return 0;
     }
 
     @Override

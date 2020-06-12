@@ -5,7 +5,6 @@ import com.okay.family.fun.frame.SourceCode
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.BeanUtils
-
 /**
  * bean的基类
  */
@@ -47,8 +46,13 @@ abstract class AbstractBean implements Serializable {
         JSONObject.toJSONString(this)
     }
 
-    def copy(AbstractBean source, AbstractBean target) {
-        BeanUtils.copyProperties(source,target)
+    def copyFrom(AbstractBean source) {
+        BeanUtils.copyProperties(source, this)
     }
+
+    def copyTo(AbstractBean target) {
+        BeanUtils.copyProperties(this, target)
+    }
+
 
 }
