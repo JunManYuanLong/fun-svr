@@ -8,43 +8,59 @@
 
     <resultMap id="entityMap" type="com.alibaba.fastjson.JSONObject">
         <!-- 实体类的json字段，typeHandler指定自定义的typeHandler -->
-        <result column="pubdata" property="pubdata" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
+        <result column="list" property="pubdata" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
     </resultMap>
 
-    <select id="getAllDatas" parameterType="java.lang.Integer"
-            resultType="com.okay.family.common.bean.pubdata.PubDataBean">
+    <resultMap type="com.okay.family.common.bean.pubdata.PubDataBean" id="PubDataBean">
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="envId" column="environment"/>
+        <result property="name" column="name"/>
+        <result property="list" column="list" typeHandler="com.okay.family.common.typehandler.ListPubDetailHandler"/>
+    </resultMap>
+
+    <select id="getAllDatas" parameterType="java.lang.Integer" resultMap="PubDataBean">
         select * from
         <include refid="table"/>
-        where owner = #{0}
+        where uid = #{0}
     </select>
 
-    <select id="getEnvDatas" resultType="com.okay.family.common.bean.pubdata.PubDataBean">
+    <select id="getDatasByEnv" resultMap="PubDataBean">
         select * from
         <include refid="table"/>
-        where owner = #{arg0} and environment = #{arg1}
+        where uid = #{arg0} and envId = #{arg1}
     </select>
 
-    <update id="updateData" parameterType="com.okay.family.common.bean.pubdata.PubDataBean">
+    <update id="updateDataAttribute" parameterType="com.okay.family.common.bean.pubdata.EditPubBean">
         UPDATE
         <include refid="table"/>
         SET
-        pubdata=#{pubdata,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},name=#{name}
-        WHERE id=#{id}
+        name=#{name}
+        WHERE id=#{id} and uid = #{uid}
     </update>
 
 
-    <insert id="add" parameterType="com.okay.family.common.bean.pubdata.PubDataBean">
+    <update id="saveData" parameterType="com.okay.family.common.bean.pubdata.SavePubDataBean">
+        UPDATE
+        <include refid="table"/>
+        SET
+        list=#{list,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListPubDetailHandler}
+        WHERE id=#{id} AND uid=#{uid}
+    </update>
+
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id" parameterType="com.okay.family.common.bean.pubdata.EditPubBean">
         INSERT INTO
         <include refid="table"/>
-        (owner,name,pubdata)
-        values
-        (#{owner},#{name},#{pubdata,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler})
+        (uid,name,envId)
+        VALUES
+        (#{uid},#{name},#{envId})
     </insert>
 
     <delete id="delData" parameterType="com.okay.family.common.bean.pubdata.EditPubBean">
         delete from
         <include refid="table"/>
-        where id = #{id} and owner = #{owner}
+        where id = #{id} and uid = #{uid}
     </delete>
 
 </mapper>

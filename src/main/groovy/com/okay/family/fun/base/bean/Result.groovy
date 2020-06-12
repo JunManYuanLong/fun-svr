@@ -32,11 +32,8 @@ class Result<T> extends AbstractBean {
     Result(int code, String msg) {
         this.code = code
         this.msg = msg
+        this.data = "null"
     }
-/**
- * 返回简单的响应
- * @param c
- */
 
     def Result() {
     }
@@ -49,19 +46,19 @@ class Result<T> extends AbstractBean {
         new Result<>(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc(), data)
     }
 
-    static <T> Result<T> success() {
-        new Result<>(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc())
+    static Result success() {
+        new Result(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc())
     }
 
-    static <T> Result<T> build(ReturnCode errorCode) {
+    static Result build(ReturnCode errorCode) {
         new Result(errorCode)
     }
 
-    static <T> Result<T> build(int code, String msg) {
+    static Result build(int code, String msg) {
         new Result(code, msg)
     }
 
-    static <T> Result<T> build(List listData) {
+    static Result build(List listData) {
         success([list: listData] as JSONObject)
     }
     
@@ -74,13 +71,12 @@ class Result<T> extends AbstractBean {
         new Result<T>(Constant.TEST_ERROR_CODE, data)
     }
 
-    static <T> Result<T> fail(ReturnCode errorCode) {
-        new Result<T>(errorCode)
+    static Result fail(ReturnCode errorCode) {
+        new Result(errorCode)
     }
 
     Result(ReturnCode errorCode) {
-        this.code = errorCode.getCode()
-        this.msg = errorCode.getDesc()
+        this(errorCode.getCode(),errorCode.getDesc())
     }
 
 

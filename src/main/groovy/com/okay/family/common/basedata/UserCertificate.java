@@ -8,5 +8,4 @@ public class UserCertificate {
 
     public static ConcurrentHashMap<Integer, TestUserBean> certificates = new ConcurrentHashMap<>();
 
-
 }

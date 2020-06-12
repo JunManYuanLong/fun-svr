@@ -2,6 +2,7 @@ package com.okay.family.service.impl;
 
 import com.okay.family.common.bean.pubdata.EditPubBean;
 import com.okay.family.common.bean.pubdata.PubDataBean;
+import com.okay.family.common.bean.pubdata.SavePubDataBean;
 import com.okay.family.mapper.PubDataMapper;
 import com.okay.family.service.IPubDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +22,21 @@ public class PubDataServiceImpl implements IPubDataService {
     }
 
     @Override
-    public List<PubDataBean> getEnvDatas(int uid, int environment) {
-        return null;
-    }
-
-    @Override
     public List<PubDataBean> getAllDatas(int uid) {
         List<PubDataBean> allDatas = pubDataMapper.getAllDatas(uid);
         return allDatas;
     }
 
     @Override
-    public List<PubDataBean> getDatasByEnv(int envId, int uid) {
-        return null;
+    public List<PubDataBean> getDatasByEnv(int uid, int envId) {
+        List<PubDataBean> datasByEnv = pubDataMapper.getDatasByEnv(uid, envId);
+        return datasByEnv;
     }
 
     @Override
     public int addData(EditPubBean bean) {
         int add = pubDataMapper.add(bean);
-        return add;
+        return bean.getId();
     }
 
     @Override
@@ -50,12 +47,13 @@ public class PubDataServiceImpl implements IPubDataService {
 
     @Override
     public int updateDataAttribute(EditPubBean bean) {
-        return 0;
+        int i = pubDataMapper.updateDataAttribute(bean);
+        return i;
     }
 
     @Override
-    public int updateData(PubDataBean bean) {
-        int i = pubDataMapper.updateData(bean);
+    public int saveData(SavePubDataBean bean) {
+        int i = pubDataMapper.saveData(bean);
         return i;
     }
 

@@ -9,6 +9,7 @@ import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -43,6 +44,11 @@ public class CommonExceptionHandler {
         if (e instanceof IbatisException) {
             String message = e.getMessage();
             logger.error("mybatis配置错误", e);
+            return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR);
+        }
+        if (e instanceof NonTransientDataAccessException) {
+            String message = e.getMessage();
+            logger.error("数据格式错误!", e);
             return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR);
         }
         logger.warn("未记录异常类:{}", e);

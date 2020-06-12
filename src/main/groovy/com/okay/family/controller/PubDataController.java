@@ -2,9 +2,11 @@ package com.okay.family.controller;
 
 import com.okay.family.common.bean.pubdata.EditPubBean;
 import com.okay.family.common.bean.pubdata.PubDataBean;
+import com.okay.family.common.bean.pubdata.SavePubDataBean;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.PubDataCode;
 import com.okay.family.fun.base.bean.Result;
+import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.service.IPubDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,25 +33,32 @@ public class PubDataController {
     @GetMapping(value = "/getdatas/{envId}/{uid}")
     public Result getDatas(@PathVariable(value = "uid", required = true) int uid,
                            @PathVariable(value = "envId", required = true) int envId) {
-        List<PubDataBean> datas = pubDataService.getDatasByEnv(envId, uid);
+        List<PubDataBean> datas = pubDataService.getDatasByEnv(uid, envId);
         return Result.build(datas);
     }
 
     @PostMapping(value = "/edit")
     public Result delData(@RequestBody @Valid EditPubBean bean) {
-        int i = 0;
-        if (bean.getType().equalsIgnoreCase("del")) {
-            i = pubDataService.delData(bean);
+        if (bean.getType().equalsIgnoreCase("delete")) {
+            int i = pubDataService.delData(bean);
             return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_MATCH_FAIL);
         } else if (bean.getType().equalsIgnoreCase("update")) {
-            i = pubDataService.updateDataAttribute(bean);
+            int i = pubDataService.updateDataAttribute(bean);
             return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_CHANGE_FAIL);
         } else if (bean.getType().equalsIgnoreCase("add")) {
-            i = pubDataService.addData(bean);
-            return i > 0 ? Result.success() : Result.fail(PubDataCode.ADD_FAIL);
+            int i = pubDataService.addData(bean);
+            return i > 0 ? Result.success(SourceCode.getJson("id=" + i)) : Result.fail(PubDataCode.ADD_FAIL);
         }
         logger.warn("未验证的参数:{}", bean.toString());
         return Result.build(CommonCode.PARAMS_ERROR);
+    }
+
+
+    @PostMapping(value = "/save")
+    public Result saveData(@RequestBody @Valid SavePubDataBean bean) {
+        int i = pubDataService.saveData(bean);
+        return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_CHANGE_FAIL);
+
     }
 
 
