@@ -21,7 +21,6 @@ class Task {
     }
 
 
-
     @Scheduled(cron = "30 * * * * ?")
     def saveRequestBean() {
         while (true) {

@@ -41,7 +41,7 @@
         (#{owner},#{name},#{pubdata,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler})
     </insert>
 
-    <delete id="delData" parameterType="com.okay.family.common.bean.pubdata.DelDataBean">
+    <delete id="delData" parameterType="com.okay.family.common.bean.pubdata.EditPubBean">
         delete from
         <include refid="table"/>
         where id = #{id} and owner = #{owner}
