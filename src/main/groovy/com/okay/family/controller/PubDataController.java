@@ -1,5 +1,6 @@
 package com.okay.family.controller;
 
+import com.okay.family.common.bean.DelBean;
 import com.okay.family.common.bean.pubdata.EditPubBean;
 import com.okay.family.common.bean.pubdata.PubDataBean;
 import com.okay.family.common.bean.pubdata.SavePubDataBean;
@@ -30,19 +31,16 @@ public class PubDataController {
         this.pubDataService = pubDataService;
     }
 
-    @GetMapping(value = "/get/{envId}/{uid}")
-    public Result getDatas(@PathVariable(value = "uid", required = true) int uid,
-                           @PathVariable(value = "envId", required = true) int envId) {
+    @GetMapping(value = "/get")
+    public Result getDatas(@RequestParam(value = "uid", required = true) int uid,
+                           @RequestParam(value = "envId", required = true) int envId) {
         List<PubDataBean> datas = pubDataService.getDatasByEnv(uid, envId);
         return Result.build(datas);
     }
 
     @PostMapping(value = "/edit")
     public Result delData(@RequestBody @Valid EditPubBean bean) {
-        if (bean.getType().equalsIgnoreCase("delete")) {
-            int i = pubDataService.delData(bean);
-            return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_MATCH_FAIL);
-        } else if (bean.getType().equalsIgnoreCase("update")) {
+        if (bean.getType().equalsIgnoreCase("update")) {
             int i = pubDataService.updateDataAttribute(bean);
             return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_CHANGE_FAIL);
         } else if (bean.getType().equalsIgnoreCase("add")) {
@@ -53,6 +51,11 @@ public class PubDataController {
         return Result.build(CommonCode.PARAMS_ERROR);
     }
 
+    @PostMapping(value = "/del")
+    public Result delData(@RequestBody @Valid DelBean bean) {
+        int i = pubDataService.delData(bean);
+        return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_MATCH_FAIL);
+    }
 
     @PostMapping(value = "/save")
     public Result saveData(@RequestBody @Valid SavePubDataBean bean) {

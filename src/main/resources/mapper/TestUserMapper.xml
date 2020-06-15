@@ -2,49 +2,94 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.okay.family.mapper.TestUserMapper">
 
-    <sql id="BASE_TABLE">
+    <sql id="table">
         qa_test_user
     </sql>
 
-    <select id="findUsers" parameterType="java.lang.Integer"
+    <sql id="user_status">
+        qa_user_status_name
+    </sql>
+
+    <sql id="env">
+        family_base_env
+    </sql>
+
+    <sql id="user_role">
+        qa_role_name
+    </sql>
+
+    <select id="findUsers" parameterType="com.okay.family.common.bean.testuser.SearchUserBean"
             resultType="com.okay.family.common.bean.testuser.TestUserBean">
-        select * from
-        <include refid="BASE_TABLE"/>
-        where owner = #{0}
+        select tu.id,tu.descc,tu.user,tu.phone,tu.password,tu.create_time,us.name status,env.name env,ur.name role from
+        <include refid="table"/>
+        tu
+        left join
+        <include refid="user_status"/>
+        us on tu.status = us.status
+        left join
+        <include refid="env"/>
+        env on tu.envId = env.id
+        left join
+        <include refid="user_role"/>
+        ur on tu.roleId = ur.roleId
+        where tu.uid = #{uid}
+        <if test="status != 0">
+            and tu.status = #{status}
+        </if>
+        <if test="envId != 0">
+            and tu.envId = #{envId}
+        </if>
+        <if test="roleId != 0">
+            and tu.roleId = #{roleId}
+        </if>
+        <choose>
+            <when test="type == 0 and query != null">
+                and tu.user = #{query}
+            </when>
+            <when test="type == 1 and query != null">
+                and tu.phone = #{query}
+            </when>
+            <when test="type == 2 and query != null">
+                and tu.id = #{query}
+            </when>
+        </choose>
+
     </select>
 
     <select id="findUser" parameterType="java.lang.Integer"
             resultType="com.okay.family.common.bean.testuser.TestUserBean">
         select * from
-        <include refid="BASE_TABLE"/>
+        <include refid="table"/>
         where id = #{0}
     </select>
 
     <select id="getUser" resultType="com.okay.family.common.bean.testuser.TestUserBean">
         select * from
-        <include refid="BASE_TABLE"/>
+        <include refid="table"/>
         where environment = #{arg0} and uname = #{arg1}
     </select>
 
-    <update id="updateUser" parameterType="com.okay.family.common.bean.testuser.TestUserBean">
+    <update id="updateUser" parameterType="com.okay.family.common.bean.testuser.EditUserBean">
         UPDATE
-        <include refid="BASE_TABLE"/>
+        <include refid="table"/>
         SET
-        status=#{status},certificate=#{certificate}
-        WHERE environment=#{environment} and uname=#{uname}
+        descc=#{dec},envId=#{envId},password=#{password},phone=#{phone},roleId=#{roleId},user=#{user}
+        WHERE id = #{id} and uid = #{uid}
     </update>
 
-    <insert id="add" parameterType="com.okay.family.common.bean.testuser.TestUserBean">
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.okay.family.common.bean.testuser.EditUserBean">
         INSERT INTO
-        <include refid="BASE_TABLE"/>
-        (owner,environment,uname,pwd,phone,identity,userdesc)
-        values (#{owner},#{environment},#{uname},#{pwd},#{phone},#{identity},#{userdesc})
+        <include refid="table"/>
+        (uid,envId,user,password,phone,roleId,descc,status)
+        VALUES
+        (#{uid},#{envId},#{user},#{password},#{phone},#{roleId},#{dec},8)
     </insert>
 
-    <delete id="delUser" parameterType="com.okay.family.common.bean.testuser.DelUserBean">
-        delete from
-        <include refid="BASE_TABLE"/>
-        where id = #{id} and owner = #{owner} and uname = #{uname}
+    <delete id="delUser" parameterType="com.okay.family.common.bean.DelBean">
+        DELETE FROM
+        <include refid="table"/>
+        where id = #{id} and uid = #{uid}
     </delete>
 
 </mapper>

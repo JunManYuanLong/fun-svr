@@ -26,7 +26,7 @@ class EditPubBean extends AbstractBean {
     /**
      * 'add, update, delete'
      */
-    @Pattern(regexp = "add|update|delete", message = "请传正确type:add|update|delete")
+    @Pattern(regexp = "add|update|delete", message = "请传正确type:add|update")
     String type
 
 }

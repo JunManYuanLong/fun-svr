@@ -57,7 +57,7 @@
         (#{uid},#{name},#{envId})
     </insert>
 
-    <delete id="delData" parameterType="com.okay.family.common.bean.pubdata.EditPubBean">
+    <delete id="delData" parameterType="com.okay.family.common.bean.DelBean">
         delete from
         <include refid="table"/>
         where id = #{id} and uid = #{uid}

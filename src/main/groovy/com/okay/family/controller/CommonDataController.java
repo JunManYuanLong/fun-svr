@@ -24,7 +24,7 @@ public class CommonDataController {
         return Result.success(collect);
     }
 
-    @GetMapping(value = "/identity")
+    @GetMapping(value = "/roles")
     public Result getIdentity() {
         JSONObject all = Identity.getAll();
         return Result.success(all);

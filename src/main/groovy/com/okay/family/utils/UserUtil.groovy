@@ -1,5 +1,6 @@
 package com.okay.family.utils
 
+
 import com.okay.family.common.bean.testuser.TestUserBean
 import com.okay.family.common.enums.UserState
 import com.okay.family.fun.frame.SourceCode
@@ -42,26 +43,21 @@ class UserUtil extends SourceCode {
  * @return
  */
     static boolean checkUserLoginStatus(TestUserBean bean) {
-        int identity = bean.getIdentity()
+        int identity = bean.getRoleId()
         switch (identity) {
             case 1:
 
-                bean.setStatus(2)
                 return true
             case 2:
 
-                bean.setStatus(2)
                 return true
             case 3:
 
-                bean.setStatus(2)
                 return true
             case 4:
 
-                bean.setStatus(2)
                 break
             default:
-                bean.setStatus(4)
                 return false
         }
     }

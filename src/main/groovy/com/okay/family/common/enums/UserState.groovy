@@ -2,7 +2,7 @@ package com.okay.family.common.enums
 
 enum UserState {
 
-    DEFAULT(0, "默认状态"),
+    DEFAULT(8, "默认状态"),
     OK(1, "可用状态"),
     NO(2, "不可用状态"),
     CANNOT(3, "无法验证状态")

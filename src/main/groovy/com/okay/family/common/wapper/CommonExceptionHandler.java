@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +51,11 @@ public class CommonExceptionHandler {
             String message = e.getMessage();
             logger.error("数据格式错误!", e);
             return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR);
+        }
+        if (e instanceof MissingServletRequestParameterException) {
+            String message = e.getMessage();
+            logger.error("数据格式错误!", e);
+            return Result.fail(CommonCode.PARAMS_ERROR);
         }
         logger.warn("未记录异常类", e);
         return Result.fail(e.getMessage());

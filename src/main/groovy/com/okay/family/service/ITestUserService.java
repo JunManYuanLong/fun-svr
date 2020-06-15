@@ -1,21 +1,32 @@
 package com.okay.family.service;
 
-import com.okay.family.common.bean.testuser.DelUserBean;
+import com.github.pagehelper.PageInfo;
+import com.okay.family.common.bean.DelBean;
+import com.okay.family.common.bean.testuser.EditUserBean;
+import com.okay.family.common.bean.testuser.SearchUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
-import com.okay.family.fun.base.interfaces.ReturnCode;
-
-import java.util.List;
-import java.util.Map;
 
 public interface ITestUserService {
 
-    Map<Integer, List<TestUserBean>> findUsers(int owner);
+    PageInfo<TestUserBean> findUsers(SearchUserBean bean);
 
-    int add(TestUserBean user);
+    int addUser(EditUserBean user);
+
+
+    int updateUser(EditUserBean user);
+
+    /**
+     * 删除测试用户
+     *
+     * @param bean
+     * @return
+     */
+    int delUsr(DelBean bean);
+
 
     TestUserBean findUser(int id);
 
-    int updateUser(TestUserBean bean);
+    int updateUserStatus(TestUserBean bean);
 
     /**
      * 验证测试用户是否可用
@@ -23,7 +34,7 @@ public interface ITestUserService {
      * @param bean
      * @return
      */
-    ReturnCode checkUser(TestUserBean bean);
+    int checkUser(TestUserBean bean);
 
     /**
      * 获取用户凭据
@@ -33,13 +44,7 @@ public interface ITestUserService {
      */
     String getCertificate(int id);
 
-    /**
-     * 删除测试用户
-     *
-     * @param bean
-     * @return
-     */
-    ReturnCode delUsr(DelUserBean bean);
+
 
 
 }

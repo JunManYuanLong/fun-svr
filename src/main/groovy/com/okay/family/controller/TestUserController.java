@@ -1,10 +1,14 @@
 package com.okay.family.controller;
 
-import com.okay.family.common.bean.testuser.DelUserBean;
+import com.github.pagehelper.PageInfo;
+import com.okay.family.common.bean.DelBean;
+import com.okay.family.common.bean.testuser.EditUserBean;
+import com.okay.family.common.bean.testuser.SearchUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
+import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.TestUserCode;
 import com.okay.family.fun.base.bean.Result;
-import com.okay.family.fun.base.interfaces.ReturnCode;
+import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.service.ITestUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -28,32 +30,37 @@ public class TestUserController {
         this.testUserService = testUserService;
     }
 
-    @GetMapping(value = "/find/{owner}")
-    public Result findUsers(@PathVariable(value = "owner", required = true) int owner) {
+    @GetMapping(value = "/get")
+    public Result findUsers(@Valid SearchUserBean bean) {
 
-        Map<Integer, List<TestUserBean>> users = testUserService.findUsers(owner);
+        PageInfo<TestUserBean> users = testUserService.findUsers(bean);
         return Result.success(users);
     }
 
-    @PostMapping(value = "/add")
-    public Result findUsers(@RequestBody @Valid TestUserBean bean) {
-        int add = testUserService.add(bean);
-        return add == 0 ? Result.fail(TestUserCode.ADD_USER_FAIL) : Result.success();
-    }
-
-    @GetMapping(value = "/check/{id}")
-    public Result check(@PathVariable(value = "id", required = true) int id) {
-        TestUserBean user = testUserService.findUser(id);
-        if (user == null)
-            return Result.fail(TestUserCode.NO_USER);
-        ReturnCode returnCode = testUserService.checkUser(user);
-        return Result.build(returnCode);
+    @PostMapping(value = "/edit")
+    public Result editUser(@RequestBody @Valid EditUserBean bean) {
+        if (bean.getType().equalsIgnoreCase("add")) {
+            int add = testUserService.addUser(bean);
+            return add > 0 ? Result.success(SourceCode.getJson("id=" + add)) : Result.fail(TestUserCode.ADD_USER_FAIL);
+        } else if (bean.getType().equalsIgnoreCase("update")) {
+            int i = testUserService.updateUser(bean);
+            return i == 0 ? Result.fail(TestUserCode.UPDATE_USER_FAIL) : Result.success();
+        }
+        return Result.fail(CommonCode.PARAMS_ERROR);
     }
 
     @PostMapping(value = "/del")
-    public Result del(@RequestBody @Valid DelUserBean bean) {
-        ReturnCode returnCode = testUserService.delUsr(bean);
-        return Result.build(returnCode);
+    public Result delUser(@RequestBody @Valid DelBean bean) {
+        int i = testUserService.delUsr(bean);
+        return i == 0 ? Result.fail(TestUserCode.DEL_USER_FAIL) : Result.success();
+    }
+
+    @GetMapping(value = "/check}")
+    public Result check(@RequestParam(value = "id", required = true) int id) {
+        TestUserBean user = testUserService.findUser(id);
+        if (user == null)
+            return Result.fail(TestUserCode.NO_USER);
+        return Result.build(0, "");
     }
 
 

@@ -1,5 +1,6 @@
 package com.okay.family.mapper;
 
+import com.okay.family.common.bean.DelBean;
 import com.okay.family.common.bean.pubdata.EditPubBean;
 import com.okay.family.common.bean.pubdata.PubDataBean;
 import com.okay.family.common.bean.pubdata.SavePubDataBean;
@@ -16,7 +17,7 @@ public interface PubDataMapper {
 
     int updateDataAttribute(EditPubBean bean);
 
-    int delData(EditPubBean bean);
+    int delData(DelBean bean);
 
     int saveData(SavePubDataBean bean);
 

@@ -1,15 +1,17 @@
 package com.okay.family.mapper;
 
-import com.okay.family.common.bean.testuser.DelUserBean;
+import com.okay.family.common.bean.DelBean;
+import com.okay.family.common.bean.testuser.EditUserBean;
+import com.okay.family.common.bean.testuser.SearchUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
 
 import java.util.List;
 
 public interface TestUserMapper {
 
-    List<TestUserBean> findUsers(int owner);
+    List<TestUserBean> findUsers(SearchUserBean bean);
 
-    int add(TestUserBean user);
+    int addUser(EditUserBean user);
 
     TestUserBean findUser(int id);
 
@@ -19,7 +21,10 @@ public interface TestUserMapper {
      * @param user
      * @return
      */
-    int updateUser(TestUserBean user);
+    int updateUser(EditUserBean user);
+
+    int updateUserStatus(TestUserBean user);
+
 
     /**
      * 获取user信息
@@ -30,7 +35,7 @@ public interface TestUserMapper {
      */
     TestUserBean getUser(int environment, String name);
 
-    int delUser(DelUserBean bean);
+    int delUser(DelBean bean);
 
 
 }
