@@ -4,6 +4,7 @@ import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.Range
 
+import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
@@ -13,6 +14,7 @@ class EditUserBean extends AbstractBean {
 
     int id
 
+    @Min(value = 1L, message = "用户ID错误")
     int uid
 
     @Range(min = 1L, max = 5L)

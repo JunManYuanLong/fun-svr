@@ -15,10 +15,12 @@ class OkayConstant {
 
     public static final String MYSQL_SEPARATE = Constant.PERCENT[1]
 
-    public static final ROLE = 4
+    public static final ROLE = 4L
 
-    public static final long USER_STATUS = 4
+    public static final long USER_STATUS = 4L
 
-    public static final long ENV = 4
+    public static final long ENV = 4L
+
+    public static final long CERTIFICATE_TIMEOUT = 20 * 60 * 1000L
 
 }

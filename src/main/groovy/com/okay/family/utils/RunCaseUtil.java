@@ -2,7 +2,7 @@ package com.okay.family.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
-import com.okay.family.common.basedata.ServiceHost;
+import com.okay.family.common.basedata.ServerHost;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.fun.config.Constant;
@@ -18,11 +18,11 @@ public class RunCaseUtil {
 
     public static CaseRunRecord run(TestCaseBean bean) {
         int environment = bean.getEnvironment();
-        int server = bean.getServerid();
+        int serverid = bean.getServerid();
         /*
         存疑,server是id还是name
          */
-        bean.setHost(ServiceHost.getHost(environment, server));
+        bean.setHost(ServerHost.getHost(serverid));
 
         CaseRunRecord historyBean = new CaseRunRecord();
         historyBean.setCaseid(bean.getId());

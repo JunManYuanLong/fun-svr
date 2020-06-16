@@ -71,13 +71,21 @@
         WHERE id = #{id} and uid = #{uid}
     </update>
 
+    <update id="updateUserStatus" parameterType="com.okay.family.common.bean.testuser.TestUserCheckBean">
+        UPDATE
+        <include refid="table"/>
+        SET
+        status=#{status},certificate=#{certificate},create_time=now()
+        WHERE id = #{id}
+    </update>
+
     <insert id="addUser" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.okay.family.common.bean.testuser.EditUserBean">
         INSERT INTO
         <include refid="table"/>
         (uid,envId,user,password,phone,roleId,descc,status)
         VALUES
-        (#{uid},#{envId},#{user},#{password},#{phone},#{roleId},#{dec},8)
+        (#{uid},#{envId},#{user},#{password},#{phone},#{roleId},#{dec},1)
     </insert>
 
     <delete id="delUser" parameterType="com.okay.family.common.bean.DelBean">

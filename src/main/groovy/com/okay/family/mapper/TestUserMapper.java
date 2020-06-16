@@ -5,7 +5,6 @@ import com.okay.family.common.bean.testuser.EditUserBean;
 import com.okay.family.common.bean.testuser.SearchUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
-import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 
@@ -31,7 +30,6 @@ public interface TestUserMapper {
      * @param user
      * @return
      */
-    @Async
     int updateUserStatus(TestUserCheckBean user);
 
     int delUser(DelBean bean);

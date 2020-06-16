@@ -6,13 +6,15 @@ class TestUserCheckBean extends AbstractBean {
 
     private static final long serialVersionUID = -98489156165;
 
-    int id;
+    int id
 
-    String env
+    int uid
+
+    int env
 
     String user
 
-    String role
+    int role
 
     String password
 
@@ -20,7 +22,7 @@ class TestUserCheckBean extends AbstractBean {
 
     String dec
 
-    String status
+    int status
 
     String certificate
 

@@ -2,6 +2,7 @@ package com.okay.family.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.basedata.UserCertificate;
 import com.okay.family.common.bean.DelBean;
 import com.okay.family.common.bean.testuser.EditUserBean;
@@ -66,7 +67,7 @@ public class TestUserServiceImpl implements ITestUserService {
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public int updateUserStatus(TestUserCheckBean bean) {
-        UserUtil.updateUserStatus(bean);
+//        UserUtil.updateUserStatus(bean);
         int i = testUserMapper.updateUserStatus(bean);
         return i;
     }
@@ -92,7 +93,7 @@ public class TestUserServiceImpl implements ITestUserService {
             String create_time = user.getCreate_time();
             long create = Time.getTimestamp(create_time);
             long now = Time.getTimeStamp();
-            if (now - create < 10 * 60 * 1000) return user;
+            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT) return user;
             boolean b = UserUtil.checkUserLoginStatus(user);
             if (!b) {
                 UserUtil.updateUserStatus(user);

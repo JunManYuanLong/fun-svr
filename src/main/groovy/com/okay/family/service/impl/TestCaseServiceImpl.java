@@ -2,8 +2,9 @@ package com.okay.family.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
-import com.okay.family.common.basedata.ServiceHost;
+import com.okay.family.common.basedata.ServerHost;
 import com.okay.family.common.bean.testcase.*;
+import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.enums.CaseStatus;
 import com.okay.family.fun.base.exception.FailException;
 import com.okay.family.fun.config.Constant;
@@ -41,7 +42,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
     @Override
     public int addCase(TestCaseBean bean) {
-        bean.setHost(ServiceHost.getHost(bean.getEnvironment(), bean.getServerid()));
+        bean.setHost(ServerHost.getHost(bean.getServerid()));
         return testCaseMapper.addCase(bean);
     }
 
@@ -130,8 +131,8 @@ public class TestCaseServiceImpl implements ITestCaseService {
             String value = params.getString(key);
             if (value.startsWith(OkayConstant.USER_CERTIFICATE_KEY)) {
                 int id = SourceCode.changeStringToInt(value.substring(OkayConstant.USER_CERTIFICATE_KEY.length()));
-                String certificate = testUserService.getCertificate(id);
-                params.put(key, certificate);
+                TestUserCheckBean userCheckBean = testUserService.getCertificate(id);
+                params.put(key, userCheckBean.getCertificate());
             } else if (value.startsWith(OkayConstant.RANDOM_KEY)) {
                 String replace = value.replace(OkayConstant.RANDOM_KEY, Constant.EMPTY);
                 String[] split = replace.split(",", 2);

@@ -5,6 +5,7 @@ import com.okay.family.common.bean.DelBean;
 import com.okay.family.common.bean.testuser.EditUserBean;
 import com.okay.family.common.bean.testuser.SearchUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
+import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.TestUserCode;
 import com.okay.family.fun.base.bean.Result;
@@ -55,11 +56,9 @@ public class TestUserController {
         return i == 0 ? Result.fail(TestUserCode.DEL_USER_FAIL) : Result.success();
     }
 
-    @GetMapping(value = "/check}")
-    public Result check(@RequestParam(value = "id", required = true) int id) {
-        TestUserBean user = testUserService.findUser(id);
-        if (user == null)
-            return Result.fail(TestUserCode.NO_USER);
+    @PostMapping(value = "/test")
+    public Result check(@RequestBody @Valid TestUserCheckBean bean) {
+        testUserService.updateUserStatus(bean);
         return Result.build(0, "");
     }
 

@@ -21,6 +21,12 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
             String queryArgs = requestWrapper.getQueryString();
             queryArgs = queryArgs == null ? requestWrapper.getBody() : queryArgs;
             logger.info("请求url:{},参数:{}", url, queryArgs);
+
+            ResponseWrapper responseWrapper = new ResponseWrapper(httpServletResponse);
+            byte[] content = responseWrapper.getContent();
+            String s = new String(content);
+            logger.error(s);
+
             return true;
         } catch (Exception e) {
             logger.error("", e);
