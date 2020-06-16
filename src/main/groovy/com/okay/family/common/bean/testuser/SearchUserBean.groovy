@@ -1,5 +1,6 @@
 package com.okay.family.common.bean.testuser
 
+import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Range
 
@@ -11,15 +12,19 @@ class SearchUserBean extends AbstractBean {
 
     int uid
 
+    @Range(min = 0L, max = OkayConstant.ENV, message = "环境参数错误")
     int envId
 
     @Min(value = 1L)
     int pageNum
+
     @Range(min = 5L, max = 20L, message = "每页显示数量设置错误")
     int pageSize
 
+    @Range(min = 0L, max = 10L, message = "用户身份参数错误")
     int roleId
 
+    @Range(min = 0L, max = OkayConstant.USER_STATUS, message = "用户状态参数错误")
     int status
 
     String query

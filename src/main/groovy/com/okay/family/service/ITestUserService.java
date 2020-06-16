@@ -5,6 +5,7 @@ import com.okay.family.common.bean.DelBean;
 import com.okay.family.common.bean.testuser.EditUserBean;
 import com.okay.family.common.bean.testuser.SearchUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
+import com.okay.family.common.bean.testuser.TestUserCheckBean;
 
 public interface ITestUserService {
 
@@ -24,9 +25,9 @@ public interface ITestUserService {
     int delUsr(DelBean bean);
 
 
-    TestUserBean findUser(int id);
+    TestUserCheckBean findUser(int id);
 
-    int updateUserStatus(TestUserBean bean);
+    int updateUserStatus(TestUserCheckBean bean);
 
     /**
      * 验证测试用户是否可用
@@ -34,7 +35,9 @@ public interface ITestUserService {
      * @param bean
      * @return
      */
-    int checkUser(TestUserBean bean);
+    boolean checkUser(TestUserCheckBean bean);
+
+    boolean checkUser(int id);
 
     /**
      * 获取用户凭据
@@ -42,9 +45,7 @@ public interface ITestUserService {
      * @param id
      * @return
      */
-    String getCertificate(int id);
-
-
+    TestUserCheckBean getCertificate(int id);
 
 
 }

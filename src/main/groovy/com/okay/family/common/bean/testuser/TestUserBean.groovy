@@ -4,7 +4,7 @@ import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.Range
 /**
- * 测试用户
+ * 测试用户bean,不包含certificate
  */
 class TestUserBean extends AbstractBean {
 

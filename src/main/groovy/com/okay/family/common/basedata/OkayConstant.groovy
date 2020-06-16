@@ -1,5 +1,6 @@
 package com.okay.family.common.basedata
 
+
 import com.okay.family.fun.config.Constant
 
 class OkayConstant {
@@ -13,5 +14,11 @@ class OkayConstant {
     public static final String RANDOM_KEY = "random="
 
     public static final String MYSQL_SEPARATE = Constant.PERCENT[1]
+
+    public static final ROLE = 4
+
+    public static final long USER_STATUS = 4
+
+    public static final long ENV = 4
 
 }

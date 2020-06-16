@@ -57,16 +57,10 @@
     </select>
 
     <select id="findUser" parameterType="java.lang.Integer"
-            resultType="com.okay.family.common.bean.testuser.TestUserBean">
+            resultType="com.okay.family.common.bean.testuser.TestUserCheckBean">
         select * from
         <include refid="table"/>
         where id = #{0}
-    </select>
-
-    <select id="getUser" resultType="com.okay.family.common.bean.testuser.TestUserBean">
-        select * from
-        <include refid="table"/>
-        where environment = #{arg0} and uname = #{arg1}
     </select>
 
     <update id="updateUser" parameterType="com.okay.family.common.bean.testuser.EditUserBean">

@@ -1,7 +1,7 @@
 package com.okay.family.utils
 
 
-import com.okay.family.common.bean.testuser.TestUserBean
+import com.okay.family.common.bean.testuser.TestUserCheckBean
 import com.okay.family.common.enums.UserState
 import com.okay.family.fun.frame.SourceCode
 
@@ -11,7 +11,7 @@ class UserUtil extends SourceCode {
  * 更新用户凭据
  * @param bean
  */
-    static void updateUserStatus(TestUserBean bean) {
+    static void updateUserStatus(TestUserCheckBean bean) {
         int identity = bean.getIdentity()
         switch (identity) {
             case 1:
@@ -42,7 +42,7 @@ class UserUtil extends SourceCode {
  * @param bean
  * @return
  */
-    static boolean checkUserLoginStatus(TestUserBean bean) {
+    static boolean checkUserLoginStatus(TestUserCheckBean bean) {
         int identity = bean.getRoleId()
         switch (identity) {
             case 1:
@@ -67,7 +67,7 @@ class UserUtil extends SourceCode {
  * @param bean
  * @return
  */
-    static boolean checkUserAvailable(TestUserBean bean) {
+    private boolean checkUserAvailable(TestUserCheckBean bean) {
 
         def environment = bean.getEnvironment()
 

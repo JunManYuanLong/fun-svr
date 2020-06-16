@@ -2,10 +2,13 @@ package com.okay.family.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.okay.family.common.basedata.UserCertificate;
 import com.okay.family.common.bean.DelBean;
 import com.okay.family.common.bean.testuser.EditUserBean;
 import com.okay.family.common.bean.testuser.SearchUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
+import com.okay.family.common.bean.testuser.TestUserCheckBean;
+import com.okay.family.fun.utils.Time;
 import com.okay.family.mapper.TestUserMapper;
 import com.okay.family.service.ITestUserService;
 import com.okay.family.utils.UserUtil;
@@ -50,7 +53,7 @@ public class TestUserServiceImpl implements ITestUserService {
     }
 
     @Override
-    public TestUserBean findUser(int id) {
+    public TestUserCheckBean findUser(int id) {
         return testUserMapper.findUser(id);
     }
 
@@ -62,49 +65,41 @@ public class TestUserServiceImpl implements ITestUserService {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
-    public int updateUserStatus(TestUserBean bean) {
+    public int updateUserStatus(TestUserCheckBean bean) {
         UserUtil.updateUserStatus(bean);
         int i = testUserMapper.updateUserStatus(bean);
         return i;
     }
 
     @Override
-    public int checkUser(TestUserBean bean) {
-        boolean b = UserUtil.checkUserLoginStatus(bean);
-        if (b) {
-//            int i = testUserMapper.updateUserStatus(bean);
-            return 1;
-        } else {
-            return 0;
-        }
+    public boolean checkUser(TestUserCheckBean bean) {
+        return UserUtil.checkUserLoginStatus(bean);
+    }
+
+    @Override
+    public boolean checkUser(int id) {
+        TestUserCheckBean user = testUserMapper.findUser(id);
+        return checkUser(user);
     }
 
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
-    public String getCertificate(int id) {
-        TestUserBean user = testUserMapper.findUser(id);
-//        if (user.getStatus() != UserState.OK.getCode())
-//            UserStatusException.fail();
-        //todo:处理单独查询certificate
-        return user.getDec();
-
-        /**
-         * 暂时采取直接读取数据看的方式,如果多用例运行,采取用例集方法缓存机制
-         */
-//        UserCertificate.certificates.compute(id, (key, value) ->
-//        {
-//            if (value == null) {
-//                TestUserBean user = testUserMapper.findUser(id);
-//                if (user.getStatus() == UserState.OK.getCode())
-//                    return user;
-//                else UserStatusException.fail();
-//            }
-//            return value;
-//        });
-//
-//        return UserCertificate.certificates.get(id).getCertificate();
-
+    public TestUserCheckBean getCertificate(int id) {
+        Object o = UserCertificate.get(id);
+        synchronized (o) {
+            TestUserCheckBean user = testUserMapper.findUser(id);
+            String create_time = user.getCreate_time();
+            long create = Time.getTimestamp(create_time);
+            long now = Time.getTimeStamp();
+            if (now - create < 10 * 60 * 1000) return user;
+            boolean b = UserUtil.checkUserLoginStatus(user);
+            if (!b) {
+                UserUtil.updateUserStatus(user);
+            }
+            testUserMapper.updateUserStatus(user);
+            return user;
+        }
 
     }
 

@@ -9,7 +9,7 @@ public class UserCertificate {
 
     private static Logger logger = LoggerFactory.getLogger(UserCertificate.class);
 
-    public static ConcurrentHashMap<Integer, Object> certificates = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<Integer, Object> certificates = new ConcurrentHashMap<>();
 
     /**
      * 获取锁对象,用户测试用户锁

@@ -4,6 +4,8 @@ import com.okay.family.common.bean.DelBean;
 import com.okay.family.common.bean.testuser.EditUserBean;
 import com.okay.family.common.bean.testuser.SearchUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
+import com.okay.family.common.bean.testuser.TestUserCheckBean;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 
@@ -13,7 +15,7 @@ public interface TestUserMapper {
 
     int addUser(EditUserBean user);
 
-    TestUserBean findUser(int id);
+    TestUserCheckBean findUser(int id);
 
     /**
      * 更新测试用户状态和用户凭据
@@ -23,17 +25,14 @@ public interface TestUserMapper {
      */
     int updateUser(EditUserBean user);
 
-    int updateUserStatus(TestUserBean user);
-
-
     /**
-     * 获取user信息
+     * 此处包括更新用户最近一次编辑时间
      *
-     * @param environment
-     * @param name
+     * @param user
      * @return
      */
-    TestUserBean getUser(int environment, String name);
+    @Async
+    int updateUserStatus(TestUserCheckBean user);
 
     int delUser(DelBean bean);
 
