@@ -7,6 +7,8 @@ import com.okay.family.common.bean.testuser.SearchUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 public interface ITestUserService {
 
     PageInfo<TestUserBean> findUsers(SearchUserBean bean);
@@ -46,6 +48,8 @@ public interface ITestUserService {
      * @return
      */
     TestUserCheckBean getCertificate(int id);
+
+    String getCertificate(int id, ConcurrentHashMap<Integer, String> certificates);
 
 
 }

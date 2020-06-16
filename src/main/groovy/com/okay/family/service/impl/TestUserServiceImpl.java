@@ -9,6 +9,8 @@ import com.okay.family.common.bean.testuser.EditUserBean;
 import com.okay.family.common.bean.testuser.SearchUserBean;
 import com.okay.family.common.bean.testuser.TestUserBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
+import com.okay.family.common.enums.UserState;
+import com.okay.family.common.exception.UserStatusException;
 import com.okay.family.fun.utils.Time;
 import com.okay.family.mapper.TestUserMapper;
 import com.okay.family.service.ITestUserService;
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
@@ -67,6 +70,7 @@ public class TestUserServiceImpl implements ITestUserService {
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public int updateUserStatus(TestUserCheckBean bean) {
+        //todo:正式上线增加验证
 //        UserUtil.updateUserStatus(bean);
         int i = testUserMapper.updateUserStatus(bean);
         return i;
@@ -93,7 +97,8 @@ public class TestUserServiceImpl implements ITestUserService {
             String create_time = user.getCreate_time();
             long create = Time.getTimestamp(create_time);
             long now = Time.getTimeStamp();
-            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT) return user;
+            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
+                return user;
             boolean b = UserUtil.checkUserLoginStatus(user);
             if (!b) {
                 UserUtil.updateUserStatus(user);
@@ -101,7 +106,30 @@ public class TestUserServiceImpl implements ITestUserService {
             testUserMapper.updateUserStatus(user);
             return user;
         }
+    }
 
+    @Override
+    public String getCertificate(int id, ConcurrentHashMap<Integer, String> map) {
+        Object o = UserCertificate.get(id);
+        synchronized (o) {
+            if (map.contains(id)) return map.get(id);
+            TestUserCheckBean user = testUserMapper.findUser(id);
+            String create_time = user.getCreate_time();
+            long create = Time.getTimestamp(create_time);
+            long now = Time.getTimeStamp();
+            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode()) {
+                map.put(id, user.getCertificate());
+                return user.getCertificate();
+            }
+            boolean b = UserUtil.checkUserLoginStatus(user);
+            if (!b) {
+                UserUtil.updateUserStatus(user);
+                if (user.getStatus()!=UserState.OK.getCode()) UserStatusException.fail();
+            }
+            map.put(id, user.getCertificate());
+            testUserMapper.updateUserStatus(user);
+            return user.getCertificate();
+        }
     }
 
     @Override
