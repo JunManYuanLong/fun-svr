@@ -2,25 +2,18 @@ package com.okay.family.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
-import com.okay.family.common.basedata.ServerHost;
-import com.okay.family.common.bean.testcase.*;
+import com.okay.family.common.bean.testcase.request.CaseAttributeBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
-import com.okay.family.common.enums.CaseStatus;
-import com.okay.family.fun.base.exception.FailException;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.mapper.TestCaseMapper;
 import com.okay.family.mapper.TestUserMapper;
 import com.okay.family.service.ITestCaseService;
 import com.okay.family.service.ITestUserService;
-import com.okay.family.utils.RunCaseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class TestCaseServiceImpl implements ITestCaseService {
@@ -40,83 +33,22 @@ public class TestCaseServiceImpl implements ITestCaseService {
         this.testUserService = testUserService;
     }
 
+
     @Override
-    public int addCase(TestCaseBean bean) {
-        bean.setHost(ServerHost.getHost(bean.getServerid()));
-        return testCaseMapper.addCase(bean);
+    public int addCase(CaseAttributeBean bean) {
+        int i = testCaseMapper.addCase(bean);
+        logger.info(i+"");
+        return bean.getId();
     }
 
     @Override
-    public List<TestCaseBean> findCasesByApi(int environment, int api_id) {
-        List<TestCaseBean> my = testCaseMapper.findCasesByApi(environment, api_id);
-        return my;
+    public int copyCase(CaseAttributeBean bean) {
+        return 0;
     }
 
     @Override
-    public List<TestCaseBean> findMyCases(int uid) {
-        List<TestCaseBean> myCase = testCaseMapper.findMyCases(uid);
-        return myCase;
-    }
-
-    @Override
-    public TestCaseBean getCaseInfo(int id) {
-        TestCaseBean caseBean = testCaseMapper.getCaseInfo(id);
-        return caseBean;
-    }
-
-    @Override
-    public CaseRunRecord runCase(int id) {
-
-        CaseRunRecord run = new CaseRunRecord();
-
-        TestCaseBean testCaseBean = testCaseMapper.getCaseInfo(id);
-
-        int server = testCaseBean.getServerid();
-
-        JSONObject headers = testCaseBean.getHeaders();
-
-        JSONObject params = testCaseBean.getParams();
-        try {
-            handleParams(params);
-            handleParams(headers);
-        } catch (FailException e) {
-            logger.error("处理参数中表达式发生错误!", e);
-            run.setStatus(CaseStatus.USER_EROOR.getCode());
-        }
-        run = RunCaseUtil.run(testCaseBean);
-        addRunCaseRecord(run);
-        return run;
-    }
-
-    @Override
-    public int editCaseAttribute(CaseAttributeBean bean) {
-        int i = testCaseMapper.editAttribute(bean);
-        return i;
-    }
-
-    @Override
-    public int editCaseData(CaseDataBean bean) {
-        int i = testCaseMapper.editData(bean);
-        return i;
-    }
-
-    @Async
-    @Override
-    public void addRunCaseRecord(CaseRunRecord bean) {
-        testCaseMapper.saveCaseRunRecord(bean);
-    }
-
-    @Async
-    @Override
-    public void addEditCaseRecord(CaseEditRecord record) {
-        testCaseMapper.saveEditReord(record);
-    }
-
-    @Override
-    public List<TestCaseBean> search(String name) {
-        List<TestCaseBean> search = testCaseMapper.search(name);
-
-        return search;
+    public int updateCase(CaseAttributeBean bean) {
+        return 0;
     }
 
 

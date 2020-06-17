@@ -3,10 +3,10 @@ package com.okay.family.common.enums
 enum CaseLevel {
 
 
-    DEAFULT(8, "最运行等级"),
-    HIGH(1, "高运行等级"),
-    NORMAL(2, "普通运行等级"),
-    LOW(3, "低运行等级")
+    DEAFULT(1, "默认等级"),
+    HIGH(2, "高运行等级"),
+    NORMAL(3, "普通运行等级"),
+    LOW(4, "低运行等级")
 
 
     int code

@@ -13,10 +13,8 @@
 
     <resultMap type="com.okay.family.common.bean.pubdata.response.PubDataBean" id="PubDataBean">
         <result property="id" column="id"/>
-        <result property="uid" column="uid"/>
-        <result property="envId" column="envId"/>
         <result property="name" column="name"/>
-        <result property="list" column="list" typeHandler="com.okay.family.common.typehandler.ListPubDetailHandler"/>
+        <result property="children" column="list" typeHandler="com.okay.family.common.typehandler.ListPubDetailHandler"/>
     </resultMap>
 
     <select id="getAllDatas" parameterType="java.lang.Integer" resultMap="PubDataBean">

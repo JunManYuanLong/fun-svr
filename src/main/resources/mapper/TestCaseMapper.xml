@@ -2,16 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.okay.family.mapper.TestCaseMapper">
 
-    <sql id="CASE_TABLE">
+    <sql id="table">
         qa_test_case
     </sql>
 
-    <sql id="RECORD_TABLE">
+    <sql id="record_table">
         qa_case_edit_record
     </sql>
 
+    <sql id="case_project_relation">
+        qa_case_project_relation
+    </sql>
+
+    <sql id="server_env">
+        family_service_env
+    </sql>
+    <sql id="api_info">
+        family_server_api_info
+    </sql>
     <resultMap id="entityMap" type="com.okay.family.common.bean.testcase.CaseVerifyBean">
-        <!-- 实体类的json字段，typeHandler指定自定义的typeHandler -->
         <result column="verify" property="verify"
                 typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
     </resultMap>
@@ -41,37 +50,26 @@
 
     <select id="findCasesByApi" resultMap="TestCaseBean">
         select * from
-        <include refid="CASE_TABLE"/>
+        <include refid="table"/>
         WHERE environment=#{arg0} and apiid = #{arg1}
     </select>
 
-    <select id="findMyCases" parameterType="java.lang.Integer" resultMap="TestCaseBean">
-        select * from
-        <include refid="CASE_TABLE"/>
-        WHERE owner=#{0}
-    </select>
-
-    <select id="getCaseInfo" parameterType="java.lang.Integer" resultMap="TestCaseBean">
-        select * from
-        <include refid="CASE_TABLE"/>
-        WHERE id=#{0}
-    </select>
-
-
-    <select id="search" parameterType="java.lang.String"
-            resultType="com.okay.family.common.bean.testcase.TestCaseBean">
-        <!--        <bind name="pattern" value="'%' + #{0} + '%'"/>-->
-        select * from
-        <include refid="CASE_TABLE"/>
-        where name like concat('%', #{0}, '%')
-    </select>
-
-    <insert id="addCase" useGeneratedKeys="true" keyProperty="id"  parameterType="com.okay.family.common.bean.testcase.TestCaseBean">
+    <insert id="addCase" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.okay.family.common.bean.testcase.request.CaseAttributeBean">
         INSERT INTO
-        <include refid="CASE_TABLE"/>
-        (owner,environment,project,serverid,servername,moduleid,modulename,apiid,apipath,host,name,apitype,lastresult,method,headers,params,level,verify)
-        values
-        (#{owner},#{environment},#{project},#{serverid},#{servername},#{moduleid},#{modulename},#{apiid},#{apipath},#{host},#{name},#{apitype},#{lastresult},#{method},#{headers},#{params},#{level},#{verify,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler})
+        <include refid="table"/>
+
+        (uid,editor,envId,serviceId,moduleId,apiId,name,level,host,path,type,method,headermoco,paramsmoco)
+
+        select * from (select
+        #{uid} aa,#{uid} bb,#{envId} cc,#{serviceId} dd ,#{moduleId} ee ,#{apiId} ff,#{name} gg,1,CONCAT("https://",domain),api_url,api_action,api_method,header_para,request_par
+        FROM
+        <include
+                refid="api_info"/>
+        a LEFT JOIN
+        <include refid="server_env"/>
+        s ON a.service = s.service_id WHERE a.id = #{apiId}) t
+
     </insert>
 
 </mapper>
