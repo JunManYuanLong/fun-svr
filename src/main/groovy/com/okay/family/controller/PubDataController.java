@@ -1,9 +1,9 @@
 package com.okay.family.controller;
 
 import com.okay.family.common.bean.DelBean;
-import com.okay.family.common.bean.pubdata.EditPubBean;
-import com.okay.family.common.bean.pubdata.PubDataBean;
-import com.okay.family.common.bean.pubdata.SavePubDataBean;
+import com.okay.family.common.bean.pubdata.request.EditPubBean;
+import com.okay.family.common.bean.pubdata.response.PubDataBean;
+import com.okay.family.common.bean.pubdata.request.SavePubDataBean;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.PubDataCode;
 import com.okay.family.fun.base.bean.Result;

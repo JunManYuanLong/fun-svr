@@ -4,7 +4,6 @@ import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.TestCaseBean;
 import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.fun.base.bean.Result;
-import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.service.ITestCaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,48 +28,58 @@ public class CaseController {
         this.service = service;
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping(value = "/edit")
     public Result add(@RequestBody @Valid TestCaseBean bean) {
         int i = service.addCase(bean);
         return i > 0 ? Result.success() : Result.fail(TestCaseCode.ADD_CASE_FAIL);
     }
 
-    @GetMapping(value = "/findcase/{environment}/{apiid}")
+    @PostMapping(value = "/del")
+    public Result delCase(@RequestBody @Valid TestCaseBean bean) {
+
+        return Result.success();
+    }
+
+    @GetMapping(value = "/getcases")
     public Result findCaseByid(@PathVariable(value = "apiid", required = true) int apiid,
                                @PathVariable(value = "environment", required = true) int environment) {
         List<TestCaseBean> my = service.findCasesByApi(environment, apiid);
         return Result.success(my);
     }
 
-    @GetMapping(value = "/findmycase/{uid}")
+    @GetMapping(value = "/relation")
+    public Result getRelation(@PathVariable(value = "apiid", required = true) int apiid,
+                              @PathVariable(value = "environment", required = true) int environment) {
+        List<TestCaseBean> my = service.findCasesByApi(environment, apiid);
+        return Result.success(my);
+    }
+
+    @GetMapping(value = "/records")
     public Result findMyCaseByid(@PathVariable(value = "uid", required = true) int uid) {
         List<TestCaseBean> myCases = service.findMyCases(uid);
         Map<Integer, List<TestCaseBean>> collect = myCases.stream().collect(Collectors.groupingBy(x -> x.getEnvironment()));
         return Result.success(collect);
     }
 
-    @GetMapping(value = "/runcase/{id}")
+    @GetMapping(value = "/attribute")
+    public Result getAttribute(@PathVariable(value = "uid", required = true) int uid) {
+        List<TestCaseBean> myCases = service.findMyCases(uid);
+        Map<Integer, List<TestCaseBean>> collect = myCases.stream().collect(Collectors.groupingBy(x -> x.getEnvironment()));
+        return Result.success(collect);
+    }
+
+    @GetMapping(value = "/data")
+    public Result getData(@PathVariable(value = "uid", required = true) int uid) {
+        List<TestCaseBean> myCases = service.findMyCases(uid);
+        Map<Integer, List<TestCaseBean>> collect = myCases.stream().collect(Collectors.groupingBy(x -> x.getEnvironment()));
+        return Result.success(collect);
+    }
+
+    @GetMapping(value = "/run")
     public Result runCase(@PathVariable(value = "id", required = true) int id) {
         CaseRunRecord runCaseHistoryBean = service.runCase(id);
 
         return Result.success(runCaseHistoryBean);
     }
-
-    @GetMapping(value = "/info/{id}")
-    public Result getInfo(@PathVariable(value = "id", required = true) int id) {
-        TestCaseBean caseBean = service.getCaseInfo(id);
-        return Result.success(caseBean);
-    }
-
-
-    @GetMapping(value = "/search/{str}")
-    public Result search(@PathVariable(value = "str", required = true) String str) {
-        if (SourceCode.isNumber(str)) {
-            return Result.success(service.getCaseInfo(SourceCode.changeStringToInt(str)));
-        }
-        List<TestCaseBean> search = service.search(str);
-        return Result.success(search);
-    }
-
 
 }

@@ -1,6 +1,7 @@
 package com.okay.family.fun.base.bean
 
 import com.alibaba.fastjson.JSONObject
+import com.github.pagehelper.PageInfo
 import com.okay.family.common.code.CommonCode
 import com.okay.family.fun.base.interfaces.ReturnCode
 import com.okay.family.fun.config.Constant
@@ -46,6 +47,14 @@ class Result<T> extends AbstractBean {
         new Result<>(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc(), data)
     }
 
+    static <T> Result<T> success(PageInfo data) {
+        JSONObject res = new JSONObject();
+        res.put("pageNum", data.getPageNum());
+        res.put("list", data.getList());
+        res.put("total", data.getTotal());
+        new Result<>(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc(), res)
+    }
+
     static Result success() {
         new Result(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc())
     }
@@ -61,7 +70,7 @@ class Result<T> extends AbstractBean {
     static Result build(List listData) {
         success([list: listData] as JSONObject)
     }
-    
+
 /**
  * 返回通用失败的响应内容
  * @param data
@@ -76,7 +85,7 @@ class Result<T> extends AbstractBean {
     }
 
     Result(ReturnCode errorCode) {
-        this(errorCode.getCode(),errorCode.getDesc())
+        this(errorCode.getCode(), errorCode.getDesc())
     }
 
 

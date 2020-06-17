@@ -1,6 +1,5 @@
 package com.okay.family.common.bean.testcase
 
-import com.okay.family.common.bean.pub.ProjectBean
 import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Range
 

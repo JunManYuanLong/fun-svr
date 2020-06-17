@@ -1,9 +1,9 @@
 package com.okay.family.mapper;
 
 import com.okay.family.common.bean.DelBean;
-import com.okay.family.common.bean.testuser.EditUserBean;
-import com.okay.family.common.bean.testuser.SearchUserBean;
-import com.okay.family.common.bean.testuser.TestUserBean;
+import com.okay.family.common.bean.testuser.request.EditUserBean;
+import com.okay.family.common.bean.testuser.request.SearchUserBean;
+import com.okay.family.common.bean.testuser.response.TestUserBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
 
 import java.util.List;

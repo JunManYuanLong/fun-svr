@@ -9,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
-@RequestMapping(value = "/casecollect")
+@RequestMapping(value = "/collect")
 public class CaseCollectionController {
 
     private static Logger logger = LoggerFactory.getLogger(CaseCollectionController.class);
@@ -27,33 +26,50 @@ public class CaseCollectionController {
 
     @PostMapping(value = "/add")
     public Result addCaseCollection(@RequestBody @Valid CaseCollectionBean bean) {
-
         int i = service.addCollection(bean);
-
         return Result.success(i);
+    }
 
+    @PostMapping(value = "/edit")
+    public Result editname(@RequestBody @Valid CaseCollectionBean bean) {
+
+        return Result.success();
+    }
+
+    @PostMapping(value = "/share")
+    public Result updateCaseCollection(@RequestBody @Valid CaseCollectionBean bean) {
+        return Result.success();
 
     }
 
-    @PostMapping(value = "/update")
-    public Result updateCaseCollection(@RequestBody @Valid CaseCollectionBean bean) {
-        service.update(bean);
+    @PostMapping(value = "/del")
+    public Result delCollection(@RequestBody @Valid CaseCollectionBean bean) {
+        return Result.success();
+
+    }
+
+    @PostMapping(value = "/delcase")
+    public Result delCase(@RequestBody @Valid CaseCollectionBean bean) {
+        return Result.success();
+
+    }
+
+    @GetMapping(value = "/cases")
+    public Result getCases(@PathVariable(value = "uid", required = true) int uid) {
+        return Result.success();
+
+    }
+
+    @GetMapping(value = "/collections")
+    public Result getCollections(@PathVariable(value = "uid", required = true) int uid) {
+        return Result.success();
+
+    }
+
+    @GetMapping(value = "/run")
+    public Result getCollection(@PathVariable(value = "id", required = true) int id) {
         return Result.success();
     }
 
 
-    @GetMapping(value = "/collections/{uid}")
-    public Result getCollections(@PathVariable(value = "uid", required = true) int uid) {
-        List<CaseCollectionBean> collections = service.getCollections(uid);
-
-
-        return Result.success(collections);
-    }
-
-    @GetMapping(value = "/collection/{id}")
-    public Result getCollection(@PathVariable(value = "id",required = true)int id) {
-        CaseCollectionBean collectionInfo = service.getCollectionInfo(id);
-
-        return Result.success(collectionInfo);
-    }
 }

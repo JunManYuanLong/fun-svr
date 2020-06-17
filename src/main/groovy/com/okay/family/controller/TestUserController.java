@@ -2,9 +2,9 @@ package com.okay.family.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.bean.DelBean;
-import com.okay.family.common.bean.testuser.EditUserBean;
-import com.okay.family.common.bean.testuser.SearchUserBean;
-import com.okay.family.common.bean.testuser.TestUserBean;
+import com.okay.family.common.bean.testuser.request.EditUserBean;
+import com.okay.family.common.bean.testuser.request.SearchUserBean;
+import com.okay.family.common.bean.testuser.response.TestUserBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.TestUserCode;
@@ -33,7 +33,6 @@ public class TestUserController {
 
     @GetMapping(value = "/get")
     public Result findUsers(@Valid SearchUserBean bean) {
-
         PageInfo<TestUserBean> users = testUserService.findUsers(bean);
         return Result.success(users);
     }

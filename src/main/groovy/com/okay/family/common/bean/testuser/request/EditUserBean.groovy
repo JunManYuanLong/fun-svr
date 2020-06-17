@@ -1,4 +1,4 @@
-package com.okay.family.common.bean.testuser
+package com.okay.family.common.bean.testuser.request
 
 import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Length

@@ -18,8 +18,8 @@
         qa_role_name
     </sql>
 
-    <select id="findUsers" parameterType="com.okay.family.common.bean.testuser.SearchUserBean"
-            resultType="com.okay.family.common.bean.testuser.TestUserBean">
+    <select id="findUsers" parameterType="com.okay.family.common.bean.testuser.request.SearchUserBean"
+            resultType="com.okay.family.common.bean.testuser.response.TestUserBean">
         select tu.id,tu.descc,tu.user,tu.phone,tu.password,tu.create_time,us.name status,env.name env,ur.name role from
         <include refid="table"/>
         tu
@@ -43,13 +43,13 @@
             and tu.roleId = #{roleId}
         </if>
         <choose>
-            <when test="type == 0 and query != null">
+            <when test="type == 0 and query != ''">
                 and tu.user = #{query}
             </when>
-            <when test="type == 1 and query != null">
+            <when test="type == 1 and query != ''">
                 and tu.phone = #{query}
             </when>
-            <when test="type == 2 and query != null">
+            <when test="type == 2 and query != ''">
                 and tu.id = #{query}
             </when>
         </choose>
@@ -63,7 +63,7 @@
         where id = #{0}
     </select>
 
-    <update id="updateUser" parameterType="com.okay.family.common.bean.testuser.EditUserBean">
+    <update id="updateUser" parameterType="com.okay.family.common.bean.testuser.request.EditUserBean">
         UPDATE
         <include refid="table"/>
         SET
@@ -80,7 +80,7 @@
     </update>
 
     <insert id="addUser" useGeneratedKeys="true" keyProperty="id"
-            parameterType="com.okay.family.common.bean.testuser.EditUserBean">
+            parameterType="com.okay.family.common.bean.testuser.request.EditUserBean">
         INSERT INTO
         <include refid="table"/>
         (uid,envId,user,password,phone,roleId,descc,status)

@@ -5,9 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.basedata.UserCertificate;
 import com.okay.family.common.bean.DelBean;
-import com.okay.family.common.bean.testuser.EditUserBean;
-import com.okay.family.common.bean.testuser.SearchUserBean;
-import com.okay.family.common.bean.testuser.TestUserBean;
+import com.okay.family.common.bean.testuser.request.EditUserBean;
+import com.okay.family.common.bean.testuser.request.SearchUserBean;
+import com.okay.family.common.bean.testuser.response.TestUserBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.enums.UserState;
 import com.okay.family.common.exception.UserStatusException;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
+@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 public class TestUserServiceImpl implements ITestUserService {
 
     private static Logger logger = LoggerFactory.getLogger(TestUserServiceImpl.class);

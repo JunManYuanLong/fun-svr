@@ -11,7 +11,7 @@
         <result column="list" property="pubdata" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
     </resultMap>
 
-    <resultMap type="com.okay.family.common.bean.pubdata.PubDataBean" id="PubDataBean">
+    <resultMap type="com.okay.family.common.bean.pubdata.response.PubDataBean" id="PubDataBean">
         <result property="id" column="id"/>
         <result property="uid" column="uid"/>
         <result property="envId" column="envId"/>
@@ -31,7 +31,7 @@
         where uid = #{arg0} and envId = #{arg1}
     </select>
 
-    <update id="updateDataAttribute" parameterType="com.okay.family.common.bean.pubdata.EditPubBean">
+    <update id="updateDataAttribute" parameterType="com.okay.family.common.bean.pubdata.request.EditPubBean">
         UPDATE
         <include refid="table"/>
         SET
@@ -40,7 +40,7 @@
     </update>
 
 
-    <update id="saveData" parameterType="com.okay.family.common.bean.pubdata.SavePubDataBean">
+    <update id="saveData" parameterType="com.okay.family.common.bean.pubdata.request.SavePubDataBean">
         UPDATE
         <include refid="table"/>
         SET
@@ -49,7 +49,7 @@
     </update>
 
 
-    <insert id="add" useGeneratedKeys="true" keyProperty="id" parameterType="com.okay.family.common.bean.pubdata.EditPubBean">
+    <insert id="add" useGeneratedKeys="true" keyProperty="id" parameterType="com.okay.family.common.bean.pubdata.request.EditPubBean">
         INSERT INTO
         <include refid="table"/>
         (uid,name,envId)
