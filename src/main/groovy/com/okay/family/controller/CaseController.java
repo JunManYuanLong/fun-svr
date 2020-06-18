@@ -1,10 +1,12 @@
 package com.okay.family.controller;
 
-import com.okay.family.common.bean.testcase.TestCaseBean;
+import com.okay.family.common.bean.DelBean;
 import com.okay.family.common.bean.testcase.request.CaseAttributeBean;
 import com.okay.family.common.code.CommonCode;
+import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.fun.frame.SourceCode;
+import com.okay.family.fun.utils.RString;
 import com.okay.family.service.ITestCaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static com.okay.family.fun.frame.SourceCode.getJson;
 
 @RestController
 @RequestMapping(value = "/case")
@@ -29,18 +33,26 @@ public class CaseController {
     @PostMapping(value = "/edit")
     public Result edit(@RequestBody @Valid CaseAttributeBean bean) {
 
-        if (bean.getType().equalsIgnoreCase("add")) {
+        String type = bean.getType();
+        if (type.equalsIgnoreCase("add")) {
             int i = service.addCase(bean);
-            return Result.success(SourceCode.getJson("id=" + i));
+            return i == 1 ? Result.success(SourceCode.getJson("id=" + bean.getId())) : Result.fail(TestCaseCode.ADD_CASE_FAIL);
+        } else if (type.equalsIgnoreCase("update")) {
+            int i = service.updateCase(bean);
+            return i == 1 ? Result.success() : Result.fail(TestCaseCode.NO_CHANGE_FAIL);
+        } else if (type.equalsIgnoreCase("copy")) {
+            if (bean.getName() == null) bean.setName(RString.getString(5));
+            int i = service.copyCase(bean);
+            return i == 1 ? Result.success(getJson("id=" + bean.getId())) : Result.fail(TestCaseCode.COPY_CASE_FAIL);
         }
         return Result.fail(CommonCode.PARAMS_ERROR);
 
     }
 
     @PostMapping(value = "/del")
-    public Result delCase(@RequestBody @Valid TestCaseBean bean) {
-
-        return Result.success();
+    public Result delCase(@RequestBody @Valid DelBean bean) {
+        int i = service.delCase(bean);
+        return i == 1 ? Result.success() : Result.fail(TestCaseCode.DEL_CASE_FAIL);
     }
 
     @GetMapping(value = "/getcases")

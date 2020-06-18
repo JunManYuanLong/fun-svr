@@ -20,6 +20,7 @@
     <sql id="api_info">
         family_server_api_info
     </sql>
+
     <resultMap id="entityMap" type="com.okay.family.common.bean.testcase.CaseVerifyBean">
         <result column="verify" property="verify"
                 typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
@@ -54,22 +55,92 @@
         WHERE environment=#{arg0} and apiid = #{arg1}
     </select>
 
+    <update id="updateCase" parameterType="com.okay.family.common.bean.testcase.request.CaseAttributeBean">
+        UPDATE
+        <include refid="table"/>
+        c
+        SET
+        editor=#{uid},name=#{name},envId=#{envId},serviceId=#{serviceId},moduleId=#{moduleId},projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},apiId=#{apiId},headermoco=(SELECT
+        header_para FROM family_server_api_info WHERE id = #{apiId}),paramsmoco=(SELECT request_par FROM
+        family_server_api_info WHERE id = #{apiId})
+        WHERE
+        id = #{id}
+    </update>
+
+    <insert id="copyCase" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.okay.family.common.bean.testcase.request.CaseAttributeBean">
+        INSERT INTO
+        <include refid="table"/>
+        (uid,editor,projectList,envId,serviceId,moduleId,apiId,name,level,path,type,method,headermoco,paramsmoco,headers,params,verify)
+        select * from (select
+        #{uid} aa,#{uid}
+        bb,projectList,envId,serviceId,moduleId,apiId,#{name}
+        n,level,path,type,method,headermoco,paramsmoco,headers,params,verify
+        FROM
+        <include refid="table"/>
+        WHERE id = #{id}) t
+    </insert>
+
+    <insert id="addCaseProjectRelation">
+        insert into
+        <include refid="case_project_relation"/>
+        (caseId,projectId)
+        values
+        <foreach collection="projectList" item="projectId" index="index" separator=",">
+            (
+            #{id}, #{projectId}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="addEditRecord" parameterType="com.okay.family.common.bean.testcase.response.CaseEditRecord">
+        INSERT INTO
+        <include refid="record_table"/>
+        (caseId,editor,type)
+        VALUES
+        (#{caseId},#{editor},#{type})
+    </insert>
+
+    <insert id="copyCaseProjectRelation">
+        INSERT INTO
+        <include refid="case_project_relation"/>
+
+        (caseId,projectId)
+
+        select * from (select
+        #{arg1} aa,projectId
+        FROM
+        <include refid="case_project_relation"/>
+        WHERE caseId = #{arg0}) t
+    </insert>
+
     <insert id="addCase" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.okay.family.common.bean.testcase.request.CaseAttributeBean">
         INSERT INTO
         <include refid="table"/>
 
-        (uid,editor,envId,serviceId,moduleId,apiId,name,level,host,path,type,method,headermoco,paramsmoco)
+        (uid,editor,projectList,envId,serviceId,moduleId,apiId,name,level,path,type,method,headermoco,paramsmoco)
 
         select * from (select
-        #{uid} aa,#{uid} bb,#{envId} cc,#{serviceId} dd ,#{moduleId} ee ,#{apiId} ff,#{name} gg,1,CONCAT("https://",domain),api_url,api_action,api_method,header_para,request_par
+        #{uid} aa,#{uid}
+        bb,#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler} ab,#{envId}
+        cc,#{serviceId} dd ,#{moduleId} ee ,#{apiId} ff,#{name}
+        gg,1,api_url,api_action,api_method,header_para,request_par
         FROM
-        <include
-                refid="api_info"/>
-        a LEFT JOIN
-        <include refid="server_env"/>
-        s ON a.service = s.service_id WHERE a.id = #{apiId}) t
-
+        <include refid="api_info"/>
+        WHERE id = #{apiId}) t
     </insert>
+
+    <delete id="delCaseProjectRelation" parameterType="com.okay.family.common.bean.DelBean">
+        delete from
+        <include refid="case_project_relation"/>
+        where caseId = #{id}
+    </delete>
+
+    <delete id="delCase" parameterType="com.okay.family.common.bean.DelBean">
+        delete from
+        <include refid="table"/>
+        where id = #{id} and uid = #{uid}
+    </delete>
 
 </mapper>
