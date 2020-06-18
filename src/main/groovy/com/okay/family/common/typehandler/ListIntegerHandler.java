@@ -31,7 +31,7 @@ public class ListIntegerHandler extends BaseTypeHandler<List<Integer>> {
     public List<Integer> getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String str = rs.getString(columnName);
         if (null != str) {
-            String[] split = str.split(Constant.PART);
+            String[] split = str.split(Constant.COMMA);
             return Arrays.asList(split).stream().map(x -> changeStringToInt(x)).collect(Collectors.toList());
         }
         return null;
@@ -41,7 +41,7 @@ public class ListIntegerHandler extends BaseTypeHandler<List<Integer>> {
     public List<Integer> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String str = rs.getString(columnIndex);
         if (null != str) {
-            String[] split = str.split(Constant.PART);
+            String[] split = str.split(Constant.COMMA);
             return Arrays.asList(split).stream().map(x -> changeStringToInt(x)).collect(Collectors.toList());
         }
         return null;
@@ -51,7 +51,7 @@ public class ListIntegerHandler extends BaseTypeHandler<List<Integer>> {
     public List<Integer> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String str = cs.getString(columnIndex);
         if (null != str) {
-            String[] split = str.split(Constant.PART);
+            String[] split = str.split(Constant.COMMA);
             return Arrays.asList(split).stream().map(x -> changeStringToInt(x)).collect(Collectors.toList());
         }
         return null;
