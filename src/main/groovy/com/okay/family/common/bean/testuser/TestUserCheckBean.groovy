@@ -20,7 +20,7 @@ class TestUserCheckBean extends AbstractBean {
 
     String phone
 
-    String dec
+    String des
 
     int status
 

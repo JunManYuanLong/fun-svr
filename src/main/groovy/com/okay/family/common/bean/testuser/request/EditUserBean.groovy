@@ -35,7 +35,7 @@ class EditUserBean extends AbstractBean {
     String phone
 
     @Length(min = 0, max = 128, message = "用户描述内容长度错误!")
-    String dec
+    String des
 
 
 }

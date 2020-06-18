@@ -67,7 +67,7 @@
         UPDATE
         <include refid="table"/>
         SET
-        descc=#{dec},envId=#{envId},password=#{password},phone=#{phone},roleId=#{roleId},user=#{user}
+        descc=#{des},envId=#{envId},password=#{password},phone=#{phone},roleId=#{roleId},user=#{user}
         WHERE id = #{id} and uid = #{uid}
     </update>
 
@@ -85,7 +85,7 @@
         <include refid="table"/>
         (uid,envId,user,password,phone,roleId,descc,status)
         VALUES
-        (#{uid},#{envId},#{user},#{password},#{phone},#{roleId},#{dec},1)
+        (#{uid},#{envId},#{user},#{password},#{phone},#{roleId},#{des},1)
     </insert>
 
     <delete id="delUser" parameterType="com.okay.family.common.bean.DelBean">

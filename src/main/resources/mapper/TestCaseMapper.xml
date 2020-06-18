@@ -71,17 +71,17 @@
             parameterType="com.okay.family.common.bean.testcase.request.CaseAttributeBean">
         INSERT INTO
         <include refid="table"/>
-        (uid,editor,projectList,envId,serviceId,moduleId,apiId,name,level,path,type,method,headermoco,paramsmoco,headers,params,verify)
+        (uid,editor,projectList,envId,serviceId,moduleId,apiId,name,level,path,type,method,headermoco,paramsmoco,headers,params,verify,available)
         select * from (select
         #{uid} aa,#{uid}
         bb,projectList,envId,serviceId,moduleId,apiId,#{name}
-        n,level,path,type,method,headermoco,paramsmoco,headers,params,verify
+        n,level,path,type,method,headermoco,paramsmoco,headers,params,verify,available
         FROM
         <include refid="table"/>
         WHERE id = #{id}) t
     </insert>
 
-    <insert id="addCaseProjectRelation">
+    <insert id="addCaseProjectRelation" parameterType="com.okay.family.common.bean.testcase.request.CaseAttributeBean">
         insert into
         <include refid="case_project_relation"/>
         (caseId,projectId)
