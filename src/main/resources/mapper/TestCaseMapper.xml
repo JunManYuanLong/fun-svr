@@ -59,14 +59,13 @@
         UPDATE
         <include refid="table"/>
         c
+        INNER JOIN
+        <include refid="api_info"/> a ON a.id = #{apiId}
         SET
-        editor=#{uid},name=#{name},envId=#{envId},serviceId=#{serviceId},moduleId=#{moduleId},projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},apiId=#{apiId},headermoco=(SELECT
-        header_para FROM family_server_api_info WHERE id = #{apiId}),paramsmoco=(SELECT request_par FROM
-        family_server_api_info WHERE id = #{apiId})
+        editor=#{uid},c.name=#{name},c.envId=#{envId},c.serviceId=#{serviceId},c.moduleId=#{moduleId},c.projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},c.apiId=#{apiId},c.headermoco=a.header_para,c.paramsmoco=a.request_par
         WHERE
-        id = #{id}
+        c.id = #{id}
     </update>
-
     <insert id="copyCase" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.okay.family.common.bean.testcase.request.CaseAttributeBean">
         INSERT INTO

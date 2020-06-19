@@ -6,10 +6,22 @@
         family_service_env
     </sql>
 
+    <sql id="save_table">
+        qa_request_record
+    </sql>
+
     <select id="findAllHost" resultType="java.util.HashMap">
         SELECT service_id,domain
         FROM
         <include refid="SERVER"/>
     </select>
+
+
+    <insert id="saveRequest" parameterType="com.okay.family.common.bean.RequestSaveBean">
+        INSERT INTO
+        <include refid="save_table"/>
+        (uid,type,method,host,api,status,code,expendtime,datasize,requestid)
+        values (#{uid},#{type},#{method},#{host},#{api},#{status},#{code},#{expendtime},#{datasize},#{requestid})
+    </insert>
 
 </mapper>
