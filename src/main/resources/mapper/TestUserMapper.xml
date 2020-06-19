@@ -88,7 +88,7 @@
         (#{uid},#{envId},#{user},#{password},#{phone},#{roleId},#{des},1)
     </insert>
 
-    <delete id="delUser" parameterType="com.okay.family.common.bean.DelBean">
+    <delete id="delUser" parameterType="com.okay.family.common.bean.common.DelBean">
         DELETE FROM
         <include refid="table"/>
         where id = #{id} and uid = #{uid}

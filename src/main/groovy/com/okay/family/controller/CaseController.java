@@ -1,7 +1,11 @@
 package com.okay.family.controller;
 
-import com.okay.family.common.bean.DelBean;
-import com.okay.family.common.bean.testcase.request.CaseAttributeBean;
+import com.github.pagehelper.PageInfo;
+import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.bean.testcase.request.CaseSearchBean;
+import com.okay.family.common.bean.testcase.request.EditCaseAttributeBean;
+import com.okay.family.common.bean.testcase.response.TestCaseListBean;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.fun.base.bean.Result;
@@ -31,7 +35,7 @@ public class CaseController {
     }
 
     @PostMapping(value = "/edit")
-    public Result edit(@RequestBody @Valid CaseAttributeBean bean) {
+    public Result edit(@RequestBody @Valid EditCaseAttributeBean bean) {
 
         String type = bean.getType();
         if (type.equalsIgnoreCase("add")) {
@@ -49,23 +53,23 @@ public class CaseController {
 
     }
 
-    @PostMapping(value = "/del")
-    public Result delCase(@RequestBody @Valid DelBean bean) {
-        int i = service.delCase(bean);
+    @PostMapping(value = "/save")
+    public Result updateCaseData(@RequestBody @Valid CaseDataBean bean) {
+        bean.init();
+        int i = service.updateCaseData(bean);
         return i == 1 ? Result.success() : Result.fail(TestCaseCode.DEL_CASE_FAIL);
     }
 
-    @GetMapping(value = "/getcases")
-    public Result findCaseByid(@PathVariable(value = "apiid", required = true) int apiid,
-                               @PathVariable(value = "environment", required = true) int environment) {
-        return Result.success();
-
+    @PostMapping(value = "/del")
+    public Result delCase(@RequestBody @Valid DelBean bean) {
+        int i = service.delCase(bean);
+        return i == 1 ? Result.success() : Result.fail(TestCaseCode.NO_CHANGE_FAIL);
     }
 
-    @GetMapping(value = "/relation")
-    public Result getRelation(@PathVariable(value = "apiid", required = true) int apiid,
-                              @PathVariable(value = "environment", required = true) int environment) {
-        return Result.success();
+    @GetMapping(value = "/getcases")
+    public Result findCaseByid(@Valid CaseSearchBean bean) {
+        PageInfo<TestCaseListBean> testCaseListBeanPageInfo = service.searchCases(bean);
+        return Result.success(testCaseListBeanPageInfo);
 
     }
 

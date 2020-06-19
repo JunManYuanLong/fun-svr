@@ -1,6 +1,6 @@
 package com.okay.family.mapper;
 
-import com.okay.family.common.bean.DelBean;
+import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.pubdata.request.EditPubBean;
 import com.okay.family.common.bean.pubdata.response.PubDataBean;
 import com.okay.family.common.bean.pubdata.request.SavePubDataBean;

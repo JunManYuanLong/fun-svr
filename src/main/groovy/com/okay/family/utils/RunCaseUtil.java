@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.basedata.ServerHost;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
-import com.okay.family.common.bean.testcase.TestCaseBean;
+import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.fun.frame.httpclient.FanLibrary;
@@ -16,7 +16,7 @@ public class RunCaseUtil {
 
     static Logger logger = LoggerFactory.getLogger(RunCaseUtil.class);
 
-    public static CaseRunRecord run(TestCaseBean bean) {
+    public static CaseRunRecord run(TestCaseAttributeBean bean) {
         int environment = bean.getEnvironment();
         int serverid = bean.getServerid();
         /*

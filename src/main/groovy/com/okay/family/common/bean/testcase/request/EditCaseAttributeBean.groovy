@@ -5,7 +5,7 @@ import com.okay.family.fun.base.bean.AbstractBean
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
-class CaseAttributeBean extends AbstractBean {
+class EditCaseAttributeBean extends AbstractBean {
 
     private static final long serialVersionUID = -629232822729332L;
 

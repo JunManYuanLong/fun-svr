@@ -3,7 +3,7 @@ package com.okay.family.service.impl;
 import com.okay.family.common.bean.casecollect.CaseCollectionBean;
 import com.okay.family.common.bean.casecollect.CaseCollectionRecord;
 import com.okay.family.common.bean.casecollect.CaseCollectionRelationBean;
-import com.okay.family.common.bean.testcase.TestCaseBean;
+import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
 import com.okay.family.common.exception.CaseCollecionException;
 import com.okay.family.mapper.CaseCollectionMapper;
 import com.okay.family.mapper.TestCaseMapper;
@@ -76,7 +76,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     }
 
     @Override
-    public List<TestCaseBean> getCases(int id) {
+    public List<TestCaseAttributeBean> getCases(int id) {
         return null;
     }
 

@@ -1,12 +1,19 @@
 package com.okay.family.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayConstant;
-import com.okay.family.common.bean.DelBean;
-import com.okay.family.common.bean.testcase.request.CaseAttributeBean;
+import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.bean.testcase.request.CaseSearchBean;
+import com.okay.family.common.bean.testcase.request.EditCaseAttributeBean;
 import com.okay.family.common.bean.testcase.response.CaseEditRecord;
+import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
+import com.okay.family.common.bean.testcase.response.TestCaseListBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.enums.CaseEditType;
+import com.okay.family.common.exception.CaseException;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.mapper.TestCaseMapper;
@@ -21,6 +28,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -43,29 +52,29 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
 
     @Override
-    public int addCase(CaseAttributeBean bean) {
+    public int addCase(EditCaseAttributeBean bean) {
         int i = testCaseMapper.addCase(bean);
         List<Integer> projectList = bean.getProjectList();
         if (projectList != null && projectList.size() > 0 && bean.getId() > 0) {
-            addEditRecord(new CaseEditRecord(bean.getId(),bean.getUid(),CaseEditType.CREATE.getDesc()));
+            addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.CREATE.getDesc()));
             addCaseProjectRelation(bean);
         }
         return i;
     }
 
     @Override
-    public int copyCase(CaseAttributeBean bean) {
+    public int copyCase(EditCaseAttributeBean bean) {
         int source = bean.getId();
         int i = testCaseMapper.copyCase(bean);
         if (i > 0) {
             copyCaseProjectRelation(source, bean.getId());
-            addEditRecord(new CaseEditRecord(bean.getId(),bean.getUid(),CaseEditType.CREATE.getDesc()));
+            addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.CREATE.getDesc()));
         }
         return i;
     }
 
     @Override
-    public int updateCase(CaseAttributeBean bean) {
+    public int updateCase(EditCaseAttributeBean bean) {
         int i = testCaseMapper.updateCase(bean);
         if (i == 1) {
             addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_ATTRIBUTE.getDesc()));
@@ -83,7 +92,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
     @Async
     @Override
-    public void addCaseProjectRelation(CaseAttributeBean bean) {
+    public void addCaseProjectRelation(EditCaseAttributeBean bean) {
         testCaseMapper.addCaseProjectRelation(bean);
     }
 
@@ -93,7 +102,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     }
 
     @Override
-    public void updateCaseProjectRelation(CaseAttributeBean bean) {
+    public void updateCaseProjectRelation(EditCaseAttributeBean bean) {
         DelBean delBean = new DelBean();
         bean.copyTo(delBean);
         delCaseProjectRelation(delBean);
@@ -110,6 +119,57 @@ public class TestCaseServiceImpl implements ITestCaseService {
     @Override
     public void addEditRecord(CaseEditRecord record) {
         testCaseMapper.addEditRecord(record);
+    }
+
+    @Override
+    public int updateCaseData(CaseDataBean bean) {
+        int i = testCaseMapper.updateCaseData(bean);
+        if (i > 0) addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_DATA.getDesc()));
+        return i;
+    }
+
+    @Override
+    public PageInfo<TestCaseListBean> searchCases(CaseSearchBean bean) {
+        PageHelper.startPage(bean.getPageNum(), bean.getPageSize());
+        List<TestCaseListBean> testCaseBeans = testCaseMapper.searchCases(bean);
+        PageInfo pageInfo = new PageInfo(testCaseBeans);
+        return pageInfo;
+    }
+
+    @Override
+    public TestCaseAttributeBean getAttributeById(int id) {
+        TestCaseAttributeBean bean = new TestCaseAttributeBean();
+        bean.setId(id);
+        CountDownLatch countDownLatch = new CountDownLatch(2);
+        getAttributeById(bean, countDownLatch);
+        getCaseProjectRelation(bean, countDownLatch);
+        try {
+            countDownLatch.await(10, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            CaseException.fail("查询用例信息发生错误:" + e.getMessage());
+        }
+        return bean;
+    }
+
+    @Async
+    @Override
+    public void getAttributeById(TestCaseAttributeBean bean, CountDownLatch countDownLatch) {
+        try {
+            TestCaseAttributeBean attributeById = testCaseMapper.getAttributeById(bean.getId());
+            bean.copyFrom(attributeById);
+        } finally {
+            countDownLatch.countDown();
+        }
+    }
+
+    @Async
+    @Override
+    public void getCaseProjectRelation(TestCaseAttributeBean bean, CountDownLatch countDownLatch) {
+        try {
+            bean.setVersionList(testCaseMapper.getCaseProjectRelation(bean.getId()));
+        } finally {
+            countDownLatch.countDown();
+        }
     }
 
     /**

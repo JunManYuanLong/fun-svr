@@ -1,27 +1,46 @@
 package com.okay.family.service;
 
-import com.okay.family.common.bean.DelBean;
-import com.okay.family.common.bean.testcase.request.CaseAttributeBean;
+import com.github.pagehelper.PageInfo;
+import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.bean.testcase.request.CaseSearchBean;
+import com.okay.family.common.bean.testcase.request.EditCaseAttributeBean;
 import com.okay.family.common.bean.testcase.response.CaseEditRecord;
+import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
+import com.okay.family.common.bean.testcase.response.TestCaseListBean;
+
+import java.util.concurrent.CountDownLatch;
 
 public interface ITestCaseService {
 
 
-    int addCase(CaseAttributeBean bean);
+    int addCase(EditCaseAttributeBean bean);
 
-    int copyCase(CaseAttributeBean bean);
+    int copyCase(EditCaseAttributeBean bean);
 
-    int updateCase(CaseAttributeBean bean);
+    int updateCase(EditCaseAttributeBean bean);
 
     int delCase(DelBean bean);
 
-    void addCaseProjectRelation(CaseAttributeBean bean);
+    void addCaseProjectRelation(EditCaseAttributeBean bean);
 
     void delCaseProjectRelation(DelBean bean);
 
-    void updateCaseProjectRelation(CaseAttributeBean bean);
+    void updateCaseProjectRelation(EditCaseAttributeBean bean);
 
     void copyCaseProjectRelation(int source, int target);
 
     void addEditRecord(CaseEditRecord record);
+
+    int updateCaseData(CaseDataBean bean);
+
+    PageInfo<TestCaseListBean> searchCases(CaseSearchBean bean);
+
+    TestCaseAttributeBean getAttributeById(int id);
+
+    void getAttributeById(TestCaseAttributeBean bean, CountDownLatch countDownLatch);
+
+    void getCaseProjectRelation(TestCaseAttributeBean bean, CountDownLatch countDownLatch);
+
+
 }

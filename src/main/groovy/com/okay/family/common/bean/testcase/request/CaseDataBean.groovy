@@ -28,7 +28,7 @@ class CaseDataBean extends AbstractBean {
 
     @NotNull
 //    @Pattern(regexp = "")
-    String httptype
+    String httpType
 
     @NotNull
     @Length(min = 1, max = 1, message = "读写方式传参格式错误,应该一个字符长度")
@@ -49,7 +49,9 @@ class CaseDataBean extends AbstractBean {
     @Pattern(regexp = "/.+", message = "接口名称应该以/开头!")
     String url
 
-
+/**
+ * 默认0,1:可用,2:不可用
+ */
     int available
 
     JSONObject headers
@@ -60,7 +62,7 @@ class CaseDataBean extends AbstractBean {
     void init() {
         initHeader()
         initParams()
-        available = testWish.size() > 0
+        available = testWish.size() > 0 ? 1 : 2
     }
 
     private def initHeader() {
