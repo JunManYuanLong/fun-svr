@@ -1,4 +1,4 @@
-package com.okay.family.common.bean.testcase.request
+package com.okay.family.common.bean.testcase
 
 import com.alibaba.fastjson.JSONObject
 import com.okay.family.common.bean.testcase.CaseVerifyBean

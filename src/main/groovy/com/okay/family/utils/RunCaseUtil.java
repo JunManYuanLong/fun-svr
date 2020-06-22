@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.basedata.ServerHost;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
-import com.okay.family.common.bean.testcase.request.CaseRunRecord;
+import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.enums.RequestType;
 import com.okay.family.common.enums.RunResult;
 import com.okay.family.fun.frame.httpclient.FunRequest;

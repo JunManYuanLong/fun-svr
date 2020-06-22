@@ -2,6 +2,7 @@ package com.okay.family.mapper;
 
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.ProjectBean;
+import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.*;
 import com.okay.family.common.bean.testcase.response.CaseDetailBean;
 import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
