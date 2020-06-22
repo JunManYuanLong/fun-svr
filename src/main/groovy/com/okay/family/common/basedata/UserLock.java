@@ -5,9 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class UserCertificate {
+/**
+ * 用户锁对象
+ */
+public class UserLock {
 
-    private static Logger logger = LoggerFactory.getLogger(UserCertificate.class);
+    private static Logger logger = LoggerFactory.getLogger(UserLock.class);
 
     private static ConcurrentHashMap<Integer, Object> certificates = new ConcurrentHashMap<>();
 

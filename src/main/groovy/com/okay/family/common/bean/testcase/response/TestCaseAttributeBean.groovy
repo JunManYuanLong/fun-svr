@@ -17,10 +17,10 @@ class TestCaseAttributeBean extends AbstractBean {
 
     String envName
 
-
     int moduleId
 
     String moduleName
+
     String name
 
     int serviceId
@@ -33,7 +33,6 @@ class TestCaseAttributeBean extends AbstractBean {
  * 用于异常查询结果赋值
  * @param bean
  */
-    @Override
     def copyFrom(TestCaseAttributeBean bean) {
         this.id = bean.getId()
         this.apiName = bean.getApiName()

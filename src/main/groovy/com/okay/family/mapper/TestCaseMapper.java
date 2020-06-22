@@ -2,10 +2,9 @@ package com.okay.family.mapper;
 
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.ProjectBean;
-import com.okay.family.common.bean.testcase.request.CaseDataBean;
-import com.okay.family.common.bean.testcase.request.CaseSearchBean;
-import com.okay.family.common.bean.testcase.request.EditCaseAttributeBean;
-import com.okay.family.common.bean.testcase.response.CaseEditRecord;
+import com.okay.family.common.bean.testcase.request.*;
+import com.okay.family.common.bean.testcase.response.CaseDetailBean;
+import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
 import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
 import com.okay.family.common.bean.testcase.response.TestCaseListBean;
 
@@ -37,5 +36,9 @@ public interface TestCaseMapper {
 
     List<ProjectBean> getCaseProjectRelation(int id);
 
+    List<CaseEditRetrunRecord> getCaseEditRecords(CaseEditRecordQueryBean bean);
 
+    CaseDetailBean getCaseDetail(int id);
+    //todo:增加SQL语句
+    void addRunRecord(CaseRunRecord record);
 }

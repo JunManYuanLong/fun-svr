@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
 import com.okay.family.common.bean.testcase.CaseVerifyBean
 import com.okay.family.fun.base.bean.AbstractBean
-import org.hibernate.validator.constraints.Length
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
@@ -20,6 +19,8 @@ class CaseDataBean extends AbstractBean {
     @Min(value = 1L)
     int uid
 
+    int envId
+
     @Min(value = 1L)
     int apiId
 
@@ -27,12 +28,9 @@ class CaseDataBean extends AbstractBean {
     JSONArray header
 
     @NotNull
-//    @Pattern(regexp = "")
+//    @Pattern(regexp = "")//todo:完善请求方式验证
     String httpType
 
-    @NotNull
-    @Length(min = 1, max = 1, message = "读写方式传参格式错误,应该一个字符长度")
-    String readType
 
     @Min(value = 1L)
     int serviceId

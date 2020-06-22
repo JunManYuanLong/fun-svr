@@ -14,10 +14,6 @@
         qa_case_project_relation
     </sql>
 
-    <sql id="server_env">
-        family_service_env
-    </sql>
-
     <sql id="api_info">
         family_server_api_info
     </sql>
@@ -33,43 +29,114 @@
         family_base_env
     </sql>
 
+    <sql id="edit_record">
+        qa_case_edit_record
+    </sql>
+
+    <sql id="edit_type">
+        qa_case_edit_type
+    </sql>
+
+    <sql id="module_table">
+        family_server_api_module
+    </sql>
+
+    <sql id="service_table">
+        family_service
+    </sql>
+
+    <sql id="project">
+        family_project
+    </sql>
+
     <resultMap id="entityMap" type="com.okay.family.common.bean.testcase.CaseVerifyBean">
         <result column="verify" property="verify"
                 typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
     </resultMap>
 
-    <resultMap type="com.okay.family.common.bean.testcase.response.TestCaseAttributeBean" id="TestCaseDetailBean">
+    <resultMap type="com.okay.family.common.bean.testcase.response.CaseDetailBean" id="CaseDetailBean">
         <result property="id" column="id"/>
-        <result property="owner" column="owner"/>
-        <result property="environment" column="environment"/>
-        <result property="project" column="project"/>
-        <result property="serverid" column="serverid"/>
-        <result property="servername" column="servername"/>
-        <result property="moduleid" column="moduleid"/>
-        <result property="modulename" column="modulename"/>
-        <result property="apiid" column="apiid"/>
-        <result property="apipath" column="apipath"/>
-        <result property="host" column="host"/>
+        <result property="envId" column="envId"/>
+        <result property="envName" column="envName"/>
+        <result property="apiId" column="apiId"/>
+        <result property="apiName" column="apiName"/>
+        <result property="httptype" column="method"/>
+        <result property="serviceId" column="serviceId"/>
+        <result property="serviceName" column="serviceName"/>
+        <result property="moduleId" column="moduleId"/>
+        <result property="moduleName" column="moduleName"/>
+        <result property="readType" column="type"/>
+        <result property="url" column="path"/>
         <result property="name" column="name"/>
-        <result property="apitype" column="apitype"/>
-        <result property="lastresult" column="lastresult"/>
-        <result property="method" column="method"/>
-        <result property="headers" column="headers" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
-        <result property="params" column="params" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
-        <result property="level" column="level"/>
-        <result property="verify" column="verify"
+        <result property="header" column="headersmoco"
+                typeHandler="com.okay.family.common.typehandler.JsonArrayHandler"/>
+        <result property="upData" column="paramsmoco"
+                typeHandler="com.okay.family.common.typehandler.JsonArrayHandler"/>
+        <result property="testWish" column="verify"
                 typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
     </resultMap>
 
-    <select id="findCasesByApi" resultMap="TestCaseDetailBean">
-        select * from
+    <select id="getCaseDetail" parameterType="java.lang.Integer" resultMap="CaseDetailBean">
+        select c.id,c.name,c.apiId,a.name apiName,c.envId,e.name envName,c.serviceId,s.name
+        serviceName,c.moduleId,m.name moduleName,c.type,c.method,c.headersmoco,c.paramsmoco,c.verify,c.path from
         <include refid="table"/>
-        WHERE environment=#{arg0} and apiid = #{arg1}
+        c left join
+        <include refid="env"/>
+        e on c.envId = e.id left join
+        <include refid="service_table"/>
+        s on c.serviceId = s.id left join
+        <include refid="module_table"/>
+        m on c.moduleId = m.id left join
+        <include refid="api_info"/>
+        a on c.apiId = a.id
+        WHERE c.id = #{0}
+    </select>
+
+    <select id="getAttributeById" parameterType="java.lang.Integer"
+            resultType="com.okay.family.common.bean.testcase.response.TestCaseAttributeBean">
+        select c.id,c.apiId,a.name apiName,c.serviceId,s.name serviceName,c.moduleId,m.name
+        moduleName,c.name,c.envId,e.name envName from
+        <include refid="table"/>
+        c left join
+        <include refid="api_info"/>
+        a on c.apiId = a.id left join
+        <include refid="service_table"/>
+        s on c.serviceId = s.id left join
+        <include refid="module_table"/>
+        m on c.moduleId = m.id left join
+        <include refid="env"/>
+        e on c.envId = e.id
+        where c.id = #{0}
+    </select>
+
+    <select id="getCaseProjectRelation" parameterType="java.lang.Integer"
+            resultType="com.okay.family.common.bean.common.ProjectBean">
+        select r.id,CASE ISNULL(concat(p.name,p.version)) WHEN 1 THEN "匿名项目" ELSE concat(p.name,p.version) END name from
+        <include refid="case_project_relation"/>
+        r left join
+        <include refid="project"/>
+        p on r.projectId = p.id
+        where r.caseId = #{0}
+    </select>
+
+    <select id="getCaseEditRecords" parameterType="com.okay.family.common.bean.testcase.request.CaseEditRecordQueryBean"
+            resultType="com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord">
+        SELECT r.id id,r.caseId caseId,r.create_time time,u.nick_name people,t.name handleType from
+        <include refid="edit_record"/>
+        r left join
+        <include refid="edit_type"/>
+        t on r.type = t.id left join
+        <include refid="user_table"/>
+        u
+        on r.editor = u.id
+        where r.caseId = #{id}
+
     </select>
 
     <select id="searchCases" parameterType="com.okay.family.common.bean.testcase.request.CaseSearchBean"
             resultType="com.okay.family.common.bean.testcase.response.TestCaseListBean">
-        select t.id id,CASE ISNULL(u.nick_name) WHEN 1 THEN "匿名用户" ELSE u.nick_name END user,t.name name,e.name envName,api.name apiName, t.uid = #{uid} isMyself,CASE
+        select t.id id,CASE ISNULL(u.nick_name) WHEN 1 THEN "匿名用户" ELSE u.nick_name END user,t.name name,e.name
+        envName,api.name apiName, t.uid = #{uid} isMyself,CASE
         t.available
         WHEN 1 THEN 1 ELSE 0 END isUsed from
         <include refid="table"/>
@@ -122,14 +189,13 @@
             </choose>
         </where>
         order by t.create_time
-
     </select>
 
     <update id="updateCaseData" parameterType="com.okay.family.common.bean.testcase.request.CaseDataBean">
         UPDATE
         <include refid="table"/>
         SET
-        headermoco=#{header,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},params=#{upData,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},headers=#{headers,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},params=#{params,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},verify=#{testWish,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler},editor=#{uid},available=#{available}
+        headersmoco=#{header,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},params=#{upData,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},headers=#{headers,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},params=#{params,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},verify=#{testWish,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler},editor=#{uid},available=#{available}
         WHERE
         id = #{id} and uid = #{uid}
     </update>
@@ -142,7 +208,7 @@
         <include refid="api_info"/>
         a ON a.id = #{apiId}
         SET
-        editor=#{uid},c.name=#{name},c.envId=#{envId},c.serviceId=#{serviceId},c.moduleId=#{moduleId},c.projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},c.apiId=#{apiId},c.headermoco=a.header_para,c.paramsmoco=a.request_par
+        editor=#{uid},c.name=#{name},c.envId=#{envId},c.serviceId=#{serviceId},c.moduleId=#{moduleId},c.projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},c.apiId=#{apiId},c.headersmoco=a.header_para,c.paramsmoco=a.request_par
         WHERE
         c.id = #{id}
     </update>
@@ -151,17 +217,18 @@
             parameterType="com.okay.family.common.bean.testcase.request.EditCaseAttributeBean">
         INSERT INTO
         <include refid="table"/>
-        (uid,editor,projectList,envId,serviceId,moduleId,apiId,name,level,path,type,method,headermoco,paramsmoco,headers,params,verify,available)
+        (uid,editor,projectList,envId,serviceId,moduleId,apiId,name,level,path,type,method,headersmoco,paramsmoco,headers,params,verify,available)
         select * from (select
         #{uid} aa,#{uid}
         bb,projectList,envId,serviceId,moduleId,apiId,#{name}
-        n,level,path,type,method,headermoco,paramsmoco,headers,params,verify,available
+        n,level,path,type,method,headersmoco,paramsmoco,headers,params,verify,available
         FROM
         <include refid="table"/>
         WHERE id = #{id}) t
     </insert>
 
-    <insert id="addCaseProjectRelation" parameterType="com.okay.family.common.bean.testcase.request.EditCaseAttributeBean">
+    <insert id="addCaseProjectRelation"
+            parameterType="com.okay.family.common.bean.testcase.request.EditCaseAttributeBean">
         insert into
         <include refid="case_project_relation"/>
         (caseId,projectId)
@@ -173,7 +240,7 @@
         </foreach>
     </insert>
 
-    <insert id="addEditRecord" parameterType="com.okay.family.common.bean.testcase.response.CaseEditRecord">
+    <insert id="addEditRecord" parameterType="com.okay.family.common.bean.testcase.request.CaseEditRecord">
         INSERT INTO
         <include refid="record_table"/>
         (caseId,editor,type)
@@ -199,7 +266,7 @@
         INSERT INTO
         <include refid="table"/>
 
-        (uid,editor,projectList,envId,serviceId,moduleId,apiId,name,level,available,path,type,method,headermoco,paramsmoco)
+        (uid,editor,projectList,envId,serviceId,moduleId,apiId,name,level,available,path,type,method,headersmoco,paramsmoco)
 
         select * from (select
         #{uid} aa,#{uid}

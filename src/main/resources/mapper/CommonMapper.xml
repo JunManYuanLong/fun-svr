@@ -11,7 +11,7 @@
     </sql>
 
     <select id="findAllHost" resultType="java.util.HashMap">
-        SELECT service_id,domain
+        SELECT service_id*10+env id,domain
         FROM
         <include refid="SERVER"/>
     </select>

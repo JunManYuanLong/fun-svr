@@ -3,7 +3,7 @@ package com.okay.family.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayConstant;
-import com.okay.family.common.basedata.UserCertificate;
+import com.okay.family.common.basedata.UserLock;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.testuser.request.EditUserBean;
 import com.okay.family.common.bean.testuser.request.SearchUserBean;
@@ -91,7 +91,7 @@ public class TestUserServiceImpl implements ITestUserService {
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public TestUserCheckBean getCertificate(int id) {
-        Object o = UserCertificate.get(id);
+        Object o = UserLock.get(id);
         synchronized (o) {
             TestUserCheckBean user = testUserMapper.findUser(id);
             String create_time = user.getCreate_time();
@@ -110,7 +110,7 @@ public class TestUserServiceImpl implements ITestUserService {
 
     @Override
     public String getCertificate(int id, ConcurrentHashMap<Integer, String> map) {
-        Object o = UserCertificate.get(id);
+        Object o = UserLock.get(id);
         synchronized (o) {
             if (map.contains(id)) return map.get(id);
             TestUserCheckBean user = testUserMapper.findUser(id);

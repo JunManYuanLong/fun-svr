@@ -1,4 +1,4 @@
-package com.okay.family.common.bean.testcase.response
+package com.okay.family.common.bean.testcase.request
 
 import com.okay.family.fun.base.bean.AbstractBean
 
@@ -18,9 +18,9 @@ class CaseEditRecord extends AbstractBean {
 
     String create_time
 
-    String type
+    int type
 
-    CaseEditRecord(int caseId, int editor, String type) {
+    CaseEditRecord(int caseId, int editor, int type) {
         this.caseId = caseId
         this.editor = editor
         this.type = type

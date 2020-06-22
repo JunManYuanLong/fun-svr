@@ -2,10 +2,9 @@ package com.okay.family.service;
 
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.bean.common.DelBean;
-import com.okay.family.common.bean.testcase.request.CaseDataBean;
-import com.okay.family.common.bean.testcase.request.CaseSearchBean;
-import com.okay.family.common.bean.testcase.request.EditCaseAttributeBean;
-import com.okay.family.common.bean.testcase.response.CaseEditRecord;
+import com.okay.family.common.bean.testcase.request.*;
+import com.okay.family.common.bean.testcase.response.CaseDetailBean;
+import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
 import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
 import com.okay.family.common.bean.testcase.response.TestCaseListBean;
 
@@ -42,5 +41,12 @@ public interface ITestCaseService {
 
     void getCaseProjectRelation(TestCaseAttributeBean bean, CountDownLatch countDownLatch);
 
+    PageInfo<CaseEditRetrunRecord> getCaseEditRecords(CaseEditRecordQueryBean bean);
+
+    CaseDetailBean getCaseDetail(int id);
+
+    CaseRunRecord runCaseData(CaseDataBean bean);
+
+    void addRunRecord(CaseRunRecord runRecord);
 
 }

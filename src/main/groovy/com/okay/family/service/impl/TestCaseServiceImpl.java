@@ -5,10 +5,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.common.DelBean;
-import com.okay.family.common.bean.testcase.request.CaseDataBean;
-import com.okay.family.common.bean.testcase.request.CaseSearchBean;
-import com.okay.family.common.bean.testcase.request.EditCaseAttributeBean;
-import com.okay.family.common.bean.testcase.response.CaseEditRecord;
+import com.okay.family.common.bean.testcase.request.*;
+import com.okay.family.common.bean.testcase.response.CaseDetailBean;
+import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
 import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
 import com.okay.family.common.bean.testcase.response.TestCaseListBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
@@ -20,6 +19,7 @@ import com.okay.family.mapper.TestCaseMapper;
 import com.okay.family.mapper.TestUserMapper;
 import com.okay.family.service.ITestCaseService;
 import com.okay.family.service.ITestUserService;
+import com.okay.family.utils.RunCaseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
         int i = testCaseMapper.addCase(bean);
         List<Integer> projectList = bean.getProjectList();
         if (projectList != null && projectList.size() > 0 && bean.getId() > 0) {
-            addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.CREATE.getDesc()));
+            addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.CREATE.getCode()));
             addCaseProjectRelation(bean);
         }
         return i;
@@ -68,7 +68,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
         int i = testCaseMapper.copyCase(bean);
         if (i > 0) {
             copyCaseProjectRelation(source, bean.getId());
-            addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.CREATE.getDesc()));
+            addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.CREATE.getCode()));
         }
         return i;
     }
@@ -77,7 +77,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public int updateCase(EditCaseAttributeBean bean) {
         int i = testCaseMapper.updateCase(bean);
         if (i == 1) {
-            addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_ATTRIBUTE.getDesc()));
+            addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_ATTRIBUTE.getCode()));
             updateCaseProjectRelation(bean);
         }
         return i;
@@ -124,7 +124,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     @Override
     public int updateCaseData(CaseDataBean bean) {
         int i = testCaseMapper.updateCaseData(bean);
-        if (i > 0) addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_DATA.getDesc()));
+        if (i > 0) addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_DATA.getCode()));
         return i;
     }
 
@@ -170,6 +170,33 @@ public class TestCaseServiceImpl implements ITestCaseService {
         } finally {
             countDownLatch.countDown();
         }
+    }
+
+    @Override
+    public PageInfo<CaseEditRetrunRecord> getCaseEditRecords(CaseEditRecordQueryBean bean) {
+        PageHelper.startPage(bean.getPageNum(), bean.getPageSize());
+        List<CaseEditRetrunRecord> caseEditRecords = testCaseMapper.getCaseEditRecords(bean);
+        PageInfo pageInfo = new PageInfo(caseEditRecords);
+        return pageInfo;
+    }
+
+    @Override
+    public CaseDetailBean getCaseDetail(int id) {
+        CaseDetailBean caseDetail = testCaseMapper.getCaseDetail(id);
+        return caseDetail;
+    }
+
+    @Override
+    public CaseRunRecord runCaseData(CaseDataBean bean) {
+        CaseRunRecord run = RunCaseUtil.run(bean);
+        addRunRecord(run);
+        return run;
+    }
+
+    @Async
+    @Override
+    public void addRunRecord(CaseRunRecord runRecord) {
+        testCaseMapper.addRunRecord(runRecord);
     }
 
     /**

@@ -26,8 +26,8 @@ public class CommonServiceImpl implements ICommonService {
     public Map<Integer, String> findAllHost() {
         List<HashMap<String, String>> hosts = commonMapper.findAllHost();
         Map<Integer, String> collect = hosts.stream().collect(Collectors.toMap((x -> {
-            Object service_id = x.get("service_id");
-            return Integer.parseInt(service_id.toString());
+            Object id = x.get("id");
+            return Integer.parseInt(id.toString());
         }), (x -> "https://" + x.get("domain"))));
         return collect;
     }

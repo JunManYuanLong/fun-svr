@@ -3,11 +3,10 @@ package com.okay.family.utils;
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.basedata.ServerHost;
-import com.okay.family.common.bean.testcase.CaseRunRecord;
-import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
-import com.okay.family.fun.config.Constant;
-import com.okay.family.fun.frame.SourceCode;
-import com.okay.family.fun.frame.httpclient.FanLibrary;
+import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.bean.testcase.request.CaseRunRecord;
+import com.okay.family.common.enums.RequestType;
+import com.okay.family.common.enums.RunResult;
 import com.okay.family.fun.frame.httpclient.FunRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,44 +15,37 @@ public class RunCaseUtil {
 
     static Logger logger = LoggerFactory.getLogger(RunCaseUtil.class);
 
-    public static CaseRunRecord run(TestCaseAttributeBean bean) {
-        int environment = bean.getEnvironment();
-        int serverid = bean.getServerid();
-        /*
-        存疑,server是id还是name
-         */
-        bean.setHost(ServerHost.getHost(serverid));
+    public static CaseRunRecord run(CaseDataBean bean) {
+        int envId = bean.getEnvId();
+        int serviceId = bean.getServiceId();
+        String host = ServerHost.getHost(serviceId, envId);
 
         CaseRunRecord historyBean = new CaseRunRecord();
-        historyBean.setCaseid(bean.getId());
-        historyBean.setHeaders(bean.getHeaders().toString());
-        historyBean.setParams(bean.getParams().toJSONString());
-
+        int andIncrement = OkayConstant.RUN_MARK.getAndIncrement();
+        historyBean.setMark(andIncrement);
+        historyBean.setUid(bean.getUid());
+        historyBean.setParams(bean.getParams());
+        JSONObject headers = bean.getHeaders();
+        headers.put(OkayConstant.MARK_HEADER, andIncrement);
+        historyBean.setHeaders(headers);
         FunRequest request = null;
-        switch (bean.getMethod()) {
-            case 1:
-                request = FunRequest.isGet().addHeaders(bean.getHeaders()).addArgs(bean.getParams());
-                break;
-            case 2:
-                request = FunRequest.isPost().addHeaders(bean.getHeaders()).addJson(bean.getParams());
-                break;
-            case 3:
-                request = FunRequest.isPost().addHeaders(bean.getHeaders()).addParams(bean.getParams());
-                break;
-            default:
-                bean.setLastresult(3);
-                historyBean.setStatus(3);
-                return historyBean;
+        String httpType = bean.getHttpType();
+        if (httpType.equalsIgnoreCase(RequestType.GET.getDesc())) {
+            request = FunRequest.isGet().setHost(host).setApiName(bean.getUrl()).addHeaders(bean.getHeaders()).addArgs(bean.getParams());
+        } else if (httpType.equalsIgnoreCase(RequestType.POST_JSON.getDesc())) {
+            request = FunRequest.isPost().setHost(host).setApiName(bean.getUrl()).addHeaders(bean.getHeaders()).addJson(bean.getParams());
+        } else if (httpType.equalsIgnoreCase(RequestType.POST_FORM.getDesc())) {
+            request = FunRequest.isPost().setHost(host).setApiName(bean.getUrl()).addHeaders(bean.getHeaders()).addParams(bean.getParams());
+        } else {
+            historyBean.setResult(RunResult.UNRUN.getCode());
+            return historyBean;
         }
-        int mark = SourceCode.getMark() + historyBean.hashCode() % 10000;
-        historyBean.setMark(mark);
-        request.addHeader(FanLibrary.getHeader(OkayConstant.MARK_HEADER, mark + Constant.EMPTY));
         JSONObject response = request.getResponse();
-        historyBean.setResponse(response.toString());
+        historyBean.setResponse(response);
 
-        VerifyResponseUtil.verify(response, bean.getVerify());
-
-        historyBean.setStatus(1);
+        boolean verify = VerifyResponseUtil.verify(response, bean.getTestWish());
+        historyBean.setResult(verify? RunResult.SUCCESS.getCode():RunResult.FAIL.getCode());
+        historyBean.setVerify(bean.getTestWish());
 
         return historyBean;
 

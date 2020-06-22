@@ -2,9 +2,10 @@ package com.okay.family.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.bean.common.DelBean;
-import com.okay.family.common.bean.testcase.request.CaseDataBean;
-import com.okay.family.common.bean.testcase.request.CaseSearchBean;
-import com.okay.family.common.bean.testcase.request.EditCaseAttributeBean;
+import com.okay.family.common.bean.testcase.request.*;
+import com.okay.family.common.bean.testcase.response.CaseDetailBean;
+import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
+import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
 import com.okay.family.common.bean.testcase.response.TestCaseListBean;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.TestCaseCode;
@@ -73,27 +74,31 @@ public class CaseController {
 
     }
 
-    @GetMapping(value = "/records")
-    public Result findMyCaseByid(@PathVariable(value = "uid", required = true) int uid) {
-        return Result.success();
+    @GetMapping(value = "/editrecords")
+    public Result findMyCaseByid(@Valid CaseEditRecordQueryBean bean) {
+        PageInfo<CaseEditRetrunRecord> caseEditRecords = service.getCaseEditRecords(bean);
+        return Result.success(caseEditRecords);
 
     }
 
     @GetMapping(value = "/attribute")
-    public Result getAttribute(@PathVariable(value = "uid", required = true) int uid) {
-        return Result.success();
-
+    public Result getAttribute(@RequestParam(value = "id", required = true) int id) {
+        TestCaseAttributeBean attributeById = service.getAttributeById(id);
+        return Result.success(attributeById);
     }
 
     @GetMapping(value = "/data")
-    public Result getData(@PathVariable(value = "uid", required = true) int uid) {
-        return Result.success();
+    public Result getData(@RequestParam(value = "id", required = true) int id) {
+        CaseDetailBean caseDetail = service.getCaseDetail(id);
+        return Result.success(caseDetail);
 
     }
 
-    @GetMapping(value = "/run")
-    public Result runCase(@PathVariable(value = "id", required = true) int id) {
-        return Result.success();
+    @PostMapping(value = "/run")
+    public Result runCase(@RequestBody @Valid CaseDataBean bean) {
+        bean.setId(0);
+        CaseRunRecord caseRunRecord = service.runCaseData(bean);
+        return Result.success(caseRunRecord);
 
     }
 
