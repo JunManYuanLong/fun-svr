@@ -9,14 +9,9 @@ class CaseEditRecord extends AbstractBean {
 
     private static final long serialVersionUID = -6290432268998729332L;
 
-
-    int id
-
     int caseId
 
     int editor
-
-    String create_time
 
     int type
 
@@ -25,4 +20,5 @@ class CaseEditRecord extends AbstractBean {
         this.editor = editor
         this.type = type
     }
+
 }

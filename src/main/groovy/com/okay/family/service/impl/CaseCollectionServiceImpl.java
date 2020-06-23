@@ -1,83 +1,94 @@
 package com.okay.family.service.impl;
 
-import com.okay.family.common.bean.casecollect.CaseCollectionBean;
-import com.okay.family.common.bean.casecollect.CaseCollectionRecord;
-import com.okay.family.common.bean.casecollect.CaseCollectionRelationBean;
-import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
-import com.okay.family.common.exception.CaseCollecionException;
+import com.okay.family.common.bean.casecollect.request.AddCollectionBean;
+import com.okay.family.common.bean.casecollect.request.CaseCollectionEditRecord;
+import com.okay.family.common.bean.casecollect.request.CollectionEditBean;
+import com.okay.family.common.bean.casecollect.request.DelCaseCollectionRelationBean;
+import com.okay.family.common.bean.casecollect.response.ListCaseBean;
+import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.enums.CollectionEditType;
 import com.okay.family.mapper.CaseCollectionMapper;
-import com.okay.family.mapper.TestCaseMapper;
 import com.okay.family.service.ICaseCollectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class CaseCollectionServiceImpl implements ICaseCollectionService {
 
     private static Logger logger = LoggerFactory.getLogger(CaseCollectionServiceImpl.class);
 
-    TestCaseMapper testCaseMapper;
-
     CaseCollectionMapper caseCollectionMapper;
 
     @Autowired
-    public CaseCollectionServiceImpl(TestCaseMapper testCaseMapper, CaseCollectionMapper caseCollectionMapper) {
-        this.testCaseMapper = testCaseMapper;
+    public CaseCollectionServiceImpl(CaseCollectionMapper caseCollectionMapper) {
         this.caseCollectionMapper = caseCollectionMapper;
     }
 
     @Override
-    public int addCollection(CaseCollectionBean bean) {
+    public int addCollection(AddCollectionBean bean) {
         int i = caseCollectionMapper.addCollection(bean);
-        if (i != 1 || bean.getId() < 1000) CaseCollecionException.fail("添加用例集错误!");
-        Set<Integer> caseids = bean.getCaseids();
-        List<CaseCollectionRelationBean> list = new ArrayList<>();
-        caseids.forEach(x -> {
-            CaseCollectionRelationBean e = new CaseCollectionRelationBean();
-            e.setCaseid(x);
-            e.setCollectionid(bean.getId());
-            list.add(e);
-        });
-        int i1 = caseCollectionMapper.addRelation(list);
-        return i1;
+        addCollectionCaseRelation(bean);
+        if (bean.getId() > 1)
+            addCollectionEditRecord(new CaseCollectionEditRecord(bean.getId(), bean.getUid(), CollectionEditType.CREATE.getCode()));
+        return bean.getId();
+    }
+
+    @Async
+    @Override
+    public void addCollectionCaseRelation(AddCollectionBean bean) {
+        caseCollectionMapper.addCollectionCaseRelation(bean);
+    }
+
+    @Async
+    @Override
+    public void addCollectionEditRecord(CaseCollectionEditRecord record) {
+        caseCollectionMapper.addEditRcord(record);
     }
 
     @Override
-    public int addCollectionRelation(List<CaseCollectionRelationBean> beans) {
-        int i = caseCollectionMapper.addRelation(beans);
+    public int editCollection(CollectionEditBean bean) {
+        int i = caseCollectionMapper.editCollection(bean);
         return i;
     }
 
     @Override
-    public int update(CaseCollectionBean bean) {
-        return 0;
+    public int shareCollection(CollectionEditBean bean) {
+        int i = caseCollectionMapper.shareCollection(bean);
+        return i;
     }
 
     @Override
-    public int addEditReord(CaseCollectionRecord record) {
-        caseCollectionMapper.addEditReord(record);
-        return 0;
+    public int delCollection(DelBean bean) {
+        int i = caseCollectionMapper.delCollection(bean);
+        delCollectionCaseRelation(bean);
+        return i;
+    }
+
+    @Async
+    @Override
+    public void delCollectionCaseRelation(DelBean bean) {
+        caseCollectionMapper.delCollectionCaseRelation(bean);
     }
 
     @Override
-    public List<CaseCollectionBean> getCollections(int uid) {
-        return null;
+    public int delCaseFromCollection(DelCaseCollectionRelationBean bean) {
+        int i = caseCollectionMapper.delCaseFromCollection(bean);
+        if (i > 0)
+            addCollectionEditRecord(new CaseCollectionEditRecord(bean.getGroupId(), bean.getUid(), CollectionEditType.DEL_CASE.getCode()));
+        return i;
     }
 
     @Override
-    public CaseCollectionBean getCollectionInfo(int collectionid) {
-        return null;
-    }
-
-    @Override
-    public List<TestCaseAttributeBean> getCases(int id) {
-        return null;
+    public List<ListCaseBean> getCases(int collectionId, int uid) {
+        List<ListCaseBean> cases = caseCollectionMapper.getCases(collectionId, uid);
+        return cases;
     }
 
 

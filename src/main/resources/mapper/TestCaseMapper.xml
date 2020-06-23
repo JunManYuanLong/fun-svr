@@ -49,6 +49,10 @@
         family_project
     </sql>
 
+    <sql id="run_record">
+        qa_case_run_record
+    </sql>
+
     <resultMap id="entityMap" type="com.okay.family.common.bean.testcase.CaseVerifyBean">
         <result column="verify" property="verify"
                 typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
@@ -60,7 +64,7 @@
         <result property="envName" column="envName"/>
         <result property="apiId" column="apiId"/>
         <result property="apiName" column="apiName"/>
-        <result property="httptype" column="method"/>
+        <result property="httpType" column="method"/>
         <result property="serviceId" column="serviceId"/>
         <result property="serviceName" column="serviceName"/>
         <result property="moduleId" column="moduleId"/>
@@ -225,6 +229,14 @@
         FROM
         <include refid="table"/>
         WHERE id = #{id}) t
+    </insert>
+
+    <insert id="addRunRecord" parameterType="com.okay.family.common.bean.testcase.CaseRunRecord">
+        insert into
+        <include refid="run_record"/>
+        (runId,mark,uid,caseId,code,result,verify,params,headers,response)
+        values
+        (#{runId},#{mark},#{uid},#{caseId},#{code},#{result},#{verify,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler},#{params,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},#{headers,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},#{response,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler})
     </insert>
 
     <insert id="addCaseProjectRelation"

@@ -1,30 +1,34 @@
 package com.okay.family.mapper;
 
-import com.okay.family.common.bean.casecollect.CaseCollectionBean;
-import com.okay.family.common.bean.casecollect.CaseCollectionRecord;
-import com.okay.family.common.bean.casecollect.CaseCollectionRelationBean;
-import com.okay.family.common.bean.testcase.CaseRunRecord;
+import com.okay.family.common.bean.casecollect.request.AddCollectionBean;
+import com.okay.family.common.bean.casecollect.request.CaseCollectionEditRecord;
+import com.okay.family.common.bean.casecollect.request.CollectionEditBean;
+import com.okay.family.common.bean.casecollect.request.DelCaseCollectionRelationBean;
+import com.okay.family.common.bean.casecollect.response.ListCaseBean;
+import com.okay.family.common.bean.common.DelBean;
 
 import java.util.List;
 
 public interface CaseCollectionMapper {
 
-    int addCollection(CaseCollectionBean records);
+    int addCollection(AddCollectionBean bean);
 
-    int addRelation(List<CaseCollectionRelationBean> records);
+    void addCollectionCaseRelation(AddCollectionBean beans);
 
-    int share(CaseCollectionBean bean);
+    void addEditRcord(CaseCollectionEditRecord record);
 
-    //todo:待完成
-    int update(CaseCollectionBean bean);
+    int delCollection(DelBean bean);
 
-    int addEditReord(CaseCollectionRecord bean);
+    void delCollectionCaseRelation(DelBean bean);
 
-    //todo:待完成
-    void addRunReord(CaseRunRecord record);
+    int editCollection(CollectionEditBean bean);
 
-    //todo:待完成
-    List<CaseCollectionBean> findCollections(int environment, int uid);
+    int shareCollection(CollectionEditBean bean);
+
+    int delCaseFromCollection(DelCaseCollectionRelationBean bean);
+
+    //todo:完成
+    List<ListCaseBean> getCases(int collectionId, int uid);
 
 
 }

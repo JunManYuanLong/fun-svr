@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -213,6 +214,27 @@ public class TestCaseServiceImpl implements ITestCaseService {
                 int id = SourceCode.changeStringToInt(value.substring(OkayConstant.USER_CERTIFICATE_KEY.length()));
                 TestUserCheckBean userCheckBean = testUserService.getCertificate(id);
                 params.put(key, userCheckBean.getCertificate());
+            } else if (value.startsWith(OkayConstant.RANDOM_KEY)) {
+                String replace = value.replace(OkayConstant.RANDOM_KEY, Constant.EMPTY);
+                String[] split = replace.split(",", 2);
+                params.put(key, SourceCode.getRandomIntRange(SourceCode.changeStringToInt(split[0]), SourceCode.changeStringToInt(split[1])));
+            }
+        });
+    }
+
+    /**
+     * 处理参数中的表达式信息
+     *
+     * @param params
+     */
+    public void handleParams(JSONObject params, ConcurrentHashMap map) {
+        params.keySet().stream().forEach(key ->
+        {
+            String value = params.getString(key);
+            if (value.startsWith(OkayConstant.USER_CERTIFICATE_KEY)) {
+                int id = SourceCode.changeStringToInt(value.substring(OkayConstant.USER_CERTIFICATE_KEY.length()));
+                String certificate = testUserService.getCertificate(id, map);
+                params.put(key, certificate);
             } else if (value.startsWith(OkayConstant.RANDOM_KEY)) {
                 String replace = value.replace(OkayConstant.RANDOM_KEY, Constant.EMPTY);
                 String[] split = replace.split(",", 2);

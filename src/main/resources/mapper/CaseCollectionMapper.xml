@@ -6,39 +6,89 @@
         qa_case_collection
     </sql>
 
-    <sql id="relation">
+    <sql id="case_relation">
         qa_collection_case_relation
     </sql>
 
-    <sql id="record">
-        qa_case_edit_record
+    <sql id="edit_record">
+        qa_collection_edit_record
     </sql>
 
-    <insert id="addCollection"  useGeneratedKeys="true" keyProperty="id" parameterType="com.okay.family.common.bean.casecollect.CaseCollectionBean">
+    <sql id="case_table">
+        qa_test_case
+    </sql>
+
+    <select id="getCases" resultType="com.okay.family.common.bean.casecollect.response.ListCaseBean">
+        select c.id id,c.name name,CASE c.uid = #{arg1} WHEN 1 THEN 1 ELSE 0 END isEdit from
+        <include refid="case_relation"/>
+        r left join
+        <include refid="case_table"/>
+        c on r.caseId = c.id
+        where c.collectionId = #{arg0}
+    </select>
+
+    <update id="editCollection" parameterType="com.okay.family.common.bean.casecollect.request.CollectionEditBean">
+        update
+        <include refid="table"/>
+        SET
+        name = #{name},last=#{uid}
+        where id = #{groupId}
+    </update>
+
+    <update id="shareCollection" parameterType="com.okay.family.common.bean.casecollect.request.CollectionEditBean">
+        update
+        <include refid="table"/>
+        set
+        pub = 2,last=#{uid}
+        where id = #{groupId} and uid = #{uid}
+    </update>
+
+    <insert id="addCollection" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.okay.family.common.bean.casecollect.request.AddCollectionBean">
         INSERT INTO
         <include refid="table"/>
-        (owner,environment,name,last)
+        (uid,envId,name,last,pub)
         values
-        (#{owner},#{environment},#{name},#{owner})
+        (#{uid},#{envId},#{groupName},#{uid},2)
     </insert>
 
-
-    <insert id="addRelation" parameterType="java.util.List">
+    <insert id="addCollectionCaseRelation"
+            parameterType="com.okay.family.common.bean.casecollect.request.AddCollectionBean">
         insert into
-        <include refid="relation"/>
-        (collectionid, caseid)
+        <include refid="case_relation"/>
+        (collectionId,caseId)
         values
-        <foreach collection="list" item="CaseCollectionRelationBean" index="index" separator=",">
+        <foreach collection="apiList" item="apiList" index="index" separator=",">
             (
-            #{CaseCollectionRelationBean.collectionid}, #{CaseCollectionRelationBean.caseid}
+            #{id},#{apiList}
             )
         </foreach>
     </insert>
 
+    <insert id="addEditRcord" parameterType="com.okay.family.common.bean.casecollect.request.CaseCollectionEditRecord">
+        insert into
+        <include refid="edit_record"/>
+        (collectionId,editor,type)
+        values
+        (#{collectionId},#{editor},#{type})
+    </insert>
 
+    <delete id="delCaseFromCollection"
+            parameterType="com.okay.family.common.bean.casecollect.request.DelCaseCollectionRelationBean">
+        delete from
+        <include refid="case_relation"/>
+        where collectionId = #{groupId} and caseId = #{apiId}
+    </delete>
 
-    <!--    <if test="phone != null">-->
-    <!--        phone,-->
-    <!--    </if>-->
+    <delete id="delCollection" parameterType="com.okay.family.common.bean.common.DelBean">
+        delete from
+        <include refid="table"/>
+        where id = #{id} and uid =#{uid}
+    </delete>
 
+    <delete id="delCollectionCaseRelation" parameterType="com.okay.family.common.bean.common.DelBean">
+        delete from
+        <include refid="case_relation"/>
+        where collectionId = #{id}
+    </delete>
 </mapper>

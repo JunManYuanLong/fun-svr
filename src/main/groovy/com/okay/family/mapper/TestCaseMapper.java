@@ -40,6 +40,7 @@ public interface TestCaseMapper {
     List<CaseEditRetrunRecord> getCaseEditRecords(CaseEditRecordQueryBean bean);
 
     CaseDetailBean getCaseDetail(int id);
-    //todo:增加SQL语句
+
     void addRunRecord(CaseRunRecord record);
+    
 }

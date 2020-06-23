@@ -29,7 +29,7 @@ class CaseDetailBean extends AbstractBean {
 
     String moduleName
 
-    String httptype
+    String httpType
 
     String readType
 

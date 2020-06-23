@@ -1,36 +1,32 @@
 package com.okay.family.service;
 
-import com.okay.family.common.bean.casecollect.CaseCollectionBean;
-import com.okay.family.common.bean.casecollect.CaseCollectionRecord;
-import com.okay.family.common.bean.casecollect.CaseCollectionRelationBean;
-import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
+import com.okay.family.common.bean.casecollect.request.AddCollectionBean;
+import com.okay.family.common.bean.casecollect.request.CaseCollectionEditRecord;
+import com.okay.family.common.bean.casecollect.request.CollectionEditBean;
+import com.okay.family.common.bean.casecollect.request.DelCaseCollectionRelationBean;
+import com.okay.family.common.bean.casecollect.response.ListCaseBean;
+import com.okay.family.common.bean.common.DelBean;
 
 import java.util.List;
 
 public interface ICaseCollectionService {
 
-    int addCollection(CaseCollectionBean beans);
+    int addCollection(AddCollectionBean beans);
 
-    int addCollectionRelation(List<CaseCollectionRelationBean> bean);
+    void addCollectionCaseRelation(AddCollectionBean bean);
 
-    /**
-     * 这里需要先删除用例集和用例的依赖关系,然后重建,需要记录record
-     *
-     * @param bean
-     * @return
-     */
-    //todo:待完成
-    int update(CaseCollectionBean bean);
+    void addCollectionEditRecord(CaseCollectionEditRecord record);
 
-    int addEditReord(CaseCollectionRecord record);
+    int editCollection(CollectionEditBean bean);
 
-    //todo:待完成
-    List<CaseCollectionBean> getCollections(int uid);
+    int shareCollection(CollectionEditBean bean);
 
-    //todo:待完成
-    CaseCollectionBean getCollectionInfo(int collectionid);
+    int delCollection(DelBean bean);
 
-    List<TestCaseAttributeBean> getCases(int id);
+    void delCollectionCaseRelation(DelBean bean);
 
+    int delCaseFromCollection(DelCaseCollectionRelationBean bean);
+
+    List<ListCaseBean> getCases(int collectionId,int uid);
 
 }

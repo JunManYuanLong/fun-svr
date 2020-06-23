@@ -44,7 +44,7 @@ class Result<T> extends AbstractBean {
  * @return
  */
     static <T> Result<T> success(T data) {
-        new Result<>(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc(), data)
+        new Result(0, CommonCode.SUCCESS.getDesc(), data)
     }
 
     static <T> Result<T> success(PageInfo data) {
