@@ -1,13 +1,15 @@
 package com.okay.family.service.impl;
 
-import com.okay.family.common.bean.casecollect.request.AddCollectionBean;
-import com.okay.family.common.bean.casecollect.request.CaseCollectionEditRecord;
-import com.okay.family.common.bean.casecollect.request.CollectionEditBean;
-import com.okay.family.common.bean.casecollect.request.DelCaseCollectionRelationBean;
+import com.okay.family.common.CaseRunThread;
+import com.okay.family.common.OkayThreadPool;
+import com.okay.family.common.bean.casecollect.CollectionRunResultRecord;
+import com.okay.family.common.bean.casecollect.request.*;
 import com.okay.family.common.bean.casecollect.response.ListCaseBean;
 import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.testcase.request.CaseDataBean;
 import com.okay.family.common.enums.CollectionEditType;
 import com.okay.family.mapper.CaseCollectionMapper;
+import com.okay.family.mapper.TestCaseMapper;
 import com.okay.family.service.ICaseCollectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,9 +29,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
 
     CaseCollectionMapper caseCollectionMapper;
 
+    TestCaseMapper testCaseMapper;
+
     @Autowired
-    public CaseCollectionServiceImpl(CaseCollectionMapper caseCollectionMapper) {
+    public CaseCollectionServiceImpl(CaseCollectionMapper caseCollectionMapper, TestCaseMapper testCaseMapper) {
         this.caseCollectionMapper = caseCollectionMapper;
+        this.testCaseMapper = testCaseMapper;
     }
 
     @Override
@@ -89,6 +95,24 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     public List<ListCaseBean> getCases(int collectionId, int uid) {
         List<ListCaseBean> cases = caseCollectionMapper.getCases(collectionId, uid);
         return cases;
+    }
+
+    @Override
+    public void runCollection(RunCollectionBean bean) {
+        List<CaseDataBean> cases = caseCollectionMapper.getCasesDeatil(bean);
+        List<CaseRunThread> results = new ArrayList<>();
+        cases.forEach(x -> {
+            CaseRunThread caseRunThread = new CaseRunThread(x);
+            OkayThreadPool.addSyncWord(caseRunThread);
+            results.add(caseRunThread);
+        });
+        //todo:处理结果
+    }
+
+    @Async
+    @Override
+    public void addCollectionRunRecord(CollectionRunResultRecord record) {
+        caseCollectionMapper.addCollectionRunRecord(record);
     }
 
 

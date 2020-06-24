@@ -1,9 +1,7 @@
 package com.okay.family.service;
 
-import com.okay.family.common.bean.casecollect.request.AddCollectionBean;
-import com.okay.family.common.bean.casecollect.request.CaseCollectionEditRecord;
-import com.okay.family.common.bean.casecollect.request.CollectionEditBean;
-import com.okay.family.common.bean.casecollect.request.DelCaseCollectionRelationBean;
+import com.okay.family.common.bean.casecollect.request.*;
+import com.okay.family.common.bean.casecollect.CollectionRunResultRecord;
 import com.okay.family.common.bean.casecollect.response.ListCaseBean;
 import com.okay.family.common.bean.common.DelBean;
 
@@ -28,5 +26,9 @@ public interface ICaseCollectionService {
     int delCaseFromCollection(DelCaseCollectionRelationBean bean);
 
     List<ListCaseBean> getCases(int collectionId,int uid);
+
+    void runCollection(RunCollectionBean bean);
+
+    void addCollectionRunRecord(CollectionRunResultRecord record);
 
 }

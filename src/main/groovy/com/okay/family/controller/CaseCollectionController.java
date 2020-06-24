@@ -3,6 +3,7 @@ package com.okay.family.controller;
 import com.okay.family.common.bean.casecollect.request.AddCollectionBean;
 import com.okay.family.common.bean.casecollect.request.CollectionEditBean;
 import com.okay.family.common.bean.casecollect.request.DelCaseCollectionRelationBean;
+import com.okay.family.common.bean.casecollect.request.RunCollectionBean;
 import com.okay.family.common.bean.casecollect.response.ListCaseBean;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.code.CollectionCode;
@@ -76,8 +77,9 @@ public class CaseCollectionController {
 
     }
 
-    @GetMapping(value = "/run")
-    public Result getCollection(@PathVariable(value = "id", required = true) int id) {
+    @PostMapping(value = "/run")
+    public Result getCollection(@RequestBody @Valid RunCollectionBean bean) {
+
         return Result.success();
     }
 

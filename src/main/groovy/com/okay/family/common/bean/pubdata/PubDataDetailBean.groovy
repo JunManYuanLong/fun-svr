@@ -1,6 +1,7 @@
 package com.okay.family.common.bean.pubdata
 
 import com.okay.family.fun.base.bean.AbstractBean
+import com.okay.family.fun.config.Constant
 
 import javax.validation.constraints.NotNull
 
@@ -16,5 +17,11 @@ class PubDataDetailBean extends AbstractBean {
 
     @NotNull
     String value
+
+    String children = "[]"
+
+    String dataType= "string"
+
+    String des = Constant.EMPTY
 
 }
