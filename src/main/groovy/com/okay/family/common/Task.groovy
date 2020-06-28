@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 @Component
 class Task {
 
-    static Logger logger = LoggerFactory.getLogger(Task.class)
+   private static Logger logger = LoggerFactory.getLogger(Task.class)
 
     ICommonService commonService
 

@@ -15,7 +15,6 @@ class VerifyResponseUtil extends SourceCode {
     static boolean verify(JSONObject response, List<CaseVerifyBean> beans) {
         String content = response.getIntValue("code") == TEST_ERROR_CODE ? response.getString("content") : response.toString()
         beans.each {
-
             def key = it.getKey()
             if (key.contains("code")) {
                 String str = "\"" + key + "\":" + it.getValue()
@@ -23,9 +22,7 @@ class VerifyResponseUtil extends SourceCode {
             } else if (key.contains("regex")) {
                 it.setResult(it.getDescription() + "校验结果:" + content ==~ it.getValue())
             }
-
         }
-
         beans.every {
             it.getResult().endsWith("true")
         }

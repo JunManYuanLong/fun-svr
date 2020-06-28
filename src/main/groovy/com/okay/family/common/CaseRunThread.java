@@ -1,6 +1,5 @@
 package com.okay.family.common;
 
-import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
 import com.okay.family.common.enums.RunResult;
@@ -48,13 +47,6 @@ public class CaseRunThread implements Runnable {
         } finally {
             countDownLatch.countDown();
         }
-    }
-
-    private void init() {
-        record.setMark(OkayConstant.RUN_MARK.getAndIncrement());
-        record.setRunId(runId);
-        record.setCaseId(bean.getId());
-        //todo:完成基本功能的初始化
     }
 
 

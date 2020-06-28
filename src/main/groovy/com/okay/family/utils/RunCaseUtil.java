@@ -19,12 +19,13 @@ public class RunCaseUtil {
         int envId = bean.getEnvId();
         int serviceId = bean.getServiceId();
         String host = ServerHost.getHost(serviceId, envId);
-
         CaseRunRecord historyBean = new CaseRunRecord();
         int andIncrement = OkayConstant.RUN_MARK.getAndIncrement();
         historyBean.setMark(andIncrement);
         historyBean.setUid(bean.getUid());
         historyBean.setParams(bean.getParams());
+        historyBean.setCaseId(bean.getId());
+        historyBean.setVerify(bean.getTestWish());
         JSONObject headers = bean.getHeaders();
         headers.put(OkayConstant.MARK_HEADER, andIncrement);
         historyBean.setHeaders(headers);
@@ -41,14 +42,12 @@ public class RunCaseUtil {
             return historyBean;
         }
         JSONObject response = request.getResponse();
+        historyBean.setCode(VerifyResponseUtil.getCode(response));
         historyBean.setResponse(response);
-
         boolean verify = VerifyResponseUtil.verify(response, bean.getTestWish());
-        historyBean.setResult(verify? RunResult.SUCCESS.getCode():RunResult.FAIL.getCode());
+        historyBean.setResult(verify ? RunResult.SUCCESS.getCode() : RunResult.FAIL.getCode());
         historyBean.setVerify(bean.getTestWish());
-
         return historyBean;
-
     }
 
 

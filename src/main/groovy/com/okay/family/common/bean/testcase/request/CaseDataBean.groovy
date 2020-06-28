@@ -28,7 +28,7 @@ class CaseDataBean extends AbstractBean {
     JSONArray header
 
     @NotNull
-//    @Pattern(regexp = "")//todo:完善请求方式验证
+    @Pattern(regexp = "GET|POST-FORM|POST-JSON", message = "请求方式传参错误")
     String httpType
 
 
@@ -68,8 +68,8 @@ class CaseDataBean extends AbstractBean {
         if (header.size() > 0) {
             header.each {x ->
                 JSONObject json = JSON.parseObject(JSONObject.toJSONString(x))
-                def key = json.getString("text")
-                def value = json.getString("value")
+                def key = json.getString("name")
+                def value = json.getString("demo")
                 total.put(key, value)
             }
         }
@@ -82,14 +82,24 @@ class CaseDataBean extends AbstractBean {
             upData.each {x ->
                 JSONObject json = JSON.parseObject(JSON.toJSONString(x))
 
-                def key = json.getString("text")
-                def value = json.getString("value")
                 def type = json.getString("dataType")
-                if (type.equalsIgnoreCase("")) {
-
-                } else if (type.equalsIgnoreCase("")) {
-                    //todo:处理不同类型的嵌套数据
+                if (type ==~ /number|string|integer/) {
+                    def key = json.getString("name")
+                    def value = json.getString("demo")
                     total.put(key, value)
+                } else if (type ==~ /object/) {
+                    def key = json.getString("name")
+                    JSONArray array = json.getJSONArray("children")
+                    JSONObject param = new JSONObject()
+                    array.each {y ->
+                        JSONObject json2 = JSON.parseObject(JSON.toString(y))
+                        def key2 = json2.getString("name")
+                        def value2 = json2.getString("demo")
+                        params.put(key2, value2)
+                    }
+                    total.put(key, param)
+                } else if (type ==~ /array/) {
+                        //todo:完成数组格式转换
                 }
             }
         }
