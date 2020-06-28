@@ -1,4 +1,4 @@
-package com.okay.family.common.bean.casecollect
+package com.okay.family.common.bean.casecollect.request
 
 import com.okay.family.fun.base.bean.AbstractBean
 
@@ -6,15 +6,15 @@ class CollectionRunResultRecord extends AbstractBean{
 
     private static final long serialVersionUID = 48438627439874932;
 
-    int id
-
-    String name
-
     int collectionId
+
+    int uid
 
     int envId
 
     int runId
+
+    String name
 
     int caseNum
 
@@ -26,10 +26,10 @@ class CollectionRunResultRecord extends AbstractBean{
 
     int unrun
 
-    int user_error
+    int userError
 
-    String start_time
+    String start
 
-    String end_time
+    String end
 
 }

@@ -1,11 +1,13 @@
 package com.okay.family.controller;
 
-import com.okay.family.common.bean.casecollect.request.AddCollectionBean;
-import com.okay.family.common.bean.casecollect.request.CollectionEditBean;
-import com.okay.family.common.bean.casecollect.request.DelCaseCollectionRelationBean;
-import com.okay.family.common.bean.casecollect.request.RunCollectionBean;
+import com.github.pagehelper.PageInfo;
+import com.okay.family.common.bean.casecollect.request.*;
+import com.okay.family.common.bean.casecollect.response.CollectionRunResultDetailBean;
+import com.okay.family.common.bean.casecollect.response.CollectionRunSimpleResutl;
 import com.okay.family.common.bean.casecollect.response.ListCaseBean;
+import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.code.CollectionCode;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.service.ICaseCollectionService;
@@ -72,16 +74,29 @@ public class CaseCollectionController {
     }
 
     @GetMapping(value = "/collections")
-    public Result getCollections(@PathVariable(value = "uid", required = true) int uid) {
-        return Result.success();
-
+    public Result getCollections(@Valid SearchCollectionBean bean) {
+        bean.init();
+        PageInfo<ListCollectionBean> collecions = service.findCollecions(bean);
+        return Result.success(collecions);
     }
 
     @PostMapping(value = "/run")
     public Result getCollection(@RequestBody @Valid RunCollectionBean bean) {
-
-        return Result.success();
+        CollectionRunSimpleResutl collectionRunSimpleResutl = service.runCollection(bean);
+        return Result.success(collectionRunSimpleResutl);
     }
 
+    @GetMapping(value = "/records")
+    public Result getRecords(@Valid DelBean bean) {
+        List<SimpleBean> records = service.getRecords(bean);
+        return Result.success(records);
+    }
+
+    @GetMapping(value = "/record")
+    public Result getRecord(@Valid DelBean bean) {
+        CollectionRunResultDetailBean collectionRunDetail = service.getCollectionRunDetail(bean.getId());
+        return Result.success(collectionRunDetail);
+
+    }
 
 }

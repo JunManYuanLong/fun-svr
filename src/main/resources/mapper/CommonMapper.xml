@@ -20,8 +20,9 @@
     <insert id="saveRequest" parameterType="com.okay.family.common.bean.RequestSaveBean">
         INSERT INTO
         <include refid="save_table"/>
-        (uid,type,method,host,api,status,code,expendtime,datasize,requestid)
-        values (#{uid},#{type},#{method},#{host},#{api},#{status},#{code},#{expendtime},#{datasize},#{requestid})
+        (api,mark,method,host,size,cost,status,code,requestid)
+        VALUES
+        (#{api},#{mark},#{method},#{host},#{size},#{cost},#{status},#{code},#{requestid})
     </insert>
 
 </mapper>

@@ -1,44 +1,46 @@
 package com.okay.family.common.bean.casecollect.response
 
-
+import com.alibaba.fastjson.JSONArray
 import com.okay.family.common.bean.testcase.response.ListCaseRunResultBean
 import com.okay.family.fun.base.bean.AbstractBean
 /**
  * 返回给前端的测试结果
  */
-class CollectionRunResultDetailBean extends AbstractBean{
+class CollectionRunResultDetailBean extends AbstractBean {
 
     private static final long serialVersionUID = 32454657765756;
-
+    /**
+     * 用例集id
+     */
     int id
 
     String name
 
-    int collectionId
-
-    int envId
+    String envName
 
     int runId
 
     int caseNum
 
-    int result
+    String result
 
-    int success
+    JSONArray list
 
-    int fail
+    String startTime
 
-    int unrun
+    String endTime
 
-    int user_error
+    List<ListCaseRunResultBean> caseList
 
-    String start_time
-
-    String end_time
-
-    String create_time
-    
-    List<ListCaseRunResultBean> results
-
-
+    def copyFrom(CollectionRunResultDetailBean bean) {
+        this.id = bean.getId()
+        this.name = bean.getName()
+        this.envId = bean.getEnv()
+        this.runId = bean.getRunId()
+        this.caseNum = bean.getCaseNum()
+        this.list = bean.getList()
+        this.result = bean.getResult()
+        this.startTime = bean.getStartTime()
+        this.endTime = bean.getEndTime()
+    }
 }

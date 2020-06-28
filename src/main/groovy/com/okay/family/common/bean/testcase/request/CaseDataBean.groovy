@@ -48,7 +48,7 @@ class CaseDataBean extends AbstractBean {
     String url
 
 /**
- * 默认0,1:可用,2:不可用
+ * 1:可用,2:不可用
  */
     int available
 

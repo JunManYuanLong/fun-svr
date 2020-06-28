@@ -1,10 +1,13 @@
 package com.okay.family.mapper;
 
 import com.okay.family.common.bean.casecollect.request.*;
-import com.okay.family.common.bean.casecollect.response.CollectionRunSimpleResutl;
+import com.okay.family.common.bean.casecollect.response.CollectionRunResultDetailBean;
 import com.okay.family.common.bean.casecollect.response.ListCaseBean;
+import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.bean.testcase.response.ListCaseRunResultBean;
 
 import java.util.List;
 
@@ -28,10 +31,18 @@ public interface CaseCollectionMapper {
 
     List<ListCaseBean> getCases(int collectionId, int uid);
 
-    //todo:待完成
     List<CaseDataBean> getCasesDeatil(RunCollectionBean bean);
 
-    //todo:待完成
-    void addCollectionRunRecord(CollectionRunSimpleResutl record);
+    void addCollectionRunRecord(CollectionRunResultRecord record);
+
+    void updateCollectionStatus(int id, int status);
+
+    List<ListCollectionBean> findCollecions(SearchCollectionBean bean);
+
+    List<SimpleBean> getRecords(DelBean bean);
+
+    List<ListCaseRunResultBean> getCaseRunRecord(int runId);
+
+    CollectionRunResultDetailBean getCollectionRunDetail(int runId);
 
 }

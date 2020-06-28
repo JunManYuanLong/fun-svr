@@ -70,6 +70,7 @@ public class CaseController {
 
     @GetMapping(value = "/getcases")
     public Result findCaseByid(@Valid CaseSearchBean bean) {
+        bean.init();
         PageInfo<TestCaseListBean> testCaseListBeanPageInfo = service.searchCases(bean);
         return Result.success(testCaseListBeanPageInfo);
 

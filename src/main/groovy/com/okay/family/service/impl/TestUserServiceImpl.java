@@ -43,7 +43,7 @@ public class TestUserServiceImpl implements ITestUserService {
     public PageInfo<TestUserBean> findUsers(SearchUserBean bean) {
         PageHelper.startPage(bean.getPageNum(), bean.getPageSize());
         List<TestUserBean> users = testUserMapper.findUsers(bean);
-        PageInfo result = new PageInfo(users);
+        PageInfo<TestUserBean> result = new PageInfo(users);
         return result;
     }
 

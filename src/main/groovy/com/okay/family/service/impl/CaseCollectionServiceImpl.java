@@ -1,14 +1,22 @@
 package com.okay.family.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.okay.family.common.CaseRunThread;
 import com.okay.family.common.OkayThreadPool;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.casecollect.request.*;
+import com.okay.family.common.bean.casecollect.response.CollectionRunResultDetailBean;
 import com.okay.family.common.bean.casecollect.response.CollectionRunSimpleResutl;
 import com.okay.family.common.bean.casecollect.response.ListCaseBean;
+import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.enums.CaseAvailableStatus;
 import com.okay.family.common.enums.CollectionEditType;
+import com.okay.family.common.enums.CollectionStatus;
+import com.okay.family.common.enums.RunResult;
 import com.okay.family.common.exception.CaseCollecionException;
 import com.okay.family.common.exception.CommonException;
 import com.okay.family.fun.utils.Time;
@@ -109,13 +117,13 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public CollectionRunSimpleResutl runCollection(RunCollectionBean bean) {
         List<CaseDataBean> casesDeatil = getCasesDeatil(bean);
-        List<CaseDataBean> cases = casesDeatil.stream().filter(x -> x.getEnvId() == bean.getEnvId()).collect(Collectors.toList());
+        List<CaseDataBean> cases = casesDeatil.stream().filter(x -> x.getEnvId() == bean.getEnvId() && x.getAvailable() == CaseAvailableStatus.OK.getCode()).collect(Collectors.toList());
         CountDownLatch countDownLatch = new CountDownLatch(cases.size());
-        int andIncrement = OkayConstant.COLLECTION_MARK.getAndIncrement();
+        int runId = OkayConstant.COLLECTION_MARK.getAndIncrement();
         List<CaseRunThread> results = new ArrayList<>();
         String start = Time.getDate();
         cases.forEach(x -> {
-            CaseRunThread caseRunThread = new CaseRunThread(x, countDownLatch, andIncrement);
+            CaseRunThread caseRunThread = new CaseRunThread(x, countDownLatch, runId);
             OkayThreadPool.addSyncWork(caseRunThread);
             results.add(caseRunThread);
         });
@@ -125,18 +133,37 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
             CommonException.fail("执行用例集失败!");
         }
         String end = Time.getDate();
-        //todo:处理结果,记录结果,返回结果
         results.forEach(x -> caseService.addRunRecord(x.getRecord()));
         Map<Integer, List<Integer>> collect = results.stream().map(x -> x.getRecord().getResult()).collect(Collectors.groupingBy(x -> x));
+        int success = collect.getOrDefault(RunResult.SUCCESS.getCode(), new ArrayList<>(0)).size();
+        int fail = collect.getOrDefault(RunResult.FAIL.getCode(), new ArrayList<>(0)).size();
+        int unrun = collect.getOrDefault(RunResult.UNRUN.getCode(), new ArrayList<>(0)).size();
+        int userError = collect.getOrDefault(RunResult.USER_ERROR.getCode(), new ArrayList<>(0)).size();
+        CollectionStatus collectionStatus = casesDeatil.size() == success ? CollectionStatus.SUCCESS : CollectionStatus.FAIL;
         CollectionRunSimpleResutl res = new CollectionRunSimpleResutl();
-        //todo:初始化res
-
+        res.setRunId(runId);
+        res.setCaseNum(casesDeatil.size());
+        res.setSuccess(success);
+        res.setStart(start);
+        res.setEnd(end);
+        res.setResult(collectionStatus.getDesc());
+        res.setFail(fail);
+        res.setUnrun(casesDeatil.size() - cases.size() + unrun);
+        res.setUserError(userError);
+        CollectionRunResultRecord record = new CollectionRunResultRecord();
+        record.copyFrom(res);
+        record.setCollectionId(bean.getGroupId());
+        record.setUid(bean.getUid());
+        record.setEnvId(bean.getEnvId());
+        record.setResult(collectionStatus.getCode());
+        updateCollectionStatus(bean.getGroupId(), collectionStatus.getCode());
+        addCollectionRunRecord(record);
         return res;
     }
 
     @Async
     @Override
-    public void addCollectionRunRecord(CollectionRunSimpleResutl record) {
+    public void addCollectionRunRecord(CollectionRunResultRecord record) {
         caseCollectionMapper.addCollectionRunRecord(record);
     }
 
@@ -160,6 +187,62 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
             CommonException.fail("初始化用例信息失败!");
         }
         return cases;
+    }
+
+    @Async
+    @Override
+    public void updateCollectionStatus(int id, int status) {
+        caseCollectionMapper.updateCollectionStatus(id, status);
+    }
+
+    @Override
+    public PageInfo<ListCollectionBean> findCollecions(SearchCollectionBean bean) {
+        PageHelper.startPage(bean.getPageNum(), bean.getPageSize());
+        List<ListCollectionBean> collecions = caseCollectionMapper.findCollecions(bean);
+        PageInfo<ListCollectionBean> pageInfo = new PageInfo(collecions);
+        return pageInfo;
+    }
+
+    @Override
+    public List<SimpleBean> getRecords(DelBean bean) {
+        List<SimpleBean> records = caseCollectionMapper.getRecords(bean);
+        return records;
+    }
+
+    @Override
+    public CollectionRunResultDetailBean getCollectionRunDetail(int runId) {
+        CollectionRunResultDetailBean detailBean = new CollectionRunResultDetailBean();
+        detailBean.setRunId(runId);
+        CountDownLatch countDownLatch = new CountDownLatch(2);
+        getCollectionRunResult(detailBean,countDownLatch);
+        getCaseRunRecord(detailBean, countDownLatch);
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            CommonException.fail("查询用例集运行详情失败!");
+        }
+        return detailBean;
+    }
+
+    @Async
+    @Override
+    public void getCaseRunRecord(CollectionRunResultDetailBean bean, CountDownLatch countDownLatch) {
+        try {
+            bean.setCaseList(caseCollectionMapper.getCaseRunRecord(bean.getRunId()));
+        } finally {
+            countDownLatch.countDown();
+        }
+    }
+
+
+    @Async
+    @Override
+    public void getCollectionRunResult(CollectionRunResultDetailBean bean, CountDownLatch countDownLatch) {
+        try {
+            bean.copyFrom(caseCollectionMapper.getCollectionRunDetail(bean.getRunId()));
+        } finally {
+            countDownLatch.countDown();
+        }
     }
 
 

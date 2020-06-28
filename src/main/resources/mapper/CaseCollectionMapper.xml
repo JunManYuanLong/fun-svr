@@ -18,6 +18,59 @@
         qa_test_case
     </sql>
 
+    <sql id="run_record">
+        qa_collection_run_record
+    </sql>
+
+    <sql id="env">
+        family_base_env
+    </sql>
+
+    <sql id="service">
+        family_service
+    </sql>
+
+    <sql id="case_status">
+        qa_case_run_status
+    </sql>
+
+    <sql id="collection_status">
+        qa_collection_status
+    </sql>
+
+    <resultMap type="com.okay.family.common.bean.testcase.request.CaseDataBean" id="CaseDataBean">
+        <result property="id" column="id"/>
+        <result property="envId" column="envId"/>
+        <result property="uid" column="uid"/>
+        <result property="apiId" column="apiId"/>
+        <result property="httpType" column="method"/>
+        <result property="serviceId" column="serviceId"/>
+        <result property="readType" column="type"/>
+        <result property="url" column="path"/>
+        <result property="name" column="name"/>
+        <result property="available" column="available"/>
+        <result property="headers" column="headers"
+                typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
+        <result property="params" column="params"
+                typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
+        <result property="testWish" column="verify"
+                typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
+    </resultMap>
+
+    <resultMap type="com.okay.family.common.bean.casecollect.response.CollectionRunResultDetailBean"
+               id="CollectionRunResultDetailBean">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="envName" column="envName"/>
+        <result property="runId" column="runId"/>
+        <result property="caseNum" column="caseNum"/>
+        <result property="result" column="result"/>
+        <result property="startTime" column="start"/>
+        <result property="endTime" column="end"/>
+        <result property="list" column="list"
+                typeHandler="com.okay.family.common.typehandler.ResultArrayHandler"/>
+    </resultMap>
+
     <select id="getCases" resultType="com.okay.family.common.bean.casecollect.response.ListCaseBean">
         select c.id id,c.name name,CASE c.uid = #{arg1} WHEN 1 THEN 1 ELSE 0 END isEdit from
         <include refid="case_relation"/>
@@ -27,11 +80,82 @@
         where c.collectionId = #{arg0}
     </select>
 
+    <select id="getCasesDeatil" parameterType="com.okay.family.common.bean.casecollect.request.RunCollectionBean"
+            resultMap="CaseDataBean">
+        select c.id,#{uid},#{envId},c.apiId
+        ,c.method,c.serviceId,c.type,c.path,c,name,c,available,c.headers,c.params,c.verify from
+        <include refid="case_relation"/>
+        r left join
+        <include refid="case_table"/>
+        c on r.caseId = c.id
+        where r.collectionId = #{groupId}
+    </select>
+
+    <select id="findCollecions" parameterType="com.okay.family.common.bean.casecollect.request.SearchCollectionBean"
+            resultType="com.okay.family.common.bean.casecollect.response.ListCollectionBean">
+        select t.id,c.name result,t.name,e.name envName,t.create_time createTime,t.pub isShare,CASE t.uid == #{uid} WHEN
+        1 THEN 1 ELSE 0 END isMyself from
+        <include refid="table"/>
+        t left join
+        <include refid="env"/>
+        e on t.envId = e.id left join
+        <include refid="collection_status"/>
+        c on t.status = c.id
+        <where>
+            <if test="result != 0">
+                and t.status = #{result}
+            </if>
+            <choose>
+                <when test="type == 2">
+                    and t.id = #{groupQuery}
+                </when>
+                <when test="type == 1">
+                    and t.name like concat("%",#{groupQuery},"%")
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="getRecords" parameterType="com.okay.family.common.bean.common.DelBean"
+            resultType="com.okay.family.common.bean.common.SimpleBean">
+        select runId id,CASE ISNULL(name) WHEN 1 THEN create_time ELSE name END name from
+        <include refid="run_record"/>
+        where collectionId = #{id}
+    </select>
+
+    <select id="getCaseRunRecord" parameterType="java.lang.Integer"
+            resultType="com.okay.family.common.bean.testcase.response.ListCaseRunResultBean">
+        select mark id,c.name name,cs.name result,s.name serviceName,c.path url from
+        <include refid="qa_case_run_record"/>
+        t left join
+        <include refid="case_table"/>
+        c on t.caseId = c.id left join
+        <include refid="service"/>
+        s on c.serviceId = s.id left join
+        <include refid="case_status"/>
+        cs on t.result = cs.id
+        where t.runId = #{0}
+    </select>
+
+    <select id="getCollectionRunDetail" parameterType="java.lang.Integer"
+            resultMap="CollectionRunResultDetailBean">
+        select r.collectionId id,t.name,s.name envName,r.runId,r.caseNum,c.name result,start,end,concat("成功=",r.success,";失败=",r.fail,";无法运行=",r.unrun,";用户错误=",r.userError) list from
+        <include refid="run_record"/>
+        r left join
+        <include refid="collection_status"/>
+        c on r.result = c.id left join
+        <include refid="table"/>
+        t on r.collectionId = t.id left join
+        <include refid="env"/>
+        s on r.envId = s.id
+        where runId = #{0}
+    </select>
+
     <update id="editCollection" parameterType="com.okay.family.common.bean.casecollect.request.CollectionEditBean">
         update
         <include refid="table"/>
         SET
-        name = #{name},last=#{uid}
+        name = #{name},editor=#{uid}
         where id = #{groupId}
     </update>
 
@@ -39,17 +163,25 @@
         update
         <include refid="table"/>
         set
-        pub = 2,last=#{uid}
+        pub = 2,editor=#{uid}
         where id = #{groupId} and uid = #{uid}
+    </update>
+
+    <update id="updateCollectionStatus">
+        update
+        <include refid="table"/>
+        set
+        status = #{arg1}
+        where id = #{arg0}
     </update>
 
     <insert id="addCollection" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.okay.family.common.bean.casecollect.request.AddCollectionBean">
         INSERT INTO
         <include refid="table"/>
-        (uid,envId,name,last,pub)
+        (uid,envId,name,editor,pub,status)
         values
-        (#{uid},#{envId},#{groupName},#{uid},2)
+        (#{uid},#{envId},#{groupName},#{uid},2,1)
     </insert>
 
     <insert id="addCollectionCaseRelation"
@@ -71,6 +203,15 @@
         (collectionId,editor,type)
         values
         (#{collectionId},#{editor},#{type})
+    </insert>
+
+    <insert id="addCollectionRunRecord"
+            parameterType="com.okay.family.common.bean.casecollect.request.CollectionRunResultRecord">
+        INSERT INTO
+        <include refid="run_record"/>
+        (runId,collectionId,name,envId,caseNum,result,success,fail,unrun,userError,start,end)
+        VALUES
+        (#{runId},#{collectionId},#{name},#{envId},#{caseNum},#{result},#{success},#{fail},#{unrun},#{userError},#{start},#{end})
     </insert>
 
     <delete id="delCaseFromCollection"

@@ -134,7 +134,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public PageInfo<TestCaseListBean> searchCases(CaseSearchBean bean) {
         PageHelper.startPage(bean.getPageNum(), bean.getPageSize());
         List<TestCaseListBean> testCaseBeans = testCaseMapper.searchCases(bean);
-        PageInfo pageInfo = new PageInfo(testCaseBeans);
+        PageInfo<TestCaseListBean> pageInfo = new PageInfo(testCaseBeans);
         return pageInfo;
     }
 
@@ -178,7 +178,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public PageInfo<CaseEditRetrunRecord> getCaseEditRecords(CaseEditRecordQueryBean bean) {
         PageHelper.startPage(bean.getPageNum(), bean.getPageSize());
         List<CaseEditRetrunRecord> caseEditRecords = testCaseMapper.getCaseEditRecords(bean);
-        PageInfo pageInfo = new PageInfo(caseEditRecords);
+        PageInfo<CaseEditRetrunRecord> pageInfo = new PageInfo(caseEditRecords);
         return pageInfo;
     }
 

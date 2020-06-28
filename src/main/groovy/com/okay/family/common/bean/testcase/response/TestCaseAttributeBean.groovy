@@ -1,6 +1,6 @@
 package com.okay.family.common.bean.testcase.response
 
-import com.okay.family.common.bean.common.ProjectBean
+import com.okay.family.common.bean.common.SimpleBean
 import com.okay.family.fun.base.bean.AbstractBean
 
 class TestCaseAttributeBean extends AbstractBean {
@@ -27,7 +27,7 @@ class TestCaseAttributeBean extends AbstractBean {
 
     String serviceName
 
-    List<ProjectBean> versionList
+    List<SimpleBean> versionList
 
 /**
  * 用于异常查询结果赋值

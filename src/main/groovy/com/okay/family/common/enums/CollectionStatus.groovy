@@ -1,6 +1,6 @@
 package com.okay.family.common.enums
 
-enum CollectionRunStatus {
+enum CollectionStatus {
 
 
     DEFAULT(1, "未测试"),
@@ -11,7 +11,7 @@ enum CollectionRunStatus {
 
     String desc
 
-    CollectionRunStatus(int code, String desc) {
+    CollectionStatus(int code, String desc) {
         this.code = code
         this.desc = desc
     }

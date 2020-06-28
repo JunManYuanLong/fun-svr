@@ -114,7 +114,7 @@
     </select>
 
     <select id="getCaseProjectRelation" parameterType="java.lang.Integer"
-            resultType="com.okay.family.common.bean.common.ProjectBean">
+            resultType="com.okay.family.common.bean.common.SimpleBean">
         select r.id,CASE ISNULL(concat(p.name,p.version)) WHEN 1 THEN "匿名项目" ELSE concat(p.name,p.version) END name from
         <include refid="case_project_relation"/>
         r left join

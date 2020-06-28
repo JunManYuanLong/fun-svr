@@ -2,7 +2,6 @@ package com.okay.family.common.bean
 
 import com.okay.family.fun.base.bean.AbstractBean
 import com.okay.family.fun.base.bean.RequestInfo
-import com.okay.family.fun.config.RequestType
 
 class RequestSaveBean extends AbstractBean {
 
@@ -11,19 +10,14 @@ class RequestSaveBean extends AbstractBean {
     /**
      * 接口地址
      */
-    String apiName
+    String api
 
     int mark
 
     /**
-     * 请求的url
-     */
-    String url
-
-    /**
      * 方法，get/post
      */
-    RequestType method
+    String method
 
     /**
      * 域名
@@ -31,22 +25,20 @@ class RequestSaveBean extends AbstractBean {
     String host
 
     /**
-     * 协议类型
-     */
-    String type
-
-    /**
      * 响应大小
      */
-    int datasize
+    int size
+
     /**
      * 响应耗时
      */
-    long elapsedtime
+    long cost
+
     /**
      * 响应状态码
      */
     int status
+
     /**
      * 响应业务code
      */
@@ -55,15 +47,12 @@ class RequestSaveBean extends AbstractBean {
     int requestid
 
     public RequestSaveBean(RequestInfo requestInfo, int datasize, long elapsed_time, int code, int status, int requestid,int mark) {
-        this.apiName = requestInfo.getApiName()
-        this.url = requestInfo.getUrl()
-        this.method = requestInfo.getMethod()
+        this.api = requestInfo.getApiName()
+        this.method = requestInfo.getMethod().getName()
         this.host = requestInfo.getHost()
-        this.type = requestInfo.getType()
         this.datasize = datasize
         this.elapsedtime = elapsedtime
         this.status = status
-        this.code = code
         this.code = code
         this.requestid = requestid
         this.mark = mark
