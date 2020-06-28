@@ -6,7 +6,7 @@ import com.okay.family.fun.base.bean.AbstractBean
 /**
  * 返回给前端的测试结果
  */
-class CollectionRunResultBean extends AbstractBean{
+class CollectionRunResultDetailBean extends AbstractBean{
 
     private static final long serialVersionUID = 32454657765756;
 

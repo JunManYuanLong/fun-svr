@@ -1,9 +1,10 @@
 package com.okay.family.service;
 
 import com.okay.family.common.bean.casecollect.request.*;
-import com.okay.family.common.bean.casecollect.CollectionRunResultRecord;
+import com.okay.family.common.bean.casecollect.response.CollectionRunSimpleResutl;
 import com.okay.family.common.bean.casecollect.response.ListCaseBean;
 import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.testcase.request.CaseDataBean;
 
 import java.util.List;
 
@@ -27,8 +28,10 @@ public interface ICaseCollectionService {
 
     List<ListCaseBean> getCases(int collectionId,int uid);
 
-    void runCollection(RunCollectionBean bean);
+    CollectionRunSimpleResutl runCollection(RunCollectionBean bean);
 
-    void addCollectionRunRecord(CollectionRunResultRecord record);
+    void addCollectionRunRecord(CollectionRunSimpleResutl record);
+
+    List<CaseDataBean> getCasesDeatil(RunCollectionBean bean);
 
 }

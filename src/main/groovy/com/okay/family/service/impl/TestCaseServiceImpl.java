@@ -190,6 +190,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
     @Override
     public CaseRunRecord runCaseData(CaseDataBean bean) {
+        handleParams(bean);
         CaseRunRecord run = RunCaseUtil.run(bean);
         addRunRecord(run);
         return run;
@@ -201,11 +202,28 @@ public class TestCaseServiceImpl implements ITestCaseService {
         testCaseMapper.addRunRecord(runRecord);
     }
 
+    @Override
+    public void handleParams(CaseDataBean bean) {
+        JSONObject params = bean.getParams();
+        JSONObject headers = bean.getHeaders();
+        handleParams(params);
+        handleParams(headers);
+    }
+
+    @Override
+    public void handleParams(CaseDataBean bean, ConcurrentHashMap<Integer, String> map) {
+        JSONObject params = bean.getParams();
+        JSONObject headers = bean.getHeaders();
+        handleParams(params, map);
+        handleParams(headers, map);
+    }
+
     /**
      * 处理参数中的表达式信息
      *
      * @param params
      */
+    @Override
     public void handleParams(JSONObject params) {
         params.keySet().stream().forEach(key ->
         {
@@ -227,6 +245,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
      *
      * @param params
      */
+    @Override
     public void handleParams(JSONObject params, ConcurrentHashMap map) {
         params.keySet().stream().forEach(key ->
         {

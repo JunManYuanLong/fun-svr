@@ -97,6 +97,7 @@ public class CaseController {
 
     @PostMapping(value = "/run")
     public Result runCase(@RequestBody @Valid CaseDataBean bean) {
+        bean.init();
         bean.setId(0);
         CaseRunRecord caseRunRecord = service.runCaseData(bean);
         return Result.success(caseRunRecord);
