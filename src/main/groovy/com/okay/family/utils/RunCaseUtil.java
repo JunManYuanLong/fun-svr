@@ -1,10 +1,9 @@
 package com.okay.family.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.basedata.ServerHost;
-import com.okay.family.common.bean.testcase.request.CaseDataBean;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
+import com.okay.family.common.bean.testcase.request.CaseDataBean;
 import com.okay.family.common.enums.RequestType;
 import com.okay.family.common.enums.RunResult;
 import com.okay.family.fun.frame.httpclient.FunRequest;
@@ -15,20 +14,10 @@ public class RunCaseUtil {
 
     static Logger logger = LoggerFactory.getLogger(RunCaseUtil.class);
 
-    public static CaseRunRecord run(CaseDataBean bean) {
+    public static void run(CaseDataBean bean, CaseRunRecord record) {
         int envId = bean.getEnvId();
         int serviceId = bean.getServiceId();
         String host = ServerHost.getHost(serviceId, envId);
-        CaseRunRecord historyBean = new CaseRunRecord();
-        int andIncrement = OkayConstant.RUN_MARK.getAndIncrement();
-        historyBean.setMark(andIncrement);
-        historyBean.setUid(bean.getUid());
-        historyBean.setParams(bean.getParams());
-        historyBean.setCaseId(bean.getId());
-        historyBean.setVerify(bean.getTestWish());
-        JSONObject headers = bean.getHeaders();
-        headers.put(OkayConstant.MARK_HEADER, andIncrement);
-        historyBean.setHeaders(headers);
         FunRequest request = null;
         String httpType = bean.getHttpType();
         if (httpType.equalsIgnoreCase(RequestType.GET.getDesc())) {
@@ -38,16 +27,19 @@ public class RunCaseUtil {
         } else if (httpType.equalsIgnoreCase(RequestType.POST_FORM.getDesc())) {
             request = FunRequest.isPost().setHost(host).setApiName(bean.getUrl()).addHeaders(bean.getHeaders()).addParams(bean.getParams());
         } else {
-            historyBean.setResult(RunResult.UNRUN.getCode());
-            return historyBean;
+            record.setResult(RunResult.UNRUN.getCode());
+            return;
         }
         JSONObject response = request.getResponse();
-        historyBean.setCode(VerifyResponseUtil.getCode(response));
-        historyBean.setResponse(response);
+        record.setResponse(response);
+        if (response.isEmpty()) {
+            record.setResult(RunResult.UNRUN.getCode());
+            return;
+        }
+        record.setCode(VerifyResponseUtil.getCode(response));
         boolean verify = VerifyResponseUtil.verify(response, bean.getTestWish());
-        historyBean.setResult(verify ? RunResult.SUCCESS.getCode() : RunResult.FAIL.getCode());
-        historyBean.setVerify(bean.getTestWish());
-        return historyBean;
+        record.setResult(verify ? RunResult.SUCCESS.getCode() : RunResult.FAIL.getCode());
+        record.setVerify(bean.getTestWish());
     }
 
 

@@ -19,6 +19,7 @@ import com.okay.family.common.enums.CollectionStatus;
 import com.okay.family.common.enums.RunResult;
 import com.okay.family.common.exception.CaseCollecionException;
 import com.okay.family.common.exception.CommonException;
+import com.okay.family.common.exception.UserStatusException;
 import com.okay.family.fun.utils.Time;
 import com.okay.family.mapper.CaseCollectionMapper;
 import com.okay.family.service.ICaseCollectionService;
@@ -117,6 +118,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public CollectionRunSimpleResutl runCollection(RunCollectionBean bean) {
         List<CaseDataBean> casesDeatil = getCasesDeatil(bean);
+        int userErrorNum = casesDeatil.stream().filter(x -> x.getAvailable() == CaseAvailableStatus.USER_ERROR.getCode()).collect(Collectors.toList()).size();
         List<CaseDataBean> cases = casesDeatil.stream().filter(x -> x.getEnvId() == bean.getEnvId() && x.getAvailable() == CaseAvailableStatus.OK.getCode()).collect(Collectors.toList());
         CountDownLatch countDownLatch = new CountDownLatch(cases.size());
         int runId = OkayConstant.COLLECTION_MARK.getAndIncrement();
@@ -138,7 +140,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         int success = collect.getOrDefault(RunResult.SUCCESS.getCode(), new ArrayList<>(0)).size();
         int fail = collect.getOrDefault(RunResult.FAIL.getCode(), new ArrayList<>(0)).size();
         int unrun = collect.getOrDefault(RunResult.UNRUN.getCode(), new ArrayList<>(0)).size();
-        int userError = collect.getOrDefault(RunResult.USER_ERROR.getCode(), new ArrayList<>(0)).size();
+        int userError = collect.getOrDefault(RunResult.USER_ERROR.getCode(), new ArrayList<>(0)).size() + userErrorNum;
         CollectionStatus collectionStatus = casesDeatil.size() == success ? CollectionStatus.SUCCESS : CollectionStatus.FAIL;
         CollectionRunSimpleResutl res = new CollectionRunSimpleResutl();
         res.setRunId(runId);
@@ -176,6 +178,11 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
             new Thread(() -> {
                 try {
                     caseService.handleParams(x, certificates);
+                } catch (UserStatusException e) {
+                    x.setAvailable(CaseAvailableStatus.USER_ERROR.getCode());
+                } catch (Exception e) {
+                    logger.error("处理用例参数发生错误!", e);
+                    x.setAvailable(CaseAvailableStatus.UN_KNOW.getCode());
                 } finally {
                     countDownLatch.countDown();
                 }
@@ -214,7 +221,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         CollectionRunResultDetailBean detailBean = new CollectionRunResultDetailBean();
         detailBean.setRunId(runId);
         CountDownLatch countDownLatch = new CountDownLatch(2);
-        getCollectionRunResult(detailBean,countDownLatch);
+        getCollectionRunResult(detailBean, countDownLatch);
         getCaseRunRecord(detailBean, countDownLatch);
         try {
             countDownLatch.await();

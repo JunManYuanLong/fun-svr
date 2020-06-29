@@ -14,6 +14,7 @@ import com.okay.family.common.bean.testcase.response.TestCaseListBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.enums.CaseEditType;
 import com.okay.family.common.exception.CaseException;
+import com.okay.family.common.exception.UserStatusException;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.mapper.TestCaseMapper;
@@ -21,6 +22,7 @@ import com.okay.family.mapper.TestUserMapper;
 import com.okay.family.service.ITestCaseService;
 import com.okay.family.service.ITestUserService;
 import com.okay.family.utils.RunCaseUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -231,7 +233,9 @@ public class TestCaseServiceImpl implements ITestCaseService {
             if (value.startsWith(OkayConstant.USER_CERTIFICATE_KEY)) {
                 int id = SourceCode.changeStringToInt(value.substring(OkayConstant.USER_CERTIFICATE_KEY.length()));
                 TestUserCheckBean userCheckBean = testUserService.getCertificate(id);
-                params.put(key, userCheckBean.getCertificate());
+                String certificate = userCheckBean.getCertificate();
+                if (StringUtils.isEmpty(certificate)) UserStatusException.fail();
+                params.put(key, certificate);
             } else if (value.startsWith(OkayConstant.RANDOM_KEY)) {
                 String replace = value.replace(OkayConstant.RANDOM_KEY, Constant.EMPTY);
                 String[] split = replace.split(",", 2);
@@ -253,6 +257,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
             if (value.startsWith(OkayConstant.USER_CERTIFICATE_KEY)) {
                 int id = SourceCode.changeStringToInt(value.substring(OkayConstant.USER_CERTIFICATE_KEY.length()));
                 String certificate = testUserService.getCertificate(id, map);
+                if (StringUtils.isEmpty(certificate)) UserStatusException.fail();
                 params.put(key, certificate);
             } else if (value.startsWith(OkayConstant.RANDOM_KEY)) {
                 String replace = value.replace(OkayConstant.RANDOM_KEY, Constant.EMPTY);
