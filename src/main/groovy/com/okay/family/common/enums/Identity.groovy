@@ -1,8 +1,7 @@
 package com.okay.family.common.enums
 
-import com.alibaba.fastjson.JSONObject
-
-import java.util.stream.Collectors
+import com.alibaba.fastjson.JSONArray
+import com.okay.family.fun.frame.SourceCode
 
 enum Identity {
 
@@ -20,8 +19,10 @@ enum Identity {
         this.desc = desc
     }
 
-    static JSONObject getAll() {
-        Identity.values().stream().collect(Collectors.toMap({x -> x.getCode() as String}, {x -> x.getDesc()})) as JSONObject
+    static JSONArray getAll() {
+        JSONArray result = new JSONArray()
+        Identity.values().each {x -> result << SourceCode.getJson("id=" + x.getCode(), "name=" + x.getDesc())}
+        result
     }
 
 }

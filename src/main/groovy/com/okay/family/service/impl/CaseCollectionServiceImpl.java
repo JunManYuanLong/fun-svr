@@ -139,7 +139,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         Map<Integer, List<Integer>> collect = results.stream().map(x -> x.getRecord().getResult()).collect(Collectors.groupingBy(x -> x));
         int success = collect.getOrDefault(RunResult.SUCCESS.getCode(), new ArrayList<>(0)).size();
         int fail = collect.getOrDefault(RunResult.FAIL.getCode(), new ArrayList<>(0)).size();
-        int unrun = collect.getOrDefault(RunResult.UNRUN.getCode(), new ArrayList<>(0)).size();
+        int unrun = collect.getOrDefault(RunResult.UNRUN.getCode(), new ArrayList<>(0)).size() - userErrorNum;
         int userError = collect.getOrDefault(RunResult.USER_ERROR.getCode(), new ArrayList<>(0)).size() + userErrorNum;
         CollectionStatus collectionStatus = casesDeatil.size() == success ? CollectionStatus.SUCCESS : CollectionStatus.FAIL;
         CollectionRunSimpleResutl res = new CollectionRunSimpleResutl();

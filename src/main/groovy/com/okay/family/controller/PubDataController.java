@@ -35,7 +35,7 @@ public class PubDataController {
     public Result getDatas(@RequestParam(value = "uid", required = true) int uid,
                            @RequestParam(value = "envId", required = true) int envId) {
         List<PubDataBean> datas = pubDataService.getDatasByEnv(uid, envId);
-        return Result.build(datas);
+        return Result.success(datas);
     }
 
     @PostMapping(value = "/edit")
@@ -48,7 +48,7 @@ public class PubDataController {
             return i > 0 ? Result.success(SourceCode.getJson("id=" + i)) : Result.fail(PubDataCode.ADD_FAIL);
         }
         logger.warn("未验证的参数:{}", bean.toString());
-        return Result.build(CommonCode.PARAMS_ERROR);
+        return Result.fail(CommonCode.PARAMS_ERROR);
     }
 
     @PostMapping(value = "/del")

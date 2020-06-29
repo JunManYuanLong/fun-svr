@@ -30,12 +30,12 @@ public class CommonExceptionHandler {
         if (e instanceof MethodArgumentNotValidException) {
             String defaultMessage = ((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getDefaultMessage();
             logger.error("参数异常:{}", defaultMessage);
-            return Result.build(CommonCode.PARAMS_ERROR.getCode(), defaultMessage);
+            return Result.fail(CommonCode.PARAMS_ERROR.getCode(), defaultMessage);
         }
         if (e instanceof DuplicateKeyException) {
             String message = e.getMessage();
             logger.error("唯一性校验异常", e);
-            return Result.build(DataBaseCode.ONLY_KEY_FAIL);
+            return Result.fail(DataBaseCode.ONLY_KEY_FAIL);
         }
         if (e instanceof MyBatisSystemException) {
             String message = e.getMessage();

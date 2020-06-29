@@ -193,9 +193,10 @@ public class TestCaseServiceImpl implements ITestCaseService {
     @Override
     public CaseRunRecord runCaseData(CaseDataBean bean) {
         handleParams(bean);
-        CaseRunRecord run = RunCaseUtil.run(bean);
-        addRunRecord(run);
-        return run;
+        CaseRunRecord record = new CaseRunRecord();
+        RunCaseUtil.run(bean, record);
+        addRunRecord(record);
+        return record;
     }
 
     @Async

@@ -1,5 +1,6 @@
 package com.okay.family.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.enums.Identity;
@@ -18,7 +19,7 @@ public class CommonDataController {
 
     @GetMapping(value = "/roles")
     public Result getIdentity() {
-        JSONObject all = Identity.getAll();
+        JSONArray all = Identity.getAll();
         return Result.success(all);
     }
 

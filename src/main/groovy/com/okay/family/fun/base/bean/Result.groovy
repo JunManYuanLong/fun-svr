@@ -1,5 +1,6 @@
 package com.okay.family.fun.base.bean
 
+import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
 import com.github.pagehelper.PageInfo
 import com.okay.family.common.code.CommonCode
@@ -24,20 +25,23 @@ class Result<T> extends AbstractBean {
      */
     T data
 
-    Result(int code, String msg, T data) {
+    private Result(int code, String msg, T data) {
         this.code = code
         this.msg = msg
         this.data = data
     }
 
-    Result(int code, String msg) {
-        this.code = code
-        this.msg = msg
-        this.data = "null"
+    private Result(int code, String msg) {
+        this(code, msg, "null")
     }
 
-    def Result() {
+    private Result(ReturnCode errorCode) {
+        this(errorCode.getCode(), errorCode.getDesc())
     }
+
+    private Result() {
+    }
+
 /**
  * 返回成功响应内容
  * @param data
@@ -56,20 +60,17 @@ class Result<T> extends AbstractBean {
     }
 
     static Result success() {
-        new Result(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc())
+        new Result(CommonCode.SUCCESS)
     }
 
-    static Result build(ReturnCode errorCode) {
-        new Result(errorCode)
-    }
-
-    static Result build(int code, String msg) {
-        new Result(code, msg)
-    }
-
-    static Result build(List listData) {
+    static Result success(JSONArray listData) {
         success([list: listData] as JSONObject)
     }
+
+    static Result success(List listData) {
+        success([list: listData] as JSONObject)
+    }
+
 
 /**
  * 返回通用失败的响应内容
@@ -84,9 +85,8 @@ class Result<T> extends AbstractBean {
         new Result(errorCode)
     }
 
-    Result(ReturnCode errorCode) {
-        this(errorCode.getCode(), errorCode.getDesc())
+    static Result fail(int code, String msg) {
+        new Result(code, msg)
     }
-
 
 }

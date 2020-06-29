@@ -58,7 +58,7 @@ public class TestUserController {
     @PostMapping(value = "/test")
     public Result check(@RequestBody @Valid TestUserCheckBean bean) {
         testUserService.updateUserStatus(bean);
-        return Result.build(0, "");
+        return Result.success();
     }
 
 

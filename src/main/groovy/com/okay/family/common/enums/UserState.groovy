@@ -1,8 +1,6 @@
 package com.okay.family.common.enums
 
-import com.alibaba.fastjson.JSONObject
-
-import java.util.stream.Collectors
+import com.alibaba.fastjson.JSONArray
 
 enum UserState {
 
@@ -11,17 +9,19 @@ enum UserState {
     NO(3, "不可用状态"),
     CANNOT(4, "无法验证状态")
 
-     int code
+    int code
 
-     String desc
+    String desc
 
     UserState(int code, String desc) {
         this.code = code
         this.desc = desc
     }
 
-    static JSONObject getAll() {
-        UserState.values().stream().collect(Collectors.toMap({x -> x.getCode() as String}, {x -> x.getDesc()})) as JSONObject
+    static JSONArray getAll() {
+        JSONArray result = new JSONArray()
+        UserState.values().each {x -> result << SourceCode.getJson("id=" + x.getCode(), "name=" + x.getDesc())}
+        result
     }
 
 }
