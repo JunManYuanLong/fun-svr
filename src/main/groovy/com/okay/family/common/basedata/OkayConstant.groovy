@@ -9,6 +9,8 @@ class OkayConstant {
 
     public static final String REQUEST_ID = "requestid"
 
+    public static final String REQUEST_ID_PREFIX = "family"
+
     public static final String MARK_HEADER = "mark"
 
     public static final String USER_CERTIFICATE_KEY = "uid="

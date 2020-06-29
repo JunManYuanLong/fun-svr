@@ -44,14 +44,14 @@ class RequestSaveBean extends AbstractBean {
      */
     int code
 
-    int requestid
+    String requestid
 
-    public RequestSaveBean(RequestInfo requestInfo, int datasize, long elapsed_time, int code, int status, int requestid,int mark) {
+    public RequestSaveBean(RequestInfo requestInfo, int size, long cost, int code, int status, String requestid,int mark) {
         this.api = requestInfo.getApiName()
         this.method = requestInfo.getMethod().getName()
         this.host = requestInfo.getHost()
-        this.datasize = datasize
-        this.elapsedtime = elapsedtime
+        this.size = size
+        this.cost = cost
         this.status = status
         this.code = code
         this.requestid = requestid

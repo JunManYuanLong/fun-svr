@@ -10,11 +10,11 @@ class TestUserCheckBean extends AbstractBean {
 
     int uid
 
-    int env
+    int envId
 
     String user
 
-    int role
+    int roleId
 
     String password
 

@@ -313,8 +313,8 @@ public class FanLibrary extends SourceCode {
         beforeRequest(request);
         Header reqidheader = request.getFirstHeader(OkayConstant.REQUEST_ID);
         Header markheader = request.getFirstHeader(OkayConstant.MARK_HEADER);
-        int request_id = reqidheader == null ? 0 : changeStringToInt(reqidheader.getValue());
-        int mark = changeStringToInt(markheader.getValue());
+        String request_id = reqidheader == null ? EMPTY : reqidheader.getValue();
+        int mark = markheader == null ? TEST_ERROR_CODE : changeStringToInt(markheader.getValue());
         JSONObject res = new JSONObject();
         RequestInfo requestInfo = new RequestInfo(request);
         long start = Time.getTimeStamp();

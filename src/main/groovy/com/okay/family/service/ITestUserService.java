@@ -15,7 +15,6 @@ public interface ITestUserService {
 
     int addUser(EditUserBean user);
 
-
     int updateUser(EditUserBean user);
 
     /**
@@ -24,8 +23,7 @@ public interface ITestUserService {
      * @param bean
      * @return
      */
-    int delUsr(DelBean bean);
-
+    int delUesr(DelBean bean);
 
     TestUserCheckBean findUser(int id);
 

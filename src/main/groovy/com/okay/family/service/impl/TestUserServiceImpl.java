@@ -5,10 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.basedata.UserLock;
 import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.bean.testuser.request.EditUserBean;
 import com.okay.family.common.bean.testuser.request.SearchUserBean;
 import com.okay.family.common.bean.testuser.response.TestUserBean;
-import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.enums.UserState;
 import com.okay.family.common.exception.UserStatusException;
 import com.okay.family.fun.utils.Time;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public class TestUserServiceImpl implements ITestUserService {
 
     private static Logger logger = LoggerFactory.getLogger(TestUserServiceImpl.class);
@@ -50,9 +50,22 @@ public class TestUserServiceImpl implements ITestUserService {
     @Override
     public int addUser(EditUserBean user) {
         int add = testUserMapper.addUser(user);
-//        TestUserBean userBean = new TestUserBean();
-//        user.copyTo(userBean);
-//        if (add == 1) checkUser(userBean);
+        if (add == 1) {
+            TestUserCheckBean userCheckBean = findUser(user.getId());
+            TestUserCheckBean bean = new TestUserCheckBean();
+            bean.setId(user.getId());
+            bean.setUser(user.getUser());
+            bean.setEnvId(user.getEnvId());
+            bean.setPassword(user.getPassword());
+            bean.setRoleId(user.getRoleId());
+            int i = updateUserStatus(userCheckBean);
+            if (i != 1) {
+                DelBean delBean = new DelBean();
+                delBean.copyFrom(user);
+                delUesr(delBean);
+                UserStatusException.fail("更新用户状态失败");
+            }
+        }
         return user.getId();
     }
 
@@ -70,8 +83,7 @@ public class TestUserServiceImpl implements ITestUserService {
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public int updateUserStatus(TestUserCheckBean bean) {
-        //todo:正式上线增加验证
-//        UserUtil.updateUserStatus(bean);
+        UserUtil.updateUserStatus(bean);
         int i = testUserMapper.updateUserStatus(bean);
         return i;
     }
@@ -125,7 +137,7 @@ public class TestUserServiceImpl implements ITestUserService {
             boolean b = UserUtil.checkUserLoginStatus(user);
             if (!b) {
                 UserUtil.updateUserStatus(user);
-                if (user.getStatus()!=UserState.OK.getCode()) UserStatusException.fail();
+                if (user.getStatus() != UserState.OK.getCode()) UserStatusException.fail();
             }
             map.put(id, user.getCertificate());
             testUserMapper.updateUserStatus(user);
@@ -134,7 +146,7 @@ public class TestUserServiceImpl implements ITestUserService {
     }
 
     @Override
-    public int delUsr(DelBean bean) {
+    public int delUesr(DelBean bean) {
         int i = testUserMapper.delUser(bean);
         return i;
     }

@@ -83,7 +83,7 @@
             parameterType="com.okay.family.common.bean.testuser.request.EditUserBean">
         INSERT INTO
         <include refid="table"/>
-        (uid,envId,user,password,phone,roleId,descc,status)
+        (uid,envId,user,password,phone,roleId,des,status)
         VALUES
         (#{uid},#{envId},#{user},#{password},#{phone},#{roleId},#{des},1)
     </insert>

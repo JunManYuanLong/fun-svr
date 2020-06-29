@@ -51,7 +51,7 @@ public class TestUserController {
 
     @PostMapping(value = "/del")
     public Result delUser(@RequestBody @Valid DelBean bean) {
-        int i = testUserService.delUsr(bean);
+        int i = testUserService.delUesr(bean);
         return i == 0 ? Result.fail(TestUserCode.DEL_USER_FAIL) : Result.success();
     }
 
