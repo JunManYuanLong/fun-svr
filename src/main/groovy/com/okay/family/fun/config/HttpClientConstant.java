@@ -3,7 +3,6 @@ package com.okay.family.fun.config;
 
 import org.apache.http.Header;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,21 +14,15 @@ import static com.okay.family.fun.frame.httpclient.FanLibrary.getHeader;
  */
 public class HttpClientConstant {
 
-    static PropertyUtils.Property propertyUtils = PropertyUtils.getProperties("http");
-
-    static String getProperty(String name) {
-        return propertyUtils.getProperty(name);
-    }
-
     /**
      * 默认user_agent
      */
-    public static Header USER_AGENT = getHeader("User-Agent", getProperty("User-Agent"));
+    public static Header USER_AGENT = getHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36");
 
     /**
      * 从连接目标url最大超时 单位：毫秒
      */
-    public static int CONNECT_REQUEST_TIMEOUT = propertyUtils.getPropertyInt("TIMEOUT") * 1000;
+    public static int CONNECT_REQUEST_TIMEOUT = 10 * 1000;
 
     /**
      * 连接池中获取可用连接最大超时时间 单位：毫秒
@@ -44,7 +37,7 @@ public class HttpClientConstant {
     /**
      * 记录
      */
-    public static int MAX_ACCEPT_TIME = propertyUtils.getPropertyInt("MAX_ACCEPT_TIME") * 1000;
+    public static int MAX_ACCEPT_TIME = 5 * 1000;
 
     /**
      * 连接池最大连接数
@@ -74,7 +67,7 @@ public class HttpClientConstant {
     /**
      * 连接header设置
      */
-    public static Header CONNECTION = getHeader("Connection", getProperty("Connection"));
+    public static Header CONNECTION = getHeader("Connection", "keep-alive");
 
     public static Header CLIENT_IP = getHeader("Client-Ip", IP);
 
@@ -97,7 +90,7 @@ public class HttpClientConstant {
     /**
      * 重试次数
      */
-    public static int TRY_TIMES = propertyUtils.getPropertyInt("TRY_TIMES");
+    public static int TRY_TIMES = 3;
 
     /**
      * 关闭超时的链接
@@ -122,29 +115,12 @@ public class HttpClientConstant {
     /**
      * SSL版本
      */
-    public static String SSL_VERSION = getProperty("ssl_v");
-
-    /**
-     * 域名黑名单
-     */
-    public static List<String> BLACK_HOSTS = new ArrayList<>();
+    public static String SSL_VERSION = "TLSv1.2";
 
     /**
      * 公共的header集合
      */
     public static List<Header> COMMON_HEADER = Arrays.asList(USER_AGENT, CONNECTION);
 
-    /**
-     * 添加黑名单
-     *
-     * @param host
-     */
-    public static void addBlackHost(String host) {
-        BLACK_HOSTS.add(host);
-    }
-
-    static {
-        BLACK_HOSTS.addAll(Arrays.asList(getProperty("black_host").split(",")));
-    }
 
 }

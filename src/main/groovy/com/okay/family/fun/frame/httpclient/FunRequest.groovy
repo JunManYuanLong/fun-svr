@@ -60,7 +60,7 @@ class FunRequest extends FanLibrary implements Serializable, Cloneable {
      * header集合
      */
 
-    List<Header> headers = new ArrayList<>()
+    List<Header> headers = new ArrayList<Header>()
 
     /**
      * get参数

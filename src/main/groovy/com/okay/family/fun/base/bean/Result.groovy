@@ -47,12 +47,12 @@ class Result<T> extends AbstractBean {
         new Result(0, CommonCode.SUCCESS.getDesc(), data)
     }
 
-    static <T> Result<T> success(PageInfo data) {
+    static Result success(PageInfo data) {
         JSONObject res = new JSONObject();
         res.put("pageNum", data.getPageNum());
         res.put("list", data.getList());
         res.put("total", data.getTotal());
-        new Result<>(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc(), res)
+        new Result(CommonCode.SUCCESS.getCode(), CommonCode.SUCCESS.getDesc(), res)
     }
 
     static Result success() {

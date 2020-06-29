@@ -27,7 +27,7 @@ class OkayConstant {
 
     public static final long CERTIFICATE_TIMEOUT = 20 * 60 * 1000L
 
-    public static AtomicInteger RUN_MARK = new AtomicInteger(SourceCode.getMark() % 1_0000_0000)
+    public static AtomicInteger RUN_MARK = new AtomicInteger(SourceCode.getMark() % 100000000)
 
     public static AtomicInteger COLLECTION_MARK = new AtomicInteger(RUN_MARK.get() / 100)
 

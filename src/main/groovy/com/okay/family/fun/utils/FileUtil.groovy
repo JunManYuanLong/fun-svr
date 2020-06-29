@@ -48,7 +48,7 @@ class FileUtil extends SourceCode {
  * @return
  */
     static List<String> getAllFile(String path) {
-        List<String> list = new ArrayList<>()
+        List<String> list = new ArrayList<String>()
         File file = new File(path)
         if (!file.exists() || file.isFile()) return list
         File[] files = file.listFiles()
