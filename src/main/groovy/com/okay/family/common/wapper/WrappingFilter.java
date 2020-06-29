@@ -1,6 +1,7 @@
 package com.okay.family.common.wapper;
 
 
+import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.utils.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,14 +35,14 @@ public class WrappingFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         ResponseWrapper responseWrapper = new ResponseWrapper(resp);
         RequestWrapper requestWrapper = new RequestWrapper(req);
-        String url = requestWrapper.getRequestURL().toString();
+        String url = requestWrapper.getRequestURI();
         String queryArgs = requestWrapper.getQueryString();
         queryArgs = queryArgs == null ? requestWrapper.getBody() : queryArgs;
         long start = Time.getTimeStamp();
         chain.doFilter(requestWrapper == null ? request : requestWrapper, responseWrapper);
         long end = Time.getTimeStamp();
         byte[] bytes = responseWrapper.getContent();
-        String respContent = new String(bytes);
+        String respContent = new String(bytes, Constant.UTF_8);
         logger.info("请求:{},耗时:{}ms,参数:{},响应:{}", url, end - start,queryArgs,respContent);
         response.getOutputStream().write(respContent.getBytes());
     }
