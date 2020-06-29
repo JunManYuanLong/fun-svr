@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
 import com.okay.family.common.bean.testcase.CaseVerifyBean
 import com.okay.family.fun.base.bean.AbstractBean
+import com.okay.family.fun.config.Constant
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
@@ -64,30 +65,28 @@ class CaseDataBean extends AbstractBean {
     }
 
     private def initHeader() {
-        JSONObject total = new JSONObject()
+        headers = new JSONObject()
         if (header.size() > 0) {
             header.each {x ->
                 JSONObject json = JSON.parseObject(JSONObject.toJSONString(x))
                 def key = json.getString("name")
                 def value = json.getString("demo")
-                total.put(key, value)
+                headers.put(key, value)
             }
         }
-        headers = total
     }
 
     private def initParams() {
-        JSONObject total = new JSONObject()
+        params = new JSONObject()
         if (upData.size() > 0) {
             upData.each {x ->
                 JSONObject json = JSON.parseObject(JSON.toJSONString(x))
-
                 def type = json.getString("dataType")
                 if (type ==~ /number|string|integer/) {
                     def key = json.getString("name")
                     def value = json.getString("demo")
-                    total.put(key, value)
-                } else if (type ==~ /object/) {
+                    params.put(key, value)
+                } else if (type == "object") {
                     def key = json.getString("name")
                     JSONArray array = json.getJSONArray("children")
                     JSONObject param = new JSONObject()
@@ -95,15 +94,18 @@ class CaseDataBean extends AbstractBean {
                         JSONObject json2 = JSON.parseObject(JSON.toString(y))
                         def key2 = json2.getString("name")
                         def value2 = json2.getString("demo")
-                        params.put(key2, value2)
+                        param.put(key2, value2)
                     }
-                    total.put(key, param)
-                } else if (type ==~ /array/) {
-                        //todo:完成数组格式转换
+                    params.put(key, param)
+                } else if (type == "array") {
+                    /*此处不兼容array<object>*/
+                    def key = json.getString("name")
+                    def value = json.getString("demo")
+                    def list = Arrays.asList(value.split(Constant.COMMA))
+                    params.put(key, list)
                 }
             }
         }
-        params = total
     }
 
 }

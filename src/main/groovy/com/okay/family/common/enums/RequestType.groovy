@@ -1,4 +1,9 @@
 package com.okay.family.common.enums
+
+import com.alibaba.fastjson.JSONObject
+
+import java.util.stream.Collectors
+
 /**
  * 接口请求方式,get postform, postjson,枚举类
  */
@@ -17,5 +22,8 @@ public enum RequestType {
         this.desc = desc;
     }
 
+    static JSONObject getAll() {
+        RequestType.values().stream().collect(Collectors.toMap({x -> x.getCode() as String}, {x -> x.getDesc()})) as JSONObject
+    }
 
 }

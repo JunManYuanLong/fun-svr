@@ -109,6 +109,7 @@ public class TestUserServiceImpl implements ITestUserService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public String getCertificate(int id, ConcurrentHashMap<Integer, String> map) {
         Object o = UserLock.get(id);
         synchronized (o) {

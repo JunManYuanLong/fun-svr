@@ -1,5 +1,9 @@
 package com.okay.family.common.enums
 
+import com.alibaba.fastjson.JSONObject
+
+import java.util.stream.Collectors
+
 enum CaseEditType {
 
     CREATE(1, "创建用例"),
@@ -14,4 +18,9 @@ enum CaseEditType {
         this.code = code
         this.desc = desc
     }
+
+    static JSONObject getAll() {
+        CaseEditType.values().stream().collect(Collectors.toMap({x -> x.getCode() as String}, {x -> x.getDesc()})) as JSONObject
+    }
+
 }

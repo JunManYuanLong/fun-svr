@@ -2,6 +2,7 @@ package com.okay.family.utils
 
 
 import com.okay.family.common.bean.testuser.TestUserCheckBean
+import com.okay.family.common.enums.Identity
 import com.okay.family.common.enums.UserState
 import com.okay.family.fun.frame.SourceCode
 
@@ -14,21 +15,21 @@ class UserUtil extends SourceCode {
     static void updateUserStatus(TestUserCheckBean bean) {
         int identity = bean.getIdentity()
         switch (identity) {
-            case 1:
+            case Identity.STU_PAD.getCode():
 
-                bean.setStatus(UserState.NO.getCode())
+                bean.setStatus(UserState.OK.getCode())
                 break
-            case 2:
+            case Identity.TEA_PAD.getCode():
 
-                bean.setStatus(UserState.NO.getCode())
+                bean.setStatus(UserState.OK.getCode())
                 break
-            case 3:
+            case Identity.STU_WEB.getCode():
 
-                bean.setStatus(UserState.NO.getCode())
+                bean.setStatus(UserState.OK.getCode())
                 break
-            case 4:
+            case Identity.TEA_WEB.getCode():
 
-                bean.setStatus(UserState.NO.getCode())
+                bean.setStatus(UserState.OK.getCode())
                 break
             default:
                 bean.setStatus(UserState.CANNOT.getCode())

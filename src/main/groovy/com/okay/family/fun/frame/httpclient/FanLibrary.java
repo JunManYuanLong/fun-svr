@@ -2,11 +2,9 @@ package com.okay.family.fun.frame.httpclient;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-
-
+import com.okay.family.common.RequestSave;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.RequestSaveBean;
-import com.okay.family.common.RequestSave;
 import com.okay.family.fun.base.bean.RequestInfo;
 import com.okay.family.fun.base.exception.ParamException;
 import com.okay.family.fun.base.exception.RequestException;
@@ -15,7 +13,6 @@ import com.okay.family.fun.config.HttpClientConstant;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.fun.utils.DecodeEncode;
 import com.okay.family.fun.utils.Time;
-import com.okay.family.fun.utils.message.AlertOver;
 import com.okay.family.utils.VerifyResponseUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.*;
@@ -335,8 +332,6 @@ public class FanLibrary extends SourceCode {
             if (SAVE_KEY) FunRequest.save(request, res);
         } catch (Exception e) {
             logger.warn("获取请求相应失败！", e);
-            if (!requestInfo.isBlack())
-                new AlertOver("接口请求失败", requestInfo.toString(), requestInfo.getUrl(), requestInfo).sendSystemMessage();
         }
         return res;
     }

@@ -126,7 +126,7 @@
     <select id="getCaseRunRecord" parameterType="java.lang.Integer"
             resultType="com.okay.family.common.bean.testcase.response.ListCaseRunResultBean">
         select mark id,c.name name,cs.name result,s.name serviceName,c.path url from
-        <include refid="qa_case_run_record"/>
+        <include refid="run_record"/>
         t left join
         <include refid="case_table"/>
         c on t.caseId = c.id left join
