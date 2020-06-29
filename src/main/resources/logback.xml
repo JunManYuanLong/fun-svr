@@ -11,6 +11,7 @@
         <!-- encoder 默认配置为PatternLayoutEncoder -->
         <encoder>
             <pattern>%level %class:%line %msg%n</pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
@@ -20,6 +21,7 @@
         <File>${LOG_HOME}/${SEVER_NAME}-log.log</File>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] %msg%n</pattern>
+            <charset>UTF-8</charset>
         </encoder>
         <!-- 只输出level级别以上的日志 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -38,6 +40,7 @@
         <File>${LOG_HOME}/${SEVER_NAME}-error.log</File>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] %msg%n</pattern>
+            <charset>UTF-8</charset>
         </encoder>
         <!-- 只输出level级别以上的日志 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
