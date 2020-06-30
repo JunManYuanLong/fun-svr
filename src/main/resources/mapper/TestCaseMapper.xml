@@ -180,7 +180,7 @@
                     and t.name like concat("%",#{testQuery},"%")
                 </when>
                 <when test="type == 2">
-                    t.id = #{testQuery}
+                    and t.id = #{testQuery}
                 </when>
             </choose>
             <choose>

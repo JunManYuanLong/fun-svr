@@ -11,6 +11,7 @@ class CaseSearchBean extends AbstractBean {
 
     private static final long serialVersionUID = -869483426556;
 
+    @Min(value = 1L)
     Integer id
 
     @Min(value = 1L)

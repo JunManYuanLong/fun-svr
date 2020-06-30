@@ -9,11 +9,11 @@ appName="family-qa.jar"
 function start()
 {
 	count=`ps -ef |grep java|grep $appName|wc -l`
-	if [ $count == 0 ];then
+	if [ $count != 0 ];then
 		echo "Maybe $appName is running, please check it..."
 	else
 		echo "The $appName is starting..."
-		nohup java -jar ./$appName -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -Xms2G -Xmx2G > /dev/null 2>&1 &
+		nohup java -jar ./$appName -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -Xms2G -Xmx2G 2>&1 &
 	fi
 }
 
@@ -30,13 +30,7 @@ function stop()
 
 function restart()
 {
-    # get release version
-    releaseApp=`ls -t |grep .jar$ |head -n1`
 
-    # get last version
-    lastVersionApp=`ls -t |grep .jar$ |head -n2 |tail -n1`
-
-    appName="family-qa.jar"
     stop
     for i in {5..1}
     do

@@ -1,7 +1,6 @@
 package com.okay.family.common
 
 import com.okay.family.common.bean.RequestSaveBean
-import com.okay.family.fun.utils.Time
 import com.okay.family.service.ICommonService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -29,7 +28,7 @@ class Task {
             if (work == null) break
             commonService.saveRequest(work)
         }
-        logger.warn("定时任务执行完毕! 时间:{}", Time.getDate())
+//        logger.warn("定时任务执行完毕! 时间:{}", Time.getDate())
     }
 
 
