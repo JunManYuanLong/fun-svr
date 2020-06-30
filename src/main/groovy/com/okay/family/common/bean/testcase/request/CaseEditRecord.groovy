@@ -9,13 +9,13 @@ class CaseEditRecord extends AbstractBean {
 
     private static final long serialVersionUID = -6290432268998729332L;
 
-    int caseId
+    Integer caseId
 
-    int editor
+    Integer editor
 
-    int type
+    Integer type
 
-    CaseEditRecord(int caseId, int editor, int type) {
+    CaseEditRecord(Integer caseId, Integer editor, Integer type) {
         this.caseId = caseId
         this.editor = editor
         this.type = type

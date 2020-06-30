@@ -10,10 +10,10 @@ class SavePubDataBean extends AbstractBean {
 
     private static final long serialVersionUID = 6293172188474L;
 
-    int id
+    Integer id
 
     @Min(value = 1L)
-    int uid
+    Integer uid
 
     @NotNull
     List<PubDataDetailBean> list

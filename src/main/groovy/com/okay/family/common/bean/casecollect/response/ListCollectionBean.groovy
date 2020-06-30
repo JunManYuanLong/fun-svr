@@ -7,16 +7,16 @@ class ListCollectionBean extends AbstractBean {
     private static final long serialVersionUID = -14894856161;
 
 
-    int id
+    Integer id
 
     /**
      * 0 非本人 1本人
      */
-    int isMyself
+    Integer isMyself
     /**
      * 0 未共享 1已共享
      */
-    int isShare
+    Integer isShare
 
     String result
 

@@ -8,9 +8,9 @@ class CollectionEditBean extends AbstractBean{
 
     private static final long serialVersionUID = 2342423490869045;
 
-    int uid
+    Integer uid
 
-    int groupId
+    Integer groupId
 
     @NotNull
     String name

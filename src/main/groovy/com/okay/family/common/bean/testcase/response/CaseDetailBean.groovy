@@ -9,23 +9,23 @@ class CaseDetailBean extends AbstractBean {
     private static final long serialVersionUID = -23489723928974L;
 
 
-    int id
+    Integer id
 
-    int apiId
+    Integer apiId
 
     String name
 
     String apiName
 
-    int envId
+    Integer envId
 
     String envName
 
-    int serviceId
+    Integer serviceId
 
     String serviceName
 
-    int moduleId
+    Integer moduleId
 
     String moduleName
 

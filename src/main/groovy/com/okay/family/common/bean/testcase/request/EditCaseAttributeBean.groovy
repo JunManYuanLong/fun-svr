@@ -9,28 +9,28 @@ class EditCaseAttributeBean extends AbstractBean {
 
     private static final long serialVersionUID = -629232822729332L;
 
-    int id
+    Integer id
 
-    int uid
+    Integer uid
 
-    int envId
+    Integer envId
 
     /**
      * 关联服务id
      */
-    int serviceId
+    Integer serviceId
 
     /**
      * 关联服务模块id
      */
-    int moduleId
+    Integer moduleId
 
     @NotNull
     String name
 
     List<Integer> projectList
 
-    int apiId
+    Integer apiId
 
     @NotNull
     @Pattern(regexp = "add|update|copy",message = "类型错误,应该传:add|update|copy")

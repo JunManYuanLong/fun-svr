@@ -10,7 +10,7 @@ class TestUserBean extends AbstractBean {
 
     private static final long serialVersionUID = -15924867071153477L;
 
-    int id;
+    Integer id;
     /**
      * 环境
      */

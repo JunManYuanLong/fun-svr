@@ -10,13 +10,13 @@ class CaseCollectionEditRecord extends AbstractBean {
     private static final long serialVersionUID = 7314229831207231048L;
 
 
-    int collectionId
+    Integer collectionId
 
-    int editor
+    Integer editor
 
     String create_time
 
-    int type
+    Integer type
 
     CaseCollectionEditRecord(int collectionId, int editor, int type) {
         this.collectionId = collectionId

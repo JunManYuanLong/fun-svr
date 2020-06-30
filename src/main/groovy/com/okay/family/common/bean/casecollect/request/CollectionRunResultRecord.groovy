@@ -6,27 +6,27 @@ class CollectionRunResultRecord extends AbstractBean{
 
     private static final long serialVersionUID = 48438627439874932;
 
-    int collectionId
+    Integer collectionId
 
-    int uid
+    Integer uid
 
-    int envId
+    Integer envId
 
-    int runId
+    Integer runId
 
     String name
 
-    int caseNum
+    Integer caseNum
 
-    int result
+    Integer result
 
-    int success
+    Integer success
 
-    int fail
+    Integer fail
 
-    int unrun
+    Integer unrun
 
-    int userError
+    Integer userError
 
     String start
 

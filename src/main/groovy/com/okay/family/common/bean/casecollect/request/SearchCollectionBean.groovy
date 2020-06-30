@@ -10,24 +10,24 @@ class SearchCollectionBean extends AbstractBean {
     private static final long serialVersionUID = -564894151549848961;
 
     @Min(value = 1L)
-    int uid
+    Integer uid
 
-    int envId
+    Integer envId
 
     String groupQuery
 
     @Min(value = 1L)
-    int pageNum
+    Integer pageNum
 
     @Range(min = 5L, max = 20L, message = "每页显示数量设置错误")
-    int pageSize
+    Integer pageSize
 
-    int result
+    Integer result
 
     /**
      * 区分用例集名称和ID,1:用例集名称,2:id
      */
-    int type
+    Integer type
 
     def init() {
         if (StringUtils.isEmpty(groupQuery)) return

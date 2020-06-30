@@ -6,7 +6,7 @@ class ListCaseRunResultBean extends AbstractBean {
 
     private static final long serialVersionUID = 21209389021819;
 
-    int id
+    Integer id
 
     String name
 

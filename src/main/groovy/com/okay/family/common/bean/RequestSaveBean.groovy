@@ -12,7 +12,7 @@ class RequestSaveBean extends AbstractBean {
      */
     String api
 
-    int mark
+    Integer mark
 
     /**
      * 方法，get/post
@@ -27,7 +27,7 @@ class RequestSaveBean extends AbstractBean {
     /**
      * 响应大小
      */
-    int size
+    Integer size
 
     /**
      * 响应耗时
@@ -37,16 +37,16 @@ class RequestSaveBean extends AbstractBean {
     /**
      * 响应状态码
      */
-    int status
+    Integer status
 
     /**
      * 响应业务code
      */
-    int code
+    Integer code
 
     String requestid
 
-    public RequestSaveBean(RequestInfo requestInfo, int size, long cost, int code, int status, String requestid,int mark) {
+    public RequestSaveBean(RequestInfo requestInfo, Integer size, long cost, Integer code, Integer status, String requestid,Integer mark) {
         this.api = requestInfo.getApiName()
         this.method = requestInfo.getMethod().getName()
         this.host = requestInfo.getHost()

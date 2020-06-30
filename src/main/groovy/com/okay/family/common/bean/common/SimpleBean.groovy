@@ -6,7 +6,7 @@ class SimpleBean extends AbstractBean {
 
     private static final long serialVersionUID = 168461652315615;
 
-    int id
+    Integer id
 
     String name
 

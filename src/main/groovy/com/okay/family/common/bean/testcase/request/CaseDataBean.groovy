@@ -15,15 +15,15 @@ class CaseDataBean extends AbstractBean {
 
     private static final long serialVersionUID = -629048686822729332L;
 
-    int id
+    Integer id
 
     @Min(value = 1L)
-    int uid
+    Integer uid
 
-    int envId
+    Integer envId
 
     @Min(value = 1L)
-    int apiId
+    Integer apiId
 
     @NotNull
     JSONArray header
@@ -34,7 +34,7 @@ class CaseDataBean extends AbstractBean {
 
 
     @Min(value = 1L)
-    int serviceId
+    Integer serviceId
 
     @NotNull
     List<CaseVerifyBean> testWish
@@ -51,7 +51,7 @@ class CaseDataBean extends AbstractBean {
 /**
  * 1:可用,2:不可用,3用户错误
  */
-    int available
+    Integer available
 
     JSONObject headers
 

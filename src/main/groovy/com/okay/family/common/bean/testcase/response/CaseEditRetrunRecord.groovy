@@ -6,9 +6,9 @@ class CaseEditRetrunRecord extends AbstractBean {
 
     private static final long serialVersionUID = -349027423875;
 
-    int id
+    Integer id
 
-    int caseId
+    Integer caseId
 
     String people
 

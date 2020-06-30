@@ -7,23 +7,23 @@ class TestCaseAttributeBean extends AbstractBean {
 
     private static final long serialVersionUID = -1595563071153477L;
 
-    int id
+    Integer id
 
-    int apiId
+    Integer apiId
 
     String apiName
 
-    int envId
+    Integer envId
 
     String envName
 
-    int moduleId
+    Integer moduleId
 
     String moduleName
 
     String name
 
-    int serviceId
+    Integer serviceId
 
     String serviceName
 

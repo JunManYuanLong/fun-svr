@@ -6,7 +6,7 @@ class TestCaseListBean extends AbstractBean {
 
     private static final long serialVersionUID = -184894651958;
 
-    int id
+    Integer id
 
     String user
 
@@ -14,9 +14,9 @@ class TestCaseListBean extends AbstractBean {
 
     String apiName
 
-    int isMyself
+    Integer isMyself
 
-    int isUsed
+    Integer isUsed
 
     String name
 

@@ -12,16 +12,16 @@ class EditUserBean extends AbstractBean {
 
     private static final long serialVersionUID = 548951651651L;
 
-    int id
+    Integer id
 
     @Min(value = 1L, message = "用户ID错误")
-    int uid
+    Integer uid
 
     @Range(min = 1L, max = 5L)
-    int envId
+    Integer envId
 
     @Range(min = 1L, max = 4L, message = "不支持的用户身份")
-    int roleId
+    Integer roleId
 
     @NotNull
     String user

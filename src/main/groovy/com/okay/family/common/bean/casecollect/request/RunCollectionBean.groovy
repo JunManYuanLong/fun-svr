@@ -10,12 +10,12 @@ class RunCollectionBean extends AbstractBean {
     private static final long serialVersionUID = 9733934389389749;
 
     @Min(value = 1L)
-    int groupId
+    Integer groupId
 
     @Min(value = 1L)
-    int uid
+    Integer uid
 
     @Range(min = 1L,max = 5L)
-    int envId
+    Integer envId
 
 }

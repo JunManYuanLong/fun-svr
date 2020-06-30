@@ -11,39 +11,40 @@ class CaseSearchBean extends AbstractBean {
 
     private static final long serialVersionUID = -869483426556;
 
-    int id
+    Integer id
 
     @Min(value = 1L)
-    int uid
+    Integer uid
 
-    int envId
+    Integer envId
 
-    int apiId
+    @Min(value = 1L)
+    Integer apiId
 
     @Range(min = 0L, max = 2L, message = "是否本人参数错误")
-    int isMyself
+    Integer isMyself
 
     @Range(min = 0L, max = 2L, message = "是否可用参数错误")
-    int isUsed
+    Integer isUsed
 
-    int serviceId
+    Integer serviceId
 
-    int moduleId
+    Integer moduleId
 
     @Min(value = 1L)
-    int pageNum
+    Integer pageNum
 
     @Range(min = 5L, max = 10L, message = "单页数值设置错误!")
-    int pageSize
+    Integer pageSize
 
-    int projectId
+    Integer projectId
 
     String testQuery
 
     /**
      * 处理搜索类型,1:用例名模糊搜索,2:用例id精确搜索
      */
-    int type
+    Integer type
 
 
     def init() {

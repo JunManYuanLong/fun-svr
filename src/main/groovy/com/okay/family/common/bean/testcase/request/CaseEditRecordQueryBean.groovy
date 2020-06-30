@@ -11,12 +11,12 @@ class CaseEditRecordQueryBean extends AbstractBean {
 
 
     @Min(value = 1L,message = "id错误!")
-    int id
+    Integer id
 
     @Min(value = 1L)
-    int pageNum
+    Integer pageNum
 
     @Range(min = 5L, max = 20L, message = "每页显示数量设置错误")
-    int pageSize
+    Integer pageSize
 
 }

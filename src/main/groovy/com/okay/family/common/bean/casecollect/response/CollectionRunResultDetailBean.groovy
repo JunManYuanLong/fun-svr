@@ -12,15 +12,15 @@ class CollectionRunResultDetailBean extends AbstractBean {
     /**
      * 用例集id
      */
-    int id
+    Integer id
 
     String name
 
     String envName
 
-    int runId
+    Integer runId
 
-    int caseNum
+    Integer caseNum
 
     String result
 

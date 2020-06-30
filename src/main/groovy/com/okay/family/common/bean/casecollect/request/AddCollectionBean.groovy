@@ -9,13 +9,13 @@ class AddCollectionBean extends AbstractBean{
 
     private static final long serialVersionUID = 589469783232L;
 
-    int id
+    Integer id
 
     @Min(value = 1L)
-    int uid
+    Integer uid
 
     @Min(value = 1L)
-    int envId
+    Integer envId
 
     @NotNull
     Set<Integer> apiList

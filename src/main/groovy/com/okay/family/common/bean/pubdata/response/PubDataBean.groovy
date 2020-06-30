@@ -11,7 +11,7 @@ class PubDataBean extends AbstractBean {
 
     private static final long serialVersionUID = 8754205931721071606L;
 
-    int id
+    Integer id
 
     @NotNull(message = "公共数据不能为空")
     @Size(min = 1, message = "数据长度错误")

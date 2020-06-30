@@ -6,9 +6,9 @@ class CollectionRunSimpleResutl extends AbstractBean {
 
     private static final long serialVersionUID = 43439867210;
 
-    int runId
+    Integer runId
 
-    int caseNum
+    Integer caseNum
 
     String start
 
@@ -16,12 +16,12 @@ class CollectionRunSimpleResutl extends AbstractBean {
 
     String result
 
-    int success
+    Integer success
 
-    int fail
+    Integer fail
 
-    int unrun
+    Integer unrun
 
-    int userError
+    Integer userError
 
 }

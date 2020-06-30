@@ -13,13 +13,13 @@ class EditPubBean extends AbstractBean {
 
     private static final long serialVersionUID = 8160564161606L;
 
-    int id
+    Integer id
 
     @Min(value = 1L)
-    int uid
+    Integer uid
 
     @Max(value = 5L)
-    int envId
+    Integer envId
 
     String name
 

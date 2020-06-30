@@ -7,9 +7,9 @@ class ListCaseBean extends AbstractBean {
     private static final long serialVersionUID = 69384703278;
 
 
-    int id
+    Integer id
 
-    int isEdit
+    Integer isEdit
 
     String name
 

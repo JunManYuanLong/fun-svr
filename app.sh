@@ -9,7 +9,7 @@ appName="family-qa.jar"
 function start()
 {
 	count=`ps -ef |grep java|grep $appName|wc -l`
-	if [ $count != 0 ];then
+	if [ $count == 0 ];then
 		echo "Maybe $appName is running, please check it..."
 	else
 		echo "The $appName is starting..."
@@ -45,7 +45,7 @@ function restart()
     done
     echo 0
 
-    backup
+#    backup
 
 #    appName=$releaseApp
     start

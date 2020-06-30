@@ -9,9 +9,9 @@ class DelBean extends AbstractBean {
     private static final long serialVersionUID = 89458151651564747L;
 
     @Min(value = 1L, message = "id参数错误")
-    int id
+    Integer id
 
     @Min(value = 1L,message = "用户id错误")
-    int uid
+    Integer uid
 
 }
