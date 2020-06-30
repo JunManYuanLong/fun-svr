@@ -15,6 +15,7 @@ import com.okay.family.fun.utils.Time;
 import com.okay.family.mapper.TestUserMapper;
 import com.okay.family.service.ITestUserService;
 import com.okay.family.utils.UserUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class TestUserServiceImpl implements ITestUserService {
             bean.setPassword(user.getPassword());
             bean.setRoleId(user.getRoleId());
             int i = updateUserStatus(userCheckBean);
-            if (i != 1) {
+            if (i != 1 || StringUtils.isEmpty(userCheckBean.getCertificate())) {
                 DelBean delBean = new DelBean();
                 delBean.copyFrom(user);
                 delUesr(delBean);
