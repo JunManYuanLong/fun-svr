@@ -18,7 +18,7 @@
     <!-- <conversionRule conversionWord="requestId" converterClass="com.noriental.utils.ParametersConvert" />-->
 
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${LOG_HOME}/${SEVER_NAME}-log.log</File>
+        <File>${LOG_HOME}/${SEVER_NAME}-info.log</File>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] %msg%n</pattern>
             <charset>UTF-8</charset>

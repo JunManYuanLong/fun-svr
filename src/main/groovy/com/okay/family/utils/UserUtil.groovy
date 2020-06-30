@@ -58,11 +58,11 @@ class UserUtil extends SourceCode {
  * @return
  */
     static boolean checkUserLoginStatus(TestUserCheckBean bean) {
-        int identity = bean.getRoleId()
-        switch (identity) {
+        def role = bean.getRoleId()
+        switch (role) {
             case 1:
-
-                return true
+                def base = new StuPadBase(bean.getCertificate(), 1)
+                return base.checkCode()
             case 2:
 
                 return true
@@ -77,21 +77,5 @@ class UserUtil extends SourceCode {
         }
     }
 
-/**
- * 验证用户信息是否可用,处理从接口获取到的用户参数
- * @param bean
- * @return
- */
-    private boolean checkUserAvailable(TestUserCheckBean bean) {
 
-        def environment = bean.getEnvironment()
-
-        def identity = bean.getIdentity()
-
-        def uname = bean.getUname()
-
-        def pwd = bean.getPwd()
-
-
-    }
 }

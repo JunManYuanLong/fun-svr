@@ -2,6 +2,7 @@ package com.okay.family.middle.stupad;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.fun.base.bean.RequestInfo;
 import com.okay.family.fun.base.interfaces.IBase;
 import com.okay.family.fun.config.HttpClientConstant;
@@ -35,7 +36,7 @@ public class StuPadBase extends SourceCode implements IBase {
     public static String USER_INFO = "/api/pad/user/info";
 
 
-    public static Map<Integer, String> hosts = new HashMap<Integer, String>() {
+    public static Map<Integer, String> hosts = new HashMap<Integer, String>((int) OkayConstant.ENV) {
         private static final long serialVersionUID = 6227506693666661844L;
 
         {
@@ -87,6 +88,12 @@ public class StuPadBase extends SourceCode implements IBase {
         this.envId = envId;
         this.HOST = hosts.get(envId);
         login();
+    }
+
+    public StuPadBase(String token, int envId) {
+        this.envId = envId;
+        this.HOST = hosts.get(envId);
+        this.token = token;
     }
 
     private StuPadBase() {
@@ -232,12 +239,12 @@ public class StuPadBase extends SourceCode implements IBase {
      *
      * @return
      */
-    public JSONObject getUserInfo() {
+    public boolean checkLoginStatus() {
         String api = USER_INFO;
         JSONObject params = getParams();
         JSONObject response = getPostResponse(api, params);
         output(response);
-        return response;
+        return isRight(response);
     }
 
     public String getCertificate() {

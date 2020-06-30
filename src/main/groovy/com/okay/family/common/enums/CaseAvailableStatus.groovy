@@ -2,7 +2,6 @@ package com.okay.family.common.enums
 
 import com.alibaba.fastjson.JSONArray
 import com.okay.family.fun.frame.SourceCode
-
 /**
  * 用例状态和运行状态记录表,user_error和un_know只存在于运行状态.
  */
@@ -24,7 +23,8 @@ enum CaseAvailableStatus {
 
     static JSONArray getAll() {
         JSONArray result = new JSONArray()
-        CaseAvailableStatus.values().each {x -> result << SourceCode.getJson("id=" + x.getCode(), "name=" + x.getDesc())}
+        result << SourceCode.getJson("id=" + OK.getCode(), "name=" + OK.getDesc())
+        result << SourceCode.getJson("id=" + NO.getCode(), "name=" + NO.getDesc())
         result
     }
 

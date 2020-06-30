@@ -5,7 +5,7 @@ import com.okay.family.fun.frame.SourceCode
 
 import java.util.concurrent.atomic.AtomicInteger
 
-class OkayConstant {
+class OkayConstant extends SourceCode{
 
     public static final String REQUEST_ID = "requestid"
 
@@ -29,7 +29,7 @@ class OkayConstant {
 
     public static final long CERTIFICATE_TIMEOUT = 20 * 60 * 1000L
 
-    public static AtomicInteger RUN_MARK = new AtomicInteger(SourceCode.getMark() % 100000000)
+    public static AtomicInteger RUN_MARK = new AtomicInteger(getMark() % 100_000_000)
 
     public static AtomicInteger COLLECTION_MARK = new AtomicInteger(RUN_MARK.get() / 100)
 
