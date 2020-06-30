@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.enums.Identity;
+import com.okay.family.common.enums.UserState;
 import com.okay.family.fun.base.bean.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +31,10 @@ public class CommonDataController {
         return Result.success(json);
     }
 
+    @GetMapping(value = "/userstate")
+    public Result getUserState() {
+        JSONArray all = UserState.getAll();
+        return Result.success(all);
+    }
 
 }
