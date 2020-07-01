@@ -231,7 +231,7 @@
         WHERE id = #{id}) t
     </insert>
 
-    <insert id="addRunRecord" parameterType="com.okay.family.common.bean.testcase.CaseRunRecord">
+    <insert id="addRunRecord" parameterType="com.okay.family.common.bean.testcase.request.CaseRunRecord">
         insert into
         <include refid="run_record"/>
         (runId,mark,uid,caseId,code,result,verify,params,headers,response)

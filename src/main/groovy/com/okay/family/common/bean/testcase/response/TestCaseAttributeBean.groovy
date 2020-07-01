@@ -3,6 +3,9 @@ package com.okay.family.common.bean.testcase.response
 import com.okay.family.common.bean.common.SimpleBean
 import com.okay.family.fun.base.bean.AbstractBean
 
+/**
+ * 用例属性编辑
+ */
 class TestCaseAttributeBean extends AbstractBean {
 
     private static final long serialVersionUID = -1595563071153477L;

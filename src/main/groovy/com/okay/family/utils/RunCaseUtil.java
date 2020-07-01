@@ -2,7 +2,7 @@ package com.okay.family.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.ServerHost;
-import com.okay.family.common.bean.testcase.CaseRunRecord;
+import com.okay.family.common.bean.testcase.request.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
 import com.okay.family.common.enums.RequestType;
 import com.okay.family.common.enums.RunResult;
@@ -27,12 +27,14 @@ public class RunCaseUtil {
         } else if (httpType.equalsIgnoreCase(RequestType.POST_FORM.getDesc())) {
             request = FunRequest.isPost().setHost(host).setApiName(bean.getUrl()).addHeaders(bean.getHeaders()).addParams(bean.getParams());
         } else {
+            logger.warn("用户身份不支持:{}",bean.toString());
             record.setResult(RunResult.UNRUN.getCode());
             return;
         }
         JSONObject response = request.getResponse();
         record.setResponse(response);
         if (response.isEmpty()) {
+            logger.warn("用例响应为空:{}",bean.toString());
             record.setResult(RunResult.UNRUN.getCode());
             return;
         }

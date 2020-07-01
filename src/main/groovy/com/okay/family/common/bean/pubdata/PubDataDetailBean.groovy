@@ -6,7 +6,7 @@ import com.okay.family.fun.config.Constant
 import javax.validation.constraints.NotNull
 
 /**
- * 用于存储公共数据的每一条对象
+ * 用于存储公共数据的每一条对象,后面属性默认方便前端展示处理
  */
 class PubDataDetailBean extends AbstractBean {
 

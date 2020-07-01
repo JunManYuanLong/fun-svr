@@ -4,6 +4,9 @@ import com.okay.family.fun.base.bean.AbstractBean
 
 import javax.validation.constraints.NotNull
 
+/**
+ * 测试期望
+ */
 class CaseVerifyBean extends AbstractBean {
 
     private static final long serialVersionUID = -1595942567071153982L;

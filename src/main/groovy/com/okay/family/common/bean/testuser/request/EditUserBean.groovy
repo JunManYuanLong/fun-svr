@@ -1,5 +1,6 @@
 package com.okay.family.common.bean.testuser.request
 
+import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.Range
@@ -8,10 +9,14 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
+/**
+ * 编辑测试用户信息
+ */
 class EditUserBean extends AbstractBean {
 
     private static final long serialVersionUID = 548951651651L;
 
+    @Min(value = 1L)
     Integer id
 
     @Min(value = 1L, message = "用户ID错误")
@@ -20,7 +25,7 @@ class EditUserBean extends AbstractBean {
     @Range(min = 1L, max = 5L)
     Integer envId
 
-    @Range(min = 1L, max = 4L, message = "不支持的用户身份")
+    @Range(min = 1L, max = OkayConstant.ROLE, message = "不支持的用户身份")
     Integer roleId
 
     @NotNull

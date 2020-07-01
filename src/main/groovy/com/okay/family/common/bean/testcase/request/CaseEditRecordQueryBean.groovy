@@ -5,6 +5,9 @@ import org.hibernate.validator.constraints.Range
 
 import javax.validation.constraints.Min
 
+/**
+ * 用例编辑记录
+ */
 class CaseEditRecordQueryBean extends AbstractBean {
 
     private static final long serialVersionUID = 3289389274983L;

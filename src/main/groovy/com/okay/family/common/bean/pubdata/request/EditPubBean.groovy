@@ -1,9 +1,11 @@
 package com.okay.family.common.bean.pubdata.request
 
 import com.okay.family.fun.base.bean.AbstractBean
+import org.hibernate.validator.constraints.Length
 
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
+import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
 /**
@@ -21,6 +23,8 @@ class EditPubBean extends AbstractBean {
     @Max(value = 5L)
     Integer envId
 
+    @NotNull
+    @Length(min = 1, max = 16, message = "name长度错误1-16")
     String name
 
     /**

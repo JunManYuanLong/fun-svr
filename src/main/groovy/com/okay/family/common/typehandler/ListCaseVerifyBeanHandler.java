@@ -18,6 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 处理用例详情的读写
+ */
 @MappedTypes(PubDataDetailBean.class)
 @MappedJdbcTypes(JdbcType.VARCHAR)
 public class ListCaseVerifyBeanHandler extends BaseTypeHandler<List<PubDataDetailBean>> {

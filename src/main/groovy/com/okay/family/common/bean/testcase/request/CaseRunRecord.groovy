@@ -1,9 +1,12 @@
-package com.okay.family.common.bean.testcase
+package com.okay.family.common.bean.testcase.request
 
 import com.alibaba.fastjson.JSONObject
 import com.okay.family.common.bean.testcase.CaseVerifyBean
 import com.okay.family.fun.base.bean.AbstractBean
 
+/**
+ * 用例运行记录
+ */
 class CaseRunRecord extends AbstractBean {
 
     private static final long serialVersionUID = -159435949821153477L;

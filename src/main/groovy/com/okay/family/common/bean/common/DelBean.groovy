@@ -4,6 +4,9 @@ import com.okay.family.fun.base.bean.AbstractBean
 
 import javax.validation.constraints.Min
 
+/**
+ * 删除
+ */
 class DelBean extends AbstractBean {
 
     private static final long serialVersionUID = 89458151651564747L;

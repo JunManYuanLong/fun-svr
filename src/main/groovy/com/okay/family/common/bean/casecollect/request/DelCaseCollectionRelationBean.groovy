@@ -11,6 +11,7 @@ class DelCaseCollectionRelationBean extends AbstractBean {
 
     private static final long serialVersionUID = 38498348343489;
 
+    @Min(value = 1L)
     Integer uid
 
     @Min(value = 1L)
