@@ -1,7 +1,7 @@
 package com.okay.family.common;
 
+import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.RequestSaveBean;
-import com.okay.family.fun.config.SqlConstant;
 import com.okay.family.fun.frame.SourceCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class RequestSave extends SourceCode {
     public static RequestSaveBean getWork() {
         RequestSaveBean requestSaveBean = null;
         try {
-            requestSaveBean = beans.poll(SqlConstant.MYSQLWORK_TIMEOUT, TimeUnit.MILLISECONDS);
+            requestSaveBean = beans.poll(OkayConstant.MYSQLWORK_TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             logger.warn("获取存储任务失败！", e);
         } finally {

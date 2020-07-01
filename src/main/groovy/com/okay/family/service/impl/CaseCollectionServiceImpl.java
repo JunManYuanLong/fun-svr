@@ -18,6 +18,7 @@ import com.okay.family.common.enums.CollectionEditType;
 import com.okay.family.common.enums.CollectionStatus;
 import com.okay.family.common.enums.RunResult;
 import com.okay.family.common.exception.CaseCollecionException;
+import com.okay.family.common.exception.CaseException;
 import com.okay.family.common.exception.CommonException;
 import com.okay.family.common.exception.UserStatusException;
 import com.okay.family.fun.utils.Time;
@@ -88,6 +89,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return i;
     }
 
+    /**
+     * 删除用例集,先删除用例集,在删除用例集和用例关联关系
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public int delCollection(DelBean bean) {
         int i = caseCollectionMapper.delCollection(bean);
@@ -132,7 +139,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         try {
             countDownLatch.await();
         } catch (InterruptedException e) {
-            CommonException.fail("执行用例集失败!");
+            CaseCollecionException.fail("执行用例集失败!");
         }
         String end = Time.getDate();
         results.forEach(x -> caseService.addRunRecord(x.getRecord()));
@@ -169,6 +176,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         caseCollectionMapper.addCollectionRunRecord(record);
     }
 
+    /**
+     * 从数据库里面读取用例集详情,用于运行
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public List<CaseDataBean> getCasesDeatil(RunCollectionBean bean) {
         ConcurrentHashMap<Integer, String> certificates = new ConcurrentHashMap<>();
@@ -191,7 +204,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         try {
             countDownLatch.await();
         } catch (InterruptedException e) {
-            CommonException.fail("初始化用例信息失败!");
+            CaseException.fail("初始化用例信息失败!");
         }
         return cases;
     }
@@ -210,6 +223,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return pageInfo;
     }
 
+    /**
+     * 获取用例集运行记录列表
+     *
+             * @param bean
+     * @return
+             */
     @Override
     public List<SimpleBean> getRecords(DelBean bean) {
         List<SimpleBean> records = caseCollectionMapper.getRecords(bean);
@@ -231,6 +250,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return detailBean;
     }
 
+    /**
+     * 获取用例运行记录
+     *
+     * @param bean
+     * @param countDownLatch
+     */
     @Async
     @Override
     public void getCaseRunRecord(CollectionRunResultDetailBean bean, CountDownLatch countDownLatch) {
@@ -242,6 +267,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     }
 
 
+    /**
+     * 获取用例集运行详情
+     *
+     * @param bean
+     * @param countDownLatch
+     */
     @Async
     @Override
     public void getCollectionRunResult(CollectionRunResultDetailBean bean, CountDownLatch countDownLatch) {

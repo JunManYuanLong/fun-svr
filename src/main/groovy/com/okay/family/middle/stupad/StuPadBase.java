@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.fun.base.bean.RequestInfo;
 import com.okay.family.fun.base.interfaces.IBase;
-import com.okay.family.fun.config.HttpClientConstant;
 import com.okay.family.fun.config.SysInit;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.fun.frame.httpclient.FanLibrary;
@@ -73,9 +72,9 @@ public class StuPadBase extends SourceCode implements IBase {
             uid = data.getInteger("uid");
             token = data.getString("token");
             uname = data.getString("uname");
-            logger.info("用户：{}，登录成功！", uname);
+            logger.info("学生pad,环境:{},账号:{},密码:{} 登录成功",envId,uname,pwd);
         } else {
-            logger.info("用户：{}，登录失败！", uname);
+            logger.info("学生pad,环境:{},账号:{},密码:{} 登录失败",envId,uname,pwd);
             output(loginResponse);
         }
     }
@@ -176,8 +175,7 @@ public class StuPadBase extends SourceCode implements IBase {
 
     @Override
     public void handleResponseHeader(JSONObject response) {
-        if (!response.containsKey(HttpClientConstant.COOKIE)) return;
-        response.remove(HttpClientConstant.COOKIE);
+
     }
 
 
