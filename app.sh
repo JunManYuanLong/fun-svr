@@ -23,8 +23,8 @@ function stop()
 	if [ -z $appId ];then
 	    echo "Maybe $appName not running, please check it..."
 	else
-        echo "The $appName is stopping..."
-        kill $appId
+        echo "The $appName is stopping... $appId"
+        kill -9 $appId
 	fi
 }
 

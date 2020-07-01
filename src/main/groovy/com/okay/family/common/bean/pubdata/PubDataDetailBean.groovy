@@ -1,5 +1,6 @@
 package com.okay.family.common.bean.pubdata
 
+import com.alibaba.fastjson.JSONArray
 import com.okay.family.fun.base.bean.AbstractBean
 import com.okay.family.fun.config.Constant
 
@@ -18,9 +19,9 @@ class PubDataDetailBean extends AbstractBean {
     @NotNull
     String value
 
-    String children = "[]"
+    JSONArray children = new JSONArray(0)
 
-    String dataType= "string"
+    String dataType = "string"
 
     String des = Constant.EMPTY
 
