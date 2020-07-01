@@ -5,6 +5,9 @@ import org.hibernate.validator.constraints.Range
 
 import javax.validation.constraints.Min
 
+/**
+ * 运行用例集
+ */
 class RunCollectionBean extends AbstractBean {
 
     private static final long serialVersionUID = 9733934389389749;

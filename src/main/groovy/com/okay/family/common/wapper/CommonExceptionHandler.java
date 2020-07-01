@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.NonTransientDataAccessException;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -56,6 +57,11 @@ public class CommonExceptionHandler {
             String message = e.getMessage();
             logger.error("数据格式错误!", e);
             return Result.fail(CommonCode.PARAMS_ERROR);
+        }
+        if (e instanceof BindException) {
+            String message = e.getMessage();
+            logger.error("validation参数校验失败!", e);
+            return Result.fail(CommonCode.BIND_ERROR);
         }
         logger.warn("未记录异常类", e);
         return Result.fail(e.getMessage());

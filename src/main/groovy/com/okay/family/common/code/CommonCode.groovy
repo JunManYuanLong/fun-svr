@@ -6,7 +6,8 @@ enum CommonCode implements ReturnCode {
 
 
     SUCCESS(0, "成功"),
-    PARAMS_ERROR(100, "常用参数错误!")
+    PARAMS_ERROR(100, "常用参数错误!"),
+    BIND_ERROR(101, "参数验证错误!")
 
     int code
 

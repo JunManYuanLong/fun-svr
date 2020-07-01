@@ -113,6 +113,9 @@
                     and t.name like concat("%",#{groupQuery},"%")
                 </when>
             </choose>
+            <if test="1 == 1">
+                and (t.uid = #{uid} or t.pub = 1)
+            </if>
         </where>
     </select>
 
@@ -139,7 +142,8 @@
 
     <select id="getCollectionRunDetail" parameterType="java.lang.Integer"
             resultMap="CollectionRunResultDetailBean">
-        select r.collectionId id,t.name,s.name envName,r.runId,r.caseNum,c.name result,start,end,concat("成功=",r.success,";失败=",r.fail,";无法运行=",r.unrun,";用户错误=",r.userError) list from
+        select r.collectionId id,t.name,s.name envName,r.runId,r.caseNum,c.name
+        result,start,end,concat("成功=",r.success,";失败=",r.fail,";无法运行=",r.unrun,";用户错误=",r.userError) list from
         <include refid="run_record"/>
         r left join
         <include refid="collection_status"/>

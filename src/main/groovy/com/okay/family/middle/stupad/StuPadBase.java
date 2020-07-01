@@ -28,7 +28,6 @@ public class StuPadBase extends SourceCode implements IBase {
 
     private static Logger logger = LoggerFactory.getLogger(StuPadBase.class);
 
-
     public static final String PUBLICK_KEY_API = "/api/pad/user/encryptinfo";
 
     public static String LOGIN = "/api/pad/user/login";

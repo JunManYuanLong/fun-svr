@@ -2,6 +2,9 @@ package com.okay.family.common.bean.casecollect.request
 
 import com.okay.family.fun.base.bean.AbstractBean
 
+/**
+ * 用例集运行结果
+ */
 class CollectionRunResultRecord extends AbstractBean{
 
     private static final long serialVersionUID = 48438627439874932;

@@ -28,7 +28,7 @@ class Task {
             if (work == null) break
             commonService.saveRequest(work)
         }
-//        logger.warn("定时任务执行完毕! 时间:{}", Time.getDate())
+        logger.info("定时任务执行完毕! 时间:{}", Time.getDate())
     }
 
 
