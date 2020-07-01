@@ -25,10 +25,10 @@ class CaseSearchBean extends AbstractBean {
     @Min(value = 1L)
     Integer apiId
 
-    @Range(min = 0L, max = 2L, message = "是否本人参数错误")
+    @Range(min = 0L, max = 2L, message = "是否本人参数错误0全部，1本人，2非本人")
     Integer isMyself
 
-    @Range(min = 0L, max = 2L, message = "是否可用参数错误")
+    @Range(min = 0L, max = 2L, message = "是否可用参数错误\t0全部， 1可用，2不可用")
     Integer isUsed
 
     Integer serviceId

@@ -9,6 +9,7 @@ import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.bean.testuser.request.EditUserBean;
 import com.okay.family.common.bean.testuser.request.SearchUserBean;
 import com.okay.family.common.bean.testuser.response.TestUserBean;
+import com.okay.family.common.code.TestUserCode;
 import com.okay.family.common.enums.UserState;
 import com.okay.family.common.exception.UserStatusException;
 import com.okay.family.fun.utils.Time;
@@ -52,7 +53,8 @@ public class TestUserServiceImpl implements ITestUserService {
     public int addUser(EditUserBean user) {
         int add = testUserMapper.addUser(user);
         if (add == 1) {
-            TestUserCheckBean userCheckBean = findUser(user.getId());
+            TestUserCheckBean userCheckBean = new TestUserCheckBean();
+            userCheckBean.copyFrom(user);
             TestUserCheckBean bean = new TestUserCheckBean();
             bean.setId(user.getId());
             bean.setUser(user.getUser());
@@ -63,9 +65,10 @@ public class TestUserServiceImpl implements ITestUserService {
             if (i != 1 || StringUtils.isEmpty(userCheckBean.getCertificate())) {
                 DelBean delBean = new DelBean();
                 delBean.copyFrom(user);
-                delUesr(delBean);
-                UserStatusException.fail("更新用户状态失败");
+                UserStatusException.fail(TestUserCode.UPDATE_USER_FAIL.getDesc());
             }
+        } else {
+            UserStatusException.fail(TestUserCode.ADD_USER_FAIL.getDesc());
         }
         return user.getId();
     }

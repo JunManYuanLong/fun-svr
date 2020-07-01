@@ -1,5 +1,6 @@
 package com.okay.family.common.bean.testuser
 
+import com.okay.family.common.bean.testuser.request.EditUserBean
 import com.okay.family.fun.base.bean.AbstractBean
 
 /**
@@ -30,5 +31,16 @@ class TestUserCheckBean extends AbstractBean {
     String certificate
 
     String create_time
+
+    def copyFrom(EditUserBean user) {
+        this.setId(user.getId());
+        this.setEnvId(user.getEnvId());
+        this.setRoleId(user.getRoleId());
+        this.setUser(user.getUser());
+        this.setPassword(user.getPassword());
+        this.setPhone(user.getPhone());
+        this.setUid(user.getUid());
+        this.setDes(user.getDes());
+    }
 
 }

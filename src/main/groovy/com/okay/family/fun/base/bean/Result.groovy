@@ -78,7 +78,7 @@ class Result<T> extends AbstractBean {
  * @return
  */
     static <T> Result<T> fail(T data) {
-        new Result<T>(Constant.TEST_ERROR_CODE, data)
+        new Result<T>(Constant.TEST_ERROR_CODE, data.toString())
     }
 
     static Result fail(ReturnCode errorCode) {

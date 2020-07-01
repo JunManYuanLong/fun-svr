@@ -20,7 +20,7 @@
 
     <select id="findUsers" parameterType="com.okay.family.common.bean.testuser.request.SearchUserBean"
             resultType="com.okay.family.common.bean.testuser.response.TestUserBean">
-        select tu.id,tu.descc,tu.user,tu.phone,tu.password,tu.create_time,us.name status,env.name env,ur.name role from
+        select tu.id,tu.des,tu.user,tu.phone,tu.password,tu.create_time,us.name status,env.name env,ur.name role from
         <include refid="table"/>
         tu
         left join
@@ -33,13 +33,13 @@
         <include refid="user_role"/>
         ur on tu.roleId = ur.roleId
         where tu.uid = #{uid}
-        <if test="status != 0">
+        <if test="status != null">
             and tu.status = #{status}
         </if>
-        <if test="envId != 0">
+        <if test="envId != null">
             and tu.envId = #{envId}
         </if>
-        <if test="roleId != 0">
+        <if test="roleId != null">
             and tu.roleId = #{roleId}
         </if>
         <choose>
@@ -67,7 +67,7 @@
         UPDATE
         <include refid="table"/>
         SET
-        descc=#{des},envId=#{envId},password=#{password},phone=#{phone},roleId=#{roleId},user=#{user}
+        des=#{des},envId=#{envId},password=#{password},phone=#{phone},roleId=#{roleId},user=#{user}
         WHERE id = #{id} and uid = #{uid}
     </update>
 

@@ -102,7 +102,7 @@
         <include refid="collection_status"/>
         c on t.status = c.id
         <where>
-            <if test="result != 0">
+            <if test="result != null">
                 and t.status = #{result}
             </if>
             <choose>

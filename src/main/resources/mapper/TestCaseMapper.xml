@@ -157,38 +157,38 @@
         <include refid="env"/>
         e on t.envId = e.id
         <where>
-            <if test="envId != 0">
-                and envId = #{envId}
+            <if test="envId != null">
+                and t.envId = #{envId}
             </if>
-            <if test="serviceId != 0">
-                and serviceId = #{serviceId}
+            <if test="serviceId != null">
+                and t.serviceId = #{serviceId}
             </if>
-            <if test="apiId != 0">
-                and apiId = #{apiId}
+            <if test="apiId != null">
+                and t.apiId = #{apiId}
             </if>
             <if test="isUsed != 0">
-                and available = #{isUsed}
+                and t.available = #{isUsed}
             </if>
-            <if test="moduleId != 0">
-                and moduleId = #{moduleId}
+            <if test="moduleId != null">
+                and t.moduleId = #{moduleId}
             </if>
-            <if test="projectId != 0">
-                AND FIND_IN_SET(#{projectId},projectList)
+            <if test="projectId != null">
+                AND FIND_IN_SET(#{projectId},t.projectList)
             </if>
+            <choose>
+                <when test="isMyself == 1">
+                    and t.id = #{uid}
+                </when>
+                <when test="isMyself == 2">
+                    and t.id != #{uid}
+                </when>
+            </choose>
             <choose>
                 <when test="type == 1">
                     and t.name like concat("%",#{testQuery},"%")
                 </when>
                 <when test="type == 2">
                     and t.id = #{testQuery}
-                </when>
-            </choose>
-            <choose>
-                <when test="isUsed == 1">
-                    and uid = #{uid}
-                </when>
-                <when test="isUsed == 2">
-                    and uid != #{uid}
                 </when>
             </choose>
         </where>
@@ -212,7 +212,7 @@
         <include refid="api_info"/>
         a ON a.id = #{apiId}
         SET
-        editor=#{uid},c.name=#{name},c.envId=#{envId},c.serviceId=#{serviceId},c.moduleId=#{moduleId},c.projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},c.apiId=#{apiId},c.headersmoco=a.header_para,c.paramsmoco=a.request_par
+        editor=#{uid},c.name=#{name},c.envId=#{envId},c.serviceId=#{serviceId},c.moduleId=#{moduleId},c.projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},c.apiId=#{apiId},c.headersmoco=a.header_paras,c.paramsmoco=a.request_paras
         WHERE
         c.id = #{id}
     </update>
@@ -284,7 +284,7 @@
         #{uid} aa,#{uid}
         bb,#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler} ab,#{envId}
         cc,#{serviceId} dd ,#{moduleId} ee ,#{apiId} ff,#{name}
-        gg,1,2,api_url,api_action,api_method,header_para,request_par
+        gg,1,2,api_url,api_action,api_method,header_paras,request_paras
         FROM
         <include refid="api_info"/>
         WHERE id = #{apiId}) t

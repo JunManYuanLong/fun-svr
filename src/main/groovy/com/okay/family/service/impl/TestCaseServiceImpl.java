@@ -5,13 +5,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.common.DelBean;
-import com.okay.family.common.bean.testcase.request.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.*;
 import com.okay.family.common.bean.testcase.response.CaseDetailBean;
 import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
 import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
 import com.okay.family.common.bean.testcase.response.TestCaseListBean;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
+import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.common.enums.CaseEditType;
 import com.okay.family.common.exception.CaseException;
 import com.okay.family.common.exception.UserStatusException;
@@ -59,9 +59,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public int addCase(EditCaseAttributeBean bean) {
         int i = testCaseMapper.addCase(bean);
         List<Integer> projectList = bean.getProjectList();
-        if (projectList != null && projectList.size() > 0 && bean.getId() > 0) {
-            addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.CREATE.getCode()));
+        if (i > 0 && projectList != null && projectList.size() > 0) {
+            if (bean.getId() != null)
+                addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.CREATE.getCode()));
             addCaseProjectRelation(bean);
+        } else {
+            CaseException.fail(TestCaseCode.ADD_CASE_FAIL.getDesc());
         }
         return i;
     }
