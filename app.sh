@@ -41,7 +41,6 @@ function restart()
 
 #    backup
 
-#    appName=$releaseApp
     start
 }
 
