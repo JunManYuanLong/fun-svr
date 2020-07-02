@@ -9,14 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.concurrent.LinkedBlockingQueue;
 
 @Component
 public class RequestSave extends SourceCode {
 
     public static Logger logger = LoggerFactory.getLogger(RequestSave.class);
-
-    private static LinkedBlockingQueue<RequestSaveBean> beans = new LinkedBlockingQueue<>();
 
     private static ICommonService service;
 

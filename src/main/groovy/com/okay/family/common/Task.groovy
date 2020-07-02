@@ -14,7 +14,7 @@ class Task {
     @Scheduled(cron = "0 0/10 * * * ?")
     def saveRequestBean() {
 
-        logger.info("定时任务执行完毕! 时间:{},记录数目:{}", Time.getDate(), num)
+        logger.info("定时任务执行完毕! 时间:{},记录数目:{}", Time.getDate())
     }
 
 

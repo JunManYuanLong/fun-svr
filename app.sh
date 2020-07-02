@@ -49,9 +49,6 @@ function restart()
           break
         fi
 	  done
-
-    echo 0
-
 #    backup
 
     start
