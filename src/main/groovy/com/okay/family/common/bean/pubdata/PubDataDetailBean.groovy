@@ -14,15 +14,17 @@ class PubDataDetailBean extends AbstractBean {
     private static final long serialVersionUID = 62931721071606L;
 
     @NotNull
-    String text
+    String name
 
     @NotNull
-    String value
+    String demo
+
+    String requirement = "R"
 
     JSONArray children = new JSONArray(0)
 
     String dataType = "string"
 
-    String des = Constant.EMPTY
+    String remark = Constant.EMPTY
 
 }
