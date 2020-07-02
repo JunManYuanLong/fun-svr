@@ -1,48 +1,41 @@
 package com.okay.family.common;
 
-import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.RequestSaveBean;
 import com.okay.family.fun.frame.SourceCode;
+import com.okay.family.service.ICommonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
+@Component
 public class RequestSave extends SourceCode {
 
     public static Logger logger = LoggerFactory.getLogger(RequestSave.class);
 
-    static LinkedBlockingQueue<RequestSaveBean> beans = new LinkedBlockingQueue<>();
+    private static LinkedBlockingQueue<RequestSaveBean> beans = new LinkedBlockingQueue<>();
 
-    public static boolean addWork(RequestSaveBean requestSaveBean) {
-        try {
-            beans.put(requestSaveBean);
-        } catch (InterruptedException e) {
-            logger.warn("添加数据库存储任务失败！", e);
-            return false;
-        }
-        return true;
-    }
+    private static ICommonService service;
 
-    /**
-     * 从任务池里面获取任务
-     *
-     * @return
-     */
-    public static RequestSaveBean getWork() {
-        RequestSaveBean requestSaveBean = null;
-        try {
-            requestSaveBean = beans.poll(OkayConstant.MYSQLWORK_TIMEOUT, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            logger.warn("获取存储任务失败！", e);
-        } finally {
-            return requestSaveBean;
-        }
+    ICommonService commonService;
+
+    @Autowired
+    public RequestSave(ICommonService commonService) {
+        this.commonService = commonService;
     }
 
 
-    public static int getWorkNum() {
-        return beans.size();
+    @PostConstruct
+    public void init() {
+        service = this.commonService;
     }
+
+    public static void addWork(RequestSaveBean requestSaveBean) {
+        service.saveRequest(requestSaveBean);
+    }
+
+
 }
