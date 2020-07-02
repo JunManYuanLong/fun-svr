@@ -2,6 +2,7 @@ package com.okay.family.common.wapper;
 
 
 import com.okay.family.fun.config.Constant;
+import com.okay.family.fun.utils.DecodeEncode;
 import com.okay.family.fun.utils.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ public class WrappingFilter implements Filter {
         RequestWrapper requestWrapper = new RequestWrapper(req);
         String url = requestWrapper.getRequestURI();
         String queryArgs = requestWrapper.getQueryString();
-        queryArgs = queryArgs == null ? requestWrapper.getBody() : queryArgs;
+        queryArgs = queryArgs == null ? DecodeEncode.unicodeToString(requestWrapper.getBody()) : queryArgs;
         long start = Time.getTimeStamp();
         chain.doFilter(requestWrapper == null ? request : requestWrapper, responseWrapper);
         long end = Time.getTimeStamp();

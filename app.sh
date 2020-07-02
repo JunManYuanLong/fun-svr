@@ -24,7 +24,7 @@ function stop()
 	    echo "Maybe $appName not running, please check it..."
 	else
         echo "The $appName is stopping... $appId"
-        kill -9 $appId
+        kill $appId
 	fi
 }
 
@@ -32,11 +32,24 @@ function restart()
 {
 
     stop
-    for i in {5..1}
-    do
-        echo -n "$i "
+    int=1
+	  while [ 1 ];
+	  do
         sleep 1
-    done
+        appId=`ps -ef |grep java|grep $appName|awk '{print $2}'`
+#        echo $int
+        if [ -z $appId ]; then
+            break
+        fi
+        echo $appId
+        let "int++"
+        if [ $int -gt 10 ]; then
+          echo "超时强制退出"
+          kill -9 $appId
+          break
+        fi
+	  done
+
     echo 0
 
 #    backup
@@ -64,7 +77,7 @@ function restart()
 
 function status()
 {
-    appId=`ps -ef |grep java|grep $appName|awk '{print $2}'`
+  appId=`ps -ef |grep java|grep $appName|awk '{print $2}'`
 	if [ -z $appId ]
 	then
 	    echo -e "\033[31m Not running \033[0m"

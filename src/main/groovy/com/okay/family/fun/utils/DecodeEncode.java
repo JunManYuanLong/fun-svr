@@ -1,6 +1,7 @@
 package com.okay.family.fun.utils;
 
 
+import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.frame.SourceCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,8 @@ import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 编码格式转码解码类
@@ -154,5 +157,26 @@ public class DecodeEncode extends SourceCode {
     public static String encodeByMd5(String text, String salt) {
         return encodeByMd5(text + salt);
     }
+
+
+    /**
+     * 处理Unicode码转成utf-8
+     *
+     * @param str
+     * @return
+     */
+    public static String unicodeToString(String str) {
+        Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{4}))");
+        Matcher matcher = pattern.matcher(str);
+        char ch;
+        while (matcher.find()) {
+            String group = matcher.group(2);
+            ch = (char) Integer.parseInt(group, 16);
+            String group1 = matcher.group(1);
+            str = str.replace(group1, ch + Constant.EMPTY);
+        }
+        return str;
+    }
+
 
 }

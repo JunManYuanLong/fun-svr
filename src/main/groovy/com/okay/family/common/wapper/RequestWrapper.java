@@ -1,5 +1,9 @@
 package com.okay.family.common.wapper;
 
+import com.okay.family.fun.config.Constant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +11,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 
 public class RequestWrapper extends HttpServletRequestWrapper {
+
+    private static Logger logger = LoggerFactory.getLogger(RequestWrapper.class);
 
     private final String body;
 
@@ -25,24 +31,22 @@ public class RequestWrapper extends HttpServletRequestWrapper {
                     stringBuilder.append(charBuffer, 0, bytesRead);
                 }
             } else {
-                stringBuilder.append("");
+                stringBuilder.append(Constant.EMPTY);
             }
         } catch (IOException ex) {
-
+            logger.error("获取请求body发生错误", ex);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             if (bufferedReader != null) {
                 try {
                     bufferedReader.close();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -58,13 +62,16 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             public boolean isFinished() {
                 return false;
             }
+
             @Override
             public boolean isReady() {
                 return false;
             }
+
             @Override
             public void setReadListener(ReadListener readListener) {
             }
+
             @Override
             public int read() throws IOException {
                 return byteArrayInputStream.read();
@@ -82,4 +89,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     public String getBody() {
         return this.body;
     }
+
+
 }
