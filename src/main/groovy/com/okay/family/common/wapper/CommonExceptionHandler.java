@@ -50,7 +50,7 @@ public class CommonExceptionHandler {
         }
         if (e instanceof NonTransientDataAccessException) {
             String message = e.getMessage();
-            logger.error("数据格式错误!", e);
+            logger.error("数据库格式错误!", e);
             return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR);
         }
         if (e instanceof MissingServletRequestParameterException) {
