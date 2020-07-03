@@ -1,6 +1,8 @@
 package com.okay.family.common.bean.casecollect.request
 
 import com.okay.family.fun.base.bean.AbstractBean
+import com.okay.family.fun.frame.SourceCode
+import org.apache.commons.lang3.StringUtils
 import org.hibernate.validator.constraints.Range
 
 import javax.validation.constraints.Min

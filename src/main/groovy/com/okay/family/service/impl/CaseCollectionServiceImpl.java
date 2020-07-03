@@ -125,6 +125,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public CollectionRunSimpleResutl runCollection(RunCollectionBean bean) {
         List<CaseDataBean> casesDeatil = getCasesDeatil(bean);
+
         int userErrorNum = casesDeatil.stream().filter(x -> x.getAvailable() == CaseAvailableStatus.USER_ERROR.getCode()).collect(Collectors.toList()).size();
         List<CaseDataBean> cases = casesDeatil.stream().filter(x -> x.getEnvId() == bean.getEnvId() && x.getAvailable() == CaseAvailableStatus.OK.getCode()).collect(Collectors.toList());
         CountDownLatch countDownLatch = new CountDownLatch(cases.size());
@@ -132,6 +133,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         List<CaseRunThread> results = new ArrayList<>();
         String start = Time.getDate();
         cases.forEach(x -> {
+            x.setUid(bean.getUid());//设置执行用户ID
             CaseRunThread caseRunThread = new CaseRunThread(x, countDownLatch, runId);
             OkayThreadPool.addSyncWork(caseRunThread);
             results.add(caseRunThread);
@@ -226,9 +228,9 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     /**
      * 获取用例集运行记录列表
      *
-             * @param bean
+     * @param bean
      * @return
-             */
+     */
     @Override
     public List<SimpleBean> getRecords(DelBean bean) {
         List<SimpleBean> records = caseCollectionMapper.getRecords(bean);

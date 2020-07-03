@@ -93,7 +93,7 @@
 
     <select id="findCollecions" parameterType="com.okay.family.common.bean.casecollect.request.SearchCollectionBean"
             resultType="com.okay.family.common.bean.casecollect.response.ListCollectionBean">
-        select t.id,c.name result,t.name,e.name envName,t.create_time createTime,t.pub isShare,CASE t.uid == #{uid} WHEN
+        select t.id,c.name result,t.name,e.name envName,t.create_time createTime,t.pub isShare,CASE t.uid = #{uid} WHEN
         1 THEN 1 ELSE 0 END isMyself from
         <include refid="table"/>
         t left join
@@ -117,6 +117,7 @@
                 and (t.uid = #{uid} or t.pub = 1)
             </if>
         </where>
+        order by t.create_time desc
     </select>
 
     <select id="getRecords" parameterType="com.okay.family.common.bean.common.DelBean"
@@ -124,6 +125,7 @@
         select runId id,CASE ISNULL(name) WHEN 1 THEN create_time ELSE name END name from
         <include refid="run_record"/>
         where collectionId = #{id}
+        order by create_time desc
     </select>
 
     <select id="getCaseRunRecord" parameterType="java.lang.Integer"
@@ -138,6 +140,7 @@
         <include refid="case_status"/>
         cs on t.result = cs.id
         where t.runId = #{0}
+        order by t.create_time desc
     </select>
 
     <select id="getCollectionRunDetail" parameterType="java.lang.Integer"

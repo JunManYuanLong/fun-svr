@@ -4,9 +4,9 @@ import com.okay.family.fun.base.interfaces.ReturnCode
 
 enum DataBaseCode implements ReturnCode {
 
-    ONLY_KEY_FAIL(200, "数据库唯一性校验失败"),
-    MYBATIS_FAIL(201, "mybatis系统错误"),
-    MYBATIS_CONFIG_ERROR(203, "mybatis配置错误")
+    ONLY_KEY_FAIL(200, "数据重复,无法操作"),
+    MYBATIS_FAIL(201, "系统错误"),
+    MYBATIS_CONFIG_ERROR(203, "配置错误")
 
     int code
 

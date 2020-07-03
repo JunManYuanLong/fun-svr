@@ -134,7 +134,7 @@
         u
         on r.editor = u.id
         where r.caseId = #{id}
-
+        order by r.create_time desc
     </select>
 
     <select id="searchCases" parameterType="com.okay.family.common.bean.testcase.request.CaseSearchBean"
@@ -192,7 +192,7 @@
                 </when>
             </choose>
         </where>
-        order by t.create_time
+        order by t.create_time desc
     </select>
 
     <update id="updateCaseData" parameterType="com.okay.family.common.bean.testcase.request.CaseDataBean">

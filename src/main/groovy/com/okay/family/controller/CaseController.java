@@ -35,7 +35,6 @@ public class CaseController {
 
     @PostMapping(value = "/edit")
     public Result edit(@RequestBody @Valid EditCaseAttributeBean bean) {
-
         String type = bean.getType();
         if (type.equalsIgnoreCase("add")) {
             int i = service.addCase(bean);

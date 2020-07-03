@@ -12,7 +12,7 @@ class OkayMethod extends SourceCode {
 
     public static JSONObject getSimplerResult(AbstractBean bean) {
         try {
-            getSimplerResult bean.getProperty("code")
+            getSimplerResult bean.getProperty(OkayConstant.SIMPLER_RESULT_KEY)
         } catch (MissingPropertyException e) {
             getSimplerResult(-2)
         }
