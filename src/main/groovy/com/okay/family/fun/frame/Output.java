@@ -1,6 +1,7 @@
 package com.okay.family.fun.frame;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
 
@@ -198,6 +199,19 @@ public class Output extends Constant {
 
     public static void show(Map map) {
         new ConsoleTable(map);
+    }
+
+    /**
+     * 打印可能的json数据
+     *
+     * @param content
+     */
+    public static void showStr(String content) {
+        try {
+            output(JSONObject.parseObject(content));
+        } catch (JSONException e) {
+            output(content);
+        }
     }
 
     public static void show(List<List<String>> rows) {

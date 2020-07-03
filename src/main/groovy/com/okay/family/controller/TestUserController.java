@@ -1,11 +1,12 @@
 package com.okay.family.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.okay.family.common.basedata.OkayMethod;
 import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.bean.testuser.request.EditUserBean;
 import com.okay.family.common.bean.testuser.request.SearchUserBean;
 import com.okay.family.common.bean.testuser.response.TestUserBean;
-import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.TestUserCode;
 import com.okay.family.fun.base.bean.Result;
@@ -44,7 +45,7 @@ public class TestUserController {
             return add > 0 ? Result.success(SourceCode.getJson("id=" + add)) : Result.fail(TestUserCode.ADD_USER_FAIL);
         } else if (bean.getType().equalsIgnoreCase("update")) {
             int i = testUserService.updateUser(bean);
-            return i == 0 ? Result.fail(TestUserCode.UPDATE_USER_FAIL) : Result.success();
+            return i == 0 ? Result.fail(TestUserCode.UPDATE_USER_FAIL) : Result.success(OkayMethod.getSimplerResult(bean));
         }
         return Result.fail(CommonCode.PARAMS_ERROR);
     }

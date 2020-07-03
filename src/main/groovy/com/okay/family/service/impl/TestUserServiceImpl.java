@@ -55,12 +55,6 @@ public class TestUserServiceImpl implements ITestUserService {
         if (add == 1) {
             TestUserCheckBean userCheckBean = new TestUserCheckBean();
             userCheckBean.copyFrom(user);
-            TestUserCheckBean bean = new TestUserCheckBean();
-            bean.setId(user.getId());
-            bean.setUser(user.getUser());
-            bean.setEnvId(user.getEnvId());
-            bean.setPassword(user.getPassword());
-            bean.setRoleId(user.getRoleId());
             int i = updateUserStatus(userCheckBean);
             if (i != 1 || StringUtils.isEmpty(userCheckBean.getCertificate())) {
                 UserStatusException.fail(TestUserCode.CHECK_FAIL.getDesc());

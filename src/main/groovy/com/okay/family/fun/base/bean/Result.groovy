@@ -32,7 +32,7 @@ class Result<T> extends AbstractBean {
     }
 
     private Result(int code, String msg) {
-        this(code, msg, "null")
+        this(code, msg, new JSONObject(0))
     }
 
     private Result(ReturnCode errorCode) {

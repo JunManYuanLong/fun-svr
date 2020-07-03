@@ -62,7 +62,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         addCollectionCaseRelation(bean);
         if (bean.getId() > 1)
             addCollectionEditRecord(new CaseCollectionEditRecord(bean.getId(), bean.getUid(), CollectionEditType.CREATE.getCode()));
-        return bean.getId();
+        return i;
     }
 
     @Async

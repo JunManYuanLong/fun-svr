@@ -1,8 +1,7 @@
 package com.okay.family.common.bean.testcase.response
 
-import com.okay.family.common.bean.common.SimpleBean
+import com.okay.family.common.bean.common.ProjectBean
 import com.okay.family.fun.base.bean.AbstractBean
-
 /**
  * 用例属性编辑
  */
@@ -30,7 +29,7 @@ class TestCaseAttributeBean extends AbstractBean {
 
     String serviceName
 
-    List<SimpleBean> versionList
+    List<ProjectBean> versionList
 
 /**
  * 用于异常查询结果赋值
@@ -38,6 +37,7 @@ class TestCaseAttributeBean extends AbstractBean {
  */
     def copyFrom(TestCaseAttributeBean bean) {
         this.id = bean.getId()
+        this.apiId = bean.getApiId()
         this.apiName = bean.getApiName()
         this.envId = bean.getEnvId()
         this.envName = bean.getEnvName()

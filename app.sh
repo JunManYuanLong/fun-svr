@@ -2,9 +2,6 @@
 version="1.0.1";
 
 appName="family-qa.jar"
-#if [ -z $appName ];then
-#    appName=`ls -t |grep .jar$ |head -n1`
-#fi
 
 function start()
 {
@@ -49,28 +46,9 @@ function restart()
           break
         fi
 	  done
-#    backup
 
     start
 }
-
-#function backup()
-#{
-#    # get backup version
-#    backupApp=`ls |grep -wv $releaseApp$ |grep .jar$`
-#
-#    # create backup dir
-#    if [ ! -d "backup" ];then
-#        mkdir backup
-#    fi
-#
-#    # backup
-#    for i in ${backupApp[@]}
-#    do
-#        echo "backup" $i
-#        mv $i backup
-#    done
-#}
 
 function status()
 {

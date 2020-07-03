@@ -2,6 +2,7 @@ package com.okay.family.common.wapper;
 
 
 import com.okay.family.fun.config.Constant;
+import com.okay.family.fun.frame.Output;
 import com.okay.family.fun.utils.DecodeEncode;
 import com.okay.family.fun.utils.Time;
 import org.slf4j.Logger;
@@ -44,9 +45,13 @@ public class WrappingFilter implements Filter {
         long end = Time.getTimeStamp();
         byte[] bytes = responseWrapper.getContent();
         String respContent = new String(bytes, Constant.UTF_8);
-        logger.info("请求:{},耗时:{}ms,参数:{},响应:{}", url, end - start,queryArgs,respContent);
+        logger.info("请求:{},耗时:{}ms,参数:{},响应:{}", url, end - start, queryArgs, respContent);
+        Output.showStr(queryArgs);
+        Output.showStr(respContent);
         response.getOutputStream().write(respContent.getBytes(Constant.UTF_8));
     }
+
+
 
 
 }

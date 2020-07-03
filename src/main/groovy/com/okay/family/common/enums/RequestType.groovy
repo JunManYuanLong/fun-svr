@@ -1,6 +1,7 @@
 package com.okay.family.common.enums
 
 import com.alibaba.fastjson.JSONArray
+import com.okay.family.fun.frame.SourceCode
 
 /**
  * 接口请求方式,get postform, postjson,枚举类

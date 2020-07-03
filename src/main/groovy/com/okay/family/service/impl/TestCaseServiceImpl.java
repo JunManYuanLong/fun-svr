@@ -59,7 +59,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public int addCase(EditCaseAttributeBean bean) {
         int i = testCaseMapper.addCase(bean);
         List<Integer> projectList = bean.getProjectList();
-        if (i > 0 && projectList != null && projectList.size() > 0) {
+        if (i > 0) {
             if (bean.getId() != null)
                 addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.CREATE.getCode()));
             addCaseProjectRelation(bean);
@@ -100,6 +100,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     @Async
     @Override
     public void addCaseProjectRelation(EditCaseAttributeBean bean) {
+        if (bean.getProjectList() == null || bean.getProjectList().size() == 0) return;
         testCaseMapper.addCaseProjectRelation(bean);
     }
 

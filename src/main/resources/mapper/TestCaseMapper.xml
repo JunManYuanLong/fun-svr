@@ -114,8 +114,8 @@
     </select>
 
     <select id="getCaseProjectRelation" parameterType="java.lang.Integer"
-            resultType="com.okay.family.common.bean.common.SimpleBean">
-        select r.id,CASE ISNULL(concat(p.name,p.version)) WHEN 1 THEN "匿名项目" ELSE concat(p.name,p.version) END name from
+            resultType="com.okay.family.common.bean.common.ProjectBean">
+        select p.id,p.name,p.version from
         <include refid="case_project_relation"/>
         r left join
         <include refid="project"/>
@@ -177,10 +177,10 @@
             </if>
             <choose>
                 <when test="isMyself == 1">
-                    and t.id = #{uid}
+                    and t.uid = #{uid}
                 </when>
                 <when test="isMyself == 2">
-                    and t.id != #{uid}
+                    and t.uid != #{uid}
                 </when>
             </choose>
             <choose>

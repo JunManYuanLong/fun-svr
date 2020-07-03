@@ -1,6 +1,7 @@
 package com.okay.family.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.okay.family.common.basedata.OkayMethod;
 import com.okay.family.common.bean.casecollect.request.*;
 import com.okay.family.common.bean.casecollect.response.CollectionRunResultDetailBean;
 import com.okay.family.common.bean.casecollect.response.CollectionRunSimpleResutl;
@@ -17,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.util.List;
-
-import static com.okay.family.fun.frame.SourceCode.getJson;
 
 @RestController
 @RequestMapping(value = "/collect")
@@ -38,15 +36,14 @@ public class CaseCollectionController {
 
     @PostMapping(value = "/add")
     public Result addCaseCollection(@RequestBody @Valid AddCollectionBean bean) {
-        service.addCollection(bean);
-        int id = bean.getId();
-        return id > 0 ? Result.success(getJson("id=" + id)) : Result.fail(CollectionCode.ADD_COLLECTION_FAIL);
+        int i = service.addCollection(bean);
+        return i > 0 ? Result.success(OkayMethod.getSimplerResult(bean)) : Result.fail(CollectionCode.ADD_COLLECTION_FAIL);
     }
 
     @PostMapping(value = "/edit")
     public Result editCollection(@RequestBody @Valid CollectionEditBean bean) {
         int i = service.editCollection(bean);
-        return i > 0 ? Result.success() : Result.fail(CollectionCode.NO_CHANGE_FAIL);
+        return i > 0 ? Result.success(OkayMethod.getSimplerResult(bean.getGroupId())) : Result.fail(CollectionCode.NO_CHANGE_FAIL);
     }
 
     @PostMapping(value = "/share")
@@ -98,5 +95,6 @@ public class CaseCollectionController {
         return Result.success(collectionRunDetail);
 
     }
+
 
 }
