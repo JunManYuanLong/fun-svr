@@ -3,6 +3,7 @@ package com.okay.family.controller;
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayMethod;
 import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.*;
 import com.okay.family.common.bean.testcase.response.CaseDetailBean;
 import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/case")
@@ -38,17 +40,22 @@ public class CaseController {
         String type = bean.getType();
         if (type.equalsIgnoreCase("add")) {
             int i = service.addCase(bean);
-            return i == 1 ? Result.success(OkayMethod.getSimplerResult(bean)) : Result.fail(TestCaseCode.ADD_CASE_FAIL);
+            return i == 1 ? Result.success(OkayMethod.getSimpleResult(bean)) : Result.fail(TestCaseCode.ADD_CASE_FAIL);
         } else if (type.equalsIgnoreCase("update")) {
             int i = service.updateCase(bean);
-            return i == 1 ? Result.success(OkayMethod.getSimplerResult(bean)) : Result.fail(TestCaseCode.NO_CHANGE_FAIL);
+            return i == 1 ? Result.success(OkayMethod.getSimpleResult(bean)) : Result.fail(TestCaseCode.NO_CHANGE_FAIL);
         } else if (type.equalsIgnoreCase("copy")) {
             if (bean.getName() == null) bean.setName(RString.getString(5));
             int i = service.copyCase(bean);
-            return i == 1 ? Result.success(OkayMethod.getSimplerResult(bean)) : Result.fail(TestCaseCode.COPY_CASE_FAIL);
+            return i == 1 ? Result.success(OkayMethod.getSimpleResult(bean)) : Result.fail(TestCaseCode.COPY_CASE_FAIL);
         }
         return Result.fail(CommonCode.PARAMS_ERROR);
+    }
 
+    @GetMapping(value = "/search")
+    public Result searchNoPage(@RequestBody @Valid CaseSearchNoPageBean bean) {
+        List<SimpleBean> simpleBeans = service.searchCaseNoPage(bean);
+        return Result.success(simpleBeans);
     }
 
     @PostMapping(value = "/save")

@@ -38,7 +38,7 @@ function restart()
         if [ -z $appId ]; then
             break
         fi
-        echo "watfor $int second ......"
+        echo "waitfor $int second ..."
         let "int++"
         if [ $int -gt 10 ]; then
           echo "超时强制退出"

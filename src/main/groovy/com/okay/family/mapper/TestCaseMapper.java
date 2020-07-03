@@ -2,6 +2,7 @@ package com.okay.family.mapper;
 
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.ProjectBean;
+import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.*;
 import com.okay.family.common.bean.testcase.response.CaseDetailBean;
 import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
@@ -32,6 +33,8 @@ public interface TestCaseMapper {
 
     List<TestCaseListBean> searchCases(CaseSearchBean bean);
 
+    List<SimpleBean> searchCaseNoPage(CaseSearchNoPageBean bean);
+
     TestCaseAttributeBean getAttributeById(int id);
 
     List<ProjectBean> getCaseProjectRelation(int id);
@@ -41,5 +44,6 @@ public interface TestCaseMapper {
     CaseDetailBean getCaseDetail(int id);
 
     void addRunRecord(CaseRunRecord record);
-    
+
+
 }

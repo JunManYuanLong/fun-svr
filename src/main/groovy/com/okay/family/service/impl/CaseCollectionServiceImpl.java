@@ -60,8 +60,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         int i = caseCollectionMapper.addCollection(bean);
         if (i < 1) CaseCollecionException.fail("添加用例集失败!");
         addCollectionCaseRelation(bean);
-        if (bean.getId() > 1)
-            addCollectionEditRecord(new CaseCollectionEditRecord(bean.getId(), bean.getUid(), CollectionEditType.CREATE.getCode()));
+        addCollectionEditRecord(new CaseCollectionEditRecord(bean.getId(), bean.getUid(), CollectionEditType.CREATE.getCode()));
         return i;
     }
 
@@ -69,6 +68,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public void addCollectionCaseRelation(AddCollectionBean bean) {
         caseCollectionMapper.addCollectionCaseRelation(bean);
+        addCollectionEditRecord(new CaseCollectionEditRecord(bean.getId(), bean.getUid(), CollectionEditType.ADD_CASE.getCode()));
     }
 
     @Async
@@ -80,12 +80,14 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public int editCollection(CollectionEditBean bean) {
         int i = caseCollectionMapper.editCollection(bean);
+        addCollectionEditRecord(new CaseCollectionEditRecord(bean.getGroupId(), bean.getUid(), CollectionEditType.EDIT_NAME.getCode()));
         return i;
     }
 
     @Override
     public int shareCollection(CollectionEditBean bean) {
         int i = caseCollectionMapper.shareCollection(bean);
+        addCollectionEditRecord(new CaseCollectionEditRecord(bean.getGroupId(), bean.getUid(), CollectionEditType.SHARE.getCode()));
         return i;
     }
 
@@ -223,6 +225,11 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         List<ListCollectionBean> collecions = caseCollectionMapper.findCollecions(bean);
         PageInfo<ListCollectionBean> pageInfo = new PageInfo(collecions);
         return pageInfo;
+    }
+
+    @Override
+    public List<SimpleBean> searchCollectionNoPage(SearchCollectionNoPageBean bean) {
+        return caseCollectionMapper.searchCollectionNoPage(bean);
     }
 
     /**

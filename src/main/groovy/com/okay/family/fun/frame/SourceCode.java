@@ -149,7 +149,7 @@ public class SourceCode extends Output implements Cloneable {
         return changeArraysToJson(content, "=");
     }
 
-    public static JSONObject getSimplerJson(String key, Object value) {
+    public static JSONObject getSimpleJson(String key, Object value) {
         if (StringUtils.isBlank(key)) return null;
         JSONObject result = new JSONObject(1) {{
             put(key, value);

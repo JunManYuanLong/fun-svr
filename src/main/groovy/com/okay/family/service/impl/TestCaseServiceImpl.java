@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.*;
 import com.okay.family.common.bean.testcase.response.CaseDetailBean;
 import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
@@ -134,6 +135,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
         int i = testCaseMapper.updateCaseData(bean);
         if (i > 0) addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_DATA.getCode()));
         return i;
+    }
+
+    @Override
+    public List<SimpleBean> searchCaseNoPage(CaseSearchNoPageBean bean) {
+        List<SimpleBean> simpleBeans = testCaseMapper.searchCaseNoPage(bean);
+        return simpleBeans;
     }
 
     @Override

@@ -39,10 +39,13 @@ public interface CaseCollectionMapper {
 
     List<ListCollectionBean> findCollecions(SearchCollectionBean bean);
 
+    List<SimpleBean> searchCollectionNoPage(SearchCollectionNoPageBean bean);
+
     List<SimpleBean> getRecords(DelBean bean);
 
     List<ListCaseRunResultBean> getCaseRunRecord(int runId);
 
     CollectionRunResultDetailBean getCollectionRunDetail(int runId);
+
 
 }

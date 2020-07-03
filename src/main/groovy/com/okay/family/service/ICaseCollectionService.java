@@ -43,6 +43,8 @@ public interface ICaseCollectionService {
 
     PageInfo<ListCollectionBean> findCollecions(SearchCollectionBean bean);
 
+    List<SimpleBean> searchCollectionNoPage(SearchCollectionNoPageBean bean);
+
     List<SimpleBean> getRecords(DelBean bean);
 
     CollectionRunResultDetailBean getCollectionRunDetail(int runId);

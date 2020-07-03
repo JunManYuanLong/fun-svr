@@ -3,6 +3,7 @@ package com.okay.family.service;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.bean.common.DelBean;
+import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.*;
 import com.okay.family.common.bean.testcase.response.CaseDetailBean;
@@ -10,6 +11,7 @@ import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
 import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
 import com.okay.family.common.bean.testcase.response.TestCaseListBean;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
@@ -35,6 +37,8 @@ public interface ITestCaseService {
     void addEditRecord(CaseEditRecord record);
 
     int updateCaseData(CaseDataBean bean);
+
+    List<SimpleBean> searchCaseNoPage(CaseSearchNoPageBean bean);
 
     PageInfo<TestCaseListBean> searchCases(CaseSearchBean bean);
 

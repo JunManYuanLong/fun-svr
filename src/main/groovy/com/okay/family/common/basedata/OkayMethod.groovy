@@ -6,15 +6,15 @@ import com.okay.family.fun.frame.SourceCode
 
 class OkayMethod extends SourceCode {
 
-    public static JSONObject getSimplerResult(def id) {
-        return getSimplerJson(OkayConstant.SIMPLER_RESULT_KEY, id)
+    public static JSONObject getSimpleResult(def id) {
+        return getSimpleJson(OkayConstant.SIMPLER_RESULT_KEY, id)
     }
 
-    public static JSONObject getSimplerResult(AbstractBean bean) {
+    public static JSONObject getSimpleResult(AbstractBean bean) {
         try {
-            getSimplerResult bean.getProperty(OkayConstant.SIMPLER_RESULT_KEY)
+            getSimpleResult bean.getProperty(OkayConstant.SIMPLER_RESULT_KEY)
         } catch (MissingPropertyException e) {
-            getSimplerResult(-2)
+            getSimpleResult(-2)
         }
     }
 

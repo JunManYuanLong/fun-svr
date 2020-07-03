@@ -36,14 +36,18 @@ public class CaseCollectionController {
 
     @PostMapping(value = "/add")
     public Result addCaseCollection(@RequestBody @Valid AddCollectionBean bean) {
+        if (bean.getId() == null) {
+            service.addCollectionCaseRelation(bean);
+            return Result.success();
+        }
         int i = service.addCollection(bean);
-        return i > 0 ? Result.success(OkayMethod.getSimplerResult(bean)) : Result.fail(CollectionCode.ADD_COLLECTION_FAIL);
+        return i > 0 ? Result.success(OkayMethod.getSimpleResult(bean)) : Result.fail(CollectionCode.ADD_COLLECTION_FAIL);
     }
 
     @PostMapping(value = "/edit")
     public Result editCollection(@RequestBody @Valid CollectionEditBean bean) {
         int i = service.editCollection(bean);
-        return i > 0 ? Result.success(OkayMethod.getSimplerResult(bean.getGroupId())) : Result.fail(CollectionCode.NO_CHANGE_FAIL);
+        return i > 0 ? Result.success(OkayMethod.getSimpleResult(bean.getGroupId())) : Result.fail(CollectionCode.NO_CHANGE_FAIL);
     }
 
     @PostMapping(value = "/share")
@@ -75,6 +79,12 @@ public class CaseCollectionController {
         bean.init();
         PageInfo<ListCollectionBean> collecions = service.findCollecions(bean);
         return Result.success(collecions);
+    }
+
+    @GetMapping(value = "/search")
+    public Result searchNoPage(@Valid SearchCollectionNoPageBean bean) {
+        List<SimpleBean> simpleBeans = service.searchCollectionNoPage(bean);
+        return Result.success(simpleBeans);
     }
 
     @PostMapping(value = "/run")

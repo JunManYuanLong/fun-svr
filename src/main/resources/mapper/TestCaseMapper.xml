@@ -195,6 +195,13 @@
         order by t.create_time desc
     </select>
 
+    <select id="searchCaseNoPage" parameterType="com.okay.family.common.bean.testcase.request.CaseSearchNoPageBean"
+            resultType="com.okay.family.common.bean.common.SimpleBean">
+        select id,name from
+        <include refid="table"/>
+        where envId = #{envId} and apiId = #{apiId} and available = 1
+    </select>
+
     <update id="updateCaseData" parameterType="com.okay.family.common.bean.testcase.request.CaseDataBean">
         UPDATE
         <include refid="table"/>
