@@ -8,6 +8,8 @@ import com.okay.family.fun.base.bean.AbstractBean
 import com.okay.family.fun.config.Constant
 
 import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
@@ -31,7 +33,7 @@ class CaseDataBean extends AbstractBean {
     @NotNull
     JSONArray header
 
-    @NotNull
+    @NotBlank
     @Pattern(regexp = "GET|POST-FORM|POST-JSON", message = "请求方式传参错误")
     String httpType
 
@@ -39,7 +41,7 @@ class CaseDataBean extends AbstractBean {
     @Min(value = 1L)
     Integer serviceId
 
-    @NotNull
+    @NotEmpty
     List<CaseVerifyBean> testWish
 
     @NotNull

@@ -22,7 +22,7 @@ class SearchUserBean extends AbstractBean {
     @Range(min = 5L, max = 20L, message = "每页显示数量设置错误")
     Integer pageSize
 
-    @Range(min = 0L, max = 10L, message = "用户身份参数错误")
+    @Range(min = 0L, max = OkayConstant.ROLE, message = "用户身份参数错误")
     Integer roleId
 
     @Range(min = 0L, max = OkayConstant.USER_STATUS, message = "用户状态参数错误")

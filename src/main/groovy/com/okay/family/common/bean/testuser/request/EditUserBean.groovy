@@ -6,9 +6,8 @@ import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.Range
 
 import javax.validation.constraints.Min
-import javax.validation.constraints.NotNull
+import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
-
 /**
  * 编辑测试用户信息
  */
@@ -22,19 +21,19 @@ class EditUserBean extends AbstractBean {
     @Min(value = 1L, message = "用户ID错误")
     Integer uid
 
-    @Range(min = 1L, max = 5L)
+    @Range(min = 1L, max = OkayConstant.ENV, message = "环境变量错误")
     Integer envId
 
     @Range(min = 1L, max = OkayConstant.ROLE, message = "不支持的用户身份")
     Integer roleId
 
-    @NotNull
+    @NotBlank
     String user
 
     @Pattern(regexp = "add|update|delete", message = "请输入正确的类型:add|update|delete")
     String type
 
-    @NotNull
+    @NotBlank
     String password
 
     String phone

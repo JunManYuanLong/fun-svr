@@ -5,9 +5,8 @@ import org.hibernate.validator.constraints.Length
 
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
-import javax.validation.constraints.NotNull
+import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
-
 /**
  * 增加,删除,更新
  */
@@ -23,7 +22,7 @@ class EditPubBean extends AbstractBean {
     @Max(value = 5L)
     Integer envId
 
-    @NotNull
+    @NotBlank
     @Length(min = 1, max = 16, message = "name长度错误1-16")
     String name
 

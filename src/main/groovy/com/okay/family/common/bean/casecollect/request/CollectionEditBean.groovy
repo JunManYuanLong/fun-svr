@@ -3,8 +3,7 @@ package com.okay.family.common.bean.casecollect.request
 import com.okay.family.fun.base.bean.AbstractBean
 
 import javax.validation.constraints.Min
-import javax.validation.constraints.NotNull
-
+import javax.validation.constraints.NotBlank
 /**
  * 编辑用例集
  */
@@ -18,7 +17,7 @@ class CollectionEditBean extends AbstractBean {
     @Min(value = 1L)
     Integer groupId
 
-    @NotNull
+    @NotBlank
     String name
 
 }

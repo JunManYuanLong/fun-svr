@@ -12,9 +12,7 @@ class CaseRunRecord extends AbstractBean {
     private static final long serialVersionUID = -159435949821153477L;
 
     Integer id
-    /**
-     * 预留字段给用例集运行的时候用的
-     */
+
     Integer runId
 
     Integer mark

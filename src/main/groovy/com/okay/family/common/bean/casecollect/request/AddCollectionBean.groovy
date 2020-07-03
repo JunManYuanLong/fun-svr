@@ -3,6 +3,7 @@ package com.okay.family.common.bean.casecollect.request
 import com.okay.family.fun.base.bean.AbstractBean
 
 import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 /**
@@ -23,7 +24,7 @@ class AddCollectionBean extends AbstractBean{
     @NotNull
     Set<Integer> apiList
 
-    @NotNull
+    @NotBlank
     String groupName
 
 }

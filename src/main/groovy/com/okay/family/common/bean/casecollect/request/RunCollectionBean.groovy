@@ -1,5 +1,6 @@
 package com.okay.family.common.bean.casecollect.request
 
+import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Range
 
@@ -18,7 +19,7 @@ class RunCollectionBean extends AbstractBean {
     @Min(value = 1L)
     Integer uid
 
-    @Range(min = 1L,max = 5L)
+    @Range(min = 1L, max = OkayConstant.ENV, message = "环境ID参数错误")
     Integer envId
 
 }

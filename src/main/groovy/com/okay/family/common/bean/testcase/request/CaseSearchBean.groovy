@@ -1,5 +1,6 @@
 package com.okay.family.common.bean.testcase.request
 
+import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.fun.base.bean.AbstractBean
 import com.okay.family.fun.frame.SourceCode
 import org.apache.commons.lang3.StringUtils
@@ -20,6 +21,7 @@ class CaseSearchBean extends AbstractBean {
     @Min(value = 1L)
     Integer uid
 
+    @Range(min = 0L, max = OkayConstant.ENV, message = "环境变量参数错误")
     Integer envId
 
     @Min(value = 1L)
@@ -41,6 +43,7 @@ class CaseSearchBean extends AbstractBean {
     @Range(min = 5L, max = 10L, message = "单页数值设置错误!")
     Integer pageSize
 
+    @Min(value = 1L)
     Integer projectId
 
     String testQuery

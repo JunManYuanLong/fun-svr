@@ -4,7 +4,7 @@ import com.okay.family.common.bean.pubdata.PubDataDetailBean
 import com.okay.family.fun.base.bean.AbstractBean
 
 import javax.validation.constraints.Min
-import javax.validation.constraints.NotNull
+import javax.validation.constraints.NotEmpty
 
 class SavePubDataBean extends AbstractBean {
 
@@ -16,7 +16,7 @@ class SavePubDataBean extends AbstractBean {
     @Min(value = 1L)
     Integer uid
 
-    @NotNull(message = "公共数据不能为空")
+    @NotEmpty(message = "公共数据不能为空")
     List<PubDataDetailBean> list
 
 }
