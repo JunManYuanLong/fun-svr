@@ -5,14 +5,17 @@ import com.okay.family.fun.base.bean.AbstractBean
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
 
 class SavePubDataBean extends AbstractBean {
 
     private static final long serialVersionUID = 6293172188474L;
 
+    @NotNull
     @Min(value = 1L)
     Integer id
 
+    @NotNull
     @Min(value = 1L)
     Integer uid
 

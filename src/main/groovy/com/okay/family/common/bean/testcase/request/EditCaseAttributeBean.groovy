@@ -16,12 +16,15 @@ class EditCaseAttributeBean extends AbstractBean {
 
     private static final long serialVersionUID = -629232822729332L;
 
+    @NotNull
     @Min(value = 1L)
     Integer id
 
+    @NotNull
     @Min(value = 1L)
     Integer uid
 
+    @NotNull
     @Range(min = 1L, max = OkayConstant.ENV, message = "环境变量参数错误")
     Integer envId
 
@@ -38,8 +41,10 @@ class EditCaseAttributeBean extends AbstractBean {
     @NotBlank
     String name
 
+    @NotNull
     List<Integer> projectList
 
+    @NotNull
     @Min(value = 1L)
     Integer apiId
 

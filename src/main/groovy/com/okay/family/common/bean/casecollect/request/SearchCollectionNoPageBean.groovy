@@ -5,14 +5,17 @@ import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Range
 
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 class SearchCollectionNoPageBean extends AbstractBean{
 
     private static final long serialVersionUID = -324894815616518798;
 
 
+    @NotNull
     Integer uid
 
+    @NotNull
     @Range(min = 1L, max = OkayConstant.ENV, message = "环境ID参数错误")
     Integer envId
 

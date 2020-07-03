@@ -5,6 +5,8 @@ import com.okay.family.fun.base.bean.AbstractBean
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
+
 /**
  * 添加用例
  */
@@ -14,9 +16,11 @@ class AddCollectionBean extends AbstractBean{
 
     Integer id
 
+    @NotNull
     @Min(value = 1L)
     Integer uid
 
+    @NotNull
     @Min(value = 1L)
     Integer envId
 
