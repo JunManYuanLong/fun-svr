@@ -209,7 +209,7 @@ public class Output extends Constant {
     public static void showStr(String content) {
         try {
             if (content.contains("&")) output(SourceCode.getJson(content.split("&")));
-            output(JSONObject.parseObject(content));
+            else output(JSONObject.parseObject(content));
         } catch (JSONException e) {
             output(content);
         }

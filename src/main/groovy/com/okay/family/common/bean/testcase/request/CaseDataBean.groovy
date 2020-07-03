@@ -3,16 +3,16 @@ package com.okay.family.common.bean.testcase.request
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
+import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.common.bean.testcase.CaseVerifyBean
 import com.okay.family.fun.base.bean.AbstractBean
 import com.okay.family.fun.config.Constant
+import org.hibernate.validator.constraints.Range
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
-
 /**
  * 测试用例数据
  */
@@ -22,11 +22,15 @@ class CaseDataBean extends AbstractBean {
 
     Integer id
 
+    @NotNull
     @Min(value = 1L)
     Integer uid
 
+    @NotNull
+    @Range(min = 1L, max = OkayConstant.ENV, message = "环境ID参数错误")
     Integer envId
 
+    @NotNull
     @Min(value = 1L)
     Integer apiId
 
@@ -37,11 +41,10 @@ class CaseDataBean extends AbstractBean {
     @Pattern(regexp = "GET|POST-FORM|POST-JSON", message = "请求方式传参错误")
     String httpType
 
-
     @Min(value = 1L)
     Integer serviceId
 
-    @NotEmpty
+    @NotNull
     List<CaseVerifyBean> testWish
 
     @NotNull

@@ -53,7 +53,7 @@ public class CaseController {
     }
 
     @GetMapping(value = "/search")
-    public Result searchNoPage(@RequestBody @Valid CaseSearchNoPageBean bean) {
+    public Result searchNoPage(@Valid CaseSearchNoPageBean bean) {
         List<SimpleBean> simpleBeans = service.searchCaseNoPage(bean);
         return Result.success(simpleBeans);
     }

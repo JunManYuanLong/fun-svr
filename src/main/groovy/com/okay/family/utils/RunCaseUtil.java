@@ -27,7 +27,7 @@ public class RunCaseUtil {
         } else if (httpType.equalsIgnoreCase(RequestType.POST_FORM.getDesc())) {
             request = FunRequest.isPost().setHost(host).setApiName(bean.getUrl()).addHeaders(bean.getHeaders()).addParams(bean.getParams());
         } else {
-            logger.warn("用户身份不支持:{}",bean.toString());
+            logger.warn("请求方式不支持:{}",bean.toString());
             record.setResult(RunResult.UNRUN.getCode());
             return;
         }

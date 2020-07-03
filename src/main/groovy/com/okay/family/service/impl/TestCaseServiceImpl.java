@@ -207,6 +207,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
         CaseRunRecord record = new CaseRunRecord();
         RunCaseUtil.run(bean, record);
         addRunRecord(record);
+        logger.warn(record.toString());
         return record;
     }
 
