@@ -36,7 +36,7 @@ public class CaseCollectionController {
 
     @PostMapping(value = "/add")
     public Result addCaseCollection(@RequestBody @Valid AddCollectionBean bean) {
-        if (bean.getId() == null) {
+        if (bean.getId() != null) {
             service.addCollectionCaseRelation(bean);
             return Result.success();
         }
