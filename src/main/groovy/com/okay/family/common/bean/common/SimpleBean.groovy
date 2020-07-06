@@ -13,4 +13,13 @@ class SimpleBean extends AbstractBean {
 
     String name
 
+    SimpleBean(Integer id, String name) {
+        this.id = id
+        this.name = name
+    }
+
+    public static SimpleBean getBean(int id, String name) {
+        new SimpleBean(id, name)
+    }
+
 }

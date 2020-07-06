@@ -1,7 +1,7 @@
 package com.okay.family.common.enums
 
 import com.alibaba.fastjson.JSONArray
-import com.okay.family.fun.frame.SourceCode
+import com.okay.family.common.bean.common.SimpleBean
 
 enum CollectionEditType {
 
@@ -22,7 +22,9 @@ enum CollectionEditType {
 
     static JSONArray getAll() {
         JSONArray result = new JSONArray()
-        CollectionEditType.values().each {x -> result << SourceCode.getJson("id=" + x.getCode(), "name=" + x.getDesc())}
+        CollectionEditType.values().each {x ->
+            result << SimpleBean.getBean(x.getCode(), x.getDesc())
+        }
         result
     }
 

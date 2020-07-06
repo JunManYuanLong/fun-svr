@@ -1,7 +1,7 @@
 package com.okay.family.common.enums
 
 import com.alibaba.fastjson.JSONArray
-import com.okay.family.fun.frame.SourceCode
+import com.okay.family.common.bean.common.SimpleBean
 /**
  * 用例状态和运行状态记录表,user_error和un_know只存在于运行状态.
  */
@@ -23,8 +23,9 @@ enum CaseAvailableStatus {
 
     static JSONArray getAll() {
         JSONArray result = new JSONArray()
-        result << SourceCode.getJson("id=" + OK.getCode(), "name=" + OK.getDesc())
-        result << SourceCode.getJson("id=" + NO.getCode(), "name=" + NO.getDesc())
+        CaseAvailableStatus.values().each {x ->
+            result << SimpleBean.getBean(x.getCode(), x.getDesc())
+        }
         result
     }
 

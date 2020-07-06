@@ -47,7 +47,7 @@ public class CaseCollectionController {
     @PostMapping(value = "/edit")
     public Result editCollection(@RequestBody @Valid CollectionEditBean bean) {
         int i = service.editCollection(bean);
-        return i > 0 ? Result.success(OkayMethod.getSimpleResult(bean.getGroupId())) : Result.fail(CollectionCode.NO_CHANGE_FAIL);
+        return i > 0 ? Result.success(OkayMethod.getIdResult(bean.getGroupId())) : Result.fail(CollectionCode.NO_CHANGE_FAIL);
     }
 
     @PostMapping(value = "/share")
