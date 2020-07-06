@@ -5,9 +5,11 @@ import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
 import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.common.bean.testcase.CaseVerifyBean
+import com.okay.family.common.exception.CommonException
 import com.okay.family.fun.base.bean.AbstractBean
 import com.okay.family.fun.config.Constant
 import org.hibernate.validator.constraints.Range
+import org.slf4j.LoggerFactory
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
@@ -17,6 +19,8 @@ import javax.validation.constraints.Pattern
  * 测试用例数据
  */
 class CaseDataBean extends AbstractBean {
+
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CaseDataBean.class)
 
     private static final long serialVersionUID = -629048686822729332L;
 
@@ -35,7 +39,7 @@ class CaseDataBean extends AbstractBean {
     Integer apiId
 
     @NotNull
-    JSONArray header
+    JSONArray header_paras
 
     @NotBlank
     @Pattern(regexp = "GET|POST-FORM|POST-JSON", message = "请求方式传参错误")
@@ -49,7 +53,7 @@ class CaseDataBean extends AbstractBean {
     List<CaseVerifyBean> testWish
 
     @NotNull
-    JSONArray upData
+    JSONArray request_paras
 
     /**
      * 接口地址
@@ -68,6 +72,7 @@ class CaseDataBean extends AbstractBean {
 
 
     void init() {
+        if (id == null) CommonException.fail("请求参数错误,id为空")
         initHeader()
         initParams()
         available = testWish.size() > 0 ? 1 : 2
@@ -75,20 +80,21 @@ class CaseDataBean extends AbstractBean {
 
     private def initHeader() {
         headers = new JSONObject()
-        if (header.size() > 0) {
-            header.each {x ->
+        if (header_paras.size() > 0) {
+            header_paras.each {x ->
                 JSONObject json = JSON.parseObject(JSONObject.toJSONString(x))
                 def key = json.getString("name")
                 def value = json.getString("demo")
                 headers.put(key, value)
             }
         }
+        logger.info("header参数初始化:{}", headers.toString())
     }
 
     private def initParams() {
         params = new JSONObject()
-        if (upData.size() > 0) {
-            upData.each {x ->
+        if (request_paras.size() > 0) {
+            request_paras.each {x ->
                 JSONObject json = JSON.parseObject(JSON.toJSONString(x))
                 def type = json.getString("dataType")
                 if (type ==~ /number|string|integer/) {
@@ -115,6 +121,7 @@ class CaseDataBean extends AbstractBean {
                 }
             }
         }
+        logger.info("请求参数初始化:{}", params.toString())
     }
 
 }

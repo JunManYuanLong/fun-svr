@@ -62,7 +62,7 @@ public class CaseController {
     public Result updateCaseData(@RequestBody @Valid CaseDataBean bean) {
         bean.init();
         int i = service.updateCaseData(bean);
-        return i == 1 ? Result.success() : Result.fail(TestCaseCode.DEL_CASE_FAIL);
+        return i == 1 ? Result.success() : Result.fail(TestCaseCode.SAVE_CASE_ERROR);
     }
 
     @PostMapping(value = "/del")
@@ -101,8 +101,8 @@ public class CaseController {
 
     @PostMapping(value = "/run")
     public Result runCase(@RequestBody @Valid CaseDataBean bean) {
-        bean.init();
         bean.setId(0);
+        bean.init();
         CaseRunRecord caseRunRecord = service.runCaseData(bean);
         return Result.success(caseRunRecord);
 

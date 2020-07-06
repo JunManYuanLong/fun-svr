@@ -3,10 +3,7 @@ package com.okay.family.controller;
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayMethod;
 import com.okay.family.common.bean.casecollect.request.*;
-import com.okay.family.common.bean.casecollect.response.CollectionRunResultDetailBean;
-import com.okay.family.common.bean.casecollect.response.CollectionRunSimpleResutl;
-import com.okay.family.common.bean.casecollect.response.ListCaseBean;
-import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
+import com.okay.family.common.bean.casecollect.response.*;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.code.CollectionCode;
@@ -70,7 +67,7 @@ public class CaseCollectionController {
 
     @GetMapping(value = "/cases")
     public Result getCases(@RequestParam(value = "groupId", required = true) int groupId, @RequestParam(value = "uid", required = true) int uid) {
-        List<ListCaseBean> cases = service.getCases(groupId, uid);
+        CollectionCaseInfoBean cases = service.getCases(groupId, uid);
         return Result.success(cases);
     }
 

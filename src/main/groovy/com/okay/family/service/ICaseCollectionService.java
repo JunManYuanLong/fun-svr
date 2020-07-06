@@ -2,10 +2,7 @@ package com.okay.family.service;
 
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.bean.casecollect.request.*;
-import com.okay.family.common.bean.casecollect.response.CollectionRunResultDetailBean;
-import com.okay.family.common.bean.casecollect.response.CollectionRunSimpleResutl;
-import com.okay.family.common.bean.casecollect.response.ListCaseBean;
-import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
+import com.okay.family.common.bean.casecollect.response.*;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
@@ -31,7 +28,9 @@ public interface ICaseCollectionService {
 
     int delCaseFromCollection(DelCaseCollectionRelationBean bean);
 
-    List<ListCaseBean> getCases(int collectionId, int uid);
+    CollectionCaseInfoBean getCases(int collectionId, int uid);
+
+    void getCollectionInfo(CollectionCaseInfoBean bean, CountDownLatch countDownLatch);
 
     CollectionRunSimpleResutl runCollection(RunCollectionBean bean);
 

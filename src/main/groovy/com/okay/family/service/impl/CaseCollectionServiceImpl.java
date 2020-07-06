@@ -6,9 +6,9 @@ import com.okay.family.common.CaseRunThread;
 import com.okay.family.common.OkayThreadPool;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.casecollect.request.*;
+import com.okay.family.common.bean.casecollect.response.CollectionCaseInfoBean;
 import com.okay.family.common.bean.casecollect.response.CollectionRunResultDetailBean;
 import com.okay.family.common.bean.casecollect.response.CollectionRunSimpleResutl;
-import com.okay.family.common.bean.casecollect.response.ListCaseBean;
 import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
@@ -119,9 +119,29 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     }
 
     @Override
-    public List<ListCaseBean> getCases(int collectionId, int uid) {
-        List<ListCaseBean> cases = caseCollectionMapper.getCases(collectionId, uid);
-        return cases;
+    public CollectionCaseInfoBean getCases(int collectionId, int uid) {
+        CollectionCaseInfoBean infoBean = new CollectionCaseInfoBean();
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+        getCollectionInfo(infoBean, countDownLatch);
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            CommonException.fail("查询用例集关联用例出错");
+        }
+        infoBean.setList(caseCollectionMapper.getCases(collectionId, uid));
+        return infoBean;
+    }
+
+    @Async
+    @Override
+    public void getCollectionInfo(CollectionCaseInfoBean bean, CountDownLatch countDownLatch) {
+        try {
+            bean.setGroupName(caseCollectionMapper.getCollectionInfo(bean));
+        } catch (Exception e) {
+            logger.error("异步查询collecionName失败");
+        } finally {
+            countDownLatch.countDown();
+        }
     }
 
     @Override

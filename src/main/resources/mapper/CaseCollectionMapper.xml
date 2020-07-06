@@ -71,6 +71,12 @@
                 typeHandler="com.okay.family.common.typehandler.ResultArrayHandler"/>
     </resultMap>
 
+    <select id="getCollectionInfo" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select name from
+        <include refid="table"/>
+        where id = #{id}
+    </select>
+
     <select id="getCases" resultType="com.okay.family.common.bean.casecollect.response.ListCaseBean">
         select c.id id,c.name name,CASE c.uid = #{arg1} WHEN 1 THEN 1 ELSE 0 END isEdit from
         <include refid="case_relation"/>

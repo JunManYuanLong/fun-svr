@@ -4,6 +4,7 @@ package com.okay.family.common.wapper;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.DataBaseCode;
 import com.okay.family.fun.base.bean.Result;
+import com.okay.family.fun.base.exception.FailException;
 import org.apache.ibatis.exceptions.IbatisException;
 import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;
@@ -57,6 +58,11 @@ public class CommonExceptionHandler {
             String message = e.getMessage();
             logger.error("validation参数校验失败!", e);
             return Result.fail(CommonCode.BIND_ERROR);
+        }
+        if (e instanceof FailException) {
+            String message = e.getMessage();
+            logger.error("捕获自定义异常", e);
+            return Result.fail(message);
         }
         logger.warn("未记录异常类", e);
         return Result.fail(CommonCode.UNKNOW_ERROR);

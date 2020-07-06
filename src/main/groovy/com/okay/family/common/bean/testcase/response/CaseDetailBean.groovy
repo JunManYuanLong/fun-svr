@@ -36,11 +36,11 @@ class CaseDetailBean extends AbstractBean {
 
     String readType
 
-    JSONArray header
+    JSONArray header_paras
 
     List<CaseVerifyBean> testWish
 
-    JSONArray upData
+    JSONArray request_paras
 
     String url
 

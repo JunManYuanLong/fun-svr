@@ -72,9 +72,9 @@
         <result property="readType" column="type"/>
         <result property="url" column="path"/>
         <result property="name" column="name"/>
-        <result property="header" column="headersmoco"
+        <result property="header_paras" column="headersmoco"
                 typeHandler="com.okay.family.common.typehandler.JsonArrayHandler"/>
-        <result property="upData" column="paramsmoco"
+        <result property="request_paras" column="paramsmoco"
                 typeHandler="com.okay.family.common.typehandler.JsonArrayHandler"/>
         <result property="testWish" column="verify"
                 typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
@@ -206,7 +206,7 @@
         UPDATE
         <include refid="table"/>
         SET
-        headersmoco=#{header,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},params=#{upData,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},headers=#{headers,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},params=#{params,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},verify=#{testWish,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler},editor=#{uid},available=#{available}
+        headersmoco=#{header_paras,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},paramsmoco=#{request_paras,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},headers=#{headers,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},params=#{params,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},verify=#{testWish,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler},editor=#{uid},available=#{available}
         WHERE
         id = #{id} and uid = #{uid}
     </update>

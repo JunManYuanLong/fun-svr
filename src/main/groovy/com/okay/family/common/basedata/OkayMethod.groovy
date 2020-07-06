@@ -16,7 +16,7 @@ class OkayMethod extends SourceCode {
 
     public static JSONObject getSimpleResult(AbstractBean bean) {
         try {
-            getIdResult bean.getProperty(OkayConstant.SIMPLER_RESULT_KEY)
+            getIdResult bean.getProperty(OkayConstant.SIMPLER_RESULT_KEY_ID)
         } catch (MissingPropertyException e) {
             getIdResult(-2)
         }
