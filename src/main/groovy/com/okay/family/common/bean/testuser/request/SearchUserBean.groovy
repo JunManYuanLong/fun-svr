@@ -16,9 +16,11 @@ class SearchUserBean extends AbstractBean {
     @Range(min = 0L, max = OkayConstant.ENV, message = "环境参数错误")
     Integer envId
 
+    @NotNull
     @Min(value = 1L)
     Integer pageNum
 
+    @NotNull
     @Range(min = 5L, max = 20L, message = "每页显示数量设置错误")
     Integer pageSize
 

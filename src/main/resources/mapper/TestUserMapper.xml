@@ -20,7 +20,7 @@
 
     <select id="findUsers" parameterType="com.okay.family.common.bean.testuser.request.SearchUserBean"
             resultType="com.okay.family.common.bean.testuser.response.TestUserBean">
-        select tu.id,tu.des,tu.user,tu.phone,tu.password,tu.create_time,us.name status,env.name env,ur.name role from
+        select tu.id,tu.des,tu.user,tu.phone,tu.password,tu.create_time,us.name status,tu.envId,env.name envName,tu.roleId,ur.name roleName from
         <include refid="table"/>
         tu
         left join
