@@ -30,7 +30,7 @@ public class CommonExceptionHandler {
         /**参数错误*/
         if (e instanceof MethodArgumentNotValidException) {
             String defaultMessage = ((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getDefaultMessage();
-            logger.error("参数异常:{}", defaultMessage);
+            logger.error("参数异常", e);
             return Result.fail(CommonCode.PARAMS_ERROR);
         }
         if (e instanceof DuplicateKeyException) {

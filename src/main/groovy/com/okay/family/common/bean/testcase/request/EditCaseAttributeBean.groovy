@@ -8,7 +8,6 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
-
 /**
  * 用例属性编辑
  */
@@ -16,7 +15,6 @@ class EditCaseAttributeBean extends AbstractBean {
 
     private static final long serialVersionUID = -629232822729332L;
 
-    @NotNull
     @Min(value = 1L)
     Integer id
 
@@ -31,11 +29,13 @@ class EditCaseAttributeBean extends AbstractBean {
     /**
      * 关联服务id
      */
+    @NotNull
     Integer serviceId
 
     /**
      * 关联服务模块id
      */
+    @NotNull
     Integer moduleId
 
     @NotBlank

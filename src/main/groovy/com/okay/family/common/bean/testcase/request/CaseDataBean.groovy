@@ -41,6 +41,7 @@ class CaseDataBean extends AbstractBean {
     @Pattern(regexp = "GET|POST-FORM|POST-JSON", message = "请求方式传参错误")
     String httpType
 
+    @NotNull(message = "serviceId不能为空")
     @Min(value = 1L)
     Integer serviceId
 
