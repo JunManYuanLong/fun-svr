@@ -38,6 +38,10 @@
         qa_collection_status
     </sql>
 
+    <sql id="case_run_record">
+        qa_case_run_record
+    </sql>
+
     <resultMap type="com.okay.family.common.bean.testcase.request.CaseDataBean" id="CaseDataBean">
         <result property="id" column="id"/>
         <result property="envId" column="envId"/>
@@ -88,7 +92,7 @@
 
     <select id="getCasesDeatil" parameterType="com.okay.family.common.bean.casecollect.request.RunCollectionBean"
             resultMap="CaseDataBean">
-        select c.id,#{uid},#{envId},c.apiId
+        select c.id,#{uid},#{envId},c.apiId,c.envId
         ,c.method,c.serviceId,c.type,c.path,available,c.headers,c.params,c.verify from
         <include refid="case_relation"/>
         r left join
@@ -130,9 +134,10 @@
     <select id="searchCollectionNoPage"
             parameterType="com.okay.family.common.bean.casecollect.request.SearchCollectionNoPageBean"
             resultType="com.okay.family.common.bean.common.SimpleBean">
-        select id,name
+        select id,name from
         <include refid="table"/>
-        where envId = #{envId} and ( uid = #{uid} or pub = 1 )
+        where
+        envId = #{envId} and ( uid = #{uid} or pub = 1 )
         <if test="query != ''">
             and name like concat("%",#{query},"%")
         </if>
@@ -143,20 +148,22 @@
         select runId id,CASE ISNULL(name) WHEN 1 THEN create_time ELSE name END name from
         <include refid="run_record"/>
         where collectionId = #{id}
-        order by create_time desc
+        order by create_time desc limit 20
     </select>
 
     <select id="getCaseRunRecord" parameterType="java.lang.Integer"
             resultType="com.okay.family.common.bean.testcase.response.ListCaseRunResultBean">
-        select mark id,c.name name,cs.name result,s.name serviceName,c.path url from
+        select c.id id,ca.name name,cs.name result,s.name serviceName,ca.path url from
         <include refid="run_record"/>
         t left join
+        <include refid="case_run_record"/>
+        c on t.runId = c.runId left join
         <include refid="case_table"/>
-        c on t.caseId = c.id left join
+        ca on ca.id = c.caseId left join
         <include refid="service"/>
-        s on c.serviceId = s.id left join
+        s on ca.serviceId = s.id left join
         <include refid="case_status"/>
-        cs on t.result = cs.id
+        cs on c.result = cs.id
         where t.runId = #{0}
         order by t.create_time desc
     </select>
@@ -188,7 +195,7 @@
         update
         <include refid="table"/>
         set
-        pub = 2,editor=#{uid}
+        pub = 1,editor=#{uid}
         where id = #{groupId} and uid = #{uid}
     </update>
 

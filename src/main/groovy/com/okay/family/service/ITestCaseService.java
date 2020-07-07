@@ -6,10 +6,7 @@ import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.*;
-import com.okay.family.common.bean.testcase.response.CaseDetailBean;
-import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
-import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
-import com.okay.family.common.bean.testcase.response.TestCaseListBean;
+import com.okay.family.common.bean.testcase.response.*;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -65,6 +62,8 @@ public interface ITestCaseService {
     void handleParams(CaseDataBean bean, ConcurrentHashMap<Integer, String> map);
 
     void delAllCaseCollectionRelation(int id);
+
+    CaseRunDetailBean getCaseRunRecord(int id);
 
 
 }

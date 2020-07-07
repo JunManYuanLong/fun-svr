@@ -6,10 +6,7 @@ import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.*;
-import com.okay.family.common.bean.testcase.response.CaseDetailBean;
-import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
-import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
-import com.okay.family.common.bean.testcase.response.TestCaseListBean;
+import com.okay.family.common.bean.testcase.response.*;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.fun.base.bean.Result;
@@ -106,8 +103,11 @@ public class CaseController {
         bean.init();
         CaseRunRecord caseRunRecord = service.runCaseData(bean);
         return Result.success(caseRunRecord);
-
     }
 
-
+    @GetMapping(value = "/record")
+    public Result getRecord(@Valid DelBean bean) {
+        CaseRunDetailBean caseRunRecord = service.getCaseRunRecord(bean.getId());
+        return Result.success(caseRunRecord);
+    }
 }

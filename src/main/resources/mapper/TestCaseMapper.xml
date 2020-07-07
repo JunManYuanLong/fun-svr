@@ -202,6 +202,11 @@
         where envId = #{envId} and apiId = #{apiId} and available = 1
     </select>
 
+    <select id="getCaseRunRecord" parameterType="java.lang.Integer" resultType="com.okay.family.common.bean.testcase.response.CaseRunDetailBean">
+        select * from <include refid="run_record"/>
+        where id = #{0}
+    </select>
+
     <update id="updateCaseData" parameterType="com.okay.family.common.bean.testcase.request.CaseDataBean">
         UPDATE
         <include refid="table"/>

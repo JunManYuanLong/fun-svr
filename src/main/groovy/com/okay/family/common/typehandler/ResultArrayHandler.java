@@ -36,6 +36,7 @@ public class ResultArrayHandler extends BaseTypeHandler<JSONArray> {
                 String[] split = x.split("=", 2);
                 result.add(SourceCode.getJson("text=" + split[0], "amount=" + split[1]));
             });
+            return result;
         }
         return null;
     }
@@ -50,6 +51,7 @@ public class ResultArrayHandler extends BaseTypeHandler<JSONArray> {
                 String[] split = x.split("=", 2);
                 result.add(SourceCode.getJson("text=" + split[0], "amount=" + split[1]));
             });
+            return result;
         }
         return null;
     }
@@ -64,6 +66,7 @@ public class ResultArrayHandler extends BaseTypeHandler<JSONArray> {
                 String[] split = x.split("=", 2);
                 result.add(SourceCode.getJson("text=" + split[0], "amount=" + split[1]));
             });
+            return result;
         }
         return null;
 

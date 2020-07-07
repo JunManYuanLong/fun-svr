@@ -65,7 +65,7 @@ public class CommonExceptionHandler {
             return Result.fail(CommonCode.PARAMS_ERROR,message);
         }
         logger.warn("未记录异常类", e);
-        return Result.fail(CommonCode.UNKNOW_ERROR);
+        return Result.fail(CommonCode.UNKNOW_ERROR,e.getMessage());
     }
 
 

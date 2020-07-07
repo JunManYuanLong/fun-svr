@@ -1,6 +1,7 @@
 package com.okay.family.utils
 
 import com.alibaba.fastjson.JSONObject
+import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.common.bean.testcase.CaseVerifyBean
 import com.okay.family.fun.frame.SourceCode
 import org.apache.commons.lang3.StringUtils
@@ -9,7 +10,7 @@ import org.slf4j.LoggerFactory
 
 class VerifyResponseUtil extends SourceCode {
 
-    private static Logger logger = LoggerFactory.getLogger(VerifyResponseUtil.class)
+    private static final Logger logger = LoggerFactory.getLogger(VerifyResponseUtil.class)
 
 /**
  * 校验响应结果
@@ -27,11 +28,12 @@ class VerifyResponseUtil extends SourceCode {
             def key = it.getText()
             if (key.contains("code")) {
                 String str = "\"" + key + "\":" + it.getValue()
-                it.setResult(it.getDes() + "校验结果:" + content.contains(str))
+                logger.warn(str)
+                it.setResult(it.getDes() + OkayConstant.RUN_RESULT_TEXT + content.contains(str))
             } else if (key.contains("regex")) {
-                it.setResult(it.getDes() + "校验结果:" + content ==~ it.getValue())
+                it.setResult(it.getDes() + OkayConstant.RUN_RESULT_TEXT + (content ==~ it.getValue()))
             } else {
-                it.setResult(it.getDes() + "校验结果:" + false)
+                it.setResult(it.getDes() + OkayConstant.RUN_RESULT_TEXT + false)
             }
         }
         beans.every {

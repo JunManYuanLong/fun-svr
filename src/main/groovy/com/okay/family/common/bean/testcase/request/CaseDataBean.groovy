@@ -88,8 +88,8 @@ class CaseDataBean extends AbstractBean {
         if (header_paras.size() > 0) {
             header_paras.each {x ->
                 JSONObject json = JSON.parseObject(JSONObject.toJSONString(x))
-                def key = json.getString("name")
-                def value = json.getString("demo")
+                def key = json.getString(OkayConstant.MOCO_KEY)
+                def value = json.getString(OkayConstant.MOCO_VALUE)
                 headers.put(key, value)
             }
         }
@@ -103,29 +103,29 @@ class CaseDataBean extends AbstractBean {
                 JSONObject json = JSON.parseObject(JSON.toJSONString(x))
                 def type = json.getString("dataType")
                 if (type ==~ /number|string|integer/) {
-                    def key = json.getString("name")
-                    def value = json.getString("demo")
+                    def key = json.getString(OkayConstant.MOCO_KEY)
+                    def value = json.getString(OkayConstant.MOCO_VALUE)
                     params.put(key, value)
                 } else if (type == "object") {
-                    def key = json.getString("name")
-                    JSONArray array = json.getJSONArray("children")
+                    def key = json.getString(OkayConstant.MOCO_KEY)
+                    JSONArray array = json.getJSONArray(OkayConstant.MOCO_CHILDREN)
                     JSONObject param = new JSONObject()
                     if (array.size() == 0) {
-                        def value = json.getString("demo")
+                        def value = json.getString(OkayConstant.MOCO_VALUE)
                         params.put(key, value)
                     } else {
                         array.each {y ->
                             JSONObject json2 = JSON.parseObject(JSON.toJSONString(y))
-                            def key2 = json2.getString("name")
-                            def value2 = json2.getString("demo")
+                            def key2 = json2.getString(OkayConstant.MOCO_KEY)
+                            def value2 = json2.getString(OkayConstant.MOCO_VALUE)
                             param.put(key2, value2)
                         }
                         params.put(key, param)
                     }
                 } else if (type == "array") {
                     /*此处不兼容array<object>*/
-                    def key = json.getString("name")
-                    def value = json.getString("demo")
+                    def key = json.getString(OkayConstant.MOCO_KEY)
+                    def value = json.getString(OkayConstant.MOCO_VALUE)
                     def list = Arrays.asList(value.split(Constant.COMMA))
                     params.put(key, list)
                 }

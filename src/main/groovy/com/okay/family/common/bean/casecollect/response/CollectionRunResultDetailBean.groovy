@@ -35,11 +35,11 @@ class CollectionRunResultDetailBean extends AbstractBean {
     def copyFrom(CollectionRunResultDetailBean bean) {
         this.id = bean.getId()
         this.name = bean.getName()
-        this.envId = bean.getEnv()
+        this.envName = bean.getEnvName()
         this.runId = bean.getRunId()
         this.caseNum = bean.getCaseNum()
-        this.list = bean.getList()
         this.result = bean.getResult()
+        this.list = bean.getList()
         this.startTime = bean.getStartTime()
         this.endTime = bean.getEndTime()
     }

@@ -8,10 +8,7 @@ import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.*;
-import com.okay.family.common.bean.testcase.response.CaseDetailBean;
-import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
-import com.okay.family.common.bean.testcase.response.TestCaseAttributeBean;
-import com.okay.family.common.bean.testcase.response.TestCaseListBean;
+import com.okay.family.common.bean.testcase.response.*;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.common.enums.CaseEditType;
@@ -265,7 +262,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
                 params.put(key, certificate);
             } else if (value.startsWith(OkayConstant.RANDOM_KEY)) {
                 String replace = value.replace(OkayConstant.RANDOM_KEY, Constant.EMPTY);
-                String[] split = replace.split(",", 2);
+                String[] split = replace.split(OkayConstant.COMMA, 2);
                 params.put(key, SourceCode.getRandomIntRange(SourceCode.changeStringToInt(split[0]), SourceCode.changeStringToInt(split[1])));
             }
         });
@@ -299,4 +296,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public void delAllCaseCollectionRelation(int id) {
         collectionMapper.delAllCaseCollectionRelation(id);
     }
+
+    @Override
+    public CaseRunDetailBean getCaseRunRecord(int id) {
+        CaseRunDetailBean caseRunRecord = testCaseMapper.getCaseRunRecord(id);
+        return caseRunRecord;
+    }
+
+
 }

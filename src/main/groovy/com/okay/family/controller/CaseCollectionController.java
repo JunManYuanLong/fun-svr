@@ -100,7 +100,6 @@ public class CaseCollectionController {
     public Result getRecord(@Valid DelBean bean) {
         CollectionRunResultDetailBean collectionRunDetail = service.getCollectionRunDetail(bean.getId());
         return Result.success(collectionRunDetail);
-
     }
 
 

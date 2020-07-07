@@ -32,6 +32,15 @@ public class OkayConstant extends SourceCode {
 
     public static final String RANDOM_KEY = "random=";
 
+    public static final String RUN_RESULT_TEXT = "--校验结果:";
+
+    public static final String MOCO_KEY = "name";
+
+    public static final String MOCO_VALUE = "demo";
+
+    public static final String MOCO_CHILDREN = "children";
+
+
     public static final String RULE = "value填写'uid=123'表示使用用户id为123的测试账号登录状态" + LINE + "如果想设置随机数,参考:" + RANDOM_KEY + "1000,2000,后者大于前者,否者功能不可用";
 
     public static final String SIMPLER_RESULT_KEY_ID = "id";

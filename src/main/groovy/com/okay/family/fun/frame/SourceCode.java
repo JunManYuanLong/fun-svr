@@ -53,10 +53,6 @@ public class SourceCode extends Output implements Cloneable {
         return LoggerFactory.getLogger(name);
     }
 
-    public static Logger getLogger() {
-        return logger;
-    }
-
     /**
      * 获取当前时间戳10位int 类型的数据
      *

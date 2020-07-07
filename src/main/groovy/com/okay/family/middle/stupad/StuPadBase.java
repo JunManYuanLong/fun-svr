@@ -67,6 +67,7 @@ public class StuPadBase extends SourceCode implements IBase {
         String url = LOGIN;
         JSONObject params = getJson("uname=" + uname, "pwd=" + getPassword(pwd));
         loginResponse = getPostResponse(url, params);
+        output(loginResponse);
         if (isRight(loginResponse)) {
             JSONObject data = loginResponse.getJSONObject("data");
             uid = data.getInteger("uid");
@@ -74,8 +75,7 @@ public class StuPadBase extends SourceCode implements IBase {
             uname = data.getString("uname");
             logger.info("学生pad,环境:{},账号:{},密码:{} 登录成功",envId,uname,pwd);
         } else {
-            logger.info("学生pad,环境:{},账号:{},密码:{} 登录失败",envId,uname,pwd);
-            output(loginResponse);
+            logger.error("学生pad,环境:{},账号:{},密码:{} 登录失败",envId,uname,pwd);
         }
     }
 
