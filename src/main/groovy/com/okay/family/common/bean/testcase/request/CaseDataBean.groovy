@@ -15,6 +15,7 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
+
 /**
  * 测试用例数据
  */
@@ -48,6 +49,10 @@ class CaseDataBean extends AbstractBean {
     @NotNull(message = "serviceId不能为空")
     @Min(value = 1L)
     Integer serviceId
+
+    @NotNull
+    @Pattern(regexp = "R|W")
+    String readType
 
     @NotNull
     List<CaseVerifyBean> testWish
@@ -105,13 +110,18 @@ class CaseDataBean extends AbstractBean {
                     def key = json.getString("name")
                     JSONArray array = json.getJSONArray("children")
                     JSONObject param = new JSONObject()
-                    array.each {y ->
-                        JSONObject json2 = JSON.parseObject(JSON.toString(y))
-                        def key2 = json2.getString("name")
-                        def value2 = json2.getString("demo")
-                        param.put(key2, value2)
+                    if (array.size() == 0) {
+                        def value = json.getString("demo")
+                        params.put(key, value)
+                    } else {
+                        array.each {y ->
+                            JSONObject json2 = JSON.parseObject(JSON.toJSONString(y))
+                            def key2 = json2.getString("name")
+                            def value2 = json2.getString("demo")
+                            param.put(key2, value2)
+                        }
+                        params.put(key, param)
                     }
-                    params.put(key, param)
                 } else if (type == "array") {
                     /*此处不兼容array<object>*/
                     def key = json.getString("name")

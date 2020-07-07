@@ -1,6 +1,5 @@
 package com.okay.family.common.typehandler;
 
-import com.okay.family.common.bean.pubdata.PubDataDetailBean;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.utils.Join;
 import org.apache.ibatis.type.BaseTypeHandler;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 
 import static com.okay.family.fun.frame.SourceCode.changeStringToInt;
 
-@MappedTypes(PubDataDetailBean.class)
+@MappedTypes(List.class)
 @MappedJdbcTypes(JdbcType.VARCHAR)
 public class ListIntegerHandler extends BaseTypeHandler<List<Integer>> {
 

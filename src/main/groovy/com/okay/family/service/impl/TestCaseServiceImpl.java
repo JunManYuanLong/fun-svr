@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
+import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.*;
 import com.okay.family.common.bean.testcase.response.CaseDetailBean;
 import com.okay.family.common.bean.testcase.response.CaseEditRetrunRecord;
@@ -18,6 +19,7 @@ import com.okay.family.common.exception.CaseException;
 import com.okay.family.common.exception.UserStatusException;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.frame.SourceCode;
+import com.okay.family.mapper.CaseCollectionMapper;
 import com.okay.family.mapper.TestCaseMapper;
 import com.okay.family.mapper.TestUserMapper;
 import com.okay.family.service.ITestCaseService;
@@ -48,13 +50,15 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
     ITestUserService testUserService;
 
+    CaseCollectionMapper collectionMapper;
+
     @Autowired
-    public TestCaseServiceImpl(TestCaseMapper testCaseMapper, TestUserMapper testUserMapper, ITestUserService testUserService) {
+    public TestCaseServiceImpl(TestCaseMapper testCaseMapper, TestUserMapper testUserMapper, ITestUserService testUserService, CaseCollectionMapper collectionMapper) {
         this.testCaseMapper = testCaseMapper;
         this.testUserMapper = testUserMapper;
         this.testUserService = testUserService;
+        this.collectionMapper = collectionMapper;
     }
-
 
     @Override
     public int addCase(EditCaseAttributeBean bean) {
@@ -94,7 +98,10 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
     public int delCase(DelBean bean) {
         int i = testCaseMapper.delCase(bean);
-        if (i > 0) delCaseProjectRelation(bean);
+        if (i > 0) {
+            delAllCaseCollectionRelation(bean.getId());
+            delCaseProjectRelation(bean);
+        }
         return i;
     }
 
@@ -205,6 +212,13 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public CaseRunRecord runCaseData(CaseDataBean bean) {
         handleParams(bean);
         CaseRunRecord record = new CaseRunRecord();
+        record.setRunId(Constant.TEST_ERROR_CODE);
+        record.setUid(bean.getUid());
+        record.setParams(bean.getParams());
+        record.setCaseId(Constant.TEST_ERROR_CODE);
+        record.setMark(OkayConstant.RUN_MARK.getAndIncrement());
+        bean.getHeaders().put(OkayConstant.MARK_HEADER, record.getMark());
+        record.setHeaders(bean.getHeaders());
         RunCaseUtil.run(bean, record);
         addRunRecord(record);
         logger.warn(record.toString());
@@ -280,5 +294,9 @@ public class TestCaseServiceImpl implements ITestCaseService {
         });
     }
 
-
+    @Async
+    @Override
+    public void delAllCaseCollectionRelation(int id) {
+        collectionMapper.delAllCaseCollectionRelation(id);
+    }
 }

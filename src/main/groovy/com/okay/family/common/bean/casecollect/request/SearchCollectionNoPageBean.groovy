@@ -4,7 +4,6 @@ import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.fun.base.bean.AbstractBean
 import org.hibernate.validator.constraints.Range
 
-import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 class SearchCollectionNoPageBean extends AbstractBean{
@@ -19,7 +18,7 @@ class SearchCollectionNoPageBean extends AbstractBean{
     @Range(min = 1L, max = OkayConstant.ENV, message = "环境ID参数错误")
     Integer envId
 
-    @NotBlank
+    @NotNull
     String query
 
 }

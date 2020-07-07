@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject
 import com.github.pagehelper.PageInfo
 import com.okay.family.common.code.CommonCode
 import com.okay.family.fun.base.interfaces.ReturnCode
-import com.okay.family.fun.config.Constant
 
 /**
  * 通用的返回体
@@ -78,13 +77,15 @@ class Result<T> extends AbstractBean {
  * @return
  */
     static <T> Result<T> fail(T data) {
-        new Result<T>(Constant.TEST_ERROR_CODE, data.toString())
+        fail(CommonCode.FAIL,data.toString())
     }
 
+    static Result fail(ReturnCode errorCode, String data) {
+        new Result(errorCode.getCode(), errorCode.getDesc(), data)
+    }
     static Result fail(ReturnCode errorCode) {
         new Result(errorCode)
     }
-
     static Result fail(int code, String msg) {
         new Result(code, msg)
     }

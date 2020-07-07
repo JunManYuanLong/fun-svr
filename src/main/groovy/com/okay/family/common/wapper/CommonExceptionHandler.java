@@ -32,37 +32,37 @@ public class CommonExceptionHandler {
         if (e instanceof MethodArgumentNotValidException) {
             String defaultMessage = ((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getDefaultMessage();
             logger.error("参数异常", e);
-            return Result.fail(CommonCode.PARAMS_ERROR);
+            return Result.fail(CommonCode.PARAMS_ERROR,e.getMessage());
         }
         if (e instanceof DuplicateKeyException) {
             logger.error("唯一性校验异常", e);
-            return Result.fail(DataBaseCode.ONLY_KEY_FAIL);
+            return Result.fail(DataBaseCode.ONLY_KEY_FAIL,e.getMessage());
         }
         if (e instanceof MyBatisSystemException) {
             logger.error("mybatis系统异常", e);
-            return Result.fail(DataBaseCode.MYBATIS_FAIL);
+            return Result.fail(DataBaseCode.MYBATIS_FAIL,e.getMessage());
         }
         if (e instanceof IbatisException) {
             logger.error("mybatis配置错误", e);
-            return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR);
+            return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR,e.getMessage());
         }
         if (e instanceof NonTransientDataAccessException) {
             logger.error("数据库格式错误!", e);
-            return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR);
+            return Result.fail(DataBaseCode.MYBATIS_CONFIG_ERROR,e.getMessage());
         }
         if (e instanceof MissingServletRequestParameterException) {
             logger.error("数据格式错误!", e);
-            return Result.fail(CommonCode.PARAMS_ERROR.getCode(), e.getMessage());
+            return Result.fail(CommonCode.PARAMS_ERROR,e.getMessage());
         }
         if (e instanceof BindException) {
             String message = e.getMessage();
             logger.error("validation参数校验失败!", e);
-            return Result.fail(CommonCode.BIND_ERROR);
+            return Result.fail(CommonCode.PARAMS_ERROR,e.getMessage());
         }
         if (e instanceof FailException) {
             String message = e.getMessage();
             logger.error("捕获自定义异常", e);
-            return Result.fail(message);
+            return Result.fail(CommonCode.PARAMS_ERROR,message);
         }
         logger.warn("未记录异常类", e);
         return Result.fail(CommonCode.UNKNOW_ERROR);

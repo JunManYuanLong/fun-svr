@@ -47,7 +47,6 @@
         <result property="serviceId" column="serviceId"/>
         <result property="readType" column="type"/>
         <result property="url" column="path"/>
-        <result property="name" column="name"/>
         <result property="available" column="available"/>
         <result property="headers" column="headers"
                 typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
@@ -71,8 +70,9 @@
                 typeHandler="com.okay.family.common.typehandler.ResultArrayHandler"/>
     </resultMap>
 
-    <select id="getCollectionInfo" parameterType="java.lang.Integer" resultType="java.lang.String">
-        select name from
+    <select id="getCollectionInfo" parameterType="java.lang.Integer"
+            resultType="com.okay.family.common.bean.casecollect.response.CollectionCaseInfoBean">
+        select name groupName,envId from
         <include refid="table"/>
         where id = #{id}
     </select>
@@ -89,7 +89,7 @@
     <select id="getCasesDeatil" parameterType="com.okay.family.common.bean.casecollect.request.RunCollectionBean"
             resultMap="CaseDataBean">
         select c.id,#{uid},#{envId},c.apiId
-        ,c.method,c.serviceId,c.type,c.path,c,name,c,available,c.headers,c.params,c.verify from
+        ,c.method,c.serviceId,c.type,c.path,available,c.headers,c.params,c.verify from
         <include refid="case_relation"/>
         r left join
         <include refid="case_table"/>
@@ -99,7 +99,8 @@
 
     <select id="findCollecions" parameterType="com.okay.family.common.bean.casecollect.request.SearchCollectionBean"
             resultType="com.okay.family.common.bean.casecollect.response.ListCollectionBean">
-        select t.id,c.name result,t.name,e.name envName,t.create_time createTime,t.pub isShare,CASE t.uid = #{uid} WHEN
+        select t.id,c.name result,t.name,t.envId,e.name envName,t.create_time createTime,t.pub isShare,CASE t.uid =
+        #{uid} WHEN
         1 THEN 1 ELSE 0 END isMyself from
         <include refid="table"/>
         t left join
@@ -131,7 +132,10 @@
             resultType="com.okay.family.common.bean.common.SimpleBean">
         select id,name
         <include refid="table"/>
-        where envId = #{envId} and ( uid = #{uid} or t.pub = 1 ) and name like concat("%",#{query},"%")
+        where envId = #{envId} and ( uid = #{uid} or pub = 1 )
+        <if test="query != ''">
+            and name like concat("%",#{query},"%")
+        </if>
     </select>
 
     <select id="getRecords" parameterType="com.okay.family.common.bean.common.DelBean"
@@ -252,5 +256,11 @@
         delete from
         <include refid="case_relation"/>
         where collectionId = #{id}
+    </delete>
+
+    <delete id="delAllCaseCollectionRelation">
+        delete from
+        <include refid="case_relation"/>
+        where caseId = #{arg0}
     </delete>
 </mapper>

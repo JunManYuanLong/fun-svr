@@ -8,8 +8,15 @@ class CollectionCaseInfoBean extends AbstractBean{
 
     Integer id
 
+    Integer envId
+
     String groupName
 
     List<ListCaseBean> list
+
+    def copyFrom(CollectionCaseInfoBean bean) {
+        this.envId = bean.getEnvId()
+        this.groupName = bean.getGroupName()
+    }
 
 }

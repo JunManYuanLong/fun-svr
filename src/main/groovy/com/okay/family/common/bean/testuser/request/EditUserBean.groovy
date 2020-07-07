@@ -16,7 +16,6 @@ class EditUserBean extends AbstractBean {
 
     private static final long serialVersionUID = 548951651651L;
 
-    @NotNull
     @Min(value = 1L)
     Integer id
 

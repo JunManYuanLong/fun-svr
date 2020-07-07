@@ -28,7 +28,10 @@ public class CommonServiceImpl implements ICommonService {
         Map<Integer, String> collect = hosts.stream().collect(Collectors.toMap((x -> {
             Object id = x.get("id");
             return Integer.parseInt(id.toString());
-        }), (x -> "https://" + x.get("domain"))));
+        }), (x -> {
+            String domain = x.get("domain");
+            return domain.endsWith("/") ? domain.substring(0, domain.length() - 1) : domain;
+        })));
         return collect;
     }
 

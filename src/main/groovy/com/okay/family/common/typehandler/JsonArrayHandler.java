@@ -14,7 +14,7 @@ import java.sql.SQLException;
 /**
  * 处理json数组读写
  */
-@MappedTypes(value = JSONArray.class)
+@MappedTypes(JSONArray.class)
 @MappedJdbcTypes(value = JdbcType.VARCHAR)
 public class JsonArrayHandler extends BaseTypeHandler<JSONArray> {
 

@@ -34,7 +34,7 @@ public interface CaseCollectionMapper {
 
     List<CaseDataBean> getCasesDeatil(RunCollectionBean bean);
 
-    String getCollectionInfo(CollectionCaseInfoBean bean);
+    CollectionCaseInfoBean getCollectionInfo(CollectionCaseInfoBean bean);
 
     void addCollectionRunRecord(CollectionRunResultRecord record);
 
@@ -50,5 +50,6 @@ public interface CaseCollectionMapper {
 
     CollectionRunResultDetailBean getCollectionRunDetail(int runId);
 
+    void delAllCaseCollectionRelation(int id);
 
 }

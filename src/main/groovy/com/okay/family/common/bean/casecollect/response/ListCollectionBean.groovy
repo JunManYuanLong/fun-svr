@@ -27,6 +27,8 @@ class ListCollectionBean extends AbstractBean {
 
     String envName
 
+    Integer envId
+
     String createTime
 
 

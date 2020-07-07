@@ -1,7 +1,6 @@
 package com.okay.family.common.typehandler;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.okay.family.fun.frame.SourceCode;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -18,7 +17,7 @@ import java.util.List;
 /**
  * 从数据库里面读取的map运行结果转化成json格式
  */
-@MappedTypes(JSONObject.class)
+@MappedTypes(JSONArray.class)
 @MappedJdbcTypes(JdbcType.VARCHAR)
 public class ResultArrayHandler extends BaseTypeHandler<JSONArray> {
 

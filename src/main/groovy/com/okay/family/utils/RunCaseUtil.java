@@ -2,7 +2,7 @@ package com.okay.family.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.ServerHost;
-import com.okay.family.common.bean.testcase.request.CaseRunRecord;
+import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
 import com.okay.family.common.enums.RequestType;
 import com.okay.family.common.enums.RunResult;
@@ -32,7 +32,7 @@ public class RunCaseUtil {
             return;
         }
         JSONObject response = request.getResponse();
-        record.setResponse(response);
+        record.setResponseResult(response);
         if (response.isEmpty()) {
             logger.warn("用例响应为空:{}",bean.toString());
             record.setResult(RunResult.UNRUN.getCode());
@@ -41,7 +41,7 @@ public class RunCaseUtil {
         record.setCode(VerifyResponseUtil.getCode(response));
         boolean verify = VerifyResponseUtil.verify(response, bean.getTestWish());
         record.setResult(verify ? RunResult.SUCCESS.getCode() : RunResult.FAIL.getCode());
-        record.setVerify(bean.getTestWish());
+        record.setCheckResult(bean.getTestWish());
     }
 
 

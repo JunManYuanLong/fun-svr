@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@MappedTypes(com.okay.family.common.bean.pubdata.PubDataDetailBean.class)
+@MappedTypes(List.class)
 @MappedJdbcTypes(JdbcType.VARCHAR)
 public class ListPubDetailHandler extends BaseTypeHandler<List<PubDataDetailBean>> {
 

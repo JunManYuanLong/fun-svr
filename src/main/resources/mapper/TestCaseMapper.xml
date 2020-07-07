@@ -206,7 +206,7 @@
         UPDATE
         <include refid="table"/>
         SET
-        headersmoco=#{header_paras,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},paramsmoco=#{request_paras,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},headers=#{headers,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},params=#{params,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},verify=#{testWish,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler},editor=#{uid},available=#{available}
+        headersmoco=#{header_paras,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},paramsmoco=#{request_paras,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonArrayHandler},headers=#{headers,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},params=#{params,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},verify=#{testWish,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler},editor=#{uid},available=#{available},create_time=now()
         WHERE
         id = #{id} and uid = #{uid}
     </update>
@@ -238,12 +238,12 @@
         WHERE id = #{id}) t
     </insert>
 
-    <insert id="addRunRecord" parameterType="com.okay.family.common.bean.testcase.request.CaseRunRecord">
+    <insert id="addRunRecord" parameterType="com.okay.family.common.bean.testcase.CaseRunRecord">
         insert into
         <include refid="run_record"/>
         (runId,mark,uid,caseId,code,result,verify,params,headers,response)
         values
-        (#{runId},#{mark},#{uid},#{caseId},#{code},#{result},#{verify,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler},#{params,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},#{headers,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},#{response,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler})
+        (#{runId},#{mark},#{uid},#{caseId},#{code},#{result},#{checkResult,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListCaseVerifyBeanHandler},#{params,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},#{headers,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler},#{responseResult,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.JsonHandler})
     </insert>
 
     <insert id="addCaseProjectRelation"

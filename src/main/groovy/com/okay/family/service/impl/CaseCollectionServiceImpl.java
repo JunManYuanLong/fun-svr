@@ -121,14 +121,15 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public CollectionCaseInfoBean getCases(int collectionId, int uid) {
         CollectionCaseInfoBean infoBean = new CollectionCaseInfoBean();
+        infoBean.setId(collectionId);
         CountDownLatch countDownLatch = new CountDownLatch(1);
         getCollectionInfo(infoBean, countDownLatch);
+        infoBean.setList(caseCollectionMapper.getCases(collectionId, uid));
         try {
             countDownLatch.await();
         } catch (InterruptedException e) {
             CommonException.fail("查询用例集关联用例出错");
         }
-        infoBean.setList(caseCollectionMapper.getCases(collectionId, uid));
         return infoBean;
     }
 
@@ -136,7 +137,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public void getCollectionInfo(CollectionCaseInfoBean bean, CountDownLatch countDownLatch) {
         try {
-            bean.setGroupName(caseCollectionMapper.getCollectionInfo(bean));
+            bean.copyFrom(caseCollectionMapper.getCollectionInfo(bean));
         } catch (Exception e) {
             logger.error("异步查询collecionName失败");
         } finally {
