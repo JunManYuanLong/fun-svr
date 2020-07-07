@@ -17,7 +17,7 @@ class ListCollectionBean extends AbstractBean {
      */
     Integer isMyself
     /**
-     * 0 未共享 1已共享
+     * 1已共享;2未共享
      */
     Integer isShare
 

@@ -8,6 +8,7 @@ import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.bean.testcase.request.DelCollectionBean;
 import com.okay.family.common.bean.testcase.response.ListCaseRunResultBean;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public interface CaseCollectionMapper {
 
     void addEditRcord(CaseCollectionEditRecord record);
 
-    int delCollection(DelBean bean);
+    int delCollection(DelCollectionBean bean);
 
-    void delCollectionCaseRelation(DelBean bean);
+    void delCollectionCaseRelation(DelCollectionBean bean);
 
     int editCollection(CollectionEditBean bean);
 

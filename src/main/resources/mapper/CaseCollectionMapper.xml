@@ -253,16 +253,16 @@
         where collectionId = #{groupId} and caseId = #{apiId}
     </delete>
 
-    <delete id="delCollection" parameterType="com.okay.family.common.bean.common.DelBean">
+    <delete id="delCollection" parameterType="com.okay.family.common.bean.testcase.request.DelCollectionBean">
         delete from
         <include refid="table"/>
-        where id = #{id} and uid =#{uid}
+        where id = #{groupId} and uid =#{uid}
     </delete>
 
-    <delete id="delCollectionCaseRelation" parameterType="com.okay.family.common.bean.common.DelBean">
+    <delete id="delCollectionCaseRelation" parameterType="com.okay.family.common.bean.testcase.request.DelCollectionBean">
         delete from
         <include refid="case_relation"/>
-        where collectionId = #{id}
+        where collectionId = #{groupId}
     </delete>
 
     <delete id="delAllCaseCollectionRelation">

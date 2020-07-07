@@ -2,10 +2,14 @@ package com.okay.family.service;
 
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.bean.casecollect.request.*;
-import com.okay.family.common.bean.casecollect.response.*;
+import com.okay.family.common.bean.casecollect.response.CollectionCaseInfoBean;
+import com.okay.family.common.bean.casecollect.response.CollectionRunResultDetailBean;
+import com.okay.family.common.bean.casecollect.response.CollectionRunSimpleResutl;
+import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.bean.testcase.request.DelCollectionBean;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -22,9 +26,9 @@ public interface ICaseCollectionService {
 
     int shareCollection(CollectionEditBean bean);
 
-    int delCollection(DelBean bean);
+    int delCollection(DelCollectionBean bean);
 
-    void delCollectionCaseRelation(DelBean bean);
+    void delCollectionCaseRelation(DelCollectionBean bean);
 
     int delCaseFromCollection(DelCaseCollectionRelationBean bean);
 

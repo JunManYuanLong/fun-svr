@@ -53,6 +53,10 @@
         qa_case_run_record
     </sql>
 
+    <sql id="request_record">
+        qa_request_record
+    </sql>
+
     <resultMap id="entityMap" type="com.okay.family.common.bean.testcase.CaseVerifyBean">
         <result column="verify" property="verify"
                 typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
@@ -79,6 +83,23 @@
         <result property="testWish" column="verify"
                 typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
     </resultMap>
+
+    <resultMap type="com.okay.family.common.bean.testcase.response.CaseRunDetailBean" id="CaseRunDetailBean">
+        <result property="runId" column="runId"/>
+        <result property="mark" column="mark"/>
+        <result property="caseId" column="caseId"/>
+        <result property="code" column="code"/>
+        <result property="requestid" column="requestid"/>
+        <result property="httpCode" column="httpCode"/>
+        <result property="cost" column="cost"/>
+        <result property="create_time" column="create_time"/>
+        <result property="verify" column="verify"
+                typeHandler="com.okay.family.common.typehandler.ListCaseVerifyBeanHandler"/>
+        <result property="headers" column="headers" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
+        <result property="params" column="params" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
+        <result property="response" column="response" typeHandler="com.okay.family.common.typehandler.JsonHandler"/>
+    </resultMap>
+
 
     <select id="getCaseDetail" parameterType="java.lang.Integer" resultMap="CaseDetailBean">
         select c.id,c.name,c.apiId,a.name apiName,c.envId,e.name envName,c.serviceId,s.name
@@ -202,9 +223,13 @@
         where envId = #{envId} and apiId = #{apiId} and available = 1
     </select>
 
-    <select id="getCaseRunRecord" parameterType="java.lang.Integer" resultType="com.okay.family.common.bean.testcase.response.CaseRunDetailBean">
-        select * from <include refid="run_record"/>
-        where id = #{0}
+    <select id="getCaseRunRecord" parameterType="java.lang.Integer" resultMap="CaseRunDetailBean">
+        select r.runId,r.mark,r.caseId,r.code,rr.requestid,rr.status httpCode,rr.cost,r.verify,r.params,r.response,r.headers,r.create_time from
+        <include refid="run_record"/>
+        r left join
+        <include refid="request_record"/>
+        rr on r.mark = rr.mark
+        where r.id = #{0}
     </select>
 
     <update id="updateCaseData" parameterType="com.okay.family.common.bean.testcase.request.CaseDataBean">

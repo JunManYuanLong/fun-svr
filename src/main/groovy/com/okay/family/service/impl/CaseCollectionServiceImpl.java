@@ -13,6 +13,7 @@ import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.bean.testcase.request.DelCollectionBean;
 import com.okay.family.common.enums.CaseAvailableStatus;
 import com.okay.family.common.enums.CollectionEditType;
 import com.okay.family.common.enums.CollectionStatus;
@@ -98,7 +99,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
      * @return
      */
     @Override
-    public int delCollection(DelBean bean) {
+    public int delCollection(DelCollectionBean bean) {
         int i = caseCollectionMapper.delCollection(bean);
         delCollectionCaseRelation(bean);
         return i;
@@ -106,7 +107,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
 
     @Async
     @Override
-    public void delCollectionCaseRelation(DelBean bean) {
+    public void delCollectionCaseRelation(DelCollectionBean bean) {
         caseCollectionMapper.delCollectionCaseRelation(bean);
     }
 
