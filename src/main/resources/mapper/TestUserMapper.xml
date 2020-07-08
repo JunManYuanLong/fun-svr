@@ -20,21 +20,21 @@
 
     <select id="findUsers" parameterType="com.okay.family.common.bean.testuser.request.SearchUserBean"
             resultType="com.okay.family.common.bean.testuser.response.TestUserBean">
-        select tu.id,tu.des,tu.user,tu.phone,tu.password,tu.create_time,us.name status,tu.envId,env.name envName,tu.roleId,ur.name roleName from
+        select tu.id,tu.des,tu.usr,tu.phone,tu.pwd,tu.create_time,us.name status,tu.envId,env.name
+        envName,tu.roleId,ur.name roleName from
         <include refid="table"/>
-        tu
-        left join
+        tu left join
         <include refid="user_status"/>
-        us on tu.status = us.status
+        us on tu.state = us.id
         left join
         <include refid="env"/>
         env on tu.envId = env.id
         left join
         <include refid="user_role"/>
-        ur on tu.roleId = ur.roleId
+        ur on tu.roleId = ur.id
         where tu.uid = #{uid}
         <if test="status != null">
-            and tu.status = #{status}
+            and tu.state = #{status}
         </if>
         <if test="envId != null">
             and tu.envId = #{envId}
@@ -44,7 +44,7 @@
         </if>
         <choose>
             <when test="type == 0 and query != ''">
-                and tu.user = #{query}
+                and tu.usr = #{query}
             </when>
             <when test="type == 1 and query != ''">
                 and tu.phone = #{query}
@@ -67,7 +67,7 @@
         UPDATE
         <include refid="table"/>
         SET
-        des=#{des},envId=#{envId},password=#{password},phone=#{phone},roleId=#{roleId},user=#{user}
+        des=#{des},envId=#{envId},pwd=#{password},phone=#{phone},roleId=#{roleId},usr=#{user}
         WHERE id = #{id} and uid = #{uid}
     </update>
 
@@ -75,7 +75,7 @@
         UPDATE
         <include refid="table"/>
         SET
-        status=#{status},certificate=#{certificate},create_time=now()
+        state=#{status},certificate=#{certificate},create_time=now()
         WHERE id = #{id}
     </update>
 
@@ -83,7 +83,7 @@
             parameterType="com.okay.family.common.bean.testuser.request.EditUserBean">
         INSERT INTO
         <include refid="table"/>
-        (uid,envId,user,password,phone,roleId,des,status)
+        (uid,envId,usr,pwd,phone,roleId,des,state)
         VALUES
         (#{uid},#{envId},#{user},#{password},#{phone},#{roleId},#{des},1)
     </insert>

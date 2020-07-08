@@ -68,8 +68,8 @@
         <result property="runId" column="runId"/>
         <result property="caseNum" column="caseNum"/>
         <result property="result" column="result"/>
-        <result property="startTime" column="start"/>
-        <result property="endTime" column="end"/>
+        <result property="startTime" column="startTime"/>
+        <result property="endTime" column="endTime"/>
         <result property="list" column="list"
                 typeHandler="com.okay.family.common.typehandler.ResultArrayHandler"/>
     </resultMap>
@@ -111,10 +111,10 @@
         <include refid="env"/>
         e on t.envId = e.id left join
         <include refid="collection_status"/>
-        c on t.status = c.id
+        c on t.state = c.id
         <where>
             <if test="result != null">
-                and t.status = #{result}
+                and t.state = #{result}
             </if>
             <if test="envId != null">
                 and t.envId = #{envId}
@@ -154,7 +154,7 @@
 
     <select id="getRecords" parameterType="com.okay.family.common.bean.common.DelBean"
             resultType="com.okay.family.common.bean.common.SimpleBean">
-        select runId id,CASE ISNULL(name) WHEN 1 THEN create_time ELSE name END name from
+        select runId id,CASE name = '' WHEN 1 THEN create_time ELSE name END name from
         <include refid="run_record"/>
         where collectionId = #{id}
         order by create_time desc limit 20
@@ -180,7 +180,7 @@
     <select id="getCollectionRunDetail" parameterType="java.lang.Integer"
             resultMap="CollectionRunResultDetailBean">
         select r.collectionId id,t.name,s.name envName,r.runId,r.caseNum,c.name
-        result,start,end,concat("成功=",r.success,";失败=",r.fail,";无法运行=",r.unrun,";用户错误=",r.userError) list from
+        result,startTime,endTime,concat("成功=",r.success,";失败=",r.fail,";无法运行=",r.unrun,";用户错误=",r.userError) list from
         <include refid="run_record"/>
         r left join
         <include refid="collection_status"/>
@@ -212,7 +212,7 @@
         update
         <include refid="table"/>
         set
-        status = #{arg1}
+        state = #{arg1}
         where id = #{arg0}
     </update>
 
@@ -220,7 +220,7 @@
             parameterType="com.okay.family.common.bean.casecollect.request.AddCollectionBean">
         INSERT INTO
         <include refid="table"/>
-        (uid,envId,name,editor,pub,status)
+        (uid,envId,name,editor,pub,state)
         values
         (#{uid},#{envId},#{groupName},#{uid},2,1)
     </insert>
@@ -250,7 +250,7 @@
             parameterType="com.okay.family.common.bean.casecollect.request.CollectionRunResultRecord">
         INSERT INTO
         <include refid="run_record"/>
-        (runId,collectionId,name,envId,caseNum,result,success,fail,unrun,userError,start,end)
+        (runId,collectionId,name,envId,caseNum,result,success,fail,unrun,userError,startTime,endTime)
         VALUES
         (#{runId},#{collectionId},#{name},#{envId},#{caseNum},#{result},#{success},#{fail},#{unrun},#{userError},#{start},#{end})
     </insert>
