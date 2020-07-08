@@ -1,6 +1,7 @@
 package com.okay.family.common.bean.casecollect.request
 
 import com.okay.family.fun.base.bean.AbstractBean
+import com.okay.family.fun.config.Constant
 
 /**
  * 用例集运行结果
@@ -17,7 +18,7 @@ class CollectionRunResultRecord extends AbstractBean{
 
     Integer runId
 
-    String name
+    String name = Constant.EMPTY
 
     Integer caseNum
 

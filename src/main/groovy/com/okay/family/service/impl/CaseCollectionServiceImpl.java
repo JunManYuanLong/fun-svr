@@ -154,7 +154,6 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public CollectionRunSimpleResutl runCollection(RunCollectionBean bean) {
         List<CaseDataBean> casesDeatil = getCasesDeatil(bean);
-        casesDeatil.stream().forEach(x -> logger.error(x.toString()));
         int userErrorNum = casesDeatil.stream().filter(x -> x.getAvailable() == CaseAvailableStatus.USER_ERROR.getCode()).collect(Collectors.toList()).size();
         List<CaseDataBean> cases = casesDeatil.stream().filter(x -> x.getEnvId() == bean.getEnvId() && x.getAvailable() == CaseAvailableStatus.OK.getCode()).collect(Collectors.toList());
         CountDownLatch countDownLatch = new CountDownLatch(cases.size());
