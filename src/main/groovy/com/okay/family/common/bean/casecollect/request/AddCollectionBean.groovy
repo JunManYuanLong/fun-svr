@@ -10,10 +10,11 @@ import javax.validation.constraints.NotNull
 /**
  * 添加用例
  */
-class AddCollectionBean extends AbstractBean{
+class AddCollectionBean extends AbstractBean {
 
     private static final long serialVersionUID = 589469783232L;
 
+    @Min(value = 1L,message = "id参数错误")
     Integer id
 
     @NotNull

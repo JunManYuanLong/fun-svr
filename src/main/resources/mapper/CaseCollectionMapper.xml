@@ -117,7 +117,7 @@
                 and t.status = #{result}
             </if>
             <if test="envId != null">
-               and t.envId = #{envId}
+                and t.envId = #{envId}
             </if>
             <choose>
                 <when test="type == 2">
@@ -132,6 +132,12 @@
             </if>
         </where>
         order by t.create_time desc
+    </select>
+
+    <select id="getCaseIds" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select caseId from
+        <include refid="case_relation"/>
+        where collectionId = #{0}
     </select>
 
     <select id="searchCollectionNoPage"
@@ -262,7 +268,8 @@
         where id = #{groupId} and uid =#{uid}
     </delete>
 
-    <delete id="delCollectionCaseRelation" parameterType="com.okay.family.common.bean.testcase.request.DelCollectionBean">
+    <delete id="delCollectionCaseRelation"
+            parameterType="com.okay.family.common.bean.testcase.request.DelCollectionBean">
         delete from
         <include refid="case_relation"/>
         where collectionId = #{groupId}

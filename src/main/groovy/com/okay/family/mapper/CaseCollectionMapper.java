@@ -33,6 +33,8 @@ public interface CaseCollectionMapper {
 
     List<ListCaseBean> getCases(int collectionId, int uid);
 
+    List<Integer> getCaseIds(int collectionId);
+
     List<CaseDataBean> getCasesDeatil(RunCollectionBean bean);
 
     CollectionCaseInfoBean getCollectionInfo(CollectionCaseInfoBean bean);

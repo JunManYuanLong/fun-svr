@@ -68,6 +68,10 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Async
     @Override
     public void addCollectionCaseRelation(AddCollectionBean bean) {
+        if (bean.getId() != null) {
+            List<Integer> caseIds = caseCollectionMapper.getCaseIds(bean.getId());
+            bean.getApiList().removeAll(caseIds);
+        }
         caseCollectionMapper.addCollectionCaseRelation(bean);
         addCollectionEditRecord(new CaseCollectionEditRecord(bean.getId(), bean.getUid(), CollectionEditType.ADD_CASE.getCode()));
     }
