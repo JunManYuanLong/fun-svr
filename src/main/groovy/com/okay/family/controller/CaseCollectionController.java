@@ -6,7 +6,7 @@ import com.okay.family.common.bean.casecollect.request.*;
 import com.okay.family.common.bean.casecollect.response.*;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
-import com.okay.family.common.bean.testcase.request.DelCollectionBean;
+import com.okay.family.common.bean.casecollect.request.DelCollectionBean;
 import com.okay.family.common.code.CollectionCode;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.service.ICaseCollectionService;
@@ -49,7 +49,7 @@ public class CaseCollectionController {
     }
 
     @PostMapping(value = "/share")
-    public Result shareCollection(@RequestBody @Valid CollectionEditBean bean) {
+    public Result shareCollection(@RequestBody @Valid DelCollectionBean bean) {
         int i = service.shareCollection(bean);
         return i > 0 ? Result.success() : Result.fail(CollectionCode.NO_CHANGE_FAIL);
     }

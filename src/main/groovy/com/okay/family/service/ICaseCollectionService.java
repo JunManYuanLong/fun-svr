@@ -9,7 +9,7 @@ import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
-import com.okay.family.common.bean.testcase.request.DelCollectionBean;
+import com.okay.family.common.bean.casecollect.request.DelCollectionBean;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -24,7 +24,7 @@ public interface ICaseCollectionService {
 
     int editCollection(CollectionEditBean bean);
 
-    int shareCollection(CollectionEditBean bean);
+    int shareCollection(DelCollectionBean bean);
 
     int delCollection(DelCollectionBean bean);
 

@@ -13,7 +13,7 @@ import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
-import com.okay.family.common.bean.testcase.request.DelCollectionBean;
+import com.okay.family.common.bean.casecollect.request.DelCollectionBean;
 import com.okay.family.common.enums.CaseAvailableStatus;
 import com.okay.family.common.enums.CollectionEditType;
 import com.okay.family.common.enums.CollectionStatus;
@@ -90,9 +90,10 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     }
 
     @Override
-    public int shareCollection(CollectionEditBean bean) {
+    public int shareCollection(DelCollectionBean bean) {
         int i = caseCollectionMapper.shareCollection(bean);
-        addCollectionEditRecord(new CaseCollectionEditRecord(bean.getGroupId(), bean.getUid(), CollectionEditType.SHARE.getCode()));
+        if (i > 0)
+            addCollectionEditRecord(new CaseCollectionEditRecord(bean.getGroupId(), bean.getUid(), CollectionEditType.SHARE.getCode()));
         return i;
     }
 

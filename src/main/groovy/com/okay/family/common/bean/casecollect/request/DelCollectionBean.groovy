@@ -1,4 +1,4 @@
-package com.okay.family.common.bean.testcase.request
+package com.okay.family.common.bean.casecollect.request
 
 import com.okay.family.fun.base.bean.AbstractBean
 
