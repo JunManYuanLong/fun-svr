@@ -58,7 +58,7 @@
 
     <select id="findUser" parameterType="java.lang.Integer"
             resultType="com.okay.family.common.bean.testuser.TestUserCheckBean">
-        select * from
+        select id,uid,envId,usr user,pwd password,roleId,phone,des,certificate,state status,create_time from
         <include refid="table"/>
         where id = #{0}
     </select>

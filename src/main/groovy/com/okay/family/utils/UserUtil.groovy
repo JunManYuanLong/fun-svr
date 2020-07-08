@@ -62,7 +62,9 @@ class UserUtil extends SourceCode {
         switch (role) {
             case 1:
                 def base = new StuPadBase(bean.getCertificate(), 1)
-                return base.checkLoginStatus()
+                def status = base.checkLoginStatus()
+                bean.setStatus(status ? UserState.OK.getCode() : UserState.NO.getCode())
+                return status
             case 2:
 
                 return true
