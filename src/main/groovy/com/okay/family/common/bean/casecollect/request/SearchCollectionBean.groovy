@@ -15,8 +15,8 @@ class SearchCollectionBean extends AbstractBean {
 
     private static final long serialVersionUID = -564894151549848961;
 
-    @NotNull
-    @Min(value = 1L)
+    @NotNull(message = "uid不能为空")
+    @Min(value = 1L, message = "uid不能为空")
     Integer uid
 
     Integer envId

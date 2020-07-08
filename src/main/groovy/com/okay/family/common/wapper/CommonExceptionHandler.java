@@ -57,7 +57,8 @@ public class CommonExceptionHandler {
         if (e instanceof BindException) {
             String message = e.getMessage();
             logger.error("validation参数校验失败!", e);
-            return Result.fail(CommonCode.PARAMS_ERROR,e.getMessage());
+            String defaultMessage = ((BindException) e).getBindingResult().getFieldError().getDefaultMessage();
+            return Result.fail(CommonCode.PARAMS_ERROR,defaultMessage);
         }
         if (e instanceof FailException) {
             String message = e.getMessage();

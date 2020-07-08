@@ -116,6 +116,9 @@
             <if test="result != null">
                 and t.status = #{result}
             </if>
+            <if test="envId != null">
+               and t.envId = #{envId}
+            </if>
             <choose>
                 <when test="type == 2">
                     and t.id = #{groupQuery}

@@ -28,7 +28,6 @@ class VerifyResponseUtil extends SourceCode {
             def key = it.getText()
             if (key.contains("code")) {
                 String str = "\"" + key + "\":" + it.getValue()
-                logger.warn(str)
                 it.setResult(it.getDes() + OkayConstant.RUN_RESULT_TEXT + content.contains(str))
             } else if (key.contains("regex")) {
                 it.setResult(it.getDes() + OkayConstant.RUN_RESULT_TEXT + (content ==~ it.getValue()))
