@@ -117,6 +117,12 @@
         WHERE c.id = #{0}
     </select>
 
+    <select id="getCaseApiId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select apiId from
+        <include refid="table"/>
+        where id = #{0}
+    </select>
+
     <select id="getAttributeById" parameterType="java.lang.Integer"
             resultType="com.okay.family.common.bean.testcase.response.TestCaseAttributeBean">
         select c.id,c.apiId,a.name apiName,c.serviceId,s.name serviceName,c.moduleId,m.name
@@ -224,7 +230,8 @@
     </select>
 
     <select id="getCaseRunRecord" parameterType="java.lang.Integer" resultMap="CaseRunDetailBean">
-        select r.runId,r.mark,r.caseId,r.code,rr.requestid,rr.state httpCode,rr.cost,r.verify,r.params,r.response,r.headers,r.create_time from
+        select r.runId,r.mark,r.caseId,r.code,rr.requestid,rr.state
+        httpCode,rr.cost,r.verify,r.params,r.response,r.headers,r.create_time from
         <include refid="run_record"/>
         r left join
         <include refid="request_record"/>
@@ -249,7 +256,20 @@
         <include refid="api_info"/>
         a ON a.id = #{apiId}
         SET
-        editor=#{uid},c.name=#{name},c.envId=#{envId},c.serviceId=#{serviceId},c.moduleId=#{moduleId},c.projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},c.apiId=#{apiId},c.headersmoco=a.header_paras,c.paramsmoco=a.request_paras
+        editor=#{uid},c.name=#{name},c.envId=#{envId},c.serviceId=#{serviceId},c.moduleId=#{moduleId},c.projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},c.apiId=#{apiId},c.headersmoco=a.header_paras,c.paramsmoco=a.request_paras,c.path=a.api_url,c.type=a.api_action,c.method=a.api_method
+        WHERE
+        c.id = #{id}
+    </update>
+
+    <update id="updateCaseNoApiId" parameterType="com.okay.family.common.bean.testcase.request.EditCaseAttributeBean">
+        UPDATE
+        <include refid="table"/>
+        c
+        INNER JOIN
+        <include refid="api_info"/>
+        a ON a.id = #{apiId}
+        SET
+        editor=#{uid},c.name=#{name},c.envId=#{envId},c.projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler}
         WHERE
         c.id = #{id}
     </update>

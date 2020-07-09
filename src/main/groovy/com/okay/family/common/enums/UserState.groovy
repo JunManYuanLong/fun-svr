@@ -5,10 +5,10 @@ import com.okay.family.common.bean.common.SimpleBean
 
 enum UserState {
 
-    DEFAULT(1, "默认状态"),
-    OK(2, "可用状态"),
-    NO(3, "不可用状态"),
-    CANNOT(4, "无法验证状态")
+    DEFAULT(1, "默认"),
+    OK(2, "可用"),
+    NO(3, "不可用"),
+    CANNOT(4, "无法验证")
 
     int code
 

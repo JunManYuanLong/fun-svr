@@ -17,6 +17,8 @@ public interface TestCaseMapper {
 
     int updateCase(EditCaseAttributeBean bean);
 
+    int updateCaseNoApiId(EditCaseAttributeBean bean);
+
     int delCase(DelBean bean);
 
     void addCaseProjectRelation(EditCaseAttributeBean bean);
@@ -44,5 +46,8 @@ public interface TestCaseMapper {
     void addRunRecord(CaseRunRecord record);
 
     CaseRunDetailBean getCaseRunRecord(int id);
+
+    int getCaseApiId(int id);
+
 
 }
