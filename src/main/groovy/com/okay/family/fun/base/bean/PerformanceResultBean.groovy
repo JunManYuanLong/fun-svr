@@ -72,8 +72,6 @@ class PerformanceResultBean extends AbstractBean {
         this.excuteTotal = excuteTotal
         this.excuteTotal = excuteTotal
         this.table = table
-        output(this.toJson())
-        output(this.table)
         //todo:完成记录功能
 //        MySqlTest.savePerformanceBean(this)
     }

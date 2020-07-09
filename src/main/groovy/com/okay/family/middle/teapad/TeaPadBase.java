@@ -1,6 +1,5 @@
-package com.okay.family.middle.stupad;
+package com.okay.family.middle.teapad;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.fun.base.bean.RequestInfo;
@@ -23,84 +22,83 @@ import java.util.Map;
 /**
  * qa项目base类
  */
-public class StuPadBase extends SourceCode implements IBase {
+public class TeaPadBase extends SourceCode implements IBase {
 
-    private static Logger logger = LoggerFactory.getLogger(StuPadBase.class);
+    private static Logger logger = LoggerFactory.getLogger(TeaPadBase.class);
 
-    public static String LOGIN = "/api/pad/user/login";
+    public static String LOGIN = "/api/t_pad/user/login";
 
-    public static String USER_INFO = "/api/pad/user/info";
-
+    public static String USER_INFO = "/api/t_pad/user/info";
 
     public static Map<Integer, String> hosts = new HashMap<Integer, String>((int) OkayConstant.ENV) {
         private static final long serialVersionUID = 6227506693666661844L;
 
         {
-            put(1, "https://stupad-hotfix.xk12.cn");
-            put(2, "https://stupad-dev.xk12.cn");
+            put(1, "https://teacherpad-hotfix.xk12.cn");
+            put(2, "https://teacherpad-dev.xk12.cn");
 //            put(3, "https://stupad-dev.xk12.cn");
 //            put(4, "https://stupad-dev.xk12.cn");
             //todo:完成host,于数据校验
         }
     };
 
-
     public String HOST;
+
+    /**
+     * 登录响应
+     */
+    JSONObject loginResponse;
 
     public int envId;
 
-    public JSONObject loginResponse;
+    String token;
 
-    public int uid;
+    String uname;
 
-    public String token;
-
-    public String uname;
-
-    public String pwd;
+    String password;
 
     @Override
     public void login() {
         String url = LOGIN;
-        JSONObject params = getJson("uname=" + uname, "pwd=" + getPassword(pwd));
+        JSONObject params = getJson("uname=" + uname, "pwd=" + getPassword());
         loginResponse = getPostResponse(url, params);
         output(loginResponse);
         if (isRight(loginResponse)) {
             JSONObject data = loginResponse.getJSONObject("data");
-            uid = data.getInteger("uid");
             token = data.getString("token");
-            uname = data.getString("uname");
-            logger.info("学生pad,环境:{},账号:{},密码:{} 登录成功", envId, uname, pwd);
+            uname = data.getString("name");
+            logger.info("教师：{}，密码：{}，登录成功!", uname, password);
         } else {
-            logger.error("学生pad,环境:{},账号:{},密码:{} 登录失败", envId, uname, pwd);
+            logger.info("教师：{}，密码：{}，登录失败!", uname, password);
         }
     }
 
-
-    public StuPadBase(String uname, String pwd, int envId) {
+    public TeaPadBase(String uname, String pwd, int envId) {
         this.uname = uname;
-        this.pwd = pwd;
+        this.password = pwd;
         this.envId = envId;
         this.HOST = hosts.get(envId);
         login();
     }
 
-    public StuPadBase(String token, int envId) {
+    public TeaPadBase(String token, int envId) {
         this.envId = envId;
         this.HOST = hosts.get(envId);
         this.token = token;
     }
 
-    private StuPadBase() {
+    private TeaPadBase() {
     }
 
-    public String getPassword(String pwd) {
-        return RSAUtils.getPassword(pwd, envId);
+    public String getPassword() {
+        return RSAUtils.getPassword(password, envId);
     }
 
     public JSONObject getParams() {
-        JSONObject json = getJson("uid=" + uid, "token=" + token, "uname=" + uname);
-        json.putAll(JSON.parseObject("{\"mac\": \"88:88:88:88:88:88\",\"os\": \"X510\",\"vc\": 100,\"sh\": \"1200\",\"sw\": \"1920\",\"vs\": \"2.1.3\",\"ua\": \"OKAY_EBOOK_4.0.0_OKUI_5.2.0.1_20191128_T\",\"serial\": \"d389f0dd\",\"channel\": \"tv_yst\"}"));
+        JSONObject json = getJson("uid=" + uname, "token=" + token);
+        json.put("ua", "OKAY_Test_4.00_TCOKUI_4.3.0.48_20190125_T");
+        json.put("imei", "isFaked");
+        json.put("serial", "d360f0f5");
         return json;
     }
 
@@ -117,6 +115,18 @@ public class StuPadBase extends SourceCode implements IBase {
     @Override
     public HttpRequestBase getRequest() {
         return null;
+    }
+
+    public JSONObject getLoginResponse() {
+        return loginResponse;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public String getUname() {
+        return uname;
     }
 
     @Override
@@ -145,6 +155,11 @@ public class StuPadBase extends SourceCode implements IBase {
     }
 
     @Override
+    public void setHeaders(HttpRequestBase httpRequestBase) {
+        httpRequestBase.addHeader(Common.getRequestIdHeader());
+    }
+
+    @Override
     public JSONObject getResponse(HttpRequestBase httpRequestBase) {
         setHeaders(httpRequestBase);
         JSONObject response = FanLibrary.getHttpResponse(httpRequestBase);
@@ -153,21 +168,8 @@ public class StuPadBase extends SourceCode implements IBase {
     }
 
     @Override
-    public void setHeaders(HttpRequestBase httpRequestBase) {
-        httpRequestBase.addHeader(Common.getRequestIdHeader());
-        httpRequestBase.addHeader(FanLibrary.getHeader("token", token));
-        httpRequestBase.addHeader(FanLibrary.getHeader("u", uname));
-        httpRequestBase.addHeader(FanLibrary.getHeader("appversion", "2.1.3"));
-        httpRequestBase.addHeader(FanLibrary.getHeader("m", "tv_yst"));
-        httpRequestBase.addHeader(FanLibrary.getHeader("appName", "com.example.demoapp"));
-        httpRequestBase.addHeader(FanLibrary.getHeader("rom", "OKAY_EBOOK_4.0.0_OKUI_5.2.0.1_20191128_T"));
-    }
-
-    @Override
     public void handleResponseHeader(JSONObject response) {
-
     }
-
 
     @Override
     public JSONObject getGetResponse(String s) {
@@ -197,11 +199,12 @@ public class StuPadBase extends SourceCode implements IBase {
     @Override
     public boolean isRight(JSONObject jsonObject) {
         try {
-            return jsonObject.getJSONObject("meta").getInteger("ecode") == 0;
+            return 0 == jsonObject.getJSONObject("meta").getInteger("ecode");
         } catch (Exception e) {
             return false;
         }
     }
+
 
     /**
      * 获取并检查code
@@ -209,31 +212,24 @@ public class StuPadBase extends SourceCode implements IBase {
      * @param jsonObject
      * @return
      */
+    @Override
     public int checkCode(JSONObject jsonObject, RequestInfo requestInfo) {
-        if (SysInit.isBlack(requestInfo.getHost())) return TEST_ERROR_CODE;
+        int code = TEST_ERROR_CODE;
+        if (SysInit.isBlack(requestInfo.getHost())) return code;
         try {
-            return jsonObject.getJSONObject("meta").getInteger("ecode");
+            code = jsonObject.getJSONObject("meta").getInteger("ecode");
         } catch (Exception e) {
             logger.warn("非标准响应:{}", jsonObject.toString());
         }
-        return TEST_ERROR_CODE;
+        return code;
     }
 
-    /**
-     * 获取用户信息
-     *
-     * @return
-     */
     public boolean checkLoginStatus() {
         String api = USER_INFO;
         JSONObject params = getParams();
         JSONObject response = getPostResponse(api, params);
         output(response);
         return isRight(response);
-    }
-
-    public String getCertificate() {
-        return token;
     }
 
 

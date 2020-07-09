@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.okay'
-//version = '0.0.1-SNAPSHOT'
+version = 'dev'
 sourceCompatibility = '1.8'
 
 apply plugin: 'groovy'
