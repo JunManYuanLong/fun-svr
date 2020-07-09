@@ -5,6 +5,7 @@ import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.pubdata.PubDataDetailBean;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.utils.Join;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
@@ -30,7 +31,7 @@ public class ListPubDetailHandler extends BaseTypeHandler<List<PubDataDetailBean
     @Override
     public List<PubDataDetailBean> getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String str = rs.getString(columnName);
-        if (null != str) {
+        if (StringUtils.isNoneBlank(str)) {
             List<String> beans = Arrays.asList(str.split(OkayConstant.MYSQL_SEPARATE));
             return beans.stream().map(x -> JSON.parseObject(x, PubDataDetailBean.class)).collect(Collectors.toList());
         }
@@ -40,7 +41,7 @@ public class ListPubDetailHandler extends BaseTypeHandler<List<PubDataDetailBean
     @Override
     public List<PubDataDetailBean> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String str = rs.getString(columnIndex);
-        if (null != str) {
+        if (StringUtils.isNoneBlank(str)) {
             List<String> beans = Arrays.asList(str.split(Constant.PART));
             return beans.stream().map(x -> JSON.parseObject(x, PubDataDetailBean.class)).collect(Collectors.toList());
         }
@@ -50,7 +51,7 @@ public class ListPubDetailHandler extends BaseTypeHandler<List<PubDataDetailBean
     @Override
     public List<PubDataDetailBean> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String str = cs.getString(columnIndex);
-        if (null != str) {
+        if (StringUtils.isNoneBlank(str)) {
             List<String> beans = Arrays.asList(str.split(Constant.PART));
             return beans.stream().map(x -> JSON.parseObject(x, PubDataDetailBean.class)).collect(Collectors.toList());
         }

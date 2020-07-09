@@ -1,6 +1,7 @@
 package com.okay.family.common.typehandler;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
@@ -41,9 +42,9 @@ public class JsonHandler extends BaseTypeHandler<JSONObject> {
      */
     @Override
     public JSONObject getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        String sqlJson = rs.getString(columnName);
-        if (null != sqlJson) {
-            return JSONObject.parseObject(sqlJson);
+        String str = rs.getString(columnName);
+        if (StringUtils.isNoneBlank(str)) {
+            return JSONObject.parseObject(str);
         }
         return null;
     }
@@ -58,18 +59,18 @@ public class JsonHandler extends BaseTypeHandler<JSONObject> {
      */
     @Override
     public JSONObject getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        String sqlJson = rs.getString(columnIndex);
-        if (null != sqlJson) {
-            return JSONObject.parseObject(sqlJson);
+        String str = rs.getString(columnIndex);
+        if (StringUtils.isNoneBlank(str)) {
+            return JSONObject.parseObject(str);
         }
         return null;
     }
 
     @Override
     public JSONObject getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        String sqlJson = cs.getString(columnIndex);
-        if (null != sqlJson) {
-            return JSONObject.parseObject(sqlJson);
+        String str = cs.getString(columnIndex);
+        if (StringUtils.isNoneBlank(str)) {
+            return JSONObject.parseObject(str);
         }
         return null;
     }

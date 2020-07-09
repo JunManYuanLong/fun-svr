@@ -1,6 +1,7 @@
 package com.okay.family.common.typehandler;
 
 import com.alibaba.fastjson.JSONArray;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
@@ -26,7 +27,7 @@ public class JsonArrayHandler extends BaseTypeHandler<JSONArray> {
     @Override
     public JSONArray getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String str = rs.getString(columnName);
-        if (null != str) {
+        if (StringUtils.isNoneBlank(str)) {
             return JSONArray.parseArray(str);
         }
         return null;
@@ -35,7 +36,7 @@ public class JsonArrayHandler extends BaseTypeHandler<JSONArray> {
     @Override
     public JSONArray getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String str = rs.getString(columnIndex);
-        if (null != str) {
+        if (StringUtils.isNoneBlank(str)) {
             return JSONArray.parseArray(str);
         }
         return null;
@@ -44,7 +45,7 @@ public class JsonArrayHandler extends BaseTypeHandler<JSONArray> {
     @Override
     public JSONArray getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String str = cs.getString(columnIndex);
-        if (null != str) {
+        if (StringUtils.isNoneBlank(str)) {
             return JSONArray.parseArray(str);
         }
         return null;

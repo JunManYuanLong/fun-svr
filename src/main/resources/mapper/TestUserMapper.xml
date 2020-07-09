@@ -20,7 +20,7 @@
 
     <select id="findUsers" parameterType="com.okay.family.common.bean.testuser.request.SearchUserBean"
             resultType="com.okay.family.common.bean.testuser.response.TestUserBean">
-        select tu.id,tu.des,tu.usr,tu.phone,tu.pwd,tu.create_time,us.name status,tu.envId,env.name
+        select tu.id,tu.des,tu.usr user,tu.phone,tu.pwd password,tu.create_time,us.name status,tu.envId,env.name
         envName,tu.roleId,ur.name roleName from
         <include refid="table"/>
         tu left join
@@ -83,9 +83,9 @@
             parameterType="com.okay.family.common.bean.testuser.request.EditUserBean">
         INSERT INTO
         <include refid="table"/>
-        (uid,envId,usr,pwd,phone,roleId,des,state)
+        (uid,envId,usr,pwd,phone,roleId,des,state,certificate)
         VALUES
-        (#{uid},#{envId},#{user},#{password},#{phone},#{roleId},#{des},1)
+        (#{uid},#{envId},#{user},#{password},#{phone},#{roleId},#{des},1,'')
     </insert>
 
     <delete id="delUser" parameterType="com.okay.family.common.bean.common.DelBean">

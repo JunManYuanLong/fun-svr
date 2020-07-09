@@ -315,13 +315,13 @@
         INSERT INTO
         <include refid="table"/>
 
-        (uid,editor,projectList,envId,serviceId,moduleId,apiId,name,leve,available,path,type,method,headersmoco,paramsmoco)
+        (uid,editor,projectList,envId,serviceId,moduleId,apiId,name,leve,available,path,type,method,headersmoco,paramsmoco,headers,params,verify)
 
         select * from (select
         #{uid} aa,#{uid}
         bb,#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler} ab,#{envId}
         cc,#{serviceId} dd ,#{moduleId} ee ,#{apiId} ff,#{name}
-        gg,1,2,api_url,api_action,api_method,header_paras,request_paras
+        gg,1,2,api_url,api_action,api_method,header_paras,request_paras,'' headers,'' params,'' verify
         FROM
         <include refid="api_info"/>
         WHERE id = #{apiId}) t

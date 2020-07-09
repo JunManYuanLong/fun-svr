@@ -50,9 +50,9 @@
     <insert id="add" useGeneratedKeys="true" keyProperty="id" parameterType="com.okay.family.common.bean.pubdata.request.EditPubBean">
         INSERT INTO
         <include refid="table"/>
-        (uid,name,envId)
+        (uid,name,envId,list)
         VALUES
-        (#{uid},#{name},#{envId})
+        (#{uid},#{name},#{envId},'')
     </insert>
 
     <delete id="delData" parameterType="com.okay.family.common.bean.common.DelBean">

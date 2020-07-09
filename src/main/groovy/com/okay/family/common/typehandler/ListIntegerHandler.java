@@ -2,6 +2,7 @@ package com.okay.family.common.typehandler;
 
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.utils.Join;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
@@ -29,7 +30,7 @@ public class ListIntegerHandler extends BaseTypeHandler<List<Integer>> {
     @Override
     public List<Integer> getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String str = rs.getString(columnName);
-        if (null != str) {
+        if (StringUtils.isNoneBlank(str)) {
             String[] split = str.split(Constant.COMMA);
             return Arrays.asList(split).stream().map(x -> changeStringToInt(x)).collect(Collectors.toList());
         }
@@ -39,7 +40,7 @@ public class ListIntegerHandler extends BaseTypeHandler<List<Integer>> {
     @Override
     public List<Integer> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String str = rs.getString(columnIndex);
-        if (null != str) {
+        if (StringUtils.isNoneBlank(str)) {
             String[] split = str.split(Constant.COMMA);
             return Arrays.asList(split).stream().map(x -> changeStringToInt(x)).collect(Collectors.toList());
         }
@@ -49,7 +50,7 @@ public class ListIntegerHandler extends BaseTypeHandler<List<Integer>> {
     @Override
     public List<Integer> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String str = cs.getString(columnIndex);
-        if (null != str) {
+        if (StringUtils.isNoneBlank(str)) {
             String[] split = str.split(Constant.COMMA);
             return Arrays.asList(split).stream().map(x -> changeStringToInt(x)).collect(Collectors.toList());
         }

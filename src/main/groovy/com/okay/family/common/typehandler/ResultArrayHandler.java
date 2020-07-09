@@ -2,6 +2,7 @@ package com.okay.family.common.typehandler;
 
 import com.alibaba.fastjson.JSONArray;
 import com.okay.family.fun.frame.SourceCode;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
@@ -28,10 +29,10 @@ public class ResultArrayHandler extends BaseTypeHandler<JSONArray> {
 
     @Override
     public JSONArray getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        String sqlJson = rs.getString(columnName);
-        if (null != sqlJson) {
+        String str = rs.getString(columnName);
+        if (StringUtils.isNoneBlank(str)) {
             JSONArray result = new JSONArray();
-            List<String> asList = Arrays.asList(sqlJson.split(";"));
+            List<String> asList = Arrays.asList(str.split(";"));
             asList.stream().forEach(x -> {
                 String[] split = x.split("=", 2);
                 result.add(SourceCode.getJson("text=" + split[0], "amount=" + split[1]));
@@ -43,10 +44,10 @@ public class ResultArrayHandler extends BaseTypeHandler<JSONArray> {
 
     @Override
     public JSONArray getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        String sqlJson = rs.getString(columnIndex);
-        if (null != sqlJson) {
+        String str = rs.getString(columnIndex);
+        if (StringUtils.isNoneBlank(str)) {
             JSONArray result = new JSONArray();
-            List<String> asList = Arrays.asList(sqlJson.split(";"));
+            List<String> asList = Arrays.asList(str.split(";"));
             asList.stream().forEach(x -> {
                 String[] split = x.split("=", 2);
                 result.add(SourceCode.getJson("text=" + split[0], "amount=" + split[1]));
@@ -58,10 +59,10 @@ public class ResultArrayHandler extends BaseTypeHandler<JSONArray> {
 
     @Override
     public JSONArray getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        String sqlJson = cs.getString(columnIndex);
-        if (null != sqlJson) {
+        String str = cs.getString(columnIndex);
+        if (StringUtils.isNoneBlank(str)) {
             JSONArray result = new JSONArray();
-            List<String> asList = Arrays.asList(sqlJson.split(";"));
+            List<String> asList = Arrays.asList(str.split(";"));
             asList.stream().forEach(x -> {
                 String[] split = x.split("=", 2);
                 result.add(SourceCode.getJson("text=" + split[0], "amount=" + split[1]));
