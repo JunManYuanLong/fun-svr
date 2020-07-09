@@ -1,7 +1,7 @@
 #!/bin/bash
 version="1.0.1";
 
-appName="family-qa.jar"
+appName="family-qa-dev.jar"
 
 function start()
 {
