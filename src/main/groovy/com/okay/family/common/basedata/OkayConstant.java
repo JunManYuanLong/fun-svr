@@ -41,7 +41,7 @@ public class OkayConstant extends SourceCode {
     public static final String MOCO_CHILDREN = "children";
 
 
-    public static final String RULE = "value填写'uid=123'表示使用用户id为123的测试账号登录状态" + LINE + "如果想设置随机数,参考:" + RANDOM_KEY + "1000,2000,后者大于前者,否者功能不可用";
+    public static final String RULE = "value填写'uid=123'表示使用用户id为123的测试账号登录状态" + LINE_HTML + "如果想设置随机数,参考:" + RANDOM_KEY + "1000,2000,后者大于前者,否者功能不可用";
 
     public static final String SIMPLER_RESULT_KEY_ID = "id";
 

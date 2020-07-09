@@ -22,6 +22,8 @@ public class Constant {
     /*常用的常量*/
     public static final String LINE = "\r\n";
 
+    public static final String LINE_HTML = "<br>";
+
     public static final String TAB = "\t";
 
     public static final String EMPTY = "";
