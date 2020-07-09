@@ -1,7 +1,8 @@
 package com.okay.family.common.bean.testcase
 
-import com.okay.family.common.basedata.OkayConstant
+
 import com.okay.family.fun.base.bean.AbstractBean
+import com.okay.family.fun.config.Constant
 /**
  * 测试期望
  */
@@ -13,7 +14,7 @@ class CaseVerifyBean extends AbstractBean {
 
     String value
 
-    String des = OkayConstant.DEFAULT_VERIFY_DEC
+    String des = Constant.EMPTY
 
     String result
 

@@ -26,13 +26,14 @@ class VerifyResponseUtil extends SourceCode {
         }
         beans.each {
             def key = it.getText()
+            def desc = StringUtils.isEmpty(it.getDes()) ? OkayConstant.DEFAULT_VERIFY_DEC : it.getDes()
             if (key.contains("code")) {
                 String str = "\"" + key + "\":" + it.getValue()
-                it.setResult(it.getDes() + OkayConstant.RUN_RESULT_TEXT + content.contains(str))
+                it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + content.contains(str))
             } else if (key.contains("regex")) {
-                it.setResult(it.getDes() + OkayConstant.RUN_RESULT_TEXT + (content ==~ it.getValue()))
+                it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + (content ==~ it.getValue()))
             } else {
-                it.setResult(it.getDes() + OkayConstant.RUN_RESULT_TEXT + false)
+                it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + false)
             }
         }
         beans.every {
