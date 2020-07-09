@@ -154,7 +154,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public CollectionRunSimpleResutl runCollection(RunCollectionBean bean) {
         List<CaseDataBean> casesDeatil = getCasesDeatil(bean);
-        int userErrorNum = casesDeatil.stream().filter(x -> x.getAvailable() == CaseAvailableStatus.USER_ERROR.getCode()).collect(Collectors.toList()).size();
+        int userErrorNum = casesDeatil.stream().filter(x -> x.getAvailable() == RunResult.USER_ERROR.getCode()).collect(Collectors.toList()).size();
         List<CaseDataBean> cases = casesDeatil.stream().filter(x -> x.getEnvId() == bean.getEnvId() && x.getAvailable() == CaseAvailableStatus.OK.getCode()).collect(Collectors.toList());
         CountDownLatch countDownLatch = new CountDownLatch(cases.size());
         int runId = OkayConstant.COLLECTION_MARK.getAndIncrement();
@@ -222,10 +222,10 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
                 try {
                     caseService.handleParams(x, certificates);
                 } catch (UserStatusException e) {
-                    x.setAvailable(CaseAvailableStatus.USER_ERROR.getCode());
+                    x.setAvailable(RunResult.USER_ERROR.getCode());
                 } catch (Exception e) {
                     logger.error("处理用例参数发生错误!", e);
-                    x.setAvailable(CaseAvailableStatus.UN_KNOW.getCode());
+                    x.setAvailable(RunResult.UNRUN.getCode());
                 } finally {
                     countDownLatch.countDown();
                 }

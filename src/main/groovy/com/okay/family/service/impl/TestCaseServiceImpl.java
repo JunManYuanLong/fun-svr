@@ -12,6 +12,7 @@ import com.okay.family.common.bean.testcase.response.*;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.common.enums.CaseEditType;
+import com.okay.family.common.enums.RunResult;
 import com.okay.family.common.exception.CaseException;
 import com.okay.family.common.exception.UserStatusException;
 import com.okay.family.fun.config.Constant;
@@ -206,9 +207,24 @@ public class TestCaseServiceImpl implements ITestCaseService {
         return caseDetail;
     }
 
+    /**
+     * 该方法用于直接运行数据,而非某一个用例,故无需校验case的available
+     *
+     * @param bean
+     * @param bean
+     * @return
+     */
+
     @Override
     public CaseRunRecord runCaseData(CaseDataBean bean) {
-        handleParams(bean);
+        try {
+            handleParams(bean);
+        } catch (UserStatusException e) {
+            bean.setAvailable(RunResult.USER_ERROR.getCode());
+        } catch (Exception e) {
+            logger.error("处理用例参数发生错误!", e);
+            bean.setAvailable(RunResult.UNRUN.getCode());
+        }
         CaseRunRecord record = new CaseRunRecord();
         record.setRunId(Constant.TEST_ERROR_CODE);
         record.setUid(bean.getUid());

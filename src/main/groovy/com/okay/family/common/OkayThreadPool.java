@@ -13,7 +13,7 @@ public class OkayThreadPool {
     }
 
     private static ThreadPoolExecutor createPool() {
-        return new ThreadPoolExecutor(5, 50, 10, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>(1000));
+        return new ThreadPoolExecutor(10, 50, 10, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>(1000));
 
     }
 

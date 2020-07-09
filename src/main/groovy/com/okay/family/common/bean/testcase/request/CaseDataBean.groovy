@@ -5,10 +5,12 @@ import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
 import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.common.bean.testcase.CaseVerifyBean
+import com.okay.family.common.enums.CaseAvailableStatus
 import com.okay.family.common.exception.CommonException
 import com.okay.family.fun.base.bean.AbstractBean
 import com.okay.family.fun.config.Constant
 import org.hibernate.validator.constraints.Range
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.validation.constraints.Min
@@ -21,7 +23,7 @@ import javax.validation.constraints.Pattern
  */
 class CaseDataBean extends AbstractBean {
 
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CaseDataBean.class)
+    private static final Logger logger = LoggerFactory.getLogger(CaseDataBean.class)
 
     private static final long serialVersionUID = -629048686822729332L;
 
@@ -66,9 +68,6 @@ class CaseDataBean extends AbstractBean {
     @Pattern(regexp = "/.+", message = "接口名称应该以/开头!")
     String url
 
-/**
- * 1:可用,2:不可用,3用户错误
- */
     Integer available
 
     JSONObject headers
@@ -80,7 +79,7 @@ class CaseDataBean extends AbstractBean {
         if (id == null) CommonException.fail("请求参数错误,id为空")
         initHeader()
         initParams()
-        available = testWish.size() > 0 ? 1 : 2
+        available = testWish.size() > 0 ? CaseAvailableStatus.OK.getCode() : CaseAvailableStatus.NO.getCode()
     }
 
     private def initHeader() {
@@ -133,5 +132,10 @@ class CaseDataBean extends AbstractBean {
         }
         logger.info("请求参数初始化:{}", params.toString())
     }
+
+    boolean canRun() {
+        this.available < 3
+    }
+
 
 }
