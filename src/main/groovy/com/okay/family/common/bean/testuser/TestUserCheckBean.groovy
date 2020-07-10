@@ -2,6 +2,7 @@ package com.okay.family.common.bean.testuser
 
 import com.okay.family.common.bean.testuser.request.EditUserBean
 import com.okay.family.fun.base.bean.AbstractBean
+import com.okay.family.fun.config.Constant
 
 /**
  * 用于验证测试用户
@@ -28,7 +29,7 @@ class TestUserCheckBean extends AbstractBean {
 
     Integer status
 
-    String certificate
+    String certificate = Constant.EMPTY
 
     String create_time
 

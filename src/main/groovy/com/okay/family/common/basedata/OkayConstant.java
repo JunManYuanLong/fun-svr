@@ -32,7 +32,7 @@ public class OkayConstant extends SourceCode {
 
     public static final String RANDOM_KEY = "random=";
 
-    public static final String RUN_RESULT_TEXT = "--校验结果:";
+    public static final String RUN_RESULT_TEXT = "<校验结果>";
 
     public static final String MOCO_KEY = "name";
 

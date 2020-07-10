@@ -56,11 +56,10 @@ public class RSAUtils extends SourceCode {
         private static final long serialVersionUID = 4899433701794704772L;
 
         {
-        put(1, "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCBvhQ1m/kDGjExBL3kV8a/fQL0Df6bPEUlQz+7GBCQgSZ5ZcJKZwzv/nwG+S2m5MH1efgr+98dY2b1jToVStiT9ltfPEtepwbIh0FbV78/lsizP7Ysqc0lrwxWXhpBVEHuG5qU3EiOQD5Xw1LIAoQJKjuqLs7j2GF6NQoJlUJnnQIDAQAB");
-        put(2, "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCBvhQ1m/kDGjExBL3kV8a/fQL0Df6bPEUlQz+7GBCQgSZ5ZcJKZwzv/nwG+S2m5MH1efgr+98dY2b1jToVStiT9ltfPEtepwbIh0FbV78/lsizP7Ysqc0lrwxWXhpBVEHuG5qU3EiOQD5Xw1LIAoQJKjuqLs7j2GF6NQoJlUJnnQIDAQAB");
-//        put(3, "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCBvhQ1m/kDGjExBL3kV8a/fQL0Df6bPEUlQz+7GBCQgSZ5ZcJKZwzv/nwG+S2m5MH1efgr+98dY2b1jToVStiT9ltfPEtepwbIh0FbV78/lsizP7Ysqc0lrwxWXhpBVEHuG5qU3EiOQD5Xw1LIAoQJKjuqLs7j2GF6NQoJlUJnnQIDAQAB");
+        put(1, MiddleConstant.PAD_HOTFIXT_PUBKEY);
+        put(2, MiddleConstant.PAD_DEV_PUBKEY);
+        put(3, MiddleConstant.PAD_HOTFIXT_PUBKEY);
 //        put(4, "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCBvhQ1m/kDGjExBL3kV8a/fQL0Df6bPEUlQz+7GBCQgSZ5ZcJKZwzv/nwG+S2m5MH1efgr+98dY2b1jToVStiT9ltfPEtepwbIh0FbV78/lsizP7Ysqc0lrwxWXhpBVEHuG5qU3EiOQD5Xw1LIAoQJKjuqLs7j2GF6NQoJlUJnnQIDAQAB");
-
         //todo:处理不同环境的pubkey
     }};
 

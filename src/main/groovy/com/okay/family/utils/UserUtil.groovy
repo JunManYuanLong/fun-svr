@@ -2,10 +2,12 @@ package com.okay.family.utils
 
 
 import com.okay.family.common.bean.testuser.TestUserCheckBean
+import com.okay.family.common.bean.testuser.request.EditUserBean
 import com.okay.family.common.enums.Identity
 import com.okay.family.common.enums.UserState
 import com.okay.family.fun.frame.SourceCode
 import com.okay.family.middle.stupad.StuPadBase
+import com.okay.family.middle.teapad.TeaPadBase
 import org.apache.commons.lang3.StringUtils
 
 class UserUtil extends SourceCode {
@@ -24,9 +26,9 @@ class UserUtil extends SourceCode {
             case Identity.STU_PAD.getCode():
                 def base = new StuPadBase(user, password, envId)
                 def cer = base.getCertificate()
-                if (!base.isRight(base.loginResponse)) {
+                if (base.loginResponse == null || base.loginResponse.getIntValue(RESPONSE_CODE) == TEST_ERROR_CODE) {
                     bean.setStatus(UserState.CANNOT.getCode())
-                } else if (StringUtils.isEmpty(cer)) {
+                } else if (!base.isRight(base.loginResponse) || StringUtils.isEmpty(cer)) {
                     bean.setStatus(UserState.NO.getCode())
                 } else {
                     bean.setStatus(UserState.OK.getCode())
@@ -34,8 +36,16 @@ class UserUtil extends SourceCode {
                 }
                 break
             case Identity.TEA_PAD.getCode():
-
-                bean.setStatus(UserState.NO.getCode())
+                def base = new TeaPadBase(user, password, envId)
+                def cer = base.getCertificate()
+                if (base.getLoginResponse() == null || base.getLoginResponse().getIntValue(RESPONSE_CODE) == TEST_ERROR_CODE) {
+                    bean.setStatus(UserState.CANNOT.getCode())
+                } else if (!base.isRight(base.getLoginResponse()) || StringUtils.isEmpty(cer)) {
+                    bean.setStatus(UserState.NO.getCode())
+                } else {
+                    bean.setStatus(UserState.OK.getCode())
+                    bean.setCertificate(cer)
+                }
                 break
             case Identity.STU_WEB.getCode():
 
@@ -61,13 +71,15 @@ class UserUtil extends SourceCode {
         def role = bean.getRoleId()
         switch (role) {
             case 1:
-                def base = new StuPadBase(bean.getCertificate(), 1)
+                def base = new StuPadBase(bean.getCertificate(), bean.getEnvId())
                 def status = base.checkLoginStatus()
                 bean.setStatus(status ? UserState.OK.getCode() : UserState.NO.getCode())
                 return status
             case 2:
-
-                return true
+                def base = new TeaPadBase(bean.getCertificate(), bean.getEnvId())
+                def status = base.checkLoginStatus()
+                bean.setStatus(status ? UserState.OK.getCode() : UserState.NO.getCode())
+                return status
             case 3:
 
                 return true
@@ -79,5 +91,10 @@ class UserUtil extends SourceCode {
         }
     }
 
+    static boolean checkUserLoginStatus(EditUserBean bean) {
+        def checkBean = new TestUserCheckBean()
+        checkBean.copyFrom(bean)
+        checkUserLoginStatus(checkBean)
+    }
 
 }

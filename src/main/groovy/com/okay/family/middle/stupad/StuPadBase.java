@@ -9,6 +9,7 @@ import com.okay.family.fun.config.SysInit;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.fun.frame.httpclient.FanLibrary;
 import com.okay.family.middle.common.Common;
+import com.okay.family.middle.common.MiddleConstant;
 import com.okay.family.middle.common.RSAUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -36,9 +37,9 @@ public class StuPadBase extends SourceCode implements IBase {
         private static final long serialVersionUID = 6227506693666661844L;
 
         {
-            put(1, "https://stupad-hotfix.xk12.cn");
-            put(2, "https://stupad-dev.xk12.cn");
-//            put(3, "https://stupad-dev.xk12.cn");
+            put(1, MiddleConstant.STUPAD_DEV_HOST);
+            put(2, MiddleConstant.STUPAD_DEV_HOST);
+            put(3, MiddleConstant.STUPAD_STRESS_HOST);
 //            put(4, "https://stupad-dev.xk12.cn");
             //todo:完成host,于数据校验
         }

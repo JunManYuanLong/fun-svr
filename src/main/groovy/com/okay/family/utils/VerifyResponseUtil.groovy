@@ -19,7 +19,7 @@ class VerifyResponseUtil extends SourceCode {
  * @return
  */
     static boolean verify(JSONObject response, List<CaseVerifyBean> beans) {
-        String content = response.getIntValue("code") == TEST_ERROR_CODE ? response.getString("content") : response.toString()
+        String content = response.getIntValue(RESPONSE_CODE) == TEST_ERROR_CODE ? response.getString(RESPOINSE_CONTENT) : response.toString()
         if (StringUtils.isEmpty(content)) {
             beans.each {it.setResult("响应错误无法验证false")}
             return false

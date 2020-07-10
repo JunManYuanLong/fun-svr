@@ -32,6 +32,7 @@ class EditUserBean extends AbstractBean {
     Integer roleId
 
     @NotBlank
+    @Length(min = 11,max = 11,message = "用户名长度错误")
     String user
 
     @NotBlank

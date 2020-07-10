@@ -40,7 +40,7 @@ function restart()
         fi
         echo "waitfor $int second ..."
         let "int++"
-        if [ $int -gt 10 ]; then
+        if [ $int -gt 5 ]; then
           echo "超时强制退出"
           kill -9 $appId
           break
