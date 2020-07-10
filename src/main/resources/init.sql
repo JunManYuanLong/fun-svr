@@ -97,6 +97,15 @@ CREATE TABLE `qa_collection_case_relation` (
 
 
 
+CREATE TABLE `qa_collection_edit_record` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `collectionId` int(10) NOT NULL COMMENT '用例集ID',
+  `editor` int(10) NOT NULL COMMENT '编辑者ID',
+  `type` int(10) NOT NULL COMMENT '编辑类型',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='测试用例集编辑记录-QA-范凯强-20200709';
+
 
 CREATE TABLE `qa_collection_edit_type` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',

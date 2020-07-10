@@ -267,7 +267,7 @@
         SET
         editor=#{uid},name=#{name},envId=#{envId},projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},serviceId=#{serviceId},moduleId=#{moduleId}
         WHERE
-        c.id = #{id}
+        id = #{id}
     </update>
 
     <insert id="copyCase" useGeneratedKeys="true" keyProperty="id"
