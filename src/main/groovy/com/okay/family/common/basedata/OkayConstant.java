@@ -71,7 +71,7 @@ public class OkayConstant extends SourceCode {
     /**
      * 用户凭证过期时间
      */
-    public static final long CERTIFICATE_TIMEOUT = 20 * 60 * 1000L;
+    public static final long CERTIFICATE_TIMEOUT = 10 * 60 * 1000L;
 
     /**
      * 从记录任务列表中获取任务的超时时间单位是ms
