@@ -72,6 +72,9 @@ public class TestUserServiceImpl implements ITestUserService {
 
     @Override
     public int updateUser(EditUserBean bean) {
+        TestUserCheckBean checkBean = new TestUserCheckBean();
+        checkBean.copyFrom(bean);
+        UserUtil.checkUserLoginStatus(checkBean);
         int i = testUserMapper.updateUser(bean);
         return i;
     }
