@@ -8,6 +8,8 @@ import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import java.util.regex.PatternSyntaxException
+
 class VerifyResponseUtil extends SourceCode {
 
     private static final Logger logger = LoggerFactory.getLogger(VerifyResponseUtil.class)
@@ -31,7 +33,11 @@ class VerifyResponseUtil extends SourceCode {
                 String str = "\"" + key + "\":" + it.getValue()
                 it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + content.contains(str))
             } else if (key.contains("regex")) {
-                it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + (content ==~ it.getValue()))
+                try {
+                    it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + (content ==~ it.getValue()))
+                } catch (PatternSyntaxException e) {
+                    it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + OkayConstant.PATTEN_ERROR_TEXT + (content ==~ it.getValue()))
+                }
             } else {
                 it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + false)
             }

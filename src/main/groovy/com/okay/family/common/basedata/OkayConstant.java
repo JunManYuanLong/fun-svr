@@ -34,6 +34,8 @@ public class OkayConstant extends SourceCode {
 
     public static final String RUN_RESULT_TEXT = "<校验结果>";
 
+    public static final String PATTEN_ERROR_TEXT = "正则表达式错误";
+
     public static final String MOCO_KEY = "name";
 
     public static final String MOCO_VALUE = "demo";
