@@ -1,6 +1,7 @@
 package com.okay.family.controller;
 
 
+import com.okay.family.common.basedata.ServerHost;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.service.ILiveUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class LiveUpdateController {
     @GetMapping(value = "/hosts")
     public Result updateHosts() {
         service.initServiceHost();
-        return Result.success();
+        return Result.success(ServerHost.getHostlist());
     }
 
 
