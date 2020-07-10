@@ -74,7 +74,7 @@ public class TestUserServiceImpl implements ITestUserService {
     public int updateUser(EditUserBean bean) {
         TestUserCheckBean checkBean = new TestUserCheckBean();
         checkBean.copyFrom(bean);
-        UserUtil.checkUserLoginStatus(checkBean);
+        updateUserStatus(checkBean);
         int i = testUserMapper.updateUser(bean);
         return i;
     }

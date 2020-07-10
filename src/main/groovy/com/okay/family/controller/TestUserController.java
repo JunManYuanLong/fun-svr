@@ -3,7 +3,6 @@ package com.okay.family.controller;
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayMethod;
 import com.okay.family.common.bean.common.DelBean;
-import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.bean.testuser.request.EditUserBean;
 import com.okay.family.common.bean.testuser.request.SearchUserBean;
 import com.okay.family.common.bean.testuser.response.TestUserBean;
@@ -54,12 +53,6 @@ public class TestUserController {
     public Result delUser(@RequestBody @Valid DelBean bean) {
         int i = testUserService.delUesr(bean);
         return i == 0 ? Result.fail(TestUserCode.DEL_USER_FAIL) : Result.success();
-    }
-
-    @PostMapping(value = "/test")
-    public Result check(@RequestBody @Valid TestUserCheckBean bean) {
-        testUserService.updateUserStatus(bean);
-        return Result.success();
     }
 
 
