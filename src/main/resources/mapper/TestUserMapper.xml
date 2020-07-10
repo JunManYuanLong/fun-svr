@@ -53,7 +53,7 @@
                 and tu.id = #{query}
             </when>
         </choose>
-
+        order by tu.create_time desc
     </select>
 
     <select id="findUser" parameterType="java.lang.Integer"
