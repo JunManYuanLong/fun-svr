@@ -36,7 +36,7 @@ class VerifyResponseUtil extends SourceCode {
                 try {
                     it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + (content ==~ it.getValue()))
                 } catch (PatternSyntaxException e) {
-                    it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + OkayConstant.PATTEN_ERROR_TEXT + (content ==~ it.getValue()))
+                    it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + OkayConstant.PATTEN_ERROR_TEXT + false)
                 }
             } else {
                 it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + false)
