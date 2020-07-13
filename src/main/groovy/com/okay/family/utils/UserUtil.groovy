@@ -7,6 +7,7 @@ import com.okay.family.common.enums.Identity
 import com.okay.family.common.enums.UserState
 import com.okay.family.fun.frame.SourceCode
 import com.okay.family.middle.stupad.StuPadBase
+import com.okay.family.middle.stuweb.StuWebBase
 import com.okay.family.middle.teapad.TeaPadBase
 import org.apache.commons.lang3.StringUtils
 
@@ -48,8 +49,16 @@ class UserUtil extends SourceCode {
                 }
                 break
             case Identity.STU_WEB.getCode():
-
-                bean.setStatus(UserState.NO.getCode())
+                def base = new StuWebBase(user, password, envId)
+                def cer = base.getCertificate()
+                if (base.loginResponse == null || base.loginResponse.getIntValue(RESPONSE_CODE) == TEST_ERROR_CODE) {
+                    bean.setStatus(UserState.CANNOT.getCode())
+                } else if (!base.isRight(base.loginResponse) || StringUtils.isEmpty(cer)) {
+                    bean.setStatus(UserState.NO.getCode())
+                } else {
+                    bean.setStatus(UserState.OK.getCode())
+                    bean.setCertificate(cer)
+                }
                 break
             case Identity.TEA_WEB.getCode():
 
@@ -70,19 +79,21 @@ class UserUtil extends SourceCode {
     static boolean checkUserLoginStatus(TestUserCheckBean bean) {
         def role = bean.getRoleId()
         switch (role) {
-            case 1:
+            case Identity.STU_PAD.getCode():
                 def base = new StuPadBase(bean.getCertificate(), bean.getEnvId())
                 def status = base.checkLoginStatus()
                 bean.setStatus(status ? UserState.OK.getCode() : UserState.NO.getCode())
                 return status
-            case 2:
+            case Identity.TEA_PAD.getCode():
                 def base = new TeaPadBase(bean.getCertificate(), bean.getEnvId())
                 def status = base.checkLoginStatus()
                 bean.setStatus(status ? UserState.OK.getCode() : UserState.NO.getCode())
                 return status
-            case 3:
-
-                return true
+            case Identity.STU_WEB.getCode():
+                def base = new StuWebBase(bean.getCertificate(), bean.getEnvId())
+                def status = base.checkLoginStatus()
+                bean.setStatus(status ? UserState.OK.getCode() : UserState.NO.getCode())
+                return status
             case 4:
 
                 break

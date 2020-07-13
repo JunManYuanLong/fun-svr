@@ -2,6 +2,8 @@ package com.okay.family.middle.common;
 
 public class MiddleConstant {
 
+
+    /*学生pad host*/
     public static final String STUPAD_HOTFIX_HOST = "https://stupad-hotfix.xk12.cn";
 
     public static final String STUPAD_DEV_HOST = "https://stupad-dev.xk12.cn";
@@ -9,6 +11,8 @@ public class MiddleConstant {
     public static final String STUPAD_STRESS_HOST = STUPAD_HOTFIX_HOST;
 
     public static final String STUPAD_ONLINE_HOST = "https://stupad.okjiaoyu.cn";
+
+    /*教师pad host*/
 
     public static final String TEAPAD_HOTFIX_HOST = "https://teacherpad-hotfix.xk12.cn";
 
@@ -18,6 +22,19 @@ public class MiddleConstant {
 
     public static final String TEAPAD_ONLINE_HOST = "https://teacherpad.okjiaoyu.cn";
 
+
+    /*学生空间  host*/
+    public static final String STUWEB_HOTFIX_HOST = "https://student-hotfix.xk12.cn";
+
+    public static final String STUWEB_DEV_HOST = "https://student-dev.xk12.cn";
+
+    public static final String STUWEB_STRESS_HOST = STUWEB_HOTFIX_HOST;
+
+    public static final String STUWEB_ONLINE_HOST = "https://student.okjiaoyu.cn";
+
+
+
+    /*加密公钥*/
 
     public static final String PAD_HOTFIXT_PUBKEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCK5FAPQWGcX4uD9/tVzuZmwucXFqyxhS/ANjB6qFwbqoORhjRBDEBXKNE7iP4pVtiaRs6f8Bwj+QpoaquHgc8RKNLEUtKYPz0cRrTQYh0MqxK4m7wx7TkaJMmAzC5Br5t/VMxB5mexTuawJlZ3+MzEXgI1R2S/N4LDXzeHXCxQwwIDAQAB";
 
