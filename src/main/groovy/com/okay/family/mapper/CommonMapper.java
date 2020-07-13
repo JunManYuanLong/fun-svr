@@ -11,5 +11,8 @@ public interface CommonMapper {
 
     int saveRequest(RequestSaveBean bean);
 
+    String getEnvHostLast();
+
+    String getHost(int envId, int service_id);
 
 }

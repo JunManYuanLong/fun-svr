@@ -13,8 +13,6 @@ import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
-import com.okay.family.common.bean.casecollect.request.DelCollectionBean;
-import com.okay.family.common.enums.CaseAvailableStatus;
 import com.okay.family.common.enums.CollectionEditType;
 import com.okay.family.common.enums.CollectionStatus;
 import com.okay.family.common.enums.RunResult;
@@ -38,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -132,7 +131,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         getCollectionInfo(infoBean, countDownLatch);
         infoBean.setList(caseCollectionMapper.getCases(collectionId, uid));
         try {
-            countDownLatch.await();
+            countDownLatch.await(OkayConstant.SYNC_WAIT_TIMEOUT, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             CommonException.fail("查询用例集关联用例出错");
         }
@@ -153,21 +152,21 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
 
     @Override
     public CollectionRunSimpleResutl runCollection(RunCollectionBean bean) {
-        List<CaseDataBean> casesDeatil = getCasesDeatil(bean);
-        int userErrorNum = casesDeatil.stream().filter(x -> x.getAvailable() == RunResult.USER_ERROR.getCode()).collect(Collectors.toList()).size();
-        List<CaseDataBean> cases = casesDeatil.stream().filter(x -> x.getEnvId() == bean.getEnvId() && x.getAvailable() == CaseAvailableStatus.OK.getCode()).collect(Collectors.toList());
+        List<CaseDataBean> cases = getCasesDeatil(bean);
+//        int userErrorNum = casesDeatil.stream().filter(x -> x.getAvailable() == RunResult.USER_ERROR.getCode()).collect(Collectors.toList()).size();
+//        List<CaseDataBean> cases = casesDeatil.stream().filter(x -> x.getEnvId() == bean.getEnvId() && x.getAvailable() == CaseAvailableStatus.OK.getCode()).collect(Collectors.toList());
         CountDownLatch countDownLatch = new CountDownLatch(cases.size());
         int runId = OkayConstant.COLLECTION_MARK.getAndIncrement();
         List<CaseRunThread> results = new ArrayList<>();
         String start = Time.getDate();
         cases.forEach(x -> {
             x.setUid(bean.getUid());//设置执行用户ID
-            CaseRunThread caseRunThread = new CaseRunThread(x, countDownLatch, runId);
+            CaseRunThread caseRunThread = new CaseRunThread(x, countDownLatch, runId, bean.getEnvId());
             OkayThreadPool.addSyncWork(caseRunThread);
             results.add(caseRunThread);
         });
         try {
-            countDownLatch.await();
+            countDownLatch.await(OkayConstant.SYNC_WAIT_TIMEOUT, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             CaseCollecionException.fail("执行用例集失败!");
         }
@@ -176,18 +175,18 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         Map<Integer, List<Integer>> collect = results.stream().map(x -> x.getRecord().getResult()).collect(Collectors.groupingBy(x -> x));
         int success = collect.getOrDefault(RunResult.SUCCESS.getCode(), new ArrayList<>(0)).size();
         int fail = collect.getOrDefault(RunResult.FAIL.getCode(), new ArrayList<>(0)).size();
-        int unrun = collect.getOrDefault(RunResult.UNRUN.getCode(), new ArrayList<>(0)).size() - userErrorNum;
-        int userError = collect.getOrDefault(RunResult.USER_ERROR.getCode(), new ArrayList<>(0)).size() + userErrorNum;
-        CollectionStatus collectionStatus = casesDeatil.size() == success ? CollectionStatus.SUCCESS : CollectionStatus.FAIL;
+        int unrun = collect.getOrDefault(RunResult.UNRUN.getCode(), new ArrayList<>(0)).size();
+        int userError = collect.getOrDefault(RunResult.USER_ERROR.getCode(), new ArrayList<>(0)).size() ;
+        CollectionStatus collectionStatus = cases.size() == success ? CollectionStatus.SUCCESS : CollectionStatus.FAIL;
         CollectionRunSimpleResutl res = new CollectionRunSimpleResutl();
         res.setRunId(runId);
-        res.setCaseNum(casesDeatil.size());
+        res.setCaseNum(cases.size());
         res.setSuccess(success);
         res.setStart(start);
         res.setEnd(end);
         res.setResult(collectionStatus.getDesc());
         res.setFail(fail);
-        res.setUnrun(casesDeatil.size() - cases.size() + unrun);
+        res.setUnrun(unrun);
         res.setUserError(userError);
         CollectionRunResultRecord record = new CollectionRunResultRecord();
         record.copyFrom(res);
@@ -222,6 +221,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
                 try {
                     caseService.handleParams(x, certificates);
                 } catch (UserStatusException e) {
+                    logger.error("用户异常!", e);
                     x.setAvailable(RunResult.USER_ERROR.getCode());
                 } catch (Exception e) {
                     logger.error("处理用例参数发生错误!", e);
@@ -232,7 +232,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
             }).start();
         });
         try {
-            countDownLatch.await();
+            countDownLatch.await(OkayConstant.SYNC_WAIT_TIMEOUT, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             CaseException.fail("初始化用例信息失败!");
         }
@@ -278,7 +278,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         getCollectionRunResult(detailBean, countDownLatch);
         getCaseRunRecord(detailBean, countDownLatch);
         try {
-            countDownLatch.await();
+            countDownLatch.await(OkayConstant.SYNC_WAIT_TIMEOUT, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             CommonException.fail("查询用例集运行详情失败!");
         }

@@ -10,5 +10,7 @@ public interface ICommonService {
 
     void saveRequest(RequestSaveBean bean);
 
+    String getHost(int envId, int service_id);
+
 
 }

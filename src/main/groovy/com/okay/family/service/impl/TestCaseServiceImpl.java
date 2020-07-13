@@ -12,7 +12,6 @@ import com.okay.family.common.bean.testcase.response.*;
 import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.common.enums.CaseEditType;
-import com.okay.family.common.enums.RunResult;
 import com.okay.family.common.exception.CaseException;
 import com.okay.family.common.exception.UserStatusException;
 import com.okay.family.fun.config.Constant;
@@ -165,7 +164,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
         getAttributeById(bean, countDownLatch);
         getCaseProjectRelation(bean, countDownLatch);
         try {
-            countDownLatch.await(10, TimeUnit.SECONDS);
+            countDownLatch.await(OkayConstant.SYNC_WAIT_TIMEOUT, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             CaseException.fail("查询用例信息发生错误:" + e.getMessage());
         }
@@ -217,14 +216,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
     @Override
     public CaseRunRecord runCaseData(CaseDataBean bean) {
-        try {
-            handleParams(bean);
-        } catch (UserStatusException e) {
-            bean.setAvailable(RunResult.USER_ERROR.getCode());
-        } catch (Exception e) {
-            logger.error("处理用例参数发生错误!", e);
-            bean.setAvailable(RunResult.UNRUN.getCode());
-        }
+        handleParams(bean);
         CaseRunRecord record = new CaseRunRecord();
         record.setRunId(Constant.TEST_ERROR_CODE);
         record.setUid(bean.getUid());
@@ -241,6 +233,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     @Async
     @Override
     public void addRunRecord(CaseRunRecord runRecord) {
+        logger.warn(runRecord.toString());
         testCaseMapper.addRunRecord(runRecord);
     }
 

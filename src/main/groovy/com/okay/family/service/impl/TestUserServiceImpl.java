@@ -105,6 +105,7 @@ public class TestUserServiceImpl implements ITestUserService {
         Object o = UserLock.get(id);
         synchronized (o) {
             TestUserCheckBean user = testUserMapper.findUser(id);
+            if (user == null) UserStatusException.fail("用户不存在,ID:" + id);
             String create_time = user.getCreate_time();
             long create = Time.getTimestamp(create_time);
             long now = Time.getTimeStamp();
@@ -126,6 +127,7 @@ public class TestUserServiceImpl implements ITestUserService {
         synchronized (o) {
             if (map.contains(id)) return map.get(id);
             TestUserCheckBean user = testUserMapper.findUser(id);
+            if (user == null) UserStatusException.fail("用户不存在,ID:" + id);
             String create_time = user.getCreate_time();
             long create = Time.getTimestamp(create_time);
             long now = Time.getTimeStamp();

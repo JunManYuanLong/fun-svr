@@ -16,6 +16,11 @@
         <include refid="SERVER"/>
     </select>
 
+    <select id="getHost" resultType="java.lang.String">
+        select domain from
+        <include refid="SERVER"/>
+        where env = #{arg0} and service_id = #{arg1}
+    </select>
 
     <insert id="saveRequest" parameterType="com.okay.family.common.bean.RequestSaveBean">
         INSERT INTO

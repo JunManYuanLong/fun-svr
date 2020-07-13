@@ -3,6 +3,7 @@ package com.okay.family.common.bean.testcase
 import com.alibaba.fastjson.JSONObject
 import com.okay.family.common.bean.testcase.CaseVerifyBean
 import com.okay.family.fun.base.bean.AbstractBean
+import com.okay.family.fun.config.Constant
 
 /**
  * 用例运行记录
@@ -21,7 +22,7 @@ class CaseRunRecord extends AbstractBean {
 
     Integer caseId
 
-    Integer code
+    Integer code = Constant.TEST_ERROR_CODE
 
     Integer result
 

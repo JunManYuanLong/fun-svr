@@ -1,14 +1,22 @@
 package com.okay.family.common;
 
+import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.enums.CaseAvailableStatus;
 import com.okay.family.common.enums.RunResult;
 import com.okay.family.utils.RunCaseUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CountDownLatch;
 
 public class CaseRunThread implements Runnable {
+
+    private static Logger logger = LoggerFactory.getLogger(CaseRunThread.class);
+
+    int envId;
 
     CaseDataBean bean;
 
@@ -24,8 +32,9 @@ public class CaseRunThread implements Runnable {
 
     }
 
-    public CaseRunThread(CaseDataBean bean, CountDownLatch countDownLatch, int runId) {
+    public CaseRunThread(CaseDataBean bean, CountDownLatch countDownLatch, int runId, int envId) {
         this.bean = bean;
+        this.envId = envId;
         this.countDownLatch = countDownLatch;
         this.record = new CaseRunRecord();
         record.setRunId(runId);
@@ -40,8 +49,21 @@ public class CaseRunThread implements Runnable {
     @Override
     public void run() {
         try {
-            RunCaseUtil.run(bean, record);
+            if (bean.getAvailable() == RunResult.USER_ERROR.getCode()) {
+                record.setResponseResult(new JSONObject());
+                record.setCode(OkayConstant.TEST_ERROR_CODE);
+                record.setResult(RunResult.USER_ERROR.getCode());
+                record.setCheckResult(bean.getTestWish());
+            } else if (bean.getEnvId() != envId || bean.getAvailable() != CaseAvailableStatus.OK.getCode()) {
+                record.setResponseResult(new JSONObject());
+                record.setCode(OkayConstant.TEST_ERROR_CODE);
+                record.setResult(RunResult.UNRUN.getCode());
+                record.setCheckResult(bean.getTestWish());
+            } else {
+                RunCaseUtil.run(bean, record);
+            }
         } catch (Exception e) {
+            logger.warn("用例无法运行,ID:{}" + bean.getId(), e);
             record.setResult(RunResult.UNRUN.getCode());
         } finally {
             countDownLatch.countDown();

@@ -1,19 +1,37 @@
 package com.okay.family.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.okay.family.common.basedata.ServerHost;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
 import com.okay.family.common.enums.RequestType;
 import com.okay.family.common.enums.RunResult;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.fun.frame.httpclient.FunRequest;
+import com.okay.family.service.ICommonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
+@Component
 public class RunCaseUtil extends SourceCode {
 
     static Logger logger = LoggerFactory.getLogger(RunCaseUtil.class);
+
+    static ICommonService service;
+
+    ICommonService commonService;
+
+    public RunCaseUtil(ICommonService service) {
+        this.commonService = service;
+    }
+
+    @PostConstruct
+    public void init() {
+        service = this.commonService;
+    }
+
 
     public static void run(CaseDataBean bean, CaseRunRecord record) {
         if (!bean.canRun()) {
@@ -25,7 +43,7 @@ public class RunCaseUtil extends SourceCode {
         }
         int envId = bean.getEnvId();
         int serviceId = bean.getServiceId();
-        String host = ServerHost.getHost(serviceId, envId);
+        String host = service.getHost(envId, serviceId);
         FunRequest request = null;
         String httpType = bean.getHttpType();
         if (httpType.equalsIgnoreCase(RequestType.GET.getDesc())) {

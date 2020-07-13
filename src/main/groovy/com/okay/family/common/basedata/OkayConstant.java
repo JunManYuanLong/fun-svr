@@ -81,6 +81,11 @@ public class OkayConstant extends SourceCode {
     public static final int MYSQLWORK_TIMEOUT = 200;
 
     /**
+     * 异步线程等待时间
+     */
+    public static final long SYNC_WAIT_TIMEOUT = 10L;
+
+    /**
      * 生成全局唯一变量,用于用例运行id
      */
     public static AtomicInteger RUN_MARK = new AtomicInteger(getMark() % 100_000_000);

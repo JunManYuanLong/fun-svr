@@ -12,7 +12,6 @@ class ServerHost extends SourceCode {
 
     static Map<Integer, String> hostlist
 
-
     static void init(Map<Integer, String> map) {
         hostlist = map
     }
