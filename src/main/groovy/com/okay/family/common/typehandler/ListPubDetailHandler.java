@@ -15,6 +15,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class ListPubDetailHandler extends BaseTypeHandler<List<PubDataDetailBean
             List<String> beans = Arrays.asList(str.split(OkayConstant.MYSQL_SEPARATE));
             return beans.stream().map(x -> JSON.parseObject(x, PubDataDetailBean.class)).collect(Collectors.toList());
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -45,7 +46,7 @@ public class ListPubDetailHandler extends BaseTypeHandler<List<PubDataDetailBean
             List<String> beans = Arrays.asList(str.split(Constant.PART));
             return beans.stream().map(x -> JSON.parseObject(x, PubDataDetailBean.class)).collect(Collectors.toList());
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -55,7 +56,7 @@ public class ListPubDetailHandler extends BaseTypeHandler<List<PubDataDetailBean
             List<String> beans = Arrays.asList(str.split(Constant.PART));
             return beans.stream().map(x -> JSON.parseObject(x, PubDataDetailBean.class)).collect(Collectors.toList());
         }
-        return null;
+        return new ArrayList<>();
     }
 
 
