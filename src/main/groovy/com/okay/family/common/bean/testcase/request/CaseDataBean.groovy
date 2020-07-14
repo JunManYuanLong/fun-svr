@@ -8,7 +8,6 @@ import com.okay.family.common.bean.testcase.CaseVerifyBean
 import com.okay.family.common.enums.CaseAvailableStatus
 import com.okay.family.common.exception.CommonException
 import com.okay.family.fun.base.bean.AbstractBean
-import com.okay.family.fun.config.Constant
 import org.hibernate.validator.constraints.Range
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -17,7 +16,6 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
-
 /**
  * 测试用例数据
  */
@@ -125,8 +123,10 @@ class CaseDataBean extends AbstractBean {
                     /*此处不兼容array<object>*/
                     def key = json.getString(OkayConstant.MOCO_KEY)
                     def value = json.getString(OkayConstant.MOCO_VALUE)
-                    def list = Arrays.asList(value.split(Constant.COMMA))
-                    params.put(key, list)
+                    if (!value ==~ /[(\d|,)+]/) {
+                        value = value.split(",") as List
+                    }
+                    params.put(key, value)
                 }
             }
         }
