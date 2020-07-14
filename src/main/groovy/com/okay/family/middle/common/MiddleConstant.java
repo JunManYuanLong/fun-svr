@@ -33,6 +33,24 @@ public class MiddleConstant {
     public static final String STUWEB_ONLINE_HOST = "https://student.okjiaoyu.cn";
 
 
+    /*教师空间  host*/
+    public static final String TEAWEB_HOTFIX_HOST = "https://student-hotfix.xk12.cn";
+
+    public static final String TEAWEB_DEV_HOST = "https://jiaoshi-dev.xk12.cn";
+
+    public static final String TEAWEB_STRESS_HOST = TEAWEB_HOTFIX_HOST;
+
+    public static final String TEAWEB_ONLINE_HOST = "https://jiaoshi.okjiaoyu.cn";
+
+    /*cas服务所用  host*/
+    public static final String CAS_HOTFIX = "https://sso-hotfix.xk12.cn/login?service=";
+
+    public static final String CAS_DEV = "https://sso-dev.xk12.cn/login?service=";
+
+    public static final String CAS_STRESS = CAS_HOTFIX;
+
+    public static final String CAS_ONLINE = "https://sso.okjiaoyu.cn/login?service=";
+
 
     /*加密公钥*/
 

@@ -27,7 +27,7 @@ public class StuWebBase extends SourceCode implements IBase {
     public static final String PACKAGE_LIST = "/preview/pkg_wait_list";
 
     public static Map<Integer, String> hosts = new HashMap<Integer, String>((int) OkayConstant.ENV) {
-        private static final long serialVersionUID = 6227506693666661844L;
+        private static final long serialVersionUID = 6227524334361844L;
 
         {
             put(1, MiddleConstant.STUWEB_HOTFIX_HOST);

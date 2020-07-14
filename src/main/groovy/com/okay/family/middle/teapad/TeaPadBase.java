@@ -32,7 +32,7 @@ public class TeaPadBase extends SourceCode implements IBase {
     public static String USER_INFO = "/api/t_pad/user/info";
 
     public static Map<Integer, String> hosts = new HashMap<Integer, String>((int) OkayConstant.ENV) {
-        private static final long serialVersionUID = 6227506693666661844L;
+        private static final long serialVersionUID = 62275164984891844L;
 
         {
             put(1, MiddleConstant.TEAPAD_HOTFIX_HOST);
@@ -48,7 +48,7 @@ public class TeaPadBase extends SourceCode implements IBase {
     /**
      * 登录响应
      */
-    JSONObject loginResponse;
+    public  JSONObject loginResponse;
 
     public int envId;
 

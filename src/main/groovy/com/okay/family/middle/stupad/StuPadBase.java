@@ -34,7 +34,7 @@ public class StuPadBase extends SourceCode implements IBase {
 
 
     public static Map<Integer, String> hosts = new HashMap<Integer, String>((int) OkayConstant.ENV) {
-        private static final long serialVersionUID = 6227506693666661844L;
+        private static final long serialVersionUID = 6225476787661844L;
 
         {
             put(1, MiddleConstant.STUPAD_DEV_HOST);

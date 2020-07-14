@@ -33,7 +33,7 @@ public class CommonExceptionHandler {
         if (e instanceof MethodArgumentNotValidException) {
             String defaultMessage = ((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getDefaultMessage();
             logger.error("参数异常", e);
-            return Result.fail(CommonCode.PARAMS_ERROR, e.getMessage());
+            return Result.fail(CommonCode.PARAMS_ERROR, defaultMessage);
         }
         if (e instanceof DuplicateKeyException) {
             logger.error("唯一性校验异常", e);

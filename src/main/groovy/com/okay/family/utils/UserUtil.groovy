@@ -1,17 +1,22 @@
 package com.okay.family.utils
 
-
 import com.okay.family.common.bean.testuser.TestUserCheckBean
 import com.okay.family.common.bean.testuser.request.EditUserBean
 import com.okay.family.common.enums.Identity
 import com.okay.family.common.enums.UserState
+import com.okay.family.fun.base.exception.LoginException
 import com.okay.family.fun.frame.SourceCode
 import com.okay.family.middle.stupad.StuPadBase
 import com.okay.family.middle.stuweb.StuWebBase
 import com.okay.family.middle.teapad.TeaPadBase
+import com.okay.family.middle.teaweb.TeaWebBase
 import org.apache.commons.lang3.StringUtils
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class UserUtil extends SourceCode {
+
+    private static Logger logger = LoggerFactory.getLogger(UserUtil.class)
 
 /**
  * 更新用户凭据,设置用户状态
@@ -61,8 +66,22 @@ class UserUtil extends SourceCode {
                 }
                 break
             case Identity.TEA_WEB.getCode():
-
-                bean.setStatus(UserState.NO.getCode())
+                try {
+                    def base = new TeaWebBase(user, password, envId)
+                    def cer = base.getCertificate()
+                    if (StringUtils.isEmpty(cer)) {
+                        bean.setStatus(UserState.NO.getCode())
+                    } else {
+                        bean.setStatus(UserState.OK.getCode())
+                        bean.setCertificate(cer)
+                    }
+                } catch (LoginException e1) {
+                    logger.warn("教师空间用户{}登录验证失败!", user, e1)
+                    bean.setStatus(UserState.NO.getCode())
+                } catch (Exception e) {
+                    logger.warn("教师空间用户{}无法验证!", user, e)
+                    bean.setStatus(UserState.CANNOT.getCode())
+                }
                 break
             default:
                 bean.setStatus(UserState.CANNOT.getCode())
@@ -94,9 +113,11 @@ class UserUtil extends SourceCode {
                 def status = base.checkLoginStatus()
                 bean.setStatus(status ? UserState.OK.getCode() : UserState.NO.getCode())
                 return status
-            case 4:
-
-                break
+            case Identity.TEA_WEB.getCode():
+                def base = new TeaWebBase(bean.getCertificate(), bean.getEnvId())
+                def status = base.checkLoginStatus()
+                bean.setStatus(status ? UserState.OK.getCode() : UserState.NO.getCode())
+                return status
             default:
                 return false
         }
