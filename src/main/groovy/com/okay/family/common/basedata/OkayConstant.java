@@ -113,12 +113,12 @@ public class OkayConstant extends SourceCode {
     /**
      * 生成全局唯一变量,用于用例运行id
      */
-    public static AtomicInteger RUN_MARK = new AtomicInteger(getMark() % 100_000_000);
+    public static AtomicInteger RUN_MARK;
 
     /**
      * 生成全局唯一变量,用于用例集用例id
      */
-    public static AtomicInteger COLLECTION_MARK = new AtomicInteger(RUN_MARK.get() / 100);
+    public static AtomicInteger COLLECTION_MARK;
 
 
 }
