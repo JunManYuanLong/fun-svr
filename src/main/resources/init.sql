@@ -266,3 +266,10 @@ INSERT INTO `qa_user_status_name` (id,name) VALUES (1, '默认');
 INSERT INTO `qa_user_status_name` (id,name) VALUES (2, '可用');
 INSERT INTO `qa_user_status_name` (id,name) VALUES (3, '不可用');
 INSERT INTO `qa_user_status_name` (id,name) VALUES (4, '无法验证');
+
+CREATE TABLE `qa_lock` (
+`id` bigint(20) unsigned NOT NULL COMMENT '锁key',
+`create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分布式锁表-QA-范凯强-20200715';
+

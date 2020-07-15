@@ -89,29 +89,32 @@ public class TestUserServiceImpl implements ITestUserService {
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public int updateUserStatus(TestUserCheckBean bean) {
         Object o = UserLock.get(bean.getId());
+        int userLock = NodeLock.getUserLock(bean.getId());
         synchronized (o) {
-            int userLock = NodeLock.getUserLock(bean.getId());
-            try {
-                int lock = commonService.lock(userLock);
-                if (lock == 0) {
-                    int i = 0;
-                    while (true) {
-                        SourceCode.sleep(OkayConstant.WAIT_INTERVAL);
-                        int lock2 = commonService.lock(NodeLock.getUserLock(bean.getId()));
-                        if (lock2 == 0) {
-                            i++;
-                            if (i > OkayConstant.WAIT_MAX_TIME) {
-                                logger.warn("获取分布式锁超时,导致无法更新用户凭据:id:{}", bean.getId());
-                                break;
-                            }
-                        }
+            int lock = commonService.lock(userLock);
+            if (lock == 0) {
+                int i = 0;
+                while (true) {
+                    SourceCode.sleep(OkayConstant.WAIT_INTERVAL);
+                    TestUserCheckBean user = testUserMapper.findUser(bean.getId());
+                    String create_time = user.getCreate_time();
+                    long create = Time.getTimestamp(create_time);
+                    long now = Time.getTimeStamp();
+                    if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
+                        return 1;
+                    i++;
+                    if (i > OkayConstant.WAIT_MAX_TIME) {
+                        UserStatusException.fail("获取分布式锁超时,导致无法更新用户凭据:id:" + bean.getId());
                     }
                 }
-                UserUtil.updateUserStatus(bean);
-                int i = testUserMapper.updateUserStatus(bean);
-                return i;
-            } finally {
-                commonService.unlock(userLock);
+            } else {
+                try {
+                    UserUtil.updateUserStatus(bean);
+                    int i = testUserMapper.updateUserStatus(bean);
+                    return i;
+                } finally {
+                    commonService.unlock(userLock);
+                }
             }
         }
     }
@@ -168,7 +171,7 @@ public class TestUserServiceImpl implements ITestUserService {
             boolean b = UserUtil.checkUserLoginStatus(user);
             if (!b) {
                 updateUserStatus(user);
-                if (user.getStatus() != UserState.OK.getCode()) UserStatusException.fail();
+                if (user.getStatus() != UserState.OK.getCode()) UserStatusException.fail("用户不可用,ID:" + id);
             } else {
                 testUserMapper.updateUserStatus(user);
             }

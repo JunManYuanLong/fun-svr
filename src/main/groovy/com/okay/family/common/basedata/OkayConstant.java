@@ -93,7 +93,7 @@ public class OkayConstant extends SourceCode {
     /**
      * 分布式锁最大等待次数
      */
-    public static final int WAIT_MAX_TIME = 10;
+    public static final int WAIT_MAX_TIME = 15;
 
     /**
      * 节点锁
