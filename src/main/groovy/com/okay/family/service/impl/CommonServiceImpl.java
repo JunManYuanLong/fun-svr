@@ -4,6 +4,7 @@ import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.basedata.ServerHost;
 import com.okay.family.common.bean.RequestSaveBean;
 import com.okay.family.common.exception.CommonException;
+import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.utils.Time;
 import com.okay.family.mapper.CommonMapper;
 import com.okay.family.service.ICommonService;
@@ -67,6 +68,7 @@ public class CommonServiceImpl implements ICommonService {
         String host = ServerHost.getHost(envId, service_id);
         if (StringUtils.isBlank(host)) {
             host = commonMapper.getHost(envId, service_id);
+            if (host.endsWith(Constant.OR)) host = host.substring(0, host.length() - 1);
             if (StringUtils.isBlank(host) || !host.startsWith("http")) CommonException.fail("服务ID:{},环境ID:{}域名配置错误");
             ServerHost.putHost(envId, service_id, host);
         }
