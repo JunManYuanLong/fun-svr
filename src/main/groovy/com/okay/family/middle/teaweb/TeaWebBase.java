@@ -80,7 +80,17 @@ public class TeaWebBase extends SourceCode implements IBase {
 //        JSONObject location1 = getGetResponse(location2.replace(HOST, EMPTY));
 //        output(cookies);
         cookies.put("user_check_" + username, "pwd_info_phone");
-        logger.info("账号:{},cookie:{}",username,cookies.toJSONString());
+        logger.info("账号:{},cookie:{}", username, cookies.toJSONString());
+    }
+
+    public void login2() {
+        String url = LOGIN;
+        JSONObject params = new JSONObject();
+        params.put("username", username);
+        params.put("password", password);
+        params.put("validate_code", EMPTY);
+        JSONObject response = getPostResponse(url, params);
+        output(response);
     }
 
 
@@ -89,7 +99,11 @@ public class TeaWebBase extends SourceCode implements IBase {
         this.password = password;
         this.envId = envId;
         this.HOST = hosts.get(envId);
-        login();
+        if (envId == 2) {
+            login2();
+        } else {
+            login();
+        }
     }
 
     public TeaWebBase(String certificate, int envId) {

@@ -25,6 +25,7 @@ public class StartRun implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        commonService.clearLock();
         int lock = commonService.lock(OkayConstant.NODE_LOCK);
         if (lock == 1) {
             OkayConstant.RUN_MARK = new AtomicInteger(SourceCode.getMark() % 100_000_000);

@@ -63,7 +63,7 @@ public class CaseRunThread implements Runnable {
                 RunCaseUtil.run(bean, record);
             }
         } catch (Exception e) {
-            logger.warn("用例无法运行,ID:{}" + bean.getId(), e);
+            logger.warn("用例无法运行,ID:" + bean.getId(), e);
             record.setResult(RunResult.UNRUN.getCode());
         } finally {
             countDownLatch.countDown();

@@ -57,12 +57,13 @@ public class CommonServiceImpl implements ICommonService {
 
     @Override
     public String getHost(int envId, int service_id) {
-        if (ServerHost.getHost(envId, service_id) == null) {
-            String host = commonMapper.getHost(envId, service_id);
+        String host = ServerHost.getHost(envId, service_id);
+        if (StringUtils.isBlank(host)) {
+            host = commonMapper.getHost(envId, service_id);
             if (StringUtils.isBlank(host) || !host.startsWith("http")) CommonException.fail("服务ID:{},环境ID:{}域名配置错误");
-            ServerHost.setHost(envId, service_id, host);
+            ServerHost.putHost(envId, service_id, host);
         }
-        return ServerHost.getHost(envId, service_id);
+        return host;
     }
 
     @Override

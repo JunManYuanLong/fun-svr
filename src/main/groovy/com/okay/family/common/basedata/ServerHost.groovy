@@ -8,14 +8,14 @@ import java.util.concurrent.ConcurrentHashMap
 
 class ServerHost extends SourceCode {
 
-    static Logger logger = LoggerFactory.getLogger(ServerHost.class)
+    private static Logger logger = LoggerFactory.getLogger(ServerHost.class)
 
     static Map<Integer, String> hosts = new ConcurrentHashMap<>()
 
-    static Map<Integer, String> timeout = new ConcurrentHashMap<>()
+    static Map<Integer, Integer> timeout = new ConcurrentHashMap<>()
 
     public static String getHost(int id) {
-        if (getMark() - timeout.get(id) > 1000) null
+        if (timeout.get(id) == null || getMark() - timeout.get(id) > 1000) null
         if (!hosts.containsKey(id)) null
         else hosts.get(id)
     }
@@ -24,7 +24,7 @@ class ServerHost extends SourceCode {
         getHost(serviceId * 10 + envId)
     }
 
-    static void setHost(int envId, int serviceId, String host) {
+    static void putHost(int envId, int serviceId, String host) {
         int key = serviceId * 10 + envId
         timeout.put(key, getMark())
         hosts.put(key, host)

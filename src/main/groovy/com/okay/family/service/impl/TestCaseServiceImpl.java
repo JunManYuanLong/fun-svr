@@ -233,7 +233,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     @Async
     @Override
     public void addRunRecord(CaseRunRecord runRecord) {
-        logger.warn(runRecord.toString());
+        logger.warn("添加运行记录:{}", runRecord.toString());
         testCaseMapper.addRunRecord(runRecord);
     }
 
