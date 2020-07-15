@@ -55,6 +55,13 @@ public class CommonServiceImpl implements ICommonService {
         commonMapper.saveRequest(bean);
     }
 
+    /**
+     * 获取host,缓存
+     *
+     * @param envId
+     * @param service_id
+     * @return
+     */
     @Override
     public String getHost(int envId, int service_id) {
         String host = ServerHost.getHost(envId, service_id);
@@ -66,6 +73,12 @@ public class CommonServiceImpl implements ICommonService {
         return host;
     }
 
+    /**
+     * 加锁
+     *
+     * @param lock
+     * @return
+     */
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public int lock(long lock) {
@@ -76,6 +89,12 @@ public class CommonServiceImpl implements ICommonService {
         }
     }
 
+    /**
+     * 释放锁
+     *
+     * @param lock
+     * @return
+     */
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public int unlock(long lock) {

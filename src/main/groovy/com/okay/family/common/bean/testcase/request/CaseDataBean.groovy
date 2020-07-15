@@ -51,7 +51,7 @@ class CaseDataBean extends AbstractBean {
     Integer serviceId
 
     @NotNull
-    @Pattern(regexp = "R|W")
+    @Pattern(regexp = "R|W",message = "readtype应该为R|W")
     String readType
 
     @NotNull

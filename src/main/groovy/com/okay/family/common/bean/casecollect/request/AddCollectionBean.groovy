@@ -17,18 +17,18 @@ class AddCollectionBean extends AbstractBean {
     @Min(value = 1L,message = "id参数错误")
     Integer id
 
-    @NotNull
+    @NotNull(message = "uid不能为空")
     @Min(value = 1L)
     Integer uid
 
-    @NotNull
-    @Min(value = 1L)
+    @NotNull(message = "envId不能为空")
+    @Min(value = 1L,message = "envId最小1")
     Integer envId
 
     @NotEmpty(message = "用例ID不能为空")
     Set<Integer> apiList
 
-    @NotBlank
+    @NotBlank(message = "用例集名称不能为空")
     String groupName
 
 }

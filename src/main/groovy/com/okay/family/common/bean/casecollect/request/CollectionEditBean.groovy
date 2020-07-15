@@ -21,7 +21,7 @@ class CollectionEditBean extends AbstractBean {
     @Min(value = 1L)
     Integer groupId
 
-    @NotBlank
+    @NotBlank(message = "name不能为空")
     String name
 
 }
