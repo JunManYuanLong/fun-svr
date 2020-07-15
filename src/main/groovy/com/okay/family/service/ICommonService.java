@@ -12,5 +12,10 @@ public interface ICommonService {
 
     String getHost(int envId, int service_id);
 
+    int lock(long lock);
+
+    int unlock(long lock);
+
+    void clearLock();
 
 }

@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.enums.*;
 import com.okay.family.fun.base.bean.Result;
+import com.okay.family.service.ICommonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +16,13 @@ import static com.okay.family.fun.frame.SourceCode.getJson;
 @RestController
 @RequestMapping(value = "/common")
 public class CommonDataController {
+
+    ICommonService service;
+
+    @Autowired
+    public CommonDataController(ICommonService service) {
+        this.service = service;
+    }
 
     /**
      * 用户身份
@@ -84,5 +93,15 @@ public class CommonDataController {
         return Result.success(all);
     }
 
+    @GetMapping(value = "/lock")
+    public Result lock() {
+        int lock = service.lock(1L);
+        return Result.success(lock);
+    }
 
+    @GetMapping(value = "/unlock")
+    public Result unlock() {
+        int unlock = service.unlock(1L);
+        return Result.success(unlock);
+    }
 }

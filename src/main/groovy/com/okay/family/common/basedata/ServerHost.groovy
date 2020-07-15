@@ -1,29 +1,33 @@
 package com.okay.family.common.basedata
 
-import com.okay.family.common.exception.CommonException
 import com.okay.family.fun.frame.SourceCode
-import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+
+import java.util.concurrent.ConcurrentHashMap
 
 class ServerHost extends SourceCode {
 
     static Logger logger = LoggerFactory.getLogger(ServerHost.class)
 
-    static Map<Integer, String> hostlist
+    static Map<Integer, String> hosts = new ConcurrentHashMap<>()
 
-    static void init(Map<Integer, String> map) {
-        hostlist = map
-    }
+    static Map<Integer, String> timeout = new ConcurrentHashMap<>()
 
     public static String getHost(int id) {
-        if (!hostlist.containsKey(id)) CommonException.fail("没有改服务域名,服务ID:${id}")
-        String get = hostlist.get(id)
-        if (StringUtils.isBlank(get)) CommonException.fail("该服务没有域名,服务ID:${id}")
-        get
+        if (getMark() - timeout.get(id) > 1000) null
+        if (!hosts.containsKey(id)) null
+        else hosts.get(id)
     }
 
-    static String getHost(int serviceId, int envId) {
+    static String getHost(int envId, int serviceId) {
         getHost(serviceId * 10 + envId)
     }
+
+    static void setHost(int envId, int serviceId, String host) {
+        int key = serviceId * 10 + envId
+        timeout.put(key, getMark())
+        hosts.put(key, host)
+    }
+
 }

@@ -10,6 +10,10 @@
         qa_request_record
     </sql>
 
+    <sql id="lock">
+        qa_lock
+    </sql>
+
     <select id="findAllHost" resultType="java.util.HashMap">
         SELECT service_id * 10 + env id,domain
         FROM
@@ -29,5 +33,24 @@
         VALUES
         (#{api},#{mark},#{method},#{host},#{size},#{cost},#{status},#{code},#{requestid})
     </insert>
+
+    <insert id="lock" parameterType="java.lang.Long">
+        INSERT INTO
+        <include refid="lock"/>
+        (id)
+        VALUES
+        (#{0})
+    </insert>
+
+    <delete id="unlock" parameterType="java.lang.Long">
+        delete from
+        <include refid="lock"/>
+        where id = #{0}
+    </delete>
+
+    <delete id="clearLock" parameterType="java.lang.String">
+        delete from <include refid="lock"/>
+        where create_time <![CDATA[ <= ]]> #{0}
+    </delete>
 
 </mapper>

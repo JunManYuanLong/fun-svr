@@ -76,6 +76,31 @@ public class OkayConstant extends SourceCode {
     public static final long CERTIFICATE_TIMEOUT = 10 * 60 * 1000L;
 
     /**
+     * 域名信息缓存时间,s
+     */
+    public static final int HOST_TIMEOUT = 1_000;
+
+    /**
+     * 分布式锁过期时间,ms
+     */
+    public static final int LOCK_TIMEOUT = 1_000_000;
+
+    /**
+     * 分布式锁等待间隔,s
+     */
+    public static final int WAIT_INTERVAL = 200;
+
+    /**
+     * 分布式锁最大等待次数
+     */
+    public static final int WAIT_MAX_TIME = 10;
+
+    /**
+     * 节点锁
+     */
+    public static final long NODE_LOCK = 1L;
+
+    /**
      * 从记录任务列表中获取任务的超时时间单位是ms
      */
     public static final int MYSQLWORK_TIMEOUT = 200;

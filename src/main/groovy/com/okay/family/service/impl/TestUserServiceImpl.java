@@ -2,6 +2,7 @@ package com.okay.family.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.okay.family.common.basedata.NodeLock;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.basedata.UserLock;
 import com.okay.family.common.bean.common.DelBean;
@@ -12,8 +13,10 @@ import com.okay.family.common.bean.testuser.response.TestUserBean;
 import com.okay.family.common.code.TestUserCode;
 import com.okay.family.common.enums.UserState;
 import com.okay.family.common.exception.UserStatusException;
+import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.fun.utils.Time;
 import com.okay.family.mapper.TestUserMapper;
+import com.okay.family.service.ICommonService;
 import com.okay.family.service.ITestUserService;
 import com.okay.family.utils.UserUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -36,9 +39,12 @@ public class TestUserServiceImpl implements ITestUserService {
 
     TestUserMapper testUserMapper;
 
+    ICommonService commonService;
+
     @Autowired
-    public TestUserServiceImpl(TestUserMapper testUserMapper) {
+    public TestUserServiceImpl(TestUserMapper testUserMapper, ICommonService commonService) {
         this.testUserMapper = testUserMapper;
+        this.commonService = commonService;
     }
 
     @Override
@@ -82,9 +88,32 @@ public class TestUserServiceImpl implements ITestUserService {
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public int updateUserStatus(TestUserCheckBean bean) {
-        UserUtil.updateUserStatus(bean);
-        int i = testUserMapper.updateUserStatus(bean);
-        return i;
+        Object o = UserLock.get(bean.getId());
+        synchronized (o) {
+            int userLock = NodeLock.getUserLock(bean.getId());
+            try {
+                int lock = commonService.lock(userLock);
+                if (lock == 0) {
+                    int i = 0;
+                    while (true) {
+                        SourceCode.sleep(OkayConstant.WAIT_INTERVAL);
+                        int lock2 = commonService.lock(NodeLock.getUserLock(bean.getId()));
+                        if (lock2 == 0) {
+                            i++;
+                            if (i > OkayConstant.WAIT_MAX_TIME) {
+                                logger.warn("获取分布式锁超时,导致无法更新用户凭据:id:{}", bean.getId());
+                                break;
+                            }
+                        }
+                    }
+                }
+                UserUtil.updateUserStatus(bean);
+                int i = testUserMapper.updateUserStatus(bean);
+                return i;
+            } finally {
+                commonService.unlock(userLock);
+            }
+        }
     }
 
     @Override
@@ -113,9 +142,10 @@ public class TestUserServiceImpl implements ITestUserService {
                 return user;
             boolean b = UserUtil.checkUserLoginStatus(user);
             if (!b) {
-                UserUtil.updateUserStatus(user);
+                updateUserStatus(user);
+            } else {
+                testUserMapper.updateUserStatus(user);
             }
-            testUserMapper.updateUserStatus(user);
             return user;
         }
     }
@@ -137,11 +167,12 @@ public class TestUserServiceImpl implements ITestUserService {
             }
             boolean b = UserUtil.checkUserLoginStatus(user);
             if (!b) {
-                UserUtil.updateUserStatus(user);
+                updateUserStatus(user);
                 if (user.getStatus() != UserState.OK.getCode()) UserStatusException.fail();
+            } else {
+                testUserMapper.updateUserStatus(user);
             }
             map.put(id, user.getCertificate());
-            testUserMapper.updateUserStatus(user);
             return user.getCertificate();
         }
     }
