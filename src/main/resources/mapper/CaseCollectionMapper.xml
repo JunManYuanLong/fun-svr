@@ -189,7 +189,7 @@
         t on r.collectionId = t.id left join
         <include refid="env"/>
         s on r.envId = s.id
-        where runId = #{0}
+        where runId = #{0} limit 1
     </select>
 
     <update id="editCollection" parameterType="com.okay.family.common.bean.casecollect.request.CollectionEditBean">
