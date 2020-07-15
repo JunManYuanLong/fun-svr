@@ -15,8 +15,7 @@ class ServerHost extends SourceCode {
     static Map<Integer, Integer> timeout = new ConcurrentHashMap<>()
 
     public static String getHost(int id) {
-        if (getMark() - timeout.getOrDefault(id,0) > 1000) null
-        if (!hosts.containsKey(id)) null
+        if ((getMark() - timeout.getOrDefault(id,0) > OkayConstant.HOST_TIMEOUT) || !hosts.containsKey(id)) null
         else hosts.get(id)
     }
 
