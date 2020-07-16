@@ -6,6 +6,7 @@ import com.okay.family.common.enums.Identity
 import com.okay.family.common.enums.UserState
 import com.okay.family.fun.base.exception.LoginException
 import com.okay.family.fun.frame.SourceCode
+import com.okay.family.middle.pubweb.PubWebBase
 import com.okay.family.middle.stupad.StuPadBase
 import com.okay.family.middle.stuweb.StuWebBase
 import com.okay.family.middle.teapad.TeaPadBase
@@ -84,6 +85,25 @@ class UserUtil extends SourceCode {
                 }
                 logger.info("登录状态校验结果:{}",bean.toString())
                 break
+            case Identity.PUB_WEB.getCode():
+                try {
+                    def base = new PubWebBase(user, password, envId)
+                    def cer = base.getCertificate()
+                    if (StringUtils.isEmpty(cer)) {
+                        bean.setStatus(UserState.NO.getCode())
+                    } else {
+                        bean.setStatus(UserState.OK.getCode())
+                        bean.setCertificate(cer)
+                    }
+                } catch (LoginException e1) {
+                    logger.warn("公立校用户{}登录验证失败!", user, e1)
+                    bean.setStatus(UserState.NO.getCode())
+                } catch (Exception e) {
+                    logger.warn("公立校用户{}无法验证!", user, e)
+                    bean.setStatus(UserState.CANNOT.getCode())
+                }
+                logger.info("登录状态校验结果:{}",bean.toString())
+                break
             default:
                 bean.setStatus(UserState.CANNOT.getCode())
                 break
@@ -116,6 +136,11 @@ class UserUtil extends SourceCode {
                 return status
             case Identity.TEA_WEB.getCode():
                 def base = new TeaWebBase(bean.getCertificate(), bean.getEnvId())
+                def status = base.checkLoginStatus()
+                bean.setStatus(status ? UserState.OK.getCode() : UserState.NO.getCode())
+                return status
+            case Identity.PUB_WEB.getCode():
+                def base = new PubWebBase(bean.getCertificate(), bean.getEnvId())
                 def status = base.checkLoginStatus()
                 bean.setStatus(status ? UserState.OK.getCode() : UserState.NO.getCode())
                 return status

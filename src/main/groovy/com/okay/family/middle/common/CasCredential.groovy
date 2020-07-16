@@ -49,7 +49,7 @@ class CasCredential extends FanLibrary {
         def response = getHttpResponse(get)
         def string = response.getString("content")
         this.lt = Regex.getRegex(string, "<input type=\"hidden\" name=\"lt\" value=\".*?\" />")
-        this.execution = Regex.getRegex(string, " <input type=\"hidden\" name=\"execution\" value=\".*?\" />")
+        this.execution = Regex.getRegex(string, "<input type=\"hidden\" name=\"execution\" value=\".*?\" />")
 //        logger.info("cas服务登录host：{},lt：{}，execution：{}", host, lt, execution)
     }
 

@@ -1,5 +1,6 @@
 package com.okay.family.common.basedata;
 
+import com.okay.family.common.enums.Identity;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.frame.SourceCode;
 
@@ -58,7 +59,7 @@ public class OkayConstant extends SourceCode {
     /**
      * 用户身份数量
      */
-    public static final long ROLE = 4L;
+    public static final long ROLE = Identity.values().length;
 
     /**
      * 用户状态数量
@@ -68,7 +69,7 @@ public class OkayConstant extends SourceCode {
     /**
      * 环境数量
      */
-    public static final long ENV = 4L;
+    public static final long ENV = 5L;
 
     /**
      * 用户凭证过期时间

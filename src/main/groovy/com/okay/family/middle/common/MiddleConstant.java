@@ -42,6 +42,16 @@ public class MiddleConstant {
 
     public static final String TEAWEB_ONLINE_HOST = "https://jiaoshi.okjiaoyu.cn";
 
+
+    /*公立校  host*/
+    public static final String PUBWEB_HOTFIX_HOST = "https://edu-hotfix.xk12.cn";
+
+    public static final String PUBWEB_DEV_HOST = "https://edu-dev.xk12.cn";
+
+    public static final String PUBWEB_STRESS_HOST = PUBWEB_HOTFIX_HOST;
+
+    public static final String PUBWEB_ONLINE_HOST = "https://edu.okjiaoyu.cn";
+
     /*cas服务所用  host*/
     public static final String CAS_HOTFIX = "https://sso-hotfix.xk12.cn/login?service=";
 
@@ -61,6 +71,12 @@ public class MiddleConstant {
     public static final String PAD_STRESS_PUBKEY = PAD_HOTFIXT_PUBKEY;
 
     public static final String PAD_ONLINE_PUBKEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDoIRaohpg6ys0gA/tIvUL/2TtTxk3aRJpIByJe263lbCNmHA+Es+k9eyc/RT+M7lkqWvAPCeqDOQIOfb7GJ78rFOhyuUf/a/ZWXGgUrqf2hLQrzaeIngkfFEkM9AtOBUT9MDjYtZsaQikOtag68UfFPv7GoULUV+y7woqtjZhaHwIDAQAB";
+
+
+    /**
+     * 通用验证码
+     */
+    public static final String CAPTCHA = "performance";
 
 
 }

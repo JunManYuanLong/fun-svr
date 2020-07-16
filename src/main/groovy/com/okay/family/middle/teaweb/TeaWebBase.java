@@ -60,7 +60,6 @@ public class TeaWebBase extends SourceCode implements IBase {
 
     @Override
     public void login() {
-        String url = LOGIN;
         JSONObject params = new JSONObject();
         params.put("loginType", "1");
         params.put("platformType", "teacher");
@@ -73,7 +72,7 @@ public class TeaWebBase extends SourceCode implements IBase {
         JSONObject tgc = CasCredential.getTGC(HOST, params, envId);
         this.cookies = tgc.getJSONObject("cookie");
         String location = tgc.containsKey("location") ? tgc.getString("location") : EMPTY;
-        if (!location.contains("ticket=ST-")) LoginException.fail(username);
+        if (!location.contains("ticket=ST-")) LoginException.fail(this.username);
         JSONObject getResponse = getGetResponse(location.replace(HOST, EMPTY));
         String location2 = getResponse.getString("location");
         /*修复由于增加cookie的值导致的报错,可以直接添加user_check_61951427267节点值方式,也可以请求"/"接口获取改cookie值*/
@@ -253,6 +252,7 @@ public class TeaWebBase extends SourceCode implements IBase {
         String url = CLASS_LIST;
         JSONObject params = getParams();
         JSONObject response = getGetResponse(url, params);
+        output(response);
         return isRight(response);
     }
 
