@@ -73,7 +73,7 @@ class CaseDataBean extends AbstractBean {
     JSONObject params
 
 
-    void init() {
+    def init() {
         if (id == null) CommonException.fail("请求参数错误,id为空")
         initHeader()
         initParams()

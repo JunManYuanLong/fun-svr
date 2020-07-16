@@ -262,7 +262,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public void handleParams(JSONObject params) {
         params.keySet().stream().forEach(key ->
         {
-            String value = params.getString(key);
+            String value = params.getString(key).trim();
             if (value.startsWith(OkayConstant.USER_CERTIFICATE_KEY)) {
                 int id = SourceCode.changeStringToInt(value.substring(OkayConstant.USER_CERTIFICATE_KEY.length()));
                 TestUserCheckBean userCheckBean = testUserService.getCertificate(id);
@@ -286,7 +286,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public void handleParams(JSONObject params, ConcurrentHashMap map) {
         params.keySet().stream().forEach(key ->
         {
-            String value = params.getString(key);
+            String value = params.getString(key).trim();
             if (value.startsWith(OkayConstant.USER_CERTIFICATE_KEY)) {
                 int id = SourceCode.changeStringToInt(value.substring(OkayConstant.USER_CERTIFICATE_KEY.length()));
                 String certificate = testUserService.getCertificate(id, map);
