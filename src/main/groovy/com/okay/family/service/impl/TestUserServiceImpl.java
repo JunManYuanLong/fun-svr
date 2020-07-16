@@ -93,6 +93,7 @@ public class TestUserServiceImpl implements ITestUserService {
         synchronized (o) {
             int lock = commonService.lock(userLock);
             if (lock == 0) {
+                logger.info("分布式锁竞争失败,ID:{}",bean.getId());
                 int i = 0;
                 while (true) {
                     SourceCode.sleep(OkayConstant.WAIT_INTERVAL);

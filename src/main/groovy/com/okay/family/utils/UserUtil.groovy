@@ -82,6 +82,7 @@ class UserUtil extends SourceCode {
                     logger.warn("教师空间用户{}无法验证!", user, e)
                     bean.setStatus(UserState.CANNOT.getCode())
                 }
+                logger.info("登录状态校验结果:{}",bean.toString())
                 break
             default:
                 bean.setStatus(UserState.CANNOT.getCode())
