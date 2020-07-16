@@ -1,5 +1,10 @@
 package com.okay.family.middle.common;
 
+import com.okay.family.common.basedata.OkayConstant;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MiddleConstant {
 
 
@@ -53,6 +58,15 @@ public class MiddleConstant {
     public static final String PUBWEB_ONLINE_HOST = "https://edu.okjiaoyu.cn";
 
     /*cas服务所用  host*/
+    public static final String STUAPP_HOTFIX = "https://stupad-hotfix.xk12.cn";
+
+    public static final String STUAPP_DEV = "https://xsapp-dev.xk12.cn";
+
+    public static final String STUAPP_STRESS = STUAPP_HOTFIX;
+
+    public static final String STUAPP_ONLINE = "https://stupad.okjiaoyu.cn";
+
+    /*cas服务所用  host*/
     public static final String CAS_HOTFIX = "https://sso-hotfix.xk12.cn/login?service=";
 
     public static final String CAS_DEV = "https://sso-dev.xk12.cn/login?service=";
@@ -72,11 +86,35 @@ public class MiddleConstant {
 
     public static final String PAD_ONLINE_PUBKEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDoIRaohpg6ys0gA/tIvUL/2TtTxk3aRJpIByJe263lbCNmHA+Es+k9eyc/RT+M7lkqWvAPCeqDOQIOfb7GJ78rFOhyuUf/a/ZWXGgUrqf2hLQrzaeIngkfFEkM9AtOBUT9MDjYtZsaQikOtag68UfFPv7GoULUV+y7woqtjZhaHwIDAQAB";
 
+    /*加密盐*/
 
+    public static final String SALT_HOTFIX = "17802ec2980353bdc3f082b0668bd1e4";
+
+    public static final String SALT_DEV = "17802ec2980353bdc3f082b0668bd1e4";
+
+    public static final String SALT_STRESS = SALT_HOTFIX;
+
+    public static final String SALT_ONLINE = "17802ec2980353bdc3f082b0668bd1e4";
     /**
      * 通用验证码
      */
     public static final String CAPTCHA = "performance";
 
+    /**
+     * 密码加密过程中实例类型
+     */
+    public final static String DES = "DES";
+
+    public static Map<Integer, String> salts = new HashMap<Integer, String>((int) OkayConstant.ENV) {
+        private static final long serialVersionUID = 62254732323261844L;
+
+        {
+            put(1, MiddleConstant.SALT_HOTFIX);
+            put(2, MiddleConstant.SALT_DEV);
+            put(3, MiddleConstant.SALT_STRESS);
+//            put(4, "https://stupad-dev.xk12.cn");
+            //todo:完成host,于数据校验
+        }
+    };
 
 }

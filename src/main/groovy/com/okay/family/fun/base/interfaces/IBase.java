@@ -179,5 +179,10 @@ public interface IBase {
      */
     HttpRequestBase getRequest();
 
+    String getCertificate();
+
+
+    boolean checkLoginStatus();
+
 
 }

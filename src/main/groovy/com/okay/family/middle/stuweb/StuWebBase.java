@@ -165,6 +165,7 @@ public class StuWebBase extends SourceCode implements IBase {
         return code;
     }
 
+    @Override
     public boolean checkLoginStatus() {
         String url = PACKAGE_LIST;
         JSONObject params = getParams();
@@ -175,6 +176,7 @@ public class StuWebBase extends SourceCode implements IBase {
         return isRight(response);
     }
 
+    @Override
     public String getCertificate() {
         return token;
     }

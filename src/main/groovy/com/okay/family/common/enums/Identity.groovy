@@ -9,7 +9,8 @@ enum Identity {
     STU_WEB(2, "学生空间"),
     TEA_PAD(3, "老师pad"),
     TEA_WEB(4, "教师空间"),
-    PUB_WEB(5, "公立校")
+    PUB_WEB(5, "公立校"),
+    STU_APP(6, "OK学生")
 
     int code
 

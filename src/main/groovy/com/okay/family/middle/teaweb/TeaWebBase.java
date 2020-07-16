@@ -248,6 +248,7 @@ public class TeaWebBase extends SourceCode implements IBase {
         return code;
     }
 
+    @Override
     public boolean checkLoginStatus() {
         String url = CLASS_LIST;
         JSONObject params = getParams();
@@ -256,6 +257,7 @@ public class TeaWebBase extends SourceCode implements IBase {
         return isRight(response);
     }
 
+    @Override
     public String getCertificate() {
         return cookies.toJSONString();
     }

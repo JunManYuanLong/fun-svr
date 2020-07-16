@@ -225,6 +225,7 @@ public class StuPadBase extends SourceCode implements IBase {
      *
      * @return
      */
+    @Override
     public boolean checkLoginStatus() {
         String api = USER_INFO;
         JSONObject params = getParams();
@@ -233,6 +234,7 @@ public class StuPadBase extends SourceCode implements IBase {
         return isRight(response);
     }
 
+    @Override
     public String getCertificate() {
         return token;
     }

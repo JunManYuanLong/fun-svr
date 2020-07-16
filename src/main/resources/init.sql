@@ -210,6 +210,8 @@ INSERT INTO `qa_role_name` (id,name) VALUES (2, '学生空间');
 INSERT INTO `qa_role_name` (id,name) VALUES (3, '老师pad');
 INSERT INTO `qa_role_name` (id,name) VALUES (4, '教师空间');
 INSERT INTO `qa_role_name` (id,name) VALUES (5, '公立校');
+INSERT INTO `qa_role_name` (id,name) VALUES (6, 'OK学生');
+
 
 CREATE TABLE `qa_test_case` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',

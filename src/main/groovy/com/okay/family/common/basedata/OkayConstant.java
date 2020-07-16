@@ -121,5 +121,10 @@ public class OkayConstant extends SourceCode {
      */
     public static AtomicInteger COLLECTION_MARK;
 
+    /**
+     * 节点
+     */
+    public static int node;
+
 
 }

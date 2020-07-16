@@ -1,5 +1,6 @@
 package com.okay.family.common
 
+import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.fun.utils.Time
 import com.okay.family.service.ICommonService
 import org.slf4j.Logger
@@ -22,7 +23,7 @@ class Task {
 
     @Scheduled(cron = "0 0/10 * * * ?")
     def saveRequestBean() {
-        commonService.clearLock()
+        if (OkayConstant.node == 1) commonService.clearLock()
         logger.info("定时任务执行完毕! 时间:{}", Time.getDate())
     }
 

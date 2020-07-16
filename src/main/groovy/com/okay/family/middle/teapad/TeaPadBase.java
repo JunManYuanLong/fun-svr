@@ -37,7 +37,7 @@ public class TeaPadBase extends SourceCode implements IBase {
         {
             put(1, MiddleConstant.TEAPAD_HOTFIX_HOST);
             put(2, MiddleConstant.TEAPAD_DEV_HOST);
-            put(3,MiddleConstant.TEAPAD_STRESS_HOST);
+            put(3, MiddleConstant.TEAPAD_STRESS_HOST);
 //            put(4, "https://stupad-dev.xk12.cn");
             //todo:完成host,于数据校验
         }
@@ -48,7 +48,7 @@ public class TeaPadBase extends SourceCode implements IBase {
     /**
      * 登录响应
      */
-    public  JSONObject loginResponse;
+    public JSONObject loginResponse;
 
     public int envId;
 
@@ -225,6 +225,7 @@ public class TeaPadBase extends SourceCode implements IBase {
         return code;
     }
 
+    @Override
     public boolean checkLoginStatus() {
         String api = USER_INFO;
         JSONObject params = getParams();
@@ -233,8 +234,10 @@ public class TeaPadBase extends SourceCode implements IBase {
         return isRight(response);
     }
 
+    @Override
     public String getCertificate() {
         return token;
     }
+
 
 }

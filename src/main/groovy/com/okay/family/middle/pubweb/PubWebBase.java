@@ -91,7 +91,7 @@ public class PubWebBase extends SourceCode implements IBase {
         params.put("phone", "");
         params.put("traceno", "");
         params.put("phoneVerifyCode", "");
-        JSONObject tgc = CasCredential.getTGC(HOST, params,envId);
+        JSONObject tgc = CasCredential.getTGC(HOST, params, envId);
         this.cookies = tgc.getJSONObject("cookie");
         String location = tgc.containsKey("location") ? tgc.getString("location") : EMPTY;
         if (!location.contains("ticket=ST-")) LoginException.fail(this.account);
@@ -238,7 +238,7 @@ public class PubWebBase extends SourceCode implements IBase {
         return null;
     }
 
-
+    @Override
     public boolean checkLoginStatus() {
         String url = GET_YEARS;
         JSONObject params = getParams();
@@ -247,6 +247,7 @@ public class PubWebBase extends SourceCode implements IBase {
         return isRight(response);
     }
 
+    @Override
     public String getCertificate() {
         return cookies.toJSONString();
     }
