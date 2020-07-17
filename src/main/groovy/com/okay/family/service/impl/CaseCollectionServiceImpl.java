@@ -198,9 +198,11 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
 
     /**
      * 运行用例集,所有用例添加运行记录
+     * <p>先从数据库中读取测试用例数据,然后多线程处理接口参数中的语法标记,然后在组装成用处运行的多线程对象,用线程池运行完之后统计测试结果
+     * </p>
      *
      * @param bean
-     * @return
+     * @return 返回一个运行记录的简单统计结果
      */
     @Override
     public CollectionRunSimpleResutl runCollection(RunCollectionBean bean) {
@@ -308,6 +310,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         caseCollectionMapper.updateCollectionStatus(id, status);
     }
 
+    /**
+     * 搜索测试用例集,分页
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public PageInfo<ListCollectionBean> findCollecions(SearchCollectionBean bean) {
         PageHelper.startPage(bean.getPageNum(), bean.getPageSize());

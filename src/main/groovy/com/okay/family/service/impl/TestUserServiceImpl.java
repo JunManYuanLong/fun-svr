@@ -47,6 +47,12 @@ public class TestUserServiceImpl implements ITestUserService {
         this.commonService = commonService;
     }
 
+    /**
+     * 搜索测试用户
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public PageInfo<TestUserBean> findUsers(SearchUserBean bean) {
         PageHelper.startPage(bean.getPageNum(), bean.getPageSize());
@@ -55,6 +61,12 @@ public class TestUserServiceImpl implements ITestUserService {
         return result;
     }
 
+    /**
+     * 添加测试用户,如果登录失败,回滚
+     *
+     * @param user
+     * @return
+     */
     @Override
     public int addUser(EditUserBean user) {
         int add = testUserMapper.addUser(user);
@@ -71,11 +83,23 @@ public class TestUserServiceImpl implements ITestUserService {
         return user.getId();
     }
 
+    /**
+     * 获取某个测试用户的详情
+     *
+     * @param id
+     * @return
+     */
     @Override
     public TestUserCheckBean findUser(int id) {
         return testUserMapper.findUser(id);
     }
 
+    /**
+     * 更新用户信息,同样会校验登录状态
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public int updateUser(EditUserBean bean) {
         TestUserCheckBean checkBean = new TestUserCheckBean();
@@ -85,6 +109,12 @@ public class TestUserServiceImpl implements ITestUserService {
         return i;
     }
 
+    /**
+     * 更新用户登录状态,全局锁+分布式锁
+     *
+     * @param bean
+     * @return
+     */
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public int updateUserStatus(TestUserCheckBean bean) {
@@ -93,7 +123,7 @@ public class TestUserServiceImpl implements ITestUserService {
         synchronized (o) {
             int lock = commonService.lock(userLock);
             if (lock == 0) {
-                logger.info("分布式锁竞争失败,ID:{}",bean.getId());
+                logger.info("分布式锁竞争失败,ID:{}", bean.getId());
                 int i = 0;
                 while (true) {
                     SourceCode.sleep(OkayConstant.WAIT_INTERVAL);
@@ -120,11 +150,23 @@ public class TestUserServiceImpl implements ITestUserService {
         }
     }
 
+    /**
+     * 校验用户登录凭据状态
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public boolean checkUser(TestUserCheckBean bean) {
         return UserUtil.checkUserLoginStatus(bean);
     }
 
+    /**
+     * 校验用户状态,暂时无用,本来用来定期更新用户状态
+     *
+     * @param id
+     * @return
+     */
     @Override
     public boolean checkUser(int id) {
         TestUserCheckBean user = testUserMapper.findUser(id);
@@ -132,6 +174,12 @@ public class TestUserServiceImpl implements ITestUserService {
     }
 
 
+    /**
+     * 获取用户登录凭据
+     *
+     * @param id
+     * @return
+     */
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public TestUserCheckBean getCertificate(int id) {
@@ -154,6 +202,13 @@ public class TestUserServiceImpl implements ITestUserService {
         }
     }
 
+    /**
+     * 获取用户登录凭据,map缓存
+     *
+     * @param id
+     * @param map
+     * @return
+     */
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public String getCertificate(int id, ConcurrentHashMap<Integer, String> map) {

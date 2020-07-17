@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 热更新接口
+ */
 @RestController
 @RequestMapping(value = "/live")
 public class LiveUpdateController {
@@ -16,5 +19,6 @@ public class LiveUpdateController {
     public LiveUpdateController(ILiveUpdateService service) {
         this.service = service;
     }
+
 
 }

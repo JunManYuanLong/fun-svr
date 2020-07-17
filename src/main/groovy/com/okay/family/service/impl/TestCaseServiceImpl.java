@@ -57,6 +57,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
         this.collectionMapper = collectionMapper;
     }
 
+    /**
+     * 添加测试用例,会初始化用例信息,默认从moco数据中读取,会记录除host以外的测试用例运行必需信息
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public int addCase(EditCaseAttributeBean bean) {
         int i = testCaseMapper.addCase(bean);
@@ -71,6 +77,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
         return i;
     }
 
+    /**
+     * 复制测试用例,完全复制,除了uid和editor
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public int copyCase(EditCaseAttributeBean bean) {
         int source = bean.getId();
@@ -82,6 +94,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
         return i;
     }
 
+    /**
+     * 更新测试用例属性
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public int updateCase(EditCaseAttributeBean bean) {
         int apiId = testCaseMapper.getCaseApiId(bean.getId());
@@ -94,6 +112,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
     }
 
 
+    /**
+     * 删除测试用例
+     *
+     * @param bean
+     * @return
+     */
     public int delCase(DelBean bean) {
         int i = testCaseMapper.delCase(bean);
         if (i > 0) {
@@ -103,6 +127,11 @@ public class TestCaseServiceImpl implements ITestCaseService {
         return i;
     }
 
+    /**
+     * 添加测试用例和项目的关联
+     *
+     * @param bean
+     */
     @Async
     @Override
     public void addCaseProjectRelation(EditCaseAttributeBean bean) {
@@ -110,11 +139,21 @@ public class TestCaseServiceImpl implements ITestCaseService {
         testCaseMapper.addCaseProjectRelation(bean);
     }
 
+    /**
+     * 删除测试用例和项目的关联,此处用于删除用例和更新用例关联的项目(先删除后添加)
+     *
+     * @param bean
+     */
     @Override
     public void delCaseProjectRelation(DelBean bean) {
         testCaseMapper.delCaseProjectRelation(bean);
     }
 
+    /**
+     * 更新用例关联的项目信息
+     *
+     * @param bean
+     */
     @Override
     public void updateCaseProjectRelation(EditCaseAttributeBean bean) {
         DelBean delBean = new DelBean();
@@ -123,18 +162,35 @@ public class TestCaseServiceImpl implements ITestCaseService {
         addCaseProjectRelation(bean);
     }
 
+    /**
+     * 复制用例关联的信息,用于拷贝测试用例
+     *
+     * @param source
+     * @param target
+     */
     @Async
     @Override
     public void copyCaseProjectRelation(int source, int target) {
         testCaseMapper.copyCaseProjectRelation(source, target);
     }
 
+    /**
+     * 添加用例编辑记录
+     *
+     * @param record
+     */
     @Async
     @Override
     public void addEditRecord(CaseEditRecord record) {
         testCaseMapper.addEditRecord(record);
     }
 
+    /**
+     * 更新用例数据
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public int updateCaseData(CaseDataBean bean) {
         int i = testCaseMapper.updateCaseData(bean);
@@ -142,12 +198,24 @@ public class TestCaseServiceImpl implements ITestCaseService {
         return i;
     }
 
+    /**
+     * 搜索测试用例,无分页
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public List<SimpleBean> searchCaseNoPage(CaseSearchNoPageBean bean) {
         List<SimpleBean> simpleBeans = testCaseMapper.searchCaseNoPage(bean);
         return simpleBeans;
     }
 
+    /**
+     * 搜索测试用例,分页
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public PageInfo<TestCaseListBean> searchCases(CaseSearchBean bean) {
         PageHelper.startPage(bean.getPageNum(), bean.getPageSize());
@@ -156,6 +224,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
         return pageInfo;
     }
 
+    /**
+     * 获取测试用例属性信息
+     *
+     * @param id
+     * @return
+     */
     @Override
     public TestCaseAttributeBean getAttributeById(int id) {
         TestCaseAttributeBean bean = new TestCaseAttributeBean();
@@ -171,6 +245,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
         return bean;
     }
 
+    /**
+     * 异步查询用例属性信息,不包括关联项目
+     *
+     * @param bean
+     * @param countDownLatch
+     */
     @Async
     @Override
     public void getAttributeById(TestCaseAttributeBean bean, CountDownLatch countDownLatch) {
@@ -182,6 +262,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
         }
     }
 
+    /**
+     * 异步查询用例关联的项目信息
+     *
+     * @param bean
+     * @param countDownLatch
+     */
     @Async
     @Override
     public void getCaseProjectRelation(TestCaseAttributeBean bean, CountDownLatch countDownLatch) {
@@ -192,6 +278,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
         }
     }
 
+    /**
+     * 获取用例编辑记录历史
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public PageInfo<CaseEditRetrunRecord> getCaseEditRecords(CaseEditRecordQueryBean bean) {
         PageHelper.startPage(bean.getPageNum(), bean.getPageSize());
@@ -200,6 +292,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
         return pageInfo;
     }
 
+    /**
+     * 获取用力详情,包括用例数据
+     *
+     * @param id
+     * @return
+     */
     @Override
     public CaseDetailBean getCaseDetail(int id) {
         CaseDetailBean caseDetail = testCaseMapper.getCaseDetail(id);
@@ -213,7 +311,6 @@ public class TestCaseServiceImpl implements ITestCaseService {
      * @param bean
      * @return
      */
-
     @Override
     public CaseRunRecord runCaseData(CaseDataBean bean) {
         handleParams(bean);
@@ -230,6 +327,11 @@ public class TestCaseServiceImpl implements ITestCaseService {
         return record;
     }
 
+    /**
+     * 添加用例的运行记录,这里包括运行测试用例和测试数据
+     *
+     * @param runRecord
+     */
     @Async
     @Override
     public void addRunRecord(CaseRunRecord runRecord) {
@@ -237,6 +339,11 @@ public class TestCaseServiceImpl implements ITestCaseService {
         testCaseMapper.addRunRecord(runRecord);
     }
 
+    /**
+     * 处理测试数据中的标记语法
+     *
+     * @param bean
+     */
     @Override
     public void handleParams(CaseDataBean bean) {
         JSONObject params = bean.getParams();
@@ -245,6 +352,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
         handleParams(headers);
     }
 
+    /**
+     * 处理测试数据中的标记语法,用map缓存,用于运行测试用例集
+     *
+     * @param bean
+     * @param map
+     */
     @Override
     public void handleParams(CaseDataBean bean, ConcurrentHashMap<Integer, String> map) {
         JSONObject params = bean.getParams();
@@ -300,12 +413,23 @@ public class TestCaseServiceImpl implements ITestCaseService {
         });
     }
 
+    /**
+     * 异步删除用例和用例集关联,用于删除测试用例
+     *
+     * @param id
+     */
     @Async
     @Override
     public void delAllCaseCollectionRelation(int id) {
         collectionMapper.delAllCaseCollectionRelation(id);
     }
 
+    /**
+     * 获取用例的运行记录,用例集运行详情出用到
+     *
+     * @param id
+     * @return
+     */
     @Override
     public CaseRunDetailBean getCaseRunRecord(int id) {
         CaseRunDetailBean caseRunRecord = testCaseMapper.getCaseRunRecord(id);
