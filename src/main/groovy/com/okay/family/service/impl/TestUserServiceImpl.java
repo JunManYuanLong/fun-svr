@@ -133,9 +133,8 @@ public class TestUserServiceImpl implements ITestUserService {
                     long now = Time.getTimeStamp();
                     if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
                         return 1;
-                    i++;
-                    if (i > OkayConstant.WAIT_MAX_TIME) {
-                        UserStatusException.fail("获取分布式锁超时,导致无法更新用户凭据:id:" + bean.getId());
+                    if (i++ > OkayConstant.WAIT_MAX_TIME) {
+                        UserStatusException.fail("获取分布式锁超时,无法更新用户凭据:id:" + bean.getId());
                     }
                 }
             } else {
