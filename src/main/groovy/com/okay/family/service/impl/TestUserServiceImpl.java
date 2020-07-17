@@ -183,15 +183,15 @@ public class TestUserServiceImpl implements ITestUserService {
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public TestUserCheckBean getCertificate(int id) {
-        TestUserCheckBean user = testUserMapper.findUser(id);
-        if (user == null) UserStatusException.fail("用户不存在,ID:" + id);
-        String create_time = user.getCreate_time();
-        long create = Time.getTimestamp(create_time);
-        long now = Time.getTimeStamp();
-        if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
-            return user;
         Object o = UserLock.get(id);
         synchronized (o) {
+            TestUserCheckBean user = testUserMapper.findUser(id);
+            if (user == null) UserStatusException.fail("用户不存在,ID:" + id);
+            String create_time = user.getCreate_time();
+            long create = Time.getTimestamp(create_time);
+            long now = Time.getTimeStamp();
+            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
+                return user;
             boolean b = UserUtil.checkUserLoginStatus(user);
             if (!b) {
                 updateUserStatus(user);
