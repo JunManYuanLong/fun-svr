@@ -55,6 +55,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         this.caseService = caseService;
     }
 
+    /**
+     * 添加用例集
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public int addCollection(AddCollectionBean bean) {
         int i = caseCollectionMapper.addCollection(bean);
@@ -64,6 +70,11 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return i;
     }
 
+    /**
+     * 添加用例集和用例关联
+     *
+     * @param bean
+     */
     @Async
     @Override
     public void addCollectionCaseRelation(AddCollectionBean bean) {
@@ -75,6 +86,11 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         addCollectionEditRecord(new CaseCollectionEditRecord(bean.getId(), bean.getUid(), CollectionEditType.ADD_CASE.getCode()));
     }
 
+    /**
+     * 添加用例集编辑记录
+     *
+     * @param record
+     */
     @Async
     @Override
     public void addCollectionEditRecord(CaseCollectionEditRecord record) {
@@ -88,6 +104,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return i;
     }
 
+    /**
+     * 分享用例集
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public int shareCollection(DelCollectionBean bean) {
         int i = caseCollectionMapper.shareCollection(bean);
@@ -109,12 +131,23 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return i;
     }
 
+    /**
+     * 删除用例集和用例的关联关系
+     *
+     * @param bean
+     */
     @Async
     @Override
     public void delCollectionCaseRelation(DelCollectionBean bean) {
         caseCollectionMapper.delCollectionCaseRelation(bean);
     }
 
+    /**
+     * 删除单个用例和用例集的关联关系
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public int delCaseFromCollection(DelCaseCollectionRelationBean bean) {
         int i = caseCollectionMapper.delCaseFromCollection(bean);
@@ -123,6 +156,13 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return i;
     }
 
+    /**
+     * 获取用例集中case列表
+     *
+     * @param collectionId
+     * @param uid
+     * @return
+     */
     @Override
     public CollectionCaseInfoBean getCases(int collectionId, int uid) {
         CollectionCaseInfoBean infoBean = new CollectionCaseInfoBean();
@@ -138,6 +178,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return infoBean;
     }
 
+    /**
+     * 异步获取用例集信息
+     *
+     * @param bean
+     * @param countDownLatch
+     */
     @Async
     @Override
     public void getCollectionInfo(CollectionCaseInfoBean bean, CountDownLatch countDownLatch) {
@@ -150,6 +196,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         }
     }
 
+    /**
+     * 运行用例集,所有用例添加运行记录
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public CollectionRunSimpleResutl runCollection(RunCollectionBean bean) {
         List<CaseDataBean> cases = getCasesDeatil(bean);
@@ -176,7 +228,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         int success = collect.getOrDefault(RunResult.SUCCESS.getCode(), new ArrayList<>(0)).size();
         int fail = collect.getOrDefault(RunResult.FAIL.getCode(), new ArrayList<>(0)).size();
         int unrun = collect.getOrDefault(RunResult.UNRUN.getCode(), new ArrayList<>(0)).size();
-        int userError = collect.getOrDefault(RunResult.USER_ERROR.getCode(), new ArrayList<>(0)).size() ;
+        int userError = collect.getOrDefault(RunResult.USER_ERROR.getCode(), new ArrayList<>(0)).size();
         CollectionStatus collectionStatus = cases.size() == success ? CollectionStatus.SUCCESS : CollectionStatus.FAIL;
         CollectionRunSimpleResutl res = new CollectionRunSimpleResutl();
         res.setRunId(runId);
@@ -199,6 +251,11 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return res;
     }
 
+    /**
+     * 保存用例集运行记录
+     *
+     * @param record
+     */
     @Async
     @Override
     public void addCollectionRunRecord(CollectionRunResultRecord record) {
@@ -239,6 +296,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return cases;
     }
 
+    /**
+     * 更新用例集运行状态
+     *
+     * @param id
+     * @param status
+     */
     @Async
     @Override
     public void updateCollectionStatus(int id, int status) {
@@ -253,6 +316,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return pageInfo;
     }
 
+    /**
+     * 获取所有用例集
+     *
+     * @param bean
+     * @return
+     */
     @Override
     public List<SimpleBean> searchCollectionNoPage(SearchCollectionNoPageBean bean) {
         return caseCollectionMapper.searchCollectionNoPage(bean);
@@ -270,6 +339,12 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         return records;
     }
 
+    /**
+     * 获取用例集运行详情
+     *
+     * @param runId
+     * @return
+     */
     @Override
     public CollectionRunResultDetailBean getCollectionRunDetail(int runId) {
         CollectionRunResultDetailBean detailBean = new CollectionRunResultDetailBean();

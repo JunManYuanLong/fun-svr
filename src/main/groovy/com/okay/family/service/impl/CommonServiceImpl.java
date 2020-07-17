@@ -37,6 +37,11 @@ public class CommonServiceImpl implements ICommonService {
         this.commonMapper = commonMapper;
     }
 
+    /**
+     * 缓存所有host信息,暂时弃用
+     *
+     * @return
+     */
     @Override
     public Map<Integer, String> findAllHost() {
         List<HashMap<String, String>> hosts = commonMapper.findAllHost();
@@ -50,6 +55,11 @@ public class CommonServiceImpl implements ICommonService {
         return collect;
     }
 
+    /**
+     * 记录请求
+     *
+     * @param bean
+     */
     @Async
     @Override
     public void saveRequest(RequestSaveBean bean) {
@@ -104,6 +114,9 @@ public class CommonServiceImpl implements ICommonService {
         return unlock;
     }
 
+    /**
+     * 删除过期锁
+     */
     @Override
     public void clearLock() {
         commonMapper.clearLock(Time.getTimeByTimestamp(Time.getTimeStamp() - OkayConstant.LOCK_TIMEOUT));
