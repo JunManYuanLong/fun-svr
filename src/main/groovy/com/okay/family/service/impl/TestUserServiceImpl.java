@@ -136,6 +136,7 @@ public class TestUserServiceImpl implements ITestUserService {
                 }
             }
         } else {
+            /*此处业务量太小,取消双重锁检查*/
             try {
                 UserUtil.updateUserStatus(bean);
                 int i = testUserMapper.updateUserStatus(bean);
