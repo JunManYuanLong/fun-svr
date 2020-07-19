@@ -118,33 +118,30 @@ public class TestUserServiceImpl implements ITestUserService {
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
     public int updateUserStatus(TestUserCheckBean bean) {
-        Object o = UserLock.get(bean.getId());
         int userLock = NodeLock.getUserLock(bean.getId());
-        synchronized (o) {
-            int lock = commonService.lock(userLock);
-            if (lock == 0) {
-                logger.info("分布式锁竞争失败,ID:{}", bean.getId());
-                int i = 0;
-                while (true) {
-                    SourceCode.sleep(OkayConstant.WAIT_INTERVAL);
-                    TestUserCheckBean user = testUserMapper.findUser(bean.getId());
-                    String create_time = user.getCreate_time();
-                    long create = Time.getTimestamp(create_time);
-                    long now = Time.getTimeStamp();
-                    if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
-                        return 1;
-                    if (i++ > OkayConstant.WAIT_MAX_TIME) {
-                        UserStatusException.fail("获取分布式锁超时,无法更新用户凭据:id:" + bean.getId());
-                    }
+        int lock = commonService.lock(userLock);
+        if (lock == 0) {
+            logger.info("分布式锁竞争失败,ID:{}", bean.getId());
+            int i = 0;
+            while (true) {
+                SourceCode.sleep(OkayConstant.WAIT_INTERVAL);
+                TestUserCheckBean user = testUserMapper.findUser(bean.getId());
+                String create_time = user.getCreate_time();
+                long create = Time.getTimestamp(create_time);
+                long now = Time.getTimeStamp();
+                if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
+                    return 1;
+                if (i++ > OkayConstant.WAIT_MAX_TIME) {
+                    UserStatusException.fail("获取分布式锁超时,无法更新用户凭据:id:" + bean.getId());
                 }
-            } else {
-                try {
-                    UserUtil.updateUserStatus(bean);
-                    int i = testUserMapper.updateUserStatus(bean);
-                    return i;
-                } finally {
-                    commonService.unlock(userLock);
-                }
+            }
+        } else {
+            try {
+                UserUtil.updateUserStatus(bean);
+                int i = testUserMapper.updateUserStatus(bean);
+                return i;
+            } finally {
+                commonService.unlock(userLock);
             }
         }
     }
