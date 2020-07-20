@@ -89,5 +89,7 @@ class Result<T> extends AbstractBean {
     static Result fail(int code, String msg) {
         new Result(code, msg)
     }
-
+    static Result fail() {
+        new Result(CommonCode.FAIL)
+    }
 }

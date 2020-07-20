@@ -248,13 +248,24 @@
         id = #{id} and uid = #{uid}
     </update>
 
+    <update id="syncApi" parameterType="java.lang.Integer">
+        UPDATE
+        <include refid="table"/>
+        c
+        INNER JOIN
+        <include refid="api_info"/>
+        a ON a.id = c.apiId
+        SET c.serviceId=a.service,c.path=a.api_url,c.type=a.api_action,c.method=a.api_method
+        WHERE c.id =#{0}
+    </update>
+
     <update id="updateCase" parameterType="com.okay.family.common.bean.testcase.request.EditCaseAttributeBean">
         UPDATE
         <include refid="table"/>
         c
         INNER JOIN
         <include refid="api_info"/>
-        a ON a.id = #{apiId}
+        a ON a.id = c.apiId
         SET
         c.editor=#{uid},c.name=#{name},c.envId=#{envId},c.serviceId=#{serviceId},c.moduleId=#{moduleId},c.projectList=#{projectList,jdbcType=OTHER,typeHandler=com.okay.family.common.typehandler.ListIntegerHandler},c.apiId=#{apiId},c.headersmoco=a.header_paras,c.paramsmoco=a.request_paras,c.path=a.api_url,c.type=a.api_action,c.method=a.api_method
         WHERE
