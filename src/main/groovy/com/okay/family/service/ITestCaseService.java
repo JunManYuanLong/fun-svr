@@ -65,5 +65,6 @@ public interface ITestCaseService {
 
     CaseRunDetailBean getCaseRunRecord(int id);
 
+    void syncApi(int caseId);
 
 }

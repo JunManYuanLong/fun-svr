@@ -49,5 +49,6 @@ public interface TestCaseMapper {
 
     int getCaseApiId(int id);
 
+    int syncApi(int caseId);
 
 }

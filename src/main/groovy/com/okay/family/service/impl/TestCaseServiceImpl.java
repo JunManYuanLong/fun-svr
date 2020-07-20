@@ -107,6 +107,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
         if (i == 1) {
             addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_ATTRIBUTE.getCode()));
             updateCaseProjectRelation(bean);
+            syncApi(bean.getId());
         }
         return i;
     }
@@ -154,6 +155,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
      *
      * @param bean
      */
+    @Async
     @Override
     public void updateCaseProjectRelation(EditCaseAttributeBean bean) {
         DelBean delBean = new DelBean();
@@ -434,6 +436,12 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public CaseRunDetailBean getCaseRunRecord(int id) {
         CaseRunDetailBean caseRunRecord = testCaseMapper.getCaseRunRecord(id);
         return caseRunRecord;
+    }
+
+    @Async
+    @Override
+    public void syncApi(int caseId) {
+        testCaseMapper.syncApi(caseId);
     }
 
 
