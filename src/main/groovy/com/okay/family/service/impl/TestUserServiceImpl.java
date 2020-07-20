@@ -136,7 +136,13 @@ public class TestUserServiceImpl implements ITestUserService {
                 }
             }
         } else {
-            /*此处业务量太小,取消双重锁检查*/
+            logger.info("分布式锁竞争成功,ID:{}", bean.getId());
+            TestUserCheckBean user = testUserMapper.findUser(bean.getId());
+            String create_time = user.getCreate_time();
+            long create = Time.getTimestamp(create_time);
+            long now = Time.getTimeStamp();
+            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
+                return 1;
             try {
                 UserUtil.updateUserStatus(bean);
                 int i = testUserMapper.updateUserStatus(bean);
