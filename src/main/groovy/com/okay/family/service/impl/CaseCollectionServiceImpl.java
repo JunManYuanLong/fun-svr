@@ -167,6 +167,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     public CollectionCaseInfoBean getCases(int collectionId, int uid) {
         CollectionCaseInfoBean infoBean = new CollectionCaseInfoBean();
         infoBean.setId(collectionId);
+        infoBean.setUid(uid);
         CountDownLatch countDownLatch = new CountDownLatch(1);
         getCollectionInfo(infoBean, countDownLatch);
         infoBean.setList(caseCollectionMapper.getCases(collectionId, uid));

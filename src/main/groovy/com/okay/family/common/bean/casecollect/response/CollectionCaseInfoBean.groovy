@@ -11,15 +11,24 @@ class CollectionCaseInfoBean extends AbstractBean {
 
     Integer id
 
+    Integer uid
+
     Integer envId
 
     String groupName
+
+    /**
+     * 0非本人 1 本人
+     */
+    Integer isMyself
 
     List<ListCaseBean> list
 
     def copyFrom(CollectionCaseInfoBean bean) {
         this.envId = bean.getEnvId()
         this.groupName = bean.getGroupName()
+        this.isMyself = bean.getIsMyself()
+        this.uid = null
     }
 
 }

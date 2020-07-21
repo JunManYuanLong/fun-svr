@@ -74,9 +74,9 @@
                 typeHandler="com.okay.family.common.typehandler.ResultArrayHandler"/>
     </resultMap>
 
-    <select id="getCollectionInfo" parameterType="java.lang.Integer"
+    <select id="getCollectionInfo" parameterType="com.okay.family.common.bean.casecollect.response.CollectionCaseInfoBean"
             resultType="com.okay.family.common.bean.casecollect.response.CollectionCaseInfoBean">
-        select name groupName,envId from
+        select name groupName,envId,CASE uid = #{uid} WHEN 1 THEN 1 ELSE 0 END isMyself from
         <include refid="table"/>
         where id = #{id}
     </select>

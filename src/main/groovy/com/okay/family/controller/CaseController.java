@@ -60,7 +60,7 @@ public class CaseController {
     public Result updateCaseData(@RequestBody @Valid CaseDataBean bean) {
         bean.init();
         int i = service.updateCaseData(bean);
-        return i == 1 ? Result.success() : Result.fail(TestCaseCode.SAVE_CASE_ERROR);
+        return Result.success();
     }
 
     @PostMapping(value = "/del")
