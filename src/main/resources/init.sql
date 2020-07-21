@@ -222,7 +222,7 @@ CREATE TABLE `qa_test_case` (
   `moduleId` int(10) NOT NULL COMMENT '模块ID',
   `apiId` int(10) NOT NULL COMMENT '接口ID',
   `path` varchar(255) NOT NULL DEFAULT '' COMMENT '接口地址',
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '用例名',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '用例名',
   `type` varchar(1) NOT NULL DEFAULT '' COMMENT '读写类型',
   `editor` int(10) NOT NULL COMMENT '最后编辑人',
   `method` varchar(10) NOT NULL DEFAULT '' COMMENT '请求方式',

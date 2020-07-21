@@ -2,12 +2,14 @@ package com.okay.family.common.bean.testcase.request
 
 import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.fun.base.bean.AbstractBean
+import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.Range
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
+
 /**
  * 用例属性编辑
  */
@@ -39,6 +41,7 @@ class EditCaseAttributeBean extends AbstractBean {
     Integer moduleId
 
     @NotBlank
+    @Length(min = 1, max = 60, message = "名字长度错误1-60")
     String name
 
     @NotNull
