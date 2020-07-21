@@ -33,13 +33,13 @@
         <include refid="user_role"/>
         ur on tu.roleId = ur.id
         where tu.uid = #{uid}
-        <if test="status != null">
+        <if test="status != 0">
             and tu.state = #{status}
         </if>
-        <if test="envId != null">
+        <if test="envId != 0">
             and tu.envId = #{envId}
         </if>
-        <if test="roleId != null">
+        <if test="roleId != 0">
             and tu.roleId = #{roleId}
         </if>
         <choose>

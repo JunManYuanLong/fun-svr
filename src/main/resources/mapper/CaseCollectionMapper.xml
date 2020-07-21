@@ -113,10 +113,10 @@
         <include refid="collection_status"/>
         c on t.state = c.id
         <where>
-            <if test="result != null">
+            <if test="result != 0">
                 and t.state = #{result}
             </if>
-            <if test="envId != null">
+            <if test="envId != 0">
                 and t.envId = #{envId}
             </if>
             <choose>
