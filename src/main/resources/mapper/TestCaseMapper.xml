@@ -199,7 +199,7 @@
             <if test="moduleId != null">
                 and t.moduleId = #{moduleId}
             </if>
-            <if test="projectId != null">
+            <if test="projectId != 0">
                 AND FIND_IN_SET(#{projectId},t.projectList)
             </if>
             <choose>

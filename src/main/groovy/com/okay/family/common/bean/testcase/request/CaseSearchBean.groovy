@@ -45,7 +45,7 @@ class CaseSearchBean extends AbstractBean {
     @Range(min = 5L, max = 10L, message = "单页数值设置错误!")
     Integer pageSize
 
-    @Min(value = 1L)
+    @Min(value = 0L)
     Integer projectId
 
     @NotNull
