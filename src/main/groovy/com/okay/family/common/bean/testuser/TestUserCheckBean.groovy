@@ -44,4 +44,18 @@ class TestUserCheckBean extends AbstractBean {
         this.setDes(user.getDes());
     }
 
+    def
+    copyFrom(TestUserCheckBean user) {
+        this.setId(user.getId());
+        this.setEnvId(user.getEnvId());
+        this.setRoleId(user.getRoleId());
+        this.setUser(user.getUser());
+        this.setPassword(user.getPassword());
+        this.setPhone(user.getPhone());
+        this.setUid(user.getUid());
+        this.setDes(user.getDes());
+        this.status = user.getStatus()
+        this.create_time = user.getCreate_time()
+        this.certificate = user.getCertificate()
+    }
 }

@@ -13,6 +13,7 @@ class SearchUserBean extends AbstractBean {
 
     Integer uid
 
+    @NotNull
     @Range(min = 0L, max = OkayConstant.ENV, message = "环境参数错误")
     Integer envId
 
@@ -24,9 +25,11 @@ class SearchUserBean extends AbstractBean {
     @Range(min = 5L, max = 20L, message = "每页显示数量设置错误")
     Integer pageSize
 
+    @NotNull
     @Range(min = 0L, max = OkayConstant.ROLE, message = "用户身份参数错误")
     Integer roleId
 
+    @NotNull
     @Range(min = 0L, max = OkayConstant.USER_STATUS, message = "用户状态参数错误")
     Integer status
 

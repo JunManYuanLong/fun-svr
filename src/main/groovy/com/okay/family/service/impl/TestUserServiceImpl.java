@@ -129,8 +129,10 @@ public class TestUserServiceImpl implements ITestUserService {
                 String create_time = user.getCreate_time();
                 long create = Time.getTimestamp(create_time);
                 long now = Time.getTimeStamp();
-                if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
-                    return 1;
+                if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode()) {
+                    bean.copyFrom(user);
+                    return testUserMapper.updateUserStatus(bean);
+                }
                 if (i++ > OkayConstant.WAIT_MAX_TIME) {
                     UserStatusException.fail("获取分布式锁超时,无法更新用户凭据:id:" + bean.getId());
                 }
@@ -141,12 +143,13 @@ public class TestUserServiceImpl implements ITestUserService {
             String create_time = user.getCreate_time();
             long create = Time.getTimestamp(create_time);
             long now = Time.getTimeStamp();
-            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
-                return 1;
+            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode()) {
+                bean.copyFrom(user);
+                return testUserMapper.updateUserStatus(bean);
+            }
             try {
                 UserUtil.updateUserStatus(bean);
-                int i = testUserMapper.updateUserStatus(bean);
-                return i;
+                return testUserMapper.updateUserStatus(bean);
             } finally {
                 commonService.unlock(userLock);
             }
@@ -193,8 +196,10 @@ public class TestUserServiceImpl implements ITestUserService {
             String create_time = user.getCreate_time();
             long create = Time.getTimestamp(create_time);
             long now = Time.getTimeStamp();
-            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode())
+            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode()) {
+                testUserMapper.updateUserStatus(user);
                 return user;
+            }
             boolean b = UserUtil.checkUserLoginStatus(user);
             if (!b) {
                 updateUserStatus(user);

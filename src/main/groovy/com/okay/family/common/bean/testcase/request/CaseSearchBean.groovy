@@ -17,9 +17,6 @@ class CaseSearchBean extends AbstractBean {
     private static final long serialVersionUID = -869483426556;
 
     @Min(value = 1L)
-    Integer id
-
-    @Min(value = 1L)
     Integer uid
 
     @Range(min = 0L, max = OkayConstant.ENV, message = "环境变量参数错误")
@@ -33,7 +30,7 @@ class CaseSearchBean extends AbstractBean {
     Integer isMyself
 
     @NotNull
-    @Range(min = 0L, max = 2L, message = "是否可用参数错误\t0全部， 1可用，2不可用")
+    @Range(min = 0L, max = 2L, message = "是否可用参数错误0全部， 1可用，2不可用")
     Integer isUsed
 
     Integer serviceId
@@ -51,6 +48,7 @@ class CaseSearchBean extends AbstractBean {
     @Min(value = 1L)
     Integer projectId
 
+    @NotNull
     String testQuery
 
     /**
@@ -60,7 +58,7 @@ class CaseSearchBean extends AbstractBean {
 
 
     def init() {
-        if (StringUtils.isEmpty(testQuery)) return
+        if (StringUtils.isBlank(testQuery)) return
         if (SourceCode.isNumber(testQuery)) type = 2
         else type = 1
     }

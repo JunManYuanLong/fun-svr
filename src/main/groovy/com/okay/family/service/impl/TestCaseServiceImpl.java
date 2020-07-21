@@ -104,11 +104,9 @@ public class TestCaseServiceImpl implements ITestCaseService {
     public int updateCase(EditCaseAttributeBean bean) {
         int apiId = testCaseMapper.getCaseApiId(bean.getId());
         int i = apiId == bean.getApiId() ? testCaseMapper.updateCaseNoApiId(bean) : testCaseMapper.updateCase(bean);
-        if (i == 1) {
-            addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_ATTRIBUTE.getCode()));
-            updateCaseProjectRelation(bean);
-            syncApi(bean.getId());
-        }
+        addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_ATTRIBUTE.getCode()));
+        updateCaseProjectRelation(bean);
+        if (i == 1) syncApi(bean.getId());
         return i;
     }
 

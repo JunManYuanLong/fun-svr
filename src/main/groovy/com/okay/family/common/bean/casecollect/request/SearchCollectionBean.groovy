@@ -1,5 +1,6 @@
 package com.okay.family.common.bean.casecollect.request
 
+import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.fun.base.bean.AbstractBean
 import com.okay.family.fun.frame.SourceCode
 import org.apache.commons.lang3.StringUtils
@@ -19,8 +20,11 @@ class SearchCollectionBean extends AbstractBean {
     @Min(value = 1L, message = "uid不能为空")
     Integer uid
 
+    @NotNull
+    @Range(min = 0L, max = OkayConstant.ENV, message = "环境变量参数错误")
     Integer envId
 
+    @NotNull
     String groupQuery
 
     @NotNull
@@ -31,6 +35,8 @@ class SearchCollectionBean extends AbstractBean {
     @Range(min = 5L, max = 20L, message = "每页显示数量设置错误")
     Integer pageSize
 
+    @NotNull
+    @Range(min = 0L, max = 3L, message = "运行结果参数错误")
     Integer result
 
     /**
