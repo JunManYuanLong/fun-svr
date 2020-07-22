@@ -83,5 +83,6 @@ case $1 in
 	status;;
 
 	*)
-	usage;;
+	echo "default restart"
+	restart;;
 esac
