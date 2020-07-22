@@ -42,7 +42,7 @@ public class PubDataController {
     public Result delData(@RequestBody @Valid EditPubBean bean) {
         if (bean.getType().equalsIgnoreCase("update")) {
             int i = pubDataService.updateDataAttribute(bean);
-            return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_CHANGE_FAIL);
+            return Result.success();
         } else if (bean.getType().equalsIgnoreCase("add")) {
             int i = pubDataService.addData(bean);
             return i > 0 ? Result.success(SourceCode.getJson("id=" + i)) : Result.fail(PubDataCode.ADD_FAIL);
@@ -54,13 +54,13 @@ public class PubDataController {
     @PostMapping(value = "/del")
     public Result delData(@RequestBody @Valid DelBean bean) {
         int i = pubDataService.delData(bean);
-        return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_MATCH_FAIL);
+        return Result.success();
     }
 
     @PostMapping(value = "/save")
     public Result saveData(@RequestBody @Valid SavePubDataBean bean) {
         int i = pubDataService.saveData(bean);
-        return i > 0 ? Result.success() : Result.fail(PubDataCode.NO_CHANGE_FAIL);
+        return Result.success();
 
     }
 

@@ -4,6 +4,9 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 自定义线程池,用例批量运行用例,非并发测试线程池
+ */
 public class OkayThreadPool {
 
     private static ThreadPoolExecutor executor = createPool();
@@ -14,7 +17,6 @@ public class OkayThreadPool {
 
     private static ThreadPoolExecutor createPool() {
         return new ThreadPoolExecutor(10, 50, 10, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>(1000));
-
     }
 
 }

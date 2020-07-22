@@ -6,7 +6,7 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 
 /**
- * 删除
+ * 删除,一些比较简单的接口请求对象也可采用
  */
 class DelBean extends AbstractBean {
 
