@@ -28,7 +28,7 @@ class VerifyResponseUtil extends SourceCode {
         }
         beans.each {
             def key = it.getText()
-            def desc = StringUtils.isEmpty(it.getDes()) ? OkayConstant.DEFAULT_VERIFY_DEC : it.getDes()
+            def desc = StringUtils.isBlank(it.getDes()) ? OkayConstant.DEFAULT_VERIFY_DEC : it.getDes()
             if (key.contains("code")) {
                 String str = "\"" + key + "\":" + it.getValue()
                 it.setResult(desc + OkayConstant.RUN_RESULT_TEXT + content.contains(str))

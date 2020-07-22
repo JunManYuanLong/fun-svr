@@ -6,7 +6,7 @@ import com.okay.family.fun.frame.SourceCode;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 常量配置类,后期会放到数据库里面重新加载
+ * 常量配置类
  */
 public class OkayConstant extends SourceCode {
 
@@ -86,7 +86,7 @@ public class OkayConstant extends SourceCode {
     public static final int LOCK_TIMEOUT = 100_000;
 
     /**
-     * 分布式锁等待间隔,s
+     * 分布式锁等待间隔毫秒
      */
     public static final int WAIT_INTERVAL = 200;
 
@@ -99,11 +99,6 @@ public class OkayConstant extends SourceCode {
      * 节点锁
      */
     public static final long NODE_LOCK = 1L;
-
-    /**
-     * 从记录任务列表中获取任务的超时时间单位是ms
-     */
-    public static final int MYSQLWORK_TIMEOUT = 200;
 
     /**
      * 异步线程等待时间
