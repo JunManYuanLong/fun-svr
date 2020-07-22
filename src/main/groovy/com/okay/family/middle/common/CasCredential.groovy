@@ -23,11 +23,10 @@ class CasCredential extends FanLibrary {
         private static final long serialVersionUID = 62275063453465844L;
 
         {
-            put(1, MiddleConstant.CAS_HOTFIX);
-            put(2, MiddleConstant.CAS_DEV);
-            put(3, MiddleConstant.CAS_STRESS);
-//            put(4, "https://stupad-dev.xk12.cn");
-            //todo:完成host,于数据校验
+            put(OkayConstant.HOTFIX, MiddleConstant.CAS_HOTFIX);
+            put(OkayConstant.DEV, MiddleConstant.CAS_DEV);
+            put(OkayConstant.STRESS, MiddleConstant.CAS_STRESS);
+            put(OkayConstant.ONLINE, MiddleConstant.CAS_ONLINE)
         }
     };
 

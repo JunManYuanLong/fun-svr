@@ -120,5 +120,13 @@ public class OkayConstant extends SourceCode {
      */
     public static int node;
 
+    public static final int HOTFIX = 1;
+
+    public static final int DEV = 2;
+
+    public static final int STRESS = 3;
+
+    public static final int ONLINE = 4;
+
 
 }

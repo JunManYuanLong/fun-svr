@@ -40,11 +40,10 @@ public class StuAppBase extends SourceCode implements IBase {
         private static final long serialVersionUID = 6225476787661844L;
 
         {
-            put(1, MiddleConstant.STUAPP_HOTFIX);
-            put(2, MiddleConstant.STUAPP_DEV);
-            put(3, MiddleConstant.STUAPP_STRESS);
-//            put(4, "https://stupad-dev.xk12.cn");
-            //todo:完成host,于数据校验
+            put(OkayConstant.HOTFIX, MiddleConstant.STUAPP_HOTFIX);
+            put(OkayConstant.DEV, MiddleConstant.STUAPP_DEV);
+            put(OkayConstant.STRESS, MiddleConstant.STUAPP_STRESS);
+            put(OkayConstant.ONLINE, MiddleConstant.STUAPP_ONLINE);
         }
     };
 

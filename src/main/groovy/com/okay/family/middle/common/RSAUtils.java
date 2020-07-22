@@ -1,6 +1,7 @@
 package com.okay.family.middle.common;
 
 
+import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.fun.frame.SourceCode;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
@@ -56,13 +57,12 @@ public class RSAUtils extends SourceCode {
         private static final long serialVersionUID = 4899433701794704772L;
 
         {
-        put(1, MiddleConstant.PAD_HOTFIXT_PUBKEY);
-        put(2, MiddleConstant.PAD_DEV_PUBKEY);
-        put(3, MiddleConstant.PAD_HOTFIXT_PUBKEY);
-//        put(4, "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCBvhQ1m/kDGjExBL3kV8a/fQL0Df6bPEUlQz+7GBCQgSZ5ZcJKZwzv/nwG+S2m5MH1efgr+98dY2b1jToVStiT9ltfPEtepwbIh0FbV78/lsizP7Ysqc0lrwxWXhpBVEHuG5qU3EiOQD5Xw1LIAoQJKjuqLs7j2GF6NQoJlUJnnQIDAQAB");
-        //todo:处理不同环境的pubkey
-    }};
-
+            put(OkayConstant.HOTFIX, MiddleConstant.PAD_HOTFIXT_PUBKEY);
+            put(OkayConstant.DEV, MiddleConstant.PAD_DEV_PUBKEY);
+            put(OkayConstant.STRESS, MiddleConstant.PAD_HOTFIXT_PUBKEY);
+            put(OkayConstant.ONLINE, MiddleConstant.PAD_ONLINE_PUBKEY);
+        }
+    };
 
 
     public static byte[] decode(String base64) throws Exception {
@@ -106,7 +106,7 @@ public class RSAUtils extends SourceCode {
      * @param pwd 明文密码
      * @return
      */
-    public static String getPassword(String pwd,int envId) {
+    public static String getPassword(String pwd, int envId) {
         pubkey = pubkeys.get(envId);
         String password = EMPTY;
         try {
@@ -140,5 +140,6 @@ public class RSAUtils extends SourceCode {
     public static String encode(byte[] bytes) throws Exception {
         return new String(Base64.encodeBase64(bytes));
     }
+
 
 }

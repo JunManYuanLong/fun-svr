@@ -10,4 +10,9 @@ public class FamilyConstant {
     static PropertyUtils.Property property = PropertyUtils.getProperties("family");
 
 
+    /**
+     * 是否区分登录选项,针对stress环境临时设置
+     */
+    public static boolean TEA_WEB_LOGIN = property.getPropertyBoolean("teaweblogin");
+
 }

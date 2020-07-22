@@ -35,11 +35,10 @@ public class TeaPadBase extends SourceCode implements IBase {
         private static final long serialVersionUID = 62275164984891844L;
 
         {
-            put(1, MiddleConstant.TEAPAD_HOTFIX_HOST);
-            put(2, MiddleConstant.TEAPAD_DEV_HOST);
-            put(3, MiddleConstant.TEAPAD_STRESS_HOST);
-//            put(4, "https://stupad-dev.xk12.cn");
-            //todo:完成host,于数据校验
+            put(OkayConstant.HOTFIX, MiddleConstant.TEAPAD_HOTFIX_HOST);
+            put(OkayConstant.DEV, MiddleConstant.TEAPAD_DEV_HOST);
+            put(OkayConstant.STRESS, MiddleConstant.TEAPAD_STRESS_HOST);
+            put(OkayConstant.ONLINE, MiddleConstant.TEAPAD_ONLINE_HOST);
         }
     };
 

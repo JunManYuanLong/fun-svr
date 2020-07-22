@@ -30,11 +30,10 @@ public class StuWebBase extends SourceCode implements IBase {
         private static final long serialVersionUID = 6227524334361844L;
 
         {
-            put(1, MiddleConstant.STUWEB_HOTFIX_HOST);
-            put(2, MiddleConstant.STUWEB_DEV_HOST);
-            put(3, MiddleConstant.STUWEB_STRESS_HOST);
-//            put(4, "https://stupad-dev.xk12.cn");
-            //todo:完成host,于数据校验
+            put(OkayConstant.HOTFIX, MiddleConstant.STUWEB_HOTFIX_HOST);
+            put(OkayConstant.DEV, MiddleConstant.STUWEB_DEV_HOST);
+            put(OkayConstant.STRESS, MiddleConstant.STUWEB_STRESS_HOST);
+            put(OkayConstant.ONLINE, MiddleConstant.STUWEB_ONLINE_HOST);
         }
     };
 

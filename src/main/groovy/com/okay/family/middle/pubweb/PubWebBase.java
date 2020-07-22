@@ -33,11 +33,10 @@ public class PubWebBase extends SourceCode implements IBase {
         private static final long serialVersionUID = 61212321316661844L;
 
         {
-            put(1, MiddleConstant.PUBWEB_HOTFIX_HOST);
-            put(2, MiddleConstant.PUBWEB_DEV_HOST);
-            put(3, MiddleConstant.PUBWEB_STRESS_HOST);
-//            put(4, "https://stupad-dev.xk12.cn");
-            //todo:完成host,于数据校验
+            put(OkayConstant.HOTFIX, MiddleConstant.PUBWEB_HOTFIX_HOST);
+            put(OkayConstant.DEV, MiddleConstant.PUBWEB_DEV_HOST);
+            put(OkayConstant.STRESS, MiddleConstant.PUBWEB_STRESS_HOST);
+            put(OkayConstant.ONLINE, MiddleConstant.PUBWEB_ONLINE_HOST);
         }
     };
 

@@ -109,11 +109,10 @@ public class MiddleConstant {
         private static final long serialVersionUID = 62254732323261844L;
 
         {
-            put(1, MiddleConstant.SALT_HOTFIX);
-            put(2, MiddleConstant.SALT_DEV);
-            put(3, MiddleConstant.SALT_STRESS);
-//            put(4, "https://stupad-dev.xk12.cn");
-            //todo:完成host,于数据校验
+            put(OkayConstant.HOTFIX, MiddleConstant.SALT_HOTFIX);
+            put(OkayConstant.DEV, MiddleConstant.SALT_DEV);
+            put(OkayConstant.STRESS, MiddleConstant.SALT_STRESS);
+            put(OkayConstant.ONLINE, MiddleConstant.SALT_ONLINE);
         }
     };
 

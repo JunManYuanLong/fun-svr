@@ -37,11 +37,10 @@ public class StuPadBase extends SourceCode implements IBase {
         private static final long serialVersionUID = 6225476787661844L;
 
         {
-            put(1, MiddleConstant.STUPAD_DEV_HOST);
-            put(2, MiddleConstant.STUPAD_DEV_HOST);
-            put(3, MiddleConstant.STUPAD_STRESS_HOST);
-//            put(4, "https://stupad-dev.xk12.cn");
-            //todo:完成host,于数据校验
+            put(OkayConstant.HOTFIX, MiddleConstant.STUPAD_DEV_HOST);
+            put(OkayConstant.DEV, MiddleConstant.STUPAD_DEV_HOST);
+            put(OkayConstant.STRESS, MiddleConstant.STUPAD_STRESS_HOST);
+            put(OkayConstant.ONLINE, MiddleConstant.STUPAD_ONLINE_HOST);
         }
     };
 

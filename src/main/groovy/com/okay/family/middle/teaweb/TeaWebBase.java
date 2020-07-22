@@ -1,6 +1,7 @@
 package com.okay.family.middle.teaweb;
 
 import com.alibaba.fastjson.JSONObject;
+import com.okay.family.common.basedata.FamilyConstant;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.fun.base.bean.RequestInfo;
 import com.okay.family.fun.base.exception.LoginException;
@@ -39,11 +40,10 @@ public class TeaWebBase extends SourceCode implements IBase {
         private static final long serialVersionUID = 622755375476661844L;
 
         {
-            put(1, MiddleConstant.TEAWEB_HOTFIX_HOST);
-            put(2, MiddleConstant.TEAWEB_DEV_HOST);
-            put(3, MiddleConstant.TEAWEB_STRESS_HOST);
-//            put(4, "https://stupad-dev.xk12.cn");
-            //todo:完成host,于数据校验
+            put(OkayConstant.HOTFIX, MiddleConstant.TEAWEB_HOTFIX_HOST);
+            put(OkayConstant.DEV, MiddleConstant.TEAWEB_DEV_HOST);
+            put(OkayConstant.STRESS, MiddleConstant.TEAWEB_STRESS_HOST);
+            put(OkayConstant.ONLINE, MiddleConstant.TEAWEB_ONLINE_HOST);
         }
     };
 
@@ -98,10 +98,10 @@ public class TeaWebBase extends SourceCode implements IBase {
         this.password = password;
         this.envId = envId;
         this.HOST = hosts.get(envId);
-        if (envId == 2) {
-            login2();
-        } else {
+        if (envId == OkayConstant.STRESS && FamilyConstant.TEA_WEB_LOGIN) {
             login();
+        } else {
+            login2();
         }
     }
 
