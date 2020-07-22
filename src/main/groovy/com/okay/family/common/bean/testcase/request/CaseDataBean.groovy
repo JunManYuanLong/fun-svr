@@ -16,6 +16,7 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
+
 /**
  * 测试用例数据
  */
@@ -50,8 +51,8 @@ class CaseDataBean extends AbstractBean {
     @Min(value = 1L)
     Integer serviceId
 
-    @NotNull
-    @Pattern(regexp = "R|W",message = "readtype应该为R|W")
+    @NotBlank
+    @Pattern(regexp = "R|W", message = "readtype应该为R|W")
     String readType
 
     @NotNull
@@ -66,10 +67,20 @@ class CaseDataBean extends AbstractBean {
     @Pattern(regexp = "/.+", message = "接口名称应该以/开头!")
     String url
 
+
+    /**
+     * 后赋值
+     */
     Integer available
 
+    /**
+     * 后赋值
+     */
     JSONObject headers
 
+    /**
+     * 后赋值
+     */
     JSONObject params
 
 

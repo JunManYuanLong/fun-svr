@@ -11,6 +11,8 @@ class SearchUserBean extends AbstractBean {
 
     private static final long serialVersionUID = 894894891651651L;
 
+    @NotNull
+    @Min(value = 1L,message = "uid错误")
     Integer uid
 
     @NotNull
