@@ -1,6 +1,7 @@
 package com.okay.family.common.wapper;
 
 
+import com.okay.family.common.basedata.FamilyConstant;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.frame.Output;
 import com.okay.family.fun.utils.DecodeEncode;
@@ -46,12 +47,10 @@ public class WrappingFilter implements Filter {
         byte[] bytes = responseWrapper.getContent();
         String respContent = new String(bytes, Constant.UTF_8);
         logger.info("请求:{},耗时:{} ms,参数:{},响应:{}", url, end - start, queryArgs, respContent);
-        Output.showStr(queryArgs);
-        Output.showStr(respContent);
+        if (FamilyConstant.OUTPUT) Output.showStr(queryArgs);
+        if (FamilyConstant.OUTPUT) Output.showStr(respContent);
         response.getOutputStream().write(respContent.getBytes(Constant.UTF_8));
     }
-
-
 
 
 }

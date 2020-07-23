@@ -15,4 +15,7 @@ public class FamilyConstant {
      */
     public static boolean TEA_WEB_LOGIN = property.getPropertyBoolean("teaweblogin");
 
+    public static boolean OUTPUT = property.getPropertyBoolean("output_key");
+
+
 }

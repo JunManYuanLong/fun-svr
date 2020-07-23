@@ -28,13 +28,13 @@ public class StartRun implements CommandLineRunner {
         commonService.clearLock();
         int lock = commonService.lock(OkayConstant.NODE_LOCK);
         if (lock == 1) {
-            OkayConstant.RUN_MARK = new AtomicInteger(SourceCode.getMark() % 100_000_000);
+            OkayConstant.RUN_MARK = new AtomicInteger(SourceCode.getMark() % 100_000_000 + SourceCode.getRandomInt(8) * 100_000_000);
             OkayConstant.node = 1;
             logger.info("我是节点 {} ----------", OkayConstant.node);
         } else {
             OkayConstant.node = 2;
             logger.info("我是节点 {} ----------", OkayConstant.node);
-            OkayConstant.RUN_MARK = new AtomicInteger(SourceCode.getMark() % 100_000_000 - 10_000_000);
+            OkayConstant.RUN_MARK = new AtomicInteger(SourceCode.getMark() % 100_000_000 + 900_000_000);
         }
         OkayConstant.COLLECTION_MARK = new AtomicInteger(OkayConstant.RUN_MARK.get() / 100);
         logger.info("程序初始化运行方法执行完毕……");
