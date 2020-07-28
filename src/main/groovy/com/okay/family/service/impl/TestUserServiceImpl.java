@@ -139,15 +139,15 @@ public class TestUserServiceImpl implements ITestUserService {
             }
         } else {
             logger.info("分布式锁竞争成功,ID:{}", bean.getId());
-            TestUserCheckBean user = testUserMapper.findUser(bean.getId());
-            String create_time = user.getCreate_time();
-            long create = Time.getTimestamp(create_time);
-            long now = Time.getTimeStamp();
-            if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode()) {
-                bean.copyFrom(user);
-                return testUserMapper.updateUserStatus(bean);
-            }
             try {
+                TestUserCheckBean user = testUserMapper.findUser(bean.getId());
+                String create_time = user.getCreate_time();
+                long create = Time.getTimestamp(create_time);
+                long now = Time.getTimeStamp();
+                if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode()) {
+                    bean.copyFrom(user);
+                    return testUserMapper.updateUserStatus(bean);
+                }
                 UserUtil.updateUserStatus(bean);
                 return testUserMapper.updateUserStatus(bean);
             } finally {

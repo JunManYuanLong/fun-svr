@@ -13,6 +13,7 @@ import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
+import com.okay.family.common.bean.testcase.response.ListCaseRunResultBean;
 import com.okay.family.common.enums.CollectionEditType;
 import com.okay.family.common.enums.CollectionStatus;
 import com.okay.family.common.enums.RunResult;
@@ -377,9 +378,15 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     @Override
     public void getCaseRunRecord(CollectionRunResultDetailBean bean, CountDownLatch countDownLatch) {
         try {
-            bean.setCaseList(caseCollectionMapper.getCaseRunRecord(bean.getRunId()));
+            List<ListCaseRunResultBean> caseRunRecord = caseCollectionMapper.getCaseRunRecord(bean.getRunId());
+            if (caseRunRecord == null || caseRunRecord.size() == 0) {
+                bean.setCaseList(new ArrayList<>());
+                return;
+            }
+            bean.setCaseList(caseRunRecord);
         } catch (Exception e) {
             logger.error("查询用例集中用例运行结果失败", e);
+            CommonException.fail("查询用例集中用例运行结果失败");
         } finally {
             countDownLatch.countDown();
         }
@@ -399,6 +406,7 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
             bean.copyFrom(caseCollectionMapper.getCollectionRunDetail(bean.getRunId()));
         } catch (Exception e) {
             logger.error("查询用例集运行结果失败", e);
+            CommonException.fail("查询用例集运行结果失败");
         } finally {
             countDownLatch.countDown();
         }

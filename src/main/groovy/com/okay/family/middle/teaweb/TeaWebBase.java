@@ -13,6 +13,7 @@ import com.okay.family.fun.frame.httpclient.FanLibrary;
 import com.okay.family.middle.common.CasCredential;
 import com.okay.family.middle.common.Common;
 import com.okay.family.middle.common.MiddleConstant;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -90,6 +91,8 @@ public class TeaWebBase extends SourceCode implements IBase {
         params.put("validate_code", EMPTY);
         JSONObject response = getPostResponse(url, params);
         output(response);
+        if (response.getJSONObject("data").getIntValue("user_state") != 1)
+            LoginException.fail("教师空间登录失败,账号:" + username + ",密码:" + password);
     }
 
 
@@ -254,7 +257,7 @@ public class TeaWebBase extends SourceCode implements IBase {
         JSONObject params = getParams();
         JSONObject response = getGetResponse(url, params);
         output(response);
-        return isRight(response);
+        return StringUtils.isBlank(this.getCertificate());
     }
 
     @Override
