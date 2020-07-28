@@ -16,7 +16,7 @@ CREATE TABLE `qa_case_collection` (
   `pub` int(10) NOT NULL DEFAULT '0' COMMENT '共享状态',
   `editor` int(10) NOT NULL COMMENT '最后编辑者ID',
   `state` int(10) NOT NULL DEFAULT '1' COMMENT '最后运行状态',
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_name` (`envId`, `name`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8 COMMENT = '测试用例集-QA-FUN-20200709';
