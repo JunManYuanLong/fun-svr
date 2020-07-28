@@ -11,15 +11,15 @@ class CaseSearchNoPageBean extends AbstractBean {
 
     private static final long serialVersionUID = -654984894165;
 
-    @NotNull
+    @NotNull(message = "uid不能为空")
     @Min(value = 1L)
     Integer uid
 
-    @NotNull
+    @NotNull(message = "envId不能为空")
     @Range(min = 0L, max = OkayConstant.ENV, message = "环境变量参数错误")
     Integer envId
 
-    @NotNull
+    @NotNull(message = "apiId不能为空")
     @Min(value = 1L)
     Integer apiId
 

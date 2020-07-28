@@ -13,15 +13,15 @@ class CaseEditRecordQueryBean extends AbstractBean {
 
     private static final long serialVersionUID = 3289389274983L;
 
-    @NotNull
+    @NotNull(message = "id不能为空")
     @Min(value = 1L,message = "id错误!")
     Integer id
 
-    @NotNull
+    @NotNull(message = "pageNum不能为空")
     @Min(value = 1L)
     Integer pageNum
 
-    @NotNull
+    @NotNull(message = "pageSize不能为空")
     @Range(min = 5L, max = 20L, message = "每页显示数量设置错误")
     Integer pageSize
 

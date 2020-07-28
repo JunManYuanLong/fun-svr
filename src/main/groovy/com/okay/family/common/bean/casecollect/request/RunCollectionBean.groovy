@@ -14,15 +14,15 @@ class RunCollectionBean extends AbstractBean {
 
     private static final long serialVersionUID = 9733934389389749;
 
-    @NotNull
+    @NotNull(message = "groupId不能为空")
     @Min(value = 1L)
     Integer groupId
 
-    @NotNull
+    @NotNull(message = "uid不能为空")
     @Min(value = 1L)
     Integer uid
 
-    @NotNull
+    @NotNull(message = "envId不能为空")
     @Range(min = 1L, max = OkayConstant.ENV, message = "环境ID参数错误")
     Integer envId
 

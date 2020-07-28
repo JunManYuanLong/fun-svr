@@ -11,11 +11,11 @@ class SavePubDataBean extends AbstractBean {
 
     private static final long serialVersionUID = 6293172188474L;
 
-    @NotNull
+    @NotNull(message = "id不能为空")
     @Min(value = 1L)
     Integer id
 
-    @NotNull
+    @NotNull(message = "uid不能为空")
     @Min(value = 1L)
     Integer uid
 

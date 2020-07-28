@@ -28,22 +28,22 @@ class CaseDataBean extends AbstractBean {
 
     Integer id
 
-    @NotNull
+    @NotNull(message = "uid不能为空")
     @Min(value = 1L)
     Integer uid
 
-    @NotNull
+    @NotNull(message = "envId不能为空")
     @Range(min = 1L, max = OkayConstant.ENV, message = "环境ID参数错误")
     Integer envId
 
-    @NotNull
+    @NotNull(message = "apiId不能为空")
     @Min(value = 1L)
     Integer apiId
 
-    @NotNull
+    @NotNull(message = "header_paras不能为空")
     JSONArray header_paras
 
-    @NotBlank
+    @NotBlank(message = "httpType不能为空")
     @Pattern(regexp = "GET|POST-FORM|POST-JSON", message = "请求方式传参错误")
     String httpType
 
@@ -51,19 +51,20 @@ class CaseDataBean extends AbstractBean {
     @Min(value = 1L)
     Integer serviceId
 
-    @NotBlank
+    @NotBlank(message = "readType不能为空")
     @Pattern(regexp = "R|W", message = "readtype应该为R|W")
     String readType
 
-    @NotNull
+    @NotNull(message = "testWish不能为空")
     List<CaseVerifyBean> testWish
 
-    @NotNull
+    @NotNull(message = "request_paras不能为空")
     JSONArray request_paras
 
     /**
      * 接口地址
      */
+    @NotBlank(message = "url不能为空")
     @Pattern(regexp = "/.+", message = "接口名称应该以/开头!")
     String url
 

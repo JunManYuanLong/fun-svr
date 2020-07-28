@@ -20,38 +20,38 @@ class EditCaseAttributeBean extends AbstractBean {
     @Min(value = 1L)
     Integer id
 
-    @NotNull
+    @NotNull(message = "uid不能为空")
     @Min(value = 1L)
     Integer uid
 
-    @NotNull
+    @NotNull(message = "envId不能为空")
     @Range(min = 1L, max = OkayConstant.ENV, message = "环境变量参数错误")
     Integer envId
 
     /**
      * 关联服务id
      */
-    @NotNull
+    @NotNull(message = "serviceId不能为空")
     Integer serviceId
 
     /**
      * 关联服务模块id
      */
-    @NotNull
+    @NotNull(message = "moduleId不能为空")
     Integer moduleId
 
-    @NotBlank
+    @NotBlank(message = "name不能为空")
     @Length(min = 1, max = 60, message = "名字长度错误1-60")
     String name
 
-    @NotNull
+    @NotNull(message = "projectList不能为空")
     List<Integer> projectList
 
-    @NotNull
+    @NotNull(message = "apiId不能为空")
     @Min(value = 1L)
     Integer apiId
 
-    @NotNull
+    @NotNull(message = "type不能为空")
     @Pattern(regexp = "add|update|copy", message = "类型错误,应该传:add|update|copy")
     String type
 

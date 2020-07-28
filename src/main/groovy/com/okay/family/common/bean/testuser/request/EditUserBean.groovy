@@ -19,32 +19,32 @@ class EditUserBean extends AbstractBean {
     @Min(value = 1L)
     Integer id
 
-    @NotNull
+    @NotNull(message = "uid不能为空")
     @Min(value = 1L, message = "用户ID错误")
     Integer uid
 
-    @NotNull
+    @NotNull(message = "envId不能为空")
     @Range(min = 1L, max = OkayConstant.ENV, message = "环境变量错误")
     Integer envId
 
-    @NotNull
+    @NotNull(message = "roleId不能为空")
     @Range(min = 1L, max = OkayConstant.ROLE, message = "不支持的用户身份")
     Integer roleId
 
-    @NotBlank
+    @NotBlank(message = "user不能为空")
     @Length(min = 11,max = 11,message = "用户名长度错误")
     String user
 
-    @NotBlank
+    @NotBlank(message = "type不能为空")
     @Pattern(regexp = "add|update|delete", message = "请输入正确的类型:add|update|delete")
     String type
 
-    @NotBlank
+    @NotBlank(message = "password不能为空")
     String password
 
     String phone
 
-    @NotBlank
+    @NotBlank(message = "des不能为空")
     @Length(min = 0, max = 100, message = "用户描述内容长度错误!1-100")
     String des
 

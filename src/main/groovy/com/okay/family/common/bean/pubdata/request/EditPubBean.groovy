@@ -16,22 +16,22 @@ class EditPubBean extends AbstractBean {
 
     Integer id
 
-    @NotNull
+    @NotNull(message = "uid不能为空")
     @Min(value = 1L)
     Integer uid
 
-    @NotNull
+    @NotNull(message = "envId不能为空")
     @Range(min = 1L, max = OkayConstant.ENV, message = "环境ID参数错误")
     Integer envId
 
-    @NotBlank
+    @NotBlank(message = "name不能为空")
     @Length(min = 1, max = 16, message = "name长度错误1-16")
     String name
 
     /**
      * 'add, update, delete'
      */
-    @NotBlank
+    @NotBlank(message = "type不能为空")
     @Pattern(regexp = "add|update|delete", message = "请传正确type:add|update")
     String type
 

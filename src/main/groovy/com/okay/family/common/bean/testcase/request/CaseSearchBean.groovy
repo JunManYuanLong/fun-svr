@@ -25,11 +25,11 @@ class CaseSearchBean extends AbstractBean {
     @Min(value = 1L)
     Integer apiId
 
-    @NotNull
+    @NotNull(message = "isMyself不能为空")
     @Range(min = 0L, max = 2L, message = "是否本人参数错误0全部，1本人，2非本人")
     Integer isMyself
 
-    @NotNull
+    @NotNull(message = "isUsed不能为空")
     @Range(min = 0L, max = 2L, message = "是否可用参数错误0全部， 1可用，2不可用")
     Integer isUsed
 
@@ -37,18 +37,18 @@ class CaseSearchBean extends AbstractBean {
 
     Integer moduleId
 
-    @NotNull
+    @NotNull(message = "pageNum不能为空")
     @Min(value = 1L)
     Integer pageNum
 
-    @NotNull
+    @NotNull(message = "pageSize不能为空")
     @Range(min = 5L, max = 10L, message = "单页数值设置错误!")
     Integer pageSize
 
     @Min(value = 0L)
     Integer projectId
 
-    @NotNull
+    @NotNull(message = "testQuery不能为空")
     String testQuery
 
     /**

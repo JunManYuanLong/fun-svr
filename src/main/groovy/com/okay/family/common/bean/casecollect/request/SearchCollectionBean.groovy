@@ -20,22 +20,22 @@ class SearchCollectionBean extends AbstractBean {
     @Min(value = 1L, message = "uid不能为空")
     Integer uid
 
-    @NotNull
+    @NotNull(message = "envId不能为空")
     @Range(min = 0L, max = OkayConstant.ENV, message = "环境变量参数错误")
     Integer envId
 
-    @NotNull
+    @NotNull(message = "groupQuery不能为空")
     String groupQuery
 
-    @NotNull
+    @NotNull(message = "pageNum不能为空")
     @Min(value = 1L)
     Integer pageNum
 
-    @NotNull
+    @NotNull(message = "pageSize不能为空")
     @Range(min = 5L, max = 20L, message = "每页显示数量设置错误")
     Integer pageSize
 
-    @NotNull
+    @NotNull(message = "result不能为空")
     @Range(min = 0L, max = 3L, message = "运行结果参数错误")
     Integer result
 
