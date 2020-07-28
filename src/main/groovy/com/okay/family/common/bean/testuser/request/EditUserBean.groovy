@@ -2,6 +2,7 @@ package com.okay.family.common.bean.testuser.request
 
 import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.fun.base.bean.AbstractBean
+import com.okay.family.fun.config.Constant
 import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.Range
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
+
 /**
  * 编辑测试用户信息
  */
@@ -32,7 +34,7 @@ class EditUserBean extends AbstractBean {
     Integer roleId
 
     @NotBlank(message = "user不能为空")
-    @Length(min = 11,max = 11,message = "用户名长度错误")
+    @Length(min = 11, max = 11, message = "用户名长度错误")
     String user
 
     @NotBlank(message = "type不能为空")
@@ -42,11 +44,10 @@ class EditUserBean extends AbstractBean {
     @NotBlank(message = "password不能为空")
     String password
 
-    String phone
+    String phone = Constant.EMPTY
 
-    @NotBlank(message = "des不能为空")
     @Length(min = 0, max = 100, message = "用户描述内容长度错误!1-100")
-    String des
+    String des = Constant.EMPTY
 
 
 }

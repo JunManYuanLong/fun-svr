@@ -176,7 +176,8 @@ CREATE TABLE `qa_pub_data` (
   `name` varchar(32) NOT NULL COMMENT '名称',
   `list` text NOT NULL COMMENT '公共数据',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_name` (`envId`,`name`) COMMENT '同一环境下，公共数据集名称唯一'
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户公共数据表-QA-FUN-20200709';
 
 
