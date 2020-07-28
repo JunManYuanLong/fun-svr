@@ -25,7 +25,7 @@ class EditPubBean extends AbstractBean {
     Integer envId
 
     @NotBlank(message = "name不能为空")
-    @Length(min = 1, max = 16, message = "name长度错误1-16")
+    @Length(min = 1, max = 20, message = "name长度错误1-20")
     String name
 
     /**
