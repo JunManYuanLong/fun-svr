@@ -220,9 +220,9 @@
             parameterType="com.okay.family.common.bean.casecollect.request.AddCollectionBean">
         INSERT INTO
         <include refid="table"/>
-        (uid,envId,name,editor,pub,state)
+        (uid,envId,name,editor,pub,state,create_time)
         values
-        (#{uid},#{envId},#{groupName},#{uid},2,1)
+        (#{uid},#{envId},#{groupName},#{uid},2,1,now())
     </insert>
 
     <insert id="addCollectionCaseRelation"
