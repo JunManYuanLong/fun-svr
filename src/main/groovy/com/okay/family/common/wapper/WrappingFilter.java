@@ -47,8 +47,12 @@ public class WrappingFilter implements Filter {
         byte[] bytes = responseWrapper.getContent();
         String respContent = new String(bytes, Constant.UTF_8);
         logger.info("请求:{},耗时:{} ms,参数:{},响应:{}", url, end - start, queryArgs, respContent);
-        if (FamilyConstant.OUTPUT) Output.showStr(queryArgs);
-        if (FamilyConstant.OUTPUT) Output.showStr(respContent);
+        try {
+            if (FamilyConstant.OUTPUT) Output.showStr(queryArgs);
+            if (FamilyConstant.OUTPUT) Output.showStr(respContent);
+        } catch (Exception e) {
+
+        }
         response.getOutputStream().write(respContent.getBytes(Constant.UTF_8));
     }
 
