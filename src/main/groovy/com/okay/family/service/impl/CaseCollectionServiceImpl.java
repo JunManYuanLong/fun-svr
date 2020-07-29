@@ -380,11 +380,8 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
     public void getCaseRunRecord(CollectionRunResultDetailBean bean, CountDownLatch countDownLatch) {
         try {
             List<ListCaseRunResultBean> caseRunRecord = caseCollectionMapper.getCaseRunRecord(bean.getRunId());
-            if (caseRunRecord == null || caseRunRecord.size() == 0) {
-                bean.setCaseList(new ArrayList<>());
-                return;
-            }
-            bean.setCaseList(caseRunRecord);
+            if (caseRunRecord == null || caseRunRecord.isEmpty() || caseRunRecord.get(0) == null) bean.setCaseList(new ArrayList<>(0));
+            else bean.setCaseList(caseRunRecord);
         } catch (Exception e) {
             logger.error("查询用例集中用例运行结果失败", e);
             CommonException.fail("查询用例集中用例运行结果失败");
