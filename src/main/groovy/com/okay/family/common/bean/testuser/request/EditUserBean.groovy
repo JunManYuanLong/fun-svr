@@ -34,7 +34,7 @@ class EditUserBean extends AbstractBean {
     Integer roleId
 
     @NotBlank(message = "user不能为空")
-    @Length(min = 11, max = 11, message = "用户名长度错误")
+    @Pattern(regexp = "\\d{11}",message = "用户名应为11位数字")
     String user
 
     @NotBlank(message = "type不能为空")
