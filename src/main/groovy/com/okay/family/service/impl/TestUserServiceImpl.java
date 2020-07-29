@@ -116,7 +116,7 @@ public class TestUserServiceImpl implements ITestUserService {
      * @return
      */
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public int updateUserStatus(TestUserCheckBean bean) {
         int userLock = NodeLock.getUserLock(bean.getId());
         int lock = commonService.lock(userLock);
@@ -187,7 +187,7 @@ public class TestUserServiceImpl implements ITestUserService {
      * @return
      */
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public TestUserCheckBean getCertificate(int id) {
         Object o = UserLock.get(id);
         synchronized (o) {
@@ -218,12 +218,13 @@ public class TestUserServiceImpl implements ITestUserService {
      * @return
      */
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public String getCertificate(int id, ConcurrentHashMap<Integer, String> map) {
-        if (map.contains(id)) return map.get(id);
+        if (map.containsKey(id)) return map.get(id);
         Object o = UserLock.get(id);
         synchronized (o) {
-            if (map.contains(id)) return map.get(id);
+            if (map.containsKey(id)) return map.get(id);
+            logger.warn("非缓存读取用户数据{}", id);
             TestUserCheckBean user = testUserMapper.findUser(id);
             if (user == null) UserStatusException.fail("用户不存在,ID:" + id);
             String create_time = user.getCreate_time();

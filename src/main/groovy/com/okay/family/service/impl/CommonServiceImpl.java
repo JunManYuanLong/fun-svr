@@ -16,7 +16,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
@@ -25,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+@Transactional(isolation = Isolation.DEFAULT,rollbackFor = Exception.class)
 public class CommonServiceImpl implements ICommonService {
 
     public static Logger logger = LoggerFactory.getLogger(CommonServiceImpl.class);
@@ -92,7 +91,7 @@ public class CommonServiceImpl implements ICommonService {
      * @return
      */
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public int lock(long lock) {
         try {
             return commonMapper.lock(lock);
@@ -108,7 +107,7 @@ public class CommonServiceImpl implements ICommonService {
      * @return
      */
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public int unlock(long lock) {
         int unlock = commonMapper.unlock(lock);
         return unlock;
