@@ -188,7 +188,7 @@ public class TestUserServiceImpl implements ITestUserService {
      */
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public TestUserCheckBean getCertificate(int id) {
+    public String getCertificate(int id) {
         Object o = UserLock.get(id);
         synchronized (o) {
             TestUserCheckBean user = testUserMapper.findUser(id);
@@ -198,15 +198,16 @@ public class TestUserServiceImpl implements ITestUserService {
             long now = Time.getTimeStamp();
             if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode()) {
                 testUserMapper.updateUserStatus(user);
-                return user;
+                return user.getCertificate();
             }
             boolean b = UserUtil.checkUserLoginStatus(user);
+            logger.info("环境:{},用户:{},身份:{},登录状态验证:{}", user.getEnvId(), user.getId(), user.getRoleId(), b);
             if (!b) {
                 updateUserStatus(user);
             } else {
                 testUserMapper.updateUserStatus(user);
             }
-            return user;
+            return user.getCertificate();
         }
     }
 
@@ -235,6 +236,7 @@ public class TestUserServiceImpl implements ITestUserService {
                 return user.getCertificate();
             }
             boolean b = UserUtil.checkUserLoginStatus(user);
+            logger.info("环境:{},用户:{},身份:{},登录状态验证:{}", user.getEnvId(), user.getId(), user.getRoleId(), b);
             if (!b) {
                 updateUserStatus(user);
                 if (user.getStatus() != UserState.OK.getCode()) UserStatusException.fail("用户不可用,ID:" + id);

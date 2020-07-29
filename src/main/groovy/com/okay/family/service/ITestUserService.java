@@ -45,7 +45,7 @@ public interface ITestUserService {
      * @param id
      * @return
      */
-    TestUserCheckBean getCertificate(int id);
+    String getCertificate(int id);
 
     String getCertificate(int id, ConcurrentHashMap<Integer, String> certificates);
 

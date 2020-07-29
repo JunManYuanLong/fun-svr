@@ -200,6 +200,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
     /**
      * 搜索测试用例,无分页
+     * <p>会过滤丢不可用的用例</p>
      *
      * @param bean
      * @return
@@ -207,6 +208,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
     @Override
     public List<SimpleBean> searchCaseNoPage(CaseSearchNoPageBean bean) {
         List<SimpleBean> simpleBeans = testCaseMapper.searchCaseNoPage(bean);
+        logger.info("接口id:{},共有{}条用例!", bean.getApiId(), simpleBeans.size());
         return simpleBeans;
     }
 
@@ -373,13 +375,13 @@ public class TestCaseServiceImpl implements ITestCaseService {
      */
     @Override
     public void handleParams(JSONObject params) {
+        logger.info("处理参数:{}", params.toJSONString());
         params.keySet().stream().forEach(key ->
         {
             String value = params.getString(key).trim();
             if (value.startsWith(OkayConstant.USER_CERTIFICATE_KEY)) {
                 int id = SourceCode.changeStringToInt(value.substring(OkayConstant.USER_CERTIFICATE_KEY.length()));
-                TestUserCheckBean userCheckBean = testUserService.getCertificate(id);
-                String certificate = userCheckBean.getCertificate();
+                String certificate = testUserService.getCertificate(id);
                 if (StringUtils.isEmpty(certificate)) UserStatusException.fail();
                 params.put(key, certificate);
             } else if (value.startsWith(OkayConstant.RANDOM_KEY)) {
@@ -397,6 +399,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
      */
     @Override
     public void handleParams(JSONObject params, ConcurrentHashMap map) {
+        logger.info("缓存处理参数:{}", params.toJSONString());
         params.keySet().stream().forEach(key ->
         {
             String value = params.getString(key).trim();
