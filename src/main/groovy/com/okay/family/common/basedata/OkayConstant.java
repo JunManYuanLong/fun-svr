@@ -83,7 +83,7 @@ public class OkayConstant extends SourceCode {
     /**
      * 分布式锁过期时间,ms
      */
-    public static final int LOCK_TIMEOUT = 100_000;
+    public static final int LOCK_TIMEOUT = 60_000;
 
     /**
      * 分布式锁等待间隔毫秒
