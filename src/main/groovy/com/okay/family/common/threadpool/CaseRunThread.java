@@ -64,7 +64,10 @@ public class CaseRunThread implements Runnable {
             }
         } catch (Exception e) {
             logger.warn("用例无法运行,ID:" + bean.getId(), e);
+            record.setResponseResult(new JSONObject());
+            record.setCode(OkayConstant.TEST_ERROR_CODE);
             record.setResult(RunResult.UNRUN.getCode());
+            record.setCheckResult(bean.getTestWish());
         } finally {
             countDownLatch.countDown();
         }
