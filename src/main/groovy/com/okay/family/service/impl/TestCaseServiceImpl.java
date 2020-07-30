@@ -103,7 +103,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
         int i = apiId == bean.getApiId() ? testCaseMapper.updateCaseNoApiId(bean) : testCaseMapper.updateCase(bean);
         addEditRecord(new CaseEditRecord(bean.getId(), bean.getUid(), CaseEditType.EDIT_ATTRIBUTE.getCode()));
         updateCaseProjectRelation(bean);
-        if (i == 1) syncApi(bean.getId());
+        syncApi(bean.getId());
         return i;
     }
 

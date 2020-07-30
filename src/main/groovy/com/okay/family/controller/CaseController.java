@@ -38,8 +38,8 @@ public class CaseController {
             int i = service.addCase(bean);
             return i == 1 ? Result.success(OkayMethod.getSimpleResult(bean)) : Result.fail(TestCaseCode.ADD_CASE_FAIL);
         } else if (type.equalsIgnoreCase("update")) {
-            int i = service.updateCase(bean);
-            return i == 1 ? Result.success(OkayMethod.getSimpleResult(bean)) : Result.fail(TestCaseCode.NO_CHANGE_FAIL);
+            service.updateCase(bean);
+            return Result.success();
         } else if (type.equalsIgnoreCase("copy")) {
             if (bean.getName() == null) bean.setName(RString.getString(5));
             int i = service.copyCase(bean);
