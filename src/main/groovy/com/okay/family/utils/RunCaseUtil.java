@@ -61,7 +61,7 @@ public class RunCaseUtil extends SourceCode {
         record.setResponseResult(response);
         if (response.isEmpty()) {
             logger.warn("用例响应为空:{}", bean.toString());
-            record.setResult(RunResult.UNRUN.getCode());
+            record.fail(RunResult.UNRUN, bean);
             return;
         }
         record.setCode(VerifyResponseUtil.getCode(response));
