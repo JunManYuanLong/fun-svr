@@ -1,4 +1,4 @@
-package com.okay.family.common;
+package com.okay.family.common.threadpool;
 
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -16,7 +16,7 @@ public class OkayThreadPool {
     }
 
     private static ThreadPoolExecutor createPool() {
-        return new ThreadPoolExecutor(10, 50, 10, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>(1000));
+        return new ThreadPoolExecutor(16, 100, 10, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>(1000));
     }
 
 }
