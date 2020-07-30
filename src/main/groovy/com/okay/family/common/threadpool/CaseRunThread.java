@@ -1,4 +1,4 @@
-package com.okay.family.common;
+package com.okay.family.common.threadpool;
 
 import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;

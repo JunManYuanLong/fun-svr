@@ -2,7 +2,7 @@ package com.okay.family.fun.frame.httpclient;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.okay.family.common.RequestSave;
+import com.okay.family.utils.RequestSave;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.RequestSaveBean;
 import com.okay.family.fun.base.bean.RequestInfo;

@@ -1,11 +1,10 @@
-package com.okay.family.common;
+package com.okay.family.utils;
 
 import com.okay.family.common.bean.RequestSaveBean;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.service.ICommonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +18,6 @@ public class RequestSave extends SourceCode {
 
     ICommonService commonService;
 
-    @Autowired
     public RequestSave(ICommonService commonService) {
         this.commonService = commonService;
     }
