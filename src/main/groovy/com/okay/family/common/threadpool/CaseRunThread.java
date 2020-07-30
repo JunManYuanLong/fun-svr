@@ -1,6 +1,5 @@
 package com.okay.family.common.threadpool;
 
-import com.alibaba.fastjson.JSONObject;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.CaseDataBean;
@@ -50,24 +49,15 @@ public class CaseRunThread implements Runnable {
     public void run() {
         try {
             if (bean.getAvailable() == RunResult.USER_ERROR.getCode()) {
-                record.setResponseResult(new JSONObject());
-                record.setCode(OkayConstant.TEST_ERROR_CODE);
-                record.setResult(RunResult.USER_ERROR.getCode());
-                record.setCheckResult(bean.getTestWish());
+                record.fail(RunResult.USER_ERROR, bean);
             } else if (bean.getEnvId() != envId || bean.getAvailable() != CaseAvailableStatus.OK.getCode()) {
-                record.setResponseResult(new JSONObject());
-                record.setCode(OkayConstant.TEST_ERROR_CODE);
-                record.setResult(RunResult.UNRUN.getCode());
-                record.setCheckResult(bean.getTestWish());
+                record.fail(RunResult.UNRUN, bean);
             } else {
                 RunCaseUtil.run(bean, record);
             }
         } catch (Exception e) {
-            logger.warn("用例无法运行,ID:" + bean.getId(), e);
-            record.setResponseResult(new JSONObject());
-            record.setCode(OkayConstant.TEST_ERROR_CODE);
-            record.setResult(RunResult.UNRUN.getCode());
-            record.setCheckResult(bean.getTestWish());
+            logger.warn("用例运行出错,ID:" + bean.getId(), e);
+            record.fail(RunResult.UNRUN, bean);
         } finally {
             countDownLatch.countDown();
         }
