@@ -39,7 +39,7 @@ public class CaseController {
             return i == 1 ? Result.success(OkayMethod.getSimpleResult(bean)) : Result.fail(TestCaseCode.ADD_CASE_FAIL);
         } else if (type.equalsIgnoreCase("update")) {
             service.updateCase(bean);
-            return Result.success();
+            return Result.success(OkayMethod.getSimpleResult(bean));
         } else if (type.equalsIgnoreCase("copy")) {
             if (bean.getName() == null) bean.setName(RString.getString(5));
             int i = service.copyCase(bean);
@@ -83,14 +83,14 @@ public class CaseController {
     }
 
     @GetMapping(value = "/attribute")
-    public Result getAttribute(@RequestParam(value = "id", required = true) int id) {
-        TestCaseAttributeBean attributeById = service.getAttributeById(id);
+    public Result getAttribute(@Valid DelBean bean) {
+        TestCaseAttributeBean attributeById = service.getAttributeById(bean.getId());
         return Result.success(attributeById);
     }
 
     @GetMapping(value = "/data")
-    public Result getData(@RequestParam(value = "id", required = true) int id) {
-        CaseDetailBean caseDetail = service.getCaseDetail(id);
+    public Result getData(@Valid DelBean bean) {
+        CaseDetailBean caseDetail = service.getCaseDetail(bean.getId());
         return Result.success(caseDetail);
 
     }
