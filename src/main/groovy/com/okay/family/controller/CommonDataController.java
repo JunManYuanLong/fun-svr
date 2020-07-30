@@ -6,7 +6,6 @@ import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.enums.*;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.service.ICommonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +18,6 @@ public class CommonDataController {
 
     ICommonService service;
 
-    @Autowired
     public CommonDataController(ICommonService service) {
         this.service = service;
     }

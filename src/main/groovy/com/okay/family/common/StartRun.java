@@ -5,7 +5,6 @@ import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.service.ICommonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,6 @@ public class StartRun implements CommandLineRunner {
 
     ICommonService commonService;
 
-    @Autowired
     public StartRun(ICommonService commonService) {
         this.commonService = commonService;
     }

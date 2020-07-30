@@ -9,7 +9,6 @@ import com.okay.family.common.bean.common.SimpleBean;
 import com.okay.family.common.bean.testcase.CaseRunRecord;
 import com.okay.family.common.bean.testcase.request.*;
 import com.okay.family.common.bean.testcase.response.*;
-import com.okay.family.common.bean.testuser.TestUserCheckBean;
 import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.common.enums.CaseEditType;
 import com.okay.family.common.exception.CaseException;
@@ -25,7 +24,6 @@ import com.okay.family.utils.RunCaseUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +47,6 @@ public class TestCaseServiceImpl implements ITestCaseService {
 
     CaseCollectionMapper collectionMapper;
 
-    @Autowired
     public TestCaseServiceImpl(TestCaseMapper testCaseMapper, TestUserMapper testUserMapper, ITestUserService testUserService, CaseCollectionMapper collectionMapper) {
         this.testCaseMapper = testCaseMapper;
         this.testUserMapper = testUserMapper;
@@ -399,7 +396,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
      */
     @Override
     public void handleParams(JSONObject params, ConcurrentHashMap map) {
-        logger.info("缓存处理参数:{}", params.toJSONString());
+        logger.info("使用缓存处理参数:{}", params.toJSONString());
         params.keySet().stream().forEach(key ->
         {
             String value = params.getString(key).trim();

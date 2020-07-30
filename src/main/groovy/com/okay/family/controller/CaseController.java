@@ -14,7 +14,6 @@ import com.okay.family.fun.utils.RString;
 import com.okay.family.service.ITestCaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,7 +27,6 @@ public class CaseController {
 
     ITestCaseService service;
 
-    @Autowired
     public CaseController(ITestCaseService service) {
         this.service = service;
     }

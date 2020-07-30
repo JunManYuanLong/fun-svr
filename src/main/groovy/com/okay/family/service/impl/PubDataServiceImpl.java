@@ -2,11 +2,10 @@ package com.okay.family.service.impl;
 
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.pubdata.request.EditPubBean;
-import com.okay.family.common.bean.pubdata.response.PubDataBean;
 import com.okay.family.common.bean.pubdata.request.SavePubDataBean;
+import com.okay.family.common.bean.pubdata.response.PubDataBean;
 import com.okay.family.mapper.PubDataMapper;
 import com.okay.family.service.IPubDataService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,6 @@ public class PubDataServiceImpl implements IPubDataService {
 
     PubDataMapper pubDataMapper;
 
-    @Autowired
     public PubDataServiceImpl(PubDataMapper pubDataMapper) {
         this.pubDataMapper = pubDataMapper;
     }

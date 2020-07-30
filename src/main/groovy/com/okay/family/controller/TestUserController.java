@@ -13,7 +13,6 @@ import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.service.ITestUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,7 +25,6 @@ public class TestUserController {
 
     ITestUserService testUserService;
 
-    @Autowired
     public TestUserController(ITestUserService testUserService) {
         this.testUserService = testUserService;
     }

@@ -3,16 +3,17 @@ package com.okay.family.controller;
 import com.github.pagehelper.PageInfo;
 import com.okay.family.common.basedata.OkayMethod;
 import com.okay.family.common.bean.casecollect.request.*;
-import com.okay.family.common.bean.casecollect.response.*;
+import com.okay.family.common.bean.casecollect.response.CollectionCaseInfoBean;
+import com.okay.family.common.bean.casecollect.response.CollectionRunResultDetailBean;
+import com.okay.family.common.bean.casecollect.response.CollectionRunSimpleResutl;
+import com.okay.family.common.bean.casecollect.response.ListCollectionBean;
 import com.okay.family.common.bean.common.DelBean;
 import com.okay.family.common.bean.common.SimpleBean;
-import com.okay.family.common.bean.casecollect.request.DelCollectionBean;
 import com.okay.family.common.code.CollectionCode;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.service.ICaseCollectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,7 +27,6 @@ public class CaseCollectionController {
 
     ICaseCollectionService service;
 
-    @Autowired
     public CaseCollectionController(ICaseCollectionService service) {
         this.service = service;
     }

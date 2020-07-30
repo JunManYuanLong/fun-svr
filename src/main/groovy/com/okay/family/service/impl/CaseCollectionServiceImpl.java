@@ -2,8 +2,6 @@ package com.okay.family.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.okay.family.common.CaseRunThread;
-import com.okay.family.common.OkayThreadPool;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.casecollect.request.*;
 import com.okay.family.common.bean.casecollect.response.CollectionCaseInfoBean;
@@ -20,14 +18,15 @@ import com.okay.family.common.enums.RunResult;
 import com.okay.family.common.exception.CaseCollecionException;
 import com.okay.family.common.exception.CaseException;
 import com.okay.family.common.exception.CommonException;
-import com.okay.family.common.exception.UserStatusException;
+import com.okay.family.common.threadpool.CaseParamaThread;
+import com.okay.family.common.threadpool.CaseRunThread;
+import com.okay.family.common.threadpool.OkayThreadPool;
 import com.okay.family.fun.utils.Time;
 import com.okay.family.mapper.CaseCollectionMapper;
 import com.okay.family.service.ICaseCollectionService;
 import com.okay.family.service.ITestCaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +50,6 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
 
     ITestCaseService caseService;
 
-    @Autowired
     public CaseCollectionServiceImpl(CaseCollectionMapper caseCollectionMapper, ITestCaseService caseService) {
         this.caseCollectionMapper = caseCollectionMapper;
         this.caseService = caseService;
@@ -276,20 +274,9 @@ public class CaseCollectionServiceImpl implements ICaseCollectionService {
         ConcurrentHashMap<Integer, String> certificates = new ConcurrentHashMap<>();
         List<CaseDataBean> cases = caseCollectionMapper.getCasesDeatil(bean);
         CountDownLatch countDownLatch = new CountDownLatch(cases.size());
-        cases.forEach(x -> {
-            new Thread(() -> {
-                try {
-                    caseService.handleParams(x, certificates);
-                } catch (UserStatusException e) {
-                    logger.error("用户异常!", e);
-                    x.setAvailable(RunResult.USER_ERROR.getCode());
-                } catch (Exception e) {
-                    logger.error("处理用例参数发生错误!", e);
-                    x.setAvailable(RunResult.UNRUN.getCode());
-                } finally {
-                    countDownLatch.countDown();
-                }
-            }).start();
+        cases.forEach(x->{
+            CaseParamaThread caseParamaThread = new CaseParamaThread(x, certificates, countDownLatch);
+            OkayThreadPool.addSyncWork(caseParamaThread);
         });
         try {
             countDownLatch.await(OkayConstant.SYNC_WAIT_TIMEOUT, TimeUnit.SECONDS);
