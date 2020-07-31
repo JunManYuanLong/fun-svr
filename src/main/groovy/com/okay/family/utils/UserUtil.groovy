@@ -1,5 +1,6 @@
 package com.okay.family.utils
 
+import com.okay.family.common.basedata.OkayConstant
 import com.okay.family.common.bean.testuser.TestUserCheckBean
 import com.okay.family.common.enums.Identity
 import com.okay.family.common.enums.UserState
@@ -31,40 +32,58 @@ class UserUtil extends SourceCode {
         def phone = bean.getPhone()
         switch (role) {
             case Identity.STU_PAD.getCode():
-                def base = new StuPadBase(user, password, envId)
-                def cer = base.getCertificate()
-                if (base.loginResponse == null || base.loginResponse.getIntValue(RESPONSE_CODE) == TEST_ERROR_CODE) {
+                try {
+                    def base = new StuPadBase(user, password, envId)
+                    def cer = base.getCertificate()
+                    if (base.loginResponse == null || base.loginResponse.getIntValue(RESPONSE_CODE) == TEST_ERROR_CODE) {
+                        bean.setStatus(UserState.CANNOT.getCode())
+                    } else if (!base.isRight(base.loginResponse) || StringUtils.isEmpty(cer)) {
+                        bean.setStatus(UserState.NO.getCode())
+                    } else {
+                        bean.setStatus(UserState.OK.getCode())
+                        bean.setCertificate(cer)
+                    }
+                } catch (Exception e) {
                     bean.setStatus(UserState.CANNOT.getCode())
-                } else if (!base.isRight(base.loginResponse) || StringUtils.isEmpty(cer)) {
-                    bean.setStatus(UserState.NO.getCode())
-                } else {
-                    bean.setStatus(UserState.OK.getCode())
-                    bean.setCertificate(cer)
+                    bean.setCertificate(OkayConstant.EMPTY)
                 }
+                logger.info("登录状态校验结果:{}", bean.toString())
                 break
             case Identity.TEA_PAD.getCode():
-                def base = new TeaPadBase(user, password, envId)
-                def cer = base.getCertificate()
-                if (base.getLoginResponse() == null || base.getLoginResponse().getIntValue(RESPONSE_CODE) == TEST_ERROR_CODE) {
+                try {
+                    def base = new TeaPadBase(user, password, envId)
+                    def cer = base.getCertificate()
+                    if (base.getLoginResponse() == null || base.getLoginResponse().getIntValue(RESPONSE_CODE) == TEST_ERROR_CODE) {
+                        bean.setStatus(UserState.CANNOT.getCode())
+                    } else if (!base.isRight(base.getLoginResponse()) || StringUtils.isEmpty(cer)) {
+                        bean.setStatus(UserState.NO.getCode())
+                    } else {
+                        bean.setStatus(UserState.OK.getCode())
+                        bean.setCertificate(cer)
+                    }
+                } catch (Exception e) {
                     bean.setStatus(UserState.CANNOT.getCode())
-                } else if (!base.isRight(base.getLoginResponse()) || StringUtils.isEmpty(cer)) {
-                    bean.setStatus(UserState.NO.getCode())
-                } else {
-                    bean.setStatus(UserState.OK.getCode())
-                    bean.setCertificate(cer)
+                    bean.setCertificate(OkayConstant.EMPTY)
                 }
+                logger.info("登录状态校验结果:{}", bean.toString())
                 break
             case Identity.STU_WEB.getCode():
-                def base = new StuWebBase(user, password, envId)
-                def cer = base.getCertificate()
-                if (base.loginResponse == null || base.loginResponse.getIntValue(RESPONSE_CODE) == TEST_ERROR_CODE) {
+                try {
+                    def base = new StuWebBase(user, password, envId)
+                    def cer = base.getCertificate()
+                    if (base.loginResponse == null || base.loginResponse.getIntValue(RESPONSE_CODE) == TEST_ERROR_CODE) {
+                        bean.setStatus(UserState.CANNOT.getCode())
+                    } else if (!base.isRight(base.loginResponse) || StringUtils.isEmpty(cer)) {
+                        bean.setStatus(UserState.NO.getCode())
+                    } else {
+                        bean.setStatus(UserState.OK.getCode())
+                        bean.setCertificate(cer)
+                    }
+                } catch (Exception e) {
                     bean.setStatus(UserState.CANNOT.getCode())
-                } else if (!base.isRight(base.loginResponse) || StringUtils.isEmpty(cer)) {
-                    bean.setStatus(UserState.NO.getCode())
-                } else {
-                    bean.setStatus(UserState.OK.getCode())
-                    bean.setCertificate(cer)
+                    bean.setCertificate(OkayConstant.EMPTY)
                 }
+                logger.info("登录状态校验结果:{}", bean.toString())
                 break
             case Identity.TEA_WEB.getCode():
                 try {
@@ -83,7 +102,7 @@ class UserUtil extends SourceCode {
                     logger.warn("教师空间用户{}无法验证!", user, e)
                     bean.setStatus(UserState.CANNOT.getCode())
                 }
-                logger.info("登录状态校验结果:{}",bean.toString())
+                logger.info("登录状态校验结果:{}", bean.toString())
                 break
             case Identity.PUB_WEB.getCode():
                 try {
@@ -102,7 +121,7 @@ class UserUtil extends SourceCode {
                     logger.warn("公立校用户{}无法验证!", user, e)
                     bean.setStatus(UserState.CANNOT.getCode())
                 }
-                logger.info("登录状态校验结果:{}",bean.toString())
+                logger.info("登录状态校验结果:{}", bean.toString())
                 break
             case Identity.STU_APP.getCode():
                 try {
@@ -115,13 +134,13 @@ class UserUtil extends SourceCode {
                         bean.setCertificate(cer)
                     }
                 } catch (LoginException e1) {
-                    logger.warn("公立校用户{}登录验证失败!", user, e1)
+                    logger.warn("学生app用户{}登录验证失败!", user, e1)
                     bean.setStatus(UserState.NO.getCode())
                 } catch (Exception e) {
-                    logger.warn("公立校用户{}无法验证!", user, e)
+                    logger.warn("学生app用户{}无法验证!", user, e)
                     bean.setStatus(UserState.CANNOT.getCode())
                 }
-                logger.info("登录状态校验结果:{}",bean.toString())
+                logger.info("登录状态校验结果:{}", bean.toString())
                 break
             default:
                 bean.setStatus(UserState.CANNOT.getCode())

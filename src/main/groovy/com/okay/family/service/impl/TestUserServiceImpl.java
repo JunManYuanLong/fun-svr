@@ -102,9 +102,8 @@ public class TestUserServiceImpl implements ITestUserService {
     public int updateUser(EditUserBean bean) {
         TestUserCheckBean checkBean = new TestUserCheckBean();
         checkBean.copyFrom(bean);
-        updateUserStatus(checkBean);
-        int i = testUserMapper.updateUser(bean);
-        return i;
+        testUserMapper.updateUser(bean);
+        return updateUserStatus(checkBean);
     }
 
     /**
@@ -139,7 +138,7 @@ public class TestUserServiceImpl implements ITestUserService {
             logger.info("分布式锁竞争成功,ID:{}", bean.getId());
             try {
                 TestUserCheckBean user = testUserMapper.findUser(bean.getId());
-                boolean b = StringUtils.isBlank(user.getCertificate()) ? false : UserUtil.checkUserLoginStatus(user);
+                boolean b = StringUtils.isBlank(user.getCertificate()) || !bean.getRoleId().equals(user.getRoleId()) ? false : UserUtil.checkUserLoginStatus(user);
                 if (b) {
                     bean.copyFrom(user);
                 } else {
@@ -147,8 +146,9 @@ public class TestUserServiceImpl implements ITestUserService {
                 }
                 return testUserMapper.updateUserStatus(bean);
             } catch (Exception e) {
-                UserStatusException.fail("用户验证失败!ID:" + bean.getId());
-                return 0;
+                logger.error("用户验证失败!ID:{}", bean.getId(), e);
+                bean.setStatus(UserState.CANNOT.getCode());
+                return testUserMapper.updateUserStatus(bean);
             } finally {
                 commonService.unlock(userLock);
             }

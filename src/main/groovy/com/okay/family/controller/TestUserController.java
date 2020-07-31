@@ -42,7 +42,7 @@ public class TestUserController {
             return add > 0 ? Result.success(SourceCode.getJson("id=" + add)) : Result.fail(TestUserCode.ADD_USER_FAIL);
         } else if (bean.getType().equalsIgnoreCase("update")) {
             int i = testUserService.updateUser(bean);
-            return i == 0 ? Result.fail(TestUserCode.UPDATE_USER_FAIL) : Result.success(OkayMethod.getSimpleResult(bean));
+            return Result.success(OkayMethod.getSimpleResult(bean));
         }
         return Result.fail(CommonCode.PARAMS_ERROR);
     }

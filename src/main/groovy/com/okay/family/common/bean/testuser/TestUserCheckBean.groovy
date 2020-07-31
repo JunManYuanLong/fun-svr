@@ -44,8 +44,7 @@ class TestUserCheckBean extends AbstractBean {
         this.setDes(user.getDes());
     }
 
-    def
-    copyFrom(TestUserCheckBean user) {
+    def copyFrom(TestUserCheckBean user) {
         this.setId(user.getId());
         this.setEnvId(user.getEnvId());
         this.setRoleId(user.getRoleId());

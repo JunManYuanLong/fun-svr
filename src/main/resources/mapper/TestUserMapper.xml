@@ -75,7 +75,7 @@
         UPDATE
         <include refid="table"/>
         SET
-        state=#{status},certificate=#{certificate},create_time=now()
+        state=#{status},certificate=#{certificate},roleId=#{roleId},create_time=now()
         WHERE id = #{id}
     </update>
 
