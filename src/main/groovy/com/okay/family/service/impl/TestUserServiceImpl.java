@@ -139,18 +139,22 @@ public class TestUserServiceImpl implements ITestUserService {
             logger.info("分布式锁竞争成功,ID:{}", bean.getId());
             try {
                 TestUserCheckBean user = testUserMapper.findUser(bean.getId());
-                boolean b = UserUtil.checkUserLoginStatus(user);
+                boolean b = StringUtils.isBlank(user.getCertificate()) ? false : UserUtil.checkUserLoginStatus(user);
                 if (b) {
                     bean.copyFrom(user);
                 } else {
                     UserUtil.updateUserStatus(bean);
                 }
                 return testUserMapper.updateUserStatus(bean);
+            } catch (Exception e) {
+                UserStatusException.fail("用户验证失败!ID:" + bean.getId());
+                return 0;
             } finally {
                 commonService.unlock(userLock);
             }
         }
     }
+
 
     /**
      * 校验用户登录凭据状态
