@@ -79,7 +79,6 @@ public class CaseController {
     public Result findMyCaseByid(@Valid CaseEditRecordQueryBean bean) {
         PageInfo<CaseEditRetrunRecord> caseEditRecords = service.getCaseEditRecords(bean);
         return Result.success(caseEditRecords);
-
     }
 
     @GetMapping(value = "/attribute")

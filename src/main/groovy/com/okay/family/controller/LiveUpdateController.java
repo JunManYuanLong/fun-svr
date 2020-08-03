@@ -34,6 +34,13 @@ public class LiveUpdateController {
         return Result.success(hosts);
     }
 
+    @GetMapping(value = "/rmhost/{id}")
+    public Result getHosts(@PathVariable(name = "id", required = true) int id) {
+        ServerHost.getHosts().remove(id);
+        Map<Integer, String> hosts = ServerHost.getHosts();
+        return Result.success(hosts);
+    }
+
     @GetMapping(value = "/hoststime")
     public Result getHostsTime() {
         Map<Integer, Integer> timeout = ServerHost.getTimeout();
@@ -41,7 +48,7 @@ public class LiveUpdateController {
     }
 
     @GetMapping(value = "/case/{caseId}")
-    public Result updateCaseApiInfo(@PathVariable(value = "caseId",required = true)int caseId) {
+    public Result updateCaseApiInfo(@PathVariable(value = "caseId", required = true) int caseId) {
         caseService.syncApi(caseId);
         return Result.success();
     }

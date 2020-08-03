@@ -2,6 +2,7 @@ package com.okay.family.common.wapper;
 
 
 import com.okay.family.common.basedata.FamilyConstant;
+import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.code.CommonCode;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.fun.config.Constant;
@@ -46,9 +47,8 @@ public class WrappingFilter implements Filter {
         String queryArgs = requestWrapper.getQueryString();
         queryArgs = queryArgs == null ? DecodeEncode.unicodeToString(requestWrapper.getBody()) : queryArgs;
 
-        String requestId = req.getHeader("requestid");
+        String requestId = req.getHeader(OkayConstant.REQUEST_ID);
         if(StringUtils.isBlank(requestId)){
-            resp.setHeader("Content-type", "application/json;charset=UTF-8");
             resp.getWriter().write(Result.fail(CommonCode.REQUESTID_ERROR).toString());
             resp.flushBuffer();
             return;
