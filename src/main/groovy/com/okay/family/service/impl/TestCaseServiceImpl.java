@@ -13,8 +13,10 @@ import com.okay.family.common.code.TestCaseCode;
 import com.okay.family.common.enums.CaseEditType;
 import com.okay.family.common.exception.CaseException;
 import com.okay.family.common.exception.UserStatusException;
+import com.okay.family.fun.base.exception.ParamException;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.frame.SourceCode;
+import com.okay.family.fun.utils.Regex;
 import com.okay.family.mapper.CaseCollectionMapper;
 import com.okay.family.mapper.TestCaseMapper;
 import com.okay.family.mapper.TestUserMapper;
@@ -377,12 +379,15 @@ public class TestCaseServiceImpl implements ITestCaseService {
         {
             String value = params.getString(key).trim();
             if (value.startsWith(OkayConstant.USER_CERTIFICATE_KEY)) {
-                int id = SourceCode.changeStringToInt(value.substring(OkayConstant.USER_CERTIFICATE_KEY.length()));
+                String substring = value.substring(OkayConstant.USER_CERTIFICATE_KEY.length());
+                if (!SourceCode.isNumber(substring)) ParamException.fail("uid参数语法错误:" + substring);
+                int id = SourceCode.changeStringToInt(substring);
                 String certificate = testUserService.getCertificate(id);
                 if (StringUtils.isEmpty(certificate)) UserStatusException.fail();
                 params.put(key, certificate);
             } else if (value.startsWith(OkayConstant.RANDOM_KEY)) {
                 String replace = value.replace(OkayConstant.RANDOM_KEY, Constant.EMPTY);
+                if (!Regex.isMatch(replace, "\\d+,\\d+")) ParamException.fail("随机参数语法错误:" + replace);
                 String[] split = replace.split(OkayConstant.COMMA, 2);
                 params.put(key, SourceCode.getRandomIntRange(SourceCode.changeStringToInt(split[0]), SourceCode.changeStringToInt(split[1])));
             }
