@@ -34,11 +34,10 @@ public class LiveUpdateController {
         return Result.success(hosts);
     }
 
-    @GetMapping(value = "/rmhost/{id}")
-    public Result getHosts(@PathVariable(name = "id", required = true) int id) {
-        ServerHost.getHosts().remove(id);
-        Map<Integer, String> hosts = ServerHost.getHosts();
-        return Result.success(hosts);
+    @GetMapping(value = "/rmhost}")
+    public Result rmHosts() {
+        ServerHost.getHosts().clear();
+        return Result.success();
     }
 
     @GetMapping(value = "/hoststime")
