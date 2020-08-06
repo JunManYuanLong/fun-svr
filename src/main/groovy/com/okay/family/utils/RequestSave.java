@@ -29,6 +29,7 @@ public class RequestSave extends SourceCode {
     }
 
     public static void addWork(RequestSaveBean requestSaveBean) {
+        logger.info("记录请求:{}",requestSaveBean.toString());
         service.saveRequest(requestSaveBean);
     }
 

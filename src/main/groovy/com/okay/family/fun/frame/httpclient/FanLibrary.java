@@ -60,10 +60,6 @@ public class FanLibrary extends SourceCode {
      */
     static boolean HEADER_KEY = false;
 
-    /**
-     * 是否保存请求和响应
-     */
-    public static boolean SAVE_KEY = false;
 
     /**
      * 方法已重载，获取get对象
@@ -332,7 +328,6 @@ public class FanLibrary extends SourceCode {
             res.putAll(getJsonResponse(content, setCookies));
             int code = VerifyResponseUtil.getCode(res);
             RequestSave.addWork(new RequestSaveBean(requestInfo, data_size, elapsed_time, code, status, request_id, mark));
-            if (SAVE_KEY) FunRequest.save(request, res);
         } catch (Exception e) {
             logger.warn("获取请求相应失败！", e);
         }
