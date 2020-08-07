@@ -72,9 +72,8 @@ public class TestUserServiceImpl implements ITestUserService {
             TestUserCheckBean userCheckBean = new TestUserCheckBean();
             userCheckBean.copyFrom(user);
             int i = updateUserStatus(userCheckBean);
-            if (i != 1 || StringUtils.isEmpty(userCheckBean.getCertificate())) {
+            if (i != 1 || StringUtils.isEmpty(userCheckBean.getCertificate()))
                 UserStatusException.fail(TestUserCode.CHECK_FAIL.getDesc());
-            }
         } else {
             UserStatusException.fail(TestUserCode.ADD_USER_FAIL.getDesc());
         }
@@ -102,8 +101,9 @@ public class TestUserServiceImpl implements ITestUserService {
     public int updateUser(EditUserBean bean) {
         TestUserCheckBean checkBean = new TestUserCheckBean();
         checkBean.copyFrom(bean);
-        testUserMapper.updateUser(bean);
-        return updateUserStatus(checkBean);
+        int i = updateUserStatus(checkBean);
+        if (i == 1) testUserMapper.updateUser(bean);
+        return i;
     }
 
     /**
@@ -138,7 +138,7 @@ public class TestUserServiceImpl implements ITestUserService {
             logger.info("分布式锁竞争成功,ID:{}", bean.getId());
             try {
                 TestUserCheckBean user = testUserMapper.findUser(bean.getId());
-                boolean b = StringUtils.isBlank(user.getCertificate()) || !bean.getRoleId().equals(user.getRoleId()) ? false : UserUtil.checkUserLoginStatus(user);
+                boolean b = bean.same(user) && StringUtils.isNoneBlank(user.getCertificate()) ? UserUtil.checkUserLoginStatus(user) : false;
                 if (b) {
                     bean.copyFrom(user);
                 } else {

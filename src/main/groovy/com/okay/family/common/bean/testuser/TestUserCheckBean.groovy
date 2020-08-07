@@ -57,4 +57,14 @@ class TestUserCheckBean extends AbstractBean {
         this.create_time = user.getCreate_time()
         this.certificate = user.getCertificate()
     }
+
+/**
+ * 是否是同一个用户,检查用户关键信息是否更改,用于判断是否要重新登录用户获取最近的凭据
+ * @param bean
+ * @return
+ */
+    boolean same(TestUserCheckBean bean) {
+        this.user == bean.user && this.password == bean.password && this.roleId == bean.roleId;
+    }
+
 }
