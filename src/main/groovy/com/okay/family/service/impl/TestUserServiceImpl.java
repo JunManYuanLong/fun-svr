@@ -138,12 +138,18 @@ public class TestUserServiceImpl implements ITestUserService {
             logger.info("分布式锁竞争成功,ID:{}", bean.getId());
             try {
                 TestUserCheckBean user = testUserMapper.findUser(bean.getId());
-                boolean b = bean.same(user) && StringUtils.isNoneBlank(user.getCertificate()) ? UserUtil.checkUserLoginStatus(user) : false;
-                if (b) {
-                    bean.copyFrom(user);
-                } else {
-                    UserUtil.updateUserStatus(bean);
+
+                String create_time = user.getCreate_time();
+                long create = Time.getTimestamp(create_time);
+                long now = Time.getTimeStamp();
+                if (bean.same(user) && StringUtils.isNotBlank(user.getCertificate())) {
+                    if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode()) {
+                        bean.copyFrom(user);
+                        return testUserMapper.updateUserStatus(bean);
+                    }
+                    if (UserUtil.checkUserLoginStatus(user)) bean.copyFrom(user);
                 }
+                UserUtil.updateUserStatus(bean);
                 return testUserMapper.updateUserStatus(bean);
             } catch (Exception e) {
                 logger.error("用户验证失败!ID:{}", bean.getId(), e);
@@ -239,7 +245,10 @@ public class TestUserServiceImpl implements ITestUserService {
             logger.info("环境:{},用户:{},身份:{},登录状态验证:{}", user.getEnvId(), user.getId(), user.getRoleId(), b);
             if (!b) {
                 updateUserStatus(user);
-                if (user.getStatus() != UserState.OK.getCode()) UserStatusException.fail("用户不可用,ID:" + id);
+                if (user.getStatus() != UserState.OK.getCode()) {
+                    map.put(id, OkayConstant.EMPTY);
+                    UserStatusException.fail("用户不可用,ID:" + id);
+                }
             } else {
                 testUserMapper.updateUserStatus(user);
             }

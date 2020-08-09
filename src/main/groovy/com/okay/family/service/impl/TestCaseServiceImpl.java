@@ -383,7 +383,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
                 if (!SourceCode.isNumber(substring)) ParamException.fail("uid参数语法错误:" + substring);
                 int id = SourceCode.changeStringToInt(substring);
                 String certificate = testUserService.getCertificate(id);
-                if (StringUtils.isEmpty(certificate)) UserStatusException.fail();
+                if (StringUtils.isBlank(certificate)) UserStatusException.fail();
                 params.put(key, certificate);
             } else if (value.startsWith(OkayConstant.RANDOM_KEY)) {
                 String replace = value.replace(OkayConstant.RANDOM_KEY, Constant.EMPTY);
@@ -408,7 +408,7 @@ public class TestCaseServiceImpl implements ITestCaseService {
             if (value.startsWith(OkayConstant.USER_CERTIFICATE_KEY)) {
                 int id = SourceCode.changeStringToInt(value.substring(OkayConstant.USER_CERTIFICATE_KEY.length()));
                 String certificate = testUserService.getCertificate(id, map);
-                if (StringUtils.isEmpty(certificate)) UserStatusException.fail();
+                if (StringUtils.isBlank(certificate)) UserStatusException.fail();
                 params.put(key, certificate);
             } else if (value.startsWith(OkayConstant.RANDOM_KEY)) {
                 String replace = value.replace(OkayConstant.RANDOM_KEY, Constant.EMPTY);
