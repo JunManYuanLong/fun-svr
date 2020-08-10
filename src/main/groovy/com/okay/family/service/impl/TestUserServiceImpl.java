@@ -126,7 +126,7 @@ public class TestUserServiceImpl implements ITestUserService {
                 String create_time = user.getCreate_time();
                 long create = Time.getTimestamp(create_time);
                 long now = Time.getTimeStamp();
-                if (now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode()) {
+                if (bean.same(user) && now - create < OkayConstant.CERTIFICATE_TIMEOUT && user.getStatus() == UserState.OK.getCode()) {
                     bean.copyFrom(user);
                     return testUserMapper.updateUserStatus(bean);
                 }
