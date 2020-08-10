@@ -1,109 +1,111 @@
 package com.okay.family.middle.common;
 
 import com.okay.family.common.basedata.OkayConstant;
+import com.okay.family.fun.config.PropertyUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MiddleConstant {
 
+    static PropertyUtils.Property property = PropertyUtils.getProperties("middle");
 
     /*学生pad host*/
-    public static final String STUPAD_HOTFIX_HOST = "https://stupad-hotfix.xk12.cn";
+    public static final String STUPAD_HOTFIX_HOST = property.getProperty("stupad_hotfix_host");
 
-    public static final String STUPAD_DEV_HOST = "https://stupad-dev.xk12.cn";
+    public static final String STUPAD_DEV_HOST = property.getProperty("stupad_dev_host");
 
-    public static final String STUPAD_STRESS_HOST = STUPAD_HOTFIX_HOST;
+    public static final String STUPAD_STRESS_HOST = property.getProperty("stupad_stress_host");
 
-    public static final String STUPAD_ONLINE_HOST = "https://stupad.okjiaoyu.cn";
+    public static final String STUPAD_ONLINE_HOST = property.getProperty("stupad_online_host");
 
     /*教师pad host*/
 
-    public static final String TEAPAD_HOTFIX_HOST = "https://teacherpad-hotfix.xk12.cn";
+    public static final String TEAPAD_HOTFIX_HOST = property.getProperty("teapad_hotfix_host");
 
-    public static final String TEAPAD_DEV_HOST = "https://teacherpad-dev.xk12.cn";
+    public static final String TEAPAD_DEV_HOST = property.getProperty("teapad_dev_host");
 
-    public static final String TEAPAD_STRESS_HOST = TEAPAD_HOTFIX_HOST;
+    public static final String TEAPAD_STRESS_HOST = property.getProperty("teapad_stress_host");
 
-    public static final String TEAPAD_ONLINE_HOST = "https://teacherpad.okjiaoyu.cn";
+    public static final String TEAPAD_ONLINE_HOST = property.getProperty("teapad_online_host");
 
 
     /*学生空间  host*/
-    public static final String STUWEB_HOTFIX_HOST = "https://student-hotfix.xk12.cn";
+    public static final String STUWEB_HOTFIX_HOST = property.getProperty("stuweb_hotfix_host");
 
-    public static final String STUWEB_DEV_HOST = "https://student-dev.xk12.cn";
+    public static final String STUWEB_DEV_HOST = property.getProperty("stuweb_dev_host");
 
-    public static final String STUWEB_STRESS_HOST = STUWEB_HOTFIX_HOST;
+    public static final String STUWEB_STRESS_HOST = property.getProperty("stuweb_stress_host");
 
-    public static final String STUWEB_ONLINE_HOST = "https://student.okjiaoyu.cn";
-
+    public static final String STUWEB_ONLINE_HOST = property.getProperty("stuweb_online_host");
 
     /*教师空间  host*/
-    public static final String TEAWEB_HOTFIX_HOST = "https://student-hotfix.xk12.cn";
+    public static final String TEAWEB_HOTFIX_HOST = property.getProperty("teaweb_hotfix_host");
 
-    public static final String TEAWEB_DEV_HOST = "https://jiaoshi-dev.xk12.cn";
+    public static final String TEAWEB_DEV_HOST = property.getProperty("teaweb_dev_host");
 
-    public static final String TEAWEB_STRESS_HOST = TEAWEB_HOTFIX_HOST;
+    public static final String TEAWEB_STRESS_HOST = property.getProperty("teaweb_stress_host");
 
-    public static final String TEAWEB_ONLINE_HOST = "https://jiaoshi.okjiaoyu.cn";
+    public static final String TEAWEB_ONLINE_HOST = property.getProperty("teaweb_online_host");
 
 
     /*公立校  host*/
-    public static final String PUBWEB_HOTFIX_HOST = "https://edu-hotfix.xk12.cn";
+    public static final String PUBWEB_HOTFIX_HOST = property.getProperty("pubweb_hotfix_host");
 
-    public static final String PUBWEB_DEV_HOST = "https://edu-dev.xk12.cn";
+    public static final String PUBWEB_DEV_HOST = property.getProperty("pubweb_dev_host");
 
-    public static final String PUBWEB_STRESS_HOST = PUBWEB_HOTFIX_HOST;
+    public static final String PUBWEB_STRESS_HOST = property.getProperty("pubweb_stress_host");
 
-    public static final String PUBWEB_ONLINE_HOST = "https://edu.okjiaoyu.cn";
+    public static final String PUBWEB_ONLINE_HOST = property.getProperty("pubweb_online_host");
+
+    /*学生pad服务所用  host*/
+    public static final String STUAPP_HOTFIX = property.getProperty("stuapp_hotfix_host");
+
+    public static final String STUAPP_DEV = property.getProperty("stuapp_dev_host");
+
+    public static final String STUAPP_STRESS = property.getProperty("stuapp_stress_host");
+
+    public static final String STUAPP_ONLINE = property.getProperty("stuapp_online_host");
 
     /*cas服务所用  host*/
-    public static final String STUAPP_HOTFIX = "https://stupad-hotfix.xk12.cn";
+    public static final String CAS_HOTFIX = property.getProperty("cas_hotfix");
 
-    public static final String STUAPP_DEV = "https://xsapp-dev.xk12.cn";
+    public static final String CAS_DEV = property.getProperty("cas_dev");
 
-    public static final String STUAPP_STRESS = STUAPP_HOTFIX;
+    public static final String CAS_STRESS = property.getProperty("cas_stress");
 
-    public static final String STUAPP_ONLINE = "https://stupad.okjiaoyu.cn";
-
-    /*cas服务所用  host*/
-    public static final String CAS_HOTFIX = "https://sso-hotfix.xk12.cn/login?service=";
-
-    public static final String CAS_DEV = "https://sso-dev.xk12.cn/login?service=";
-
-    public static final String CAS_STRESS = CAS_HOTFIX;
-
-    public static final String CAS_ONLINE = "https://sso.okjiaoyu.cn/login?service=";
+    public static final String CAS_ONLINE = property.getProperty("cas_online");
 
 
     /*加密公钥*/
 
-    public static final String PAD_HOTFIXT_PUBKEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWN96VBx1QBlVtLOapckMpPiCohKD2A7IUlhS9g+cWfLjrfTuoT9h8Q7vSbz01n/1Iilhsd5Fhh/R+F0ZNA4MHRSpD8HZXNmT1sDiQVF4RkjznOBdd/9QevZIpOvOy/0E2baF8QyR/XycC23pZM3s3AtFPWCLmqQn/pAMz9e73IQIDAQAB";
+    public static final String PAD_HOTFIXT_PUBKEY = property.getProperty("pad_hotfix_pubkey");
 
-    public static final String PAD_DEV_PUBKEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCBvhQ1m/kDGjExBL3kV8a/fQL0Df6bPEUlQz+7GBCQgSZ5ZcJKZwzv/nwG+S2m5MH1efgr+98dY2b1jToVStiT9ltfPEtepwbIh0FbV78/lsizP7Ysqc0lrwxWXhpBVEHuG5qU3EiOQD5Xw1LIAoQJKjuqLs7j2GF6NQoJlUJnnQIDAQAB";
+    public static final String PAD_DEV_PUBKEY = property.getProperty("pad_dev_pubkey");
 
-    public static final String PAD_STRESS_PUBKEY = PAD_HOTFIXT_PUBKEY;
+    public static final String PAD_STRESS_PUBKEY = property.getProperty("pad_stress_pubkey");
 
-    public static final String PAD_ONLINE_PUBKEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDoIRaohpg6ys0gA/tIvUL/2TtTxk3aRJpIByJe263lbCNmHA+Es+k9eyc/RT+M7lkqWvAPCeqDOQIOfb7GJ78rFOhyuUf/a/ZWXGgUrqf2hLQrzaeIngkfFEkM9AtOBUT9MDjYtZsaQikOtag68UfFPv7GoULUV+y7woqtjZhaHwIDAQAB";
+    public static final String PAD_ONLINE_PUBKEY = property.getProperty("pad_online_pubkey");
 
     /*加密盐*/
 
-    public static final String SALT_HOTFIX = "17802ec2980353bdc3f082b0668bd1e4";
+    public static final String SALT_HOTFIX = property.getProperty("salt_hotfix");
 
-    public static final String SALT_DEV = "17802ec2980353bdc3f082b0668bd1e4";
+    public static final String SALT_DEV = property.getProperty("salt_dev");
 
-    public static final String SALT_STRESS = SALT_HOTFIX;
+    public static final String SALT_STRESS = property.getProperty("salt_stress");
 
-    public static final String SALT_ONLINE = "17802ec2980353bdc3f082b0668bd1e4";
+    public static final String SALT_ONLINE = property.getProperty("salt_online");
+
     /**
      * 通用验证码
      */
-    public static final String CAPTCHA = "performance";
+    public static final String CAPTCHA = property.getProperty("captcha");
 
     /**
      * 密码加密过程中实例类型
      */
-    public final static String DES = "DES";
+    public final static String DES = property.getProperty("des");
 
     public static Map<Integer, String> salts = new HashMap<Integer, String>((int) OkayConstant.ENV) {
         private static final long serialVersionUID = 62254732323261844L;
@@ -115,5 +117,6 @@ public class MiddleConstant {
             put(OkayConstant.ONLINE, MiddleConstant.SALT_ONLINE);
         }
     };
+
 
 }
