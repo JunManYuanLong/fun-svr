@@ -1,6 +1,7 @@
 package com.okay.family.controller;
 
 
+import com.okay.family.common.basedata.FamilyConstant;
 import com.okay.family.common.basedata.ServerHost;
 import com.okay.family.fun.base.bean.Result;
 import com.okay.family.service.ILiveUpdateService;
@@ -49,6 +50,12 @@ public class LiveUpdateController {
     @GetMapping(value = "/case/{caseId}")
     public Result updateCaseApiInfo(@PathVariable(value = "caseId", required = true) int caseId) {
         caseService.syncApi(caseId);
+        return Result.success();
+    }
+
+    @GetMapping(value = "/output")
+    public Result editOutput() {
+        FamilyConstant.OUTPUT = !FamilyConstant.OUTPUT;
         return Result.success();
     }
 
