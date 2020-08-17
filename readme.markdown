@@ -7,6 +7,7 @@
 
 # 测开笔记
 
+- [开源测试服务](https://mp.weixin.qq.com/s/ZOs0cp_vt6_iiundHaKk4g)
 - [我的开发日记（一）](https://mp.weixin.qq.com/s/eQgpOKbXsU9vOmxp0Xiklg)
 - [我的开发日记（二）](https://mp.weixin.qq.com/s/XuffL3ZmKKOgHDtH_cEYOw)
 - [我的开发日记（三）](https://mp.weixin.qq.com/s/a-I0agh6nWp8RLlcmbgf5w)
