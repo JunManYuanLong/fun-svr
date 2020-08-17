@@ -138,7 +138,6 @@ public class TestUserServiceImpl implements ITestUserService {
             logger.info("分布式锁竞争成功,ID:{}", bean.getId());
             try {
                 TestUserCheckBean user = testUserMapper.findUser(bean.getId());
-
                 String create_time = user.getCreate_time();
                 long create = Time.getTimestamp(create_time);
                 long now = Time.getTimeStamp();
