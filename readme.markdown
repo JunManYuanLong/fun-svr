@@ -3,7 +3,7 @@
 
 ## [GitHub地址](https://github.com/JunManYuanLong/FunTester)
 
-* 开发的争过过程都写出来了,以下是内容文章的连接.
+* 开发的整个过程都写出来了,以下是内容文章的连接.
 
 # 测开笔记
 
