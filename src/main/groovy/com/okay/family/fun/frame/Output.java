@@ -1,10 +1,9 @@
 package com.okay.family.fun.frame;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-
-
 import com.okay.family.fun.base.bean.AbstractBean;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.utils.Emoji;
@@ -110,7 +109,13 @@ public class Output extends Constant {
      * @param jsonArray
      */
     public static void output(JSONArray jsonArray) {
-        jsonArray.forEach(x -> output(x));
+        jsonArray.forEach(x -> {
+            try {
+                output(JSON.parseObject(x.toString()));
+            } catch (JSONException e) {
+                output(x);
+            }
+        });
     }
 
     /**
