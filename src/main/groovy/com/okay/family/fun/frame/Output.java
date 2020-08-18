@@ -109,6 +109,10 @@ public class Output extends Constant {
      * @param jsonArray
      */
     public static void output(JSONArray jsonArray) {
+        if (jsonArray == null || jsonArray.isEmpty()) {
+            output("jsonarray对象为空!");
+            return;
+        }
         jsonArray.forEach(x -> {
             try {
                 output(JSON.parseObject(x.toString()));
