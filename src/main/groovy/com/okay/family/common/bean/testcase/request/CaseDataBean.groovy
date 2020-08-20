@@ -8,6 +8,7 @@ import com.okay.family.common.bean.testcase.CaseVerifyBean
 import com.okay.family.common.enums.CaseAvailableStatus
 import com.okay.family.common.exception.CommonException
 import com.okay.family.fun.base.bean.AbstractBean
+import com.okay.family.fun.config.Constant
 import org.hibernate.validator.constraints.Range
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -114,7 +115,8 @@ class CaseDataBean extends AbstractBean {
                 if (type ==~ /number|integer/) {
                     def key = json.getString(OkayConstant.MOCO_KEY)
                     def value = json.getString(OkayConstant.MOCO_VALUE)
-                    params.put(key, value as Integer)
+                    if (value.contains(Constant.COMMA)) params.put(key, value as Double)
+                    else params.put(key, value as Integer)
                 } else if (type ==~ /object|string/) {
                     def key = json.getString(OkayConstant.MOCO_KEY)
                     JSONArray array = json.getJSONArray(OkayConstant.MOCO_CHILDREN)
