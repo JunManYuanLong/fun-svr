@@ -115,7 +115,7 @@ class CaseDataBean extends AbstractBean {
                     def key = json.getString(OkayConstant.MOCO_KEY)
                     def value = json.getString(OkayConstant.MOCO_VALUE)
                     params.put(key, value)
-                } else if (type == "object") {
+                } else if (type ==~ /object|string/) {
                     def key = json.getString(OkayConstant.MOCO_KEY)
                     JSONArray array = json.getJSONArray(OkayConstant.MOCO_CHILDREN)
                     JSONObject param = new JSONObject()
