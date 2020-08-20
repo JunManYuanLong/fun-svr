@@ -111,10 +111,10 @@ class CaseDataBean extends AbstractBean {
             request_paras.each {x ->
                 JSONObject json = JSON.parseObject(JSON.toJSONString(x))
                 def type = json.getString("dataType")
-                if (type ==~ /number|string|integer/) {
+                if (type ==~ /number|integer/) {
                     def key = json.getString(OkayConstant.MOCO_KEY)
                     def value = json.getString(OkayConstant.MOCO_VALUE)
-                    params.put(key, value)
+                    params.put(key, value as Integer)
                 } else if (type ==~ /object|string/) {
                     def key = json.getString(OkayConstant.MOCO_KEY)
                     JSONArray array = json.getJSONArray(OkayConstant.MOCO_CHILDREN)
