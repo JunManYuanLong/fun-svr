@@ -2,7 +2,6 @@ package com.okay.family.fun.frame.httpclient;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.okay.family.utils.RequestSave;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.common.bean.RequestSaveBean;
 import com.okay.family.fun.base.bean.RequestInfo;
@@ -12,10 +11,13 @@ import com.okay.family.fun.base.interfaces.IBase;
 import com.okay.family.fun.config.HttpClientConstant;
 import com.okay.family.fun.frame.SourceCode;
 import com.okay.family.fun.utils.DecodeEncode;
+import com.okay.family.fun.utils.Regex;
 import com.okay.family.fun.utils.Time;
+import com.okay.family.utils.RequestSave;
 import com.okay.family.utils.VerifyResponseUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.*;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -36,6 +38,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 /**
@@ -51,6 +55,17 @@ public class FanLibrary extends SourceCode {
     private static IBase iBase;
 
     /**
+     * 打印请求头和响应头，一次有效，在请求之前使用该方法
+     */
+    public static void printHeader() {
+        HEADER_KEY = true;
+    }
+
+    public static void noHeader() {
+        HEADER_KEY = false;
+    }
+
+    /**
      * 最近发送的请求
      */
     public static HttpRequestBase lastRequest;
@@ -60,6 +75,10 @@ public class FanLibrary extends SourceCode {
      */
     static boolean HEADER_KEY = false;
 
+    /**
+     * 是否保存请求和响应
+     */
+    public static boolean SAVE_KEY = false;
 
     /**
      * 方法已重载，获取get对象
@@ -220,9 +239,10 @@ public class FanLibrary extends SourceCode {
      * @param request
      */
     protected static void beforeRequest(HttpRequestBase request) {
-        HttpClientConstant.COMMON_HEADER.forEach(header -> request.addHeader(header));
-        if (!request.containsHeader(OkayConstant.REQUEST_ID))
-            request.addHeader(OkayConstant.REQUEST_ID, "family" + getMark());
+        HttpClientConstant.COMMON_HEADER.forEach(header -> {
+            if (!request.containsHeader(header.getName()))
+                request.addHeader(header);
+        });
     }
 
     /**
@@ -260,7 +280,7 @@ public class FanLibrary extends SourceCode {
             }};
             logger.warn("响应体非json格式，已经自动转换成json格式！");
         } finally {
-            if (!cookies.isEmpty()) jsonObject.put(HttpClientConstant.COOKIE, cookies);
+            if (cookies != null && !cookies.isEmpty()) jsonObject.put(HttpClientConstant.COOKIE, cookies);
             return jsonObject;
         }
     }
@@ -272,7 +292,7 @@ public class FanLibrary extends SourceCode {
      * @param response
      * @return
      */
-    public static String getContent(CloseableHttpResponse response) {
+    public static String getContent(HttpResponse response) {
         HttpEntity entity = response.getEntity();// 获取响应实体
         String content = EMPTY;
         try {
@@ -359,6 +379,29 @@ public class FanLibrary extends SourceCode {
     }
 
     /**
+     * 解析response，使用char数组，注意编码格式
+     * <p>自定义解析响应实体的方法，暂不采用</p>
+     *
+     * @param response 传入的response，非closedresponse
+     * @return string类型的response
+     */
+    @Deprecated
+    private static String parseResponeEntityByChar(HttpResponse response) {
+        StringBuffer buffer = new StringBuffer();// 创建并实例化stringbuffer，存放响应信息
+        try (InputStream input = response.getEntity().getContent(); InputStreamReader reader = new InputStreamReader(input, DEFAULT_CHARSET)) {
+            char[] buff = new char[1024];// 创建并实例化字符数组
+            int length = 0;// 声明变量length，表示读取长度
+            while ((length = reader.read(buff)) != -1) {// 循环读取字符输入流
+                String x = new String(buff, 0, length);// 获取读取到的有效内容
+                buffer.append(x);// 将读取到的内容添加到stringbuffer中
+            }
+        } catch (IOException e) {
+            logger.warn("解析响应实体失败！", e);
+        }
+        return buffer.toString();
+    }
+
+    /**
      * 从响应解析到文件
      *
      * @param response
@@ -439,8 +482,54 @@ public class FanLibrary extends SourceCode {
      */
     public static String excuteSimlple(HttpRequestBase request) throws IOException {
         try (CloseableHttpResponse response = ClientManage.httpsClient.execute(request);) {
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) RequestException.fail("响应状态码错误:"+response.getStatusLine().getStatusCode());
             return getContent(response);
         }
+    }
+
+    /**
+     * 设置代理请求
+     *
+     * @param request
+     * @param adress
+     */
+    public static void setProxy(HttpRequestBase request, String adress) {
+        request.setConfig(getProxyConfig(adress));
+    }
+
+    /**
+     * 设置代理请求
+     *
+     * @param request
+     * @param ip
+     * @param port
+     */
+    public static void setProxy(HttpRequestBase request, String ip, int port) {
+        setProxy(request, ip + ":" + port);
+    }
+
+    /**
+     * 通过IP和端口获取代理配置对象
+     *
+     * @param adress
+     * @return
+     */
+    public static RequestConfig getProxyConfig(String adress) {
+        if (StringUtils.isBlank(adress) || !Regex.isMatch(adress, "((25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))):([0-9]|[1-9]\\d{1,3}|[1-5]\\d{4}|6[0-4]\\d{4}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])"))
+            ParamException.fail("adress格式错误:" + adress);
+        String[] split = adress.split(":");
+        return ClientManage.getProxyRequestConfig(split[0], changeStringToInt(split[1]));
+    }
+
+    /**
+     * 通过IP和端口获取代理配置对象
+     *
+     * @param ip
+     * @param port
+     * @return
+     */
+    public static RequestConfig getProxyConfig(String ip, int port) {
+        return getProxyConfig(ip + ":" + port);
     }
 
     /**
@@ -451,6 +540,36 @@ public class FanLibrary extends SourceCode {
     public static void excuteSync(HttpRequestBase request) {
         if (!ClientManage.httpAsyncClient.isRunning()) ClientManage.httpAsyncClient.start();
         ClientManage.httpAsyncClient.execute(request, null);
+    }
+
+    /**
+     * 异步发送请求获取影响Demo
+     * <p>经过测试没卵用</p>
+     *
+     * @param request
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static JSONObject excuteSyncWithResponse(HttpRequestBase request) {
+        if (!ClientManage.httpAsyncClient.isRunning()) ClientManage.httpAsyncClient.start();
+        Future<HttpResponse> execute = ClientManage.httpAsyncClient.execute(request, null);
+        try {
+            HttpResponse httpResponse = execute.get();
+            String content = getContent(httpResponse);
+            return getJsonResponse(content, null);
+        } catch (Exception e) {
+            logger.error("异步请求获取响应失败!", e);
+        }
+        return new JSONObject();
+    }
+
+    /**
+     * 获取最后一个发出的请求
+     *
+     * @return
+     */
+    public static HttpRequestBase getLastRequest() {
+        return lastRequest;
     }
 
     /**
