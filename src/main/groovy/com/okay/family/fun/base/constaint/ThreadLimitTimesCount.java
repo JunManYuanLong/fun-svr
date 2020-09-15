@@ -3,7 +3,7 @@ package com.okay.family.fun.base.constaint;
 
 import com.okay.family.fun.base.interfaces.MarkThread;
 import com.okay.family.fun.config.HttpClientConstant;
-import com.okay.family.fun.frame.excute.Concurrent;
+import com.okay.family.fun.frame.execute.Concurrent;
 import com.okay.family.fun.frame.httpclient.GCThread;
 import com.okay.family.fun.utils.Time;
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ public abstract class ThreadLimitTimesCount<T> extends ThreadBase {
                     long s = Time.getTimeStamp();
                     doing();
                     long e = Time.getTimeStamp();
-                    excuteNum++;
+                    executeNum++;
                     long diff = e - s;
                     t.add(diff);
                     if (diff > HttpClientConstant.MAX_ACCEPT_TIME) marks.add(diff + CONNECTOR + threadmark);

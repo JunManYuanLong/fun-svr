@@ -1,4 +1,4 @@
-package com.okay.family.fun.frame.excute;
+package com.okay.family.fun.frame.execute;
 
 
 import com.okay.family.fun.base.bean.PerformanceResultBean;
@@ -65,7 +65,7 @@ public class Concurrent extends SourceCode {
     /**
      * 执行总数
      */
-    private int excuteTotal;
+    private int executeTotal;
 
     /**
      * 用于记录所有请求时间
@@ -148,9 +148,9 @@ public class Concurrent extends SourceCode {
         threads.forEach(x -> {
             if (x.status()) failTotal++;
             errorTotal += x.errorNum;
-            excuteTotal += x.excuteNum;
+            executeTotal += x.executeNum;
         });
-        logger.info("总计{}个线程，共用时：{} s,执行总数:{},错误数:{},失败数:{}", threadNum, Time.getTimeDiffer(startTime, endTime), excuteTotal, errorTotal, failTotal);
+        logger.info("总计{}个线程，共用时：{} s,执行总数:{},错误数:{},失败数:{}", threadNum, Time.getTimeDiffer(startTime, endTime), executeTotal, errorTotal, failTotal);
         return over();
     }
 
@@ -195,7 +195,7 @@ public class Concurrent extends SourceCode {
         Collections.sort(data);
         String statistics = statistics(data, desc);
         double qps = 1000.0 * size * name / sum;
-        return new PerformanceResultBean(desc, start, end, name, size, sum / size, qps, getPercent(excuteTotal, errorTotal), getPercent(threadNum, failTotal), excuteTotal, statistics);
+        return new PerformanceResultBean(desc, start, end, name, size, sum / size, qps, getPercent(executeTotal, errorTotal), getPercent(threadNum, failTotal), executeTotal, statistics);
     }
 
     /**

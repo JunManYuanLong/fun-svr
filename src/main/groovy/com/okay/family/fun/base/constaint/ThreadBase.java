@@ -15,6 +15,14 @@ import java.util.stream.Collectors;
  */
 public abstract class ThreadBase<T> extends SourceCode implements Runnable {
 
+    /**
+     * 线程的名字
+     */
+    public String threadName;
+
+    /**
+     * 线程标记对象,用户标记请求或者单次执行任务的
+     */
     public String threadmark;
 
     /**
@@ -25,7 +33,7 @@ public abstract class ThreadBase<T> extends SourceCode implements Runnable {
     /**
      * 执行数,一般与响应时间记录数量相同
      */
-    public int excuteNum;
+    public int executeNum;
 
     /**
      * 计数锁

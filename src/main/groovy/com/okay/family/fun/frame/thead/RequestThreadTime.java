@@ -29,7 +29,7 @@ public class RequestThreadTime extends ThreadLimitTimeCount {
      * @param time    每个线程运行的次数
      */
     public RequestThreadTime(HttpRequestBase request, int time) {
-        super(null,time,null);
+        super(null, time, null);
         this.request = request;
     }
 
@@ -39,7 +39,7 @@ public class RequestThreadTime extends ThreadLimitTimeCount {
      * @param mark    标记类对象
      */
     public RequestThreadTime(HttpRequestBase request, int time, MarkThread mark) {
-        super(null,time, mark);
+        super(null, time, mark);
         this.request = request;
     }
 
@@ -55,7 +55,7 @@ public class RequestThreadTime extends ThreadLimitTimeCount {
 
     @Override
     protected void doing() throws Exception {
-        FanLibrary.excuteSimlple(request);
+        FanLibrary.executeSimlple(request);
     }
 
 

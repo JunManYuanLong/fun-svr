@@ -57,9 +57,9 @@ class PerformanceResultBean extends AbstractBean {
      * 执行总数
      */
 
-    int excuteTotal
+    int executeTotal
 
-    PerformanceResultBean(String mark, String startTime, String endTime, int threads, int total, int rt, double qps, double errorRate, double failRate, int excuteTotal, String table) {
+    PerformanceResultBean(String mark, String startTime, String endTime, int threads, int total, int rt, double qps, double errorRate, double failRate, int executeTotal, String table) {
         this.mark = mark
         this.startTime = startTime
         this.endTime = endTime
@@ -69,8 +69,7 @@ class PerformanceResultBean extends AbstractBean {
         this.qps = qps
         this.errorRate = errorRate
         this.failRate = failRate
-        this.excuteTotal = excuteTotal
-        this.excuteTotal = excuteTotal
+        this.executeTotal = executeTotal
         this.table = table
         //todo:完成记录功能
 //        MySqlTest.savePerformanceBean(this)
