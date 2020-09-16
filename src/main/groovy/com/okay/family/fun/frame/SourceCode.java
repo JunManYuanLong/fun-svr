@@ -2,8 +2,6 @@ package com.okay.family.fun.frame;
 
 
 import com.alibaba.fastjson.JSONObject;
-
-
 import com.okay.family.fun.base.exception.FailException;
 import com.okay.family.fun.base.exception.ParamException;
 import com.okay.family.fun.base.interfaces.IMessage;
@@ -18,6 +16,7 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -267,7 +266,7 @@ public class SourceCode extends Output implements Cloneable {
         logger.debug("需要判断的文本：{}", text);
         if (StringUtils.isEmpty(text)) return false;
         if (text.equals("0")) return true;
-        return Regex.isRegex(text, "^-{0,1}[1-9][0-9]*(.\\d+){0,1}$");
+        return Regex.isRegex(text, "^-{0,1}(([1-9][0-9]*)|0)(.\\d+){0,1}$");
     }
 
     /**
@@ -279,6 +278,19 @@ public class SourceCode extends Output implements Cloneable {
         try {
             if (second > 30) Thread.sleep(second);
             if (second <= 30) Thread.sleep(second * 1000);
+        } catch (InterruptedException e) {
+            logger.warn("sleep发生错误！", e);
+        }
+    }
+
+    /**
+     * 线程休眠,以纳秒为单位
+     *
+     * @param nanosec
+     */
+    public static void sleep(long nanosec) {
+        try {
+            TimeUnit.NANOSECONDS.sleep(nanosec);
         } catch (InterruptedException e) {
             logger.warn("sleep发生错误！", e);
         }
