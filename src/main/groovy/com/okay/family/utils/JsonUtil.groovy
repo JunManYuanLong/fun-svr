@@ -72,8 +72,8 @@ class JsonUtil extends SourceCode {
         new JsonUtil(json)
     }
 
-    Verify getVerify(String path) {
-        Verify.getInstance(this.json, path)
+    JsonVerify getVerify(String path) {
+        JsonVerify.getInstance(this.json, path)
     }
 
     /**
