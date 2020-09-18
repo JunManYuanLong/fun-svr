@@ -232,14 +232,6 @@ public class Output extends Constant {
 
         List<Integer> rowLength = new ArrayList<>();
 
-        public static void show(Map map) {
-            new ConsoleTable(map);
-        }
-
-        public static void show(List<List<String>> rows) {
-            new ConsoleTable(rows);
-        }
-
         /**
          * 输出map
          *
