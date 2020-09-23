@@ -22,6 +22,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 坑,账号白名单无法实时添加
+ */
 public class PubWebBase extends SourceCode implements IBase {
 
     private static Logger logger = LoggerFactory.getLogger(PubWebBase.class);

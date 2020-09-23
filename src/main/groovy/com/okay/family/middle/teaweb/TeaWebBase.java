@@ -1,7 +1,6 @@
 package com.okay.family.middle.teaweb;
 
 import com.alibaba.fastjson.JSONObject;
-import com.okay.family.common.basedata.FamilyConstant;
 import com.okay.family.common.basedata.OkayConstant;
 import com.okay.family.fun.base.bean.RequestInfo;
 import com.okay.family.fun.base.exception.LoginException;
@@ -83,6 +82,9 @@ public class TeaWebBase extends SourceCode implements IBase {
         logger.info("账号:{},cookie:{}", username, cookies.toJSONString());
     }
 
+    /**
+     * 适配新服务,取消单点登录
+     */
     public void login2() {
         String url = LOGIN;
         JSONObject params = new JSONObject();
@@ -101,11 +103,7 @@ public class TeaWebBase extends SourceCode implements IBase {
         this.password = password;
         this.envId = envId;
         this.HOST = hosts.get(envId);
-        if (envId == OkayConstant.STRESS && FamilyConstant.TEA_WEB_LOGIN) {
-            login();
-        } else {
-            login2();
-        }
+        login2();
     }
 
     public TeaWebBase(String certificate, int envId) {
