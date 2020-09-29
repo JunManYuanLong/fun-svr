@@ -48,11 +48,6 @@ abstract class AbstractBean implements Serializable {
         initFrom(JSON.toJSON(str))
     }
 
-    @Override
-    String toString() {
-        JSONObject.toJSONString(this)
-    }
-
     def copyFrom(AbstractBean source) {
         BeanUtils.copyProperties(source, this)
     }
@@ -61,5 +56,13 @@ abstract class AbstractBean implements Serializable {
         BeanUtils.copyProperties(this, target)
     }
 
+    /**
+     * 这里bean的属性必需是可以访问的,不然会返回空json串
+     * @return
+     */
+    @Override
+    String toString() {
+        JSONObject.toJSONString(this)
+    }
 
 }
