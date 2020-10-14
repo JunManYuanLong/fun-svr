@@ -1,6 +1,7 @@
 package com.okay.family.fun.frame.httpclient;
 
 
+import com.okay.family.fun.config.HttpClientConstant;
 import com.okay.family.fun.frame.SourceCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public class GCThread extends SourceCode implements Runnable {
     public void run() {
         logger.info("gc回收线程开始了！");
         while (FLAG) {
-            sleep(3);
+            sleep(HttpClientConstant.LOOP_INTERVAL);
             ClientManage.recyclingConnection();
         }
         logger.info("gc回收线程结束了！");
