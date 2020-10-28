@@ -144,23 +144,21 @@ class JsonUtil extends SourceCode {
             get(path) as T
         } catch (ClassCastException e) {
             logger.warn("类型转换失败!", e)
-            null
         }
     }
 
     /**
-     * 获取匹配对象
+     * 获取匹配对象,这里如果使用模糊路径匹配失败,返回"[]",如果绝对路径报错
      * @param path
      * @return
      */
-    Object get(String path) {
+    def get(String path) {
         logger.debug("匹配对象:{},表达式:{}", json.toString(), path)
         if (json == null || json.isEmpty()) ParamException.fail("json为空或者null,参数错误!")
         try {
             JsonPath.read(this.json, path)
         } catch (JsonPathException e) {
-            logger.warn("jsonpath:{}解析失败,json值", json.toString(), path, e)
-            null
+            logger.warn("json: {} 解析失败,path: {}", json.toString(), path, e)
         }
     }
 
