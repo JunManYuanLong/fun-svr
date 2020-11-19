@@ -25,32 +25,8 @@ public class Output extends Constant {
 
     static final String DOWN = SourceCode.getManyString("~☢~", 10);
 
-    /**
-     * 输出带有信息的异常
-     *
-     * @param object
-     * @param e
-     */
-    public static void output(Object object, Exception e) {
-        output(object);
-        output(e);
-    }
-
     public static void output(AbstractBean bean) {
         output(bean.toJson());
-    }
-
-    /**
-     * 输出异常
-     *
-     * @param e
-     */
-    public static void output(Exception e) {
-        logger.error("error！！！", e);
-//        StackTraceElement[] stackTrace = e.getStackTrace();
-//        for (int i = 0; i < stackTrace.length; i++) {
-//            logger.warn(stackTrace[i].toString());
-//        }
     }
 
     /**
@@ -80,7 +56,7 @@ public class Output extends Constant {
                 output(object[0].toString());
             }
         } else if (object.length == 2) {
-            output(LINE + object[0]);
+            output(object[0]);
             if (object[1] instanceof List) {
                 output((List) object[1]);
             } else {
@@ -93,6 +69,10 @@ public class Output extends Constant {
 
     public static void output(List list) {
         list.forEach(x -> output("第" + (list.indexOf(x) + 1) + "个：" + x.toString()));
+    }
+
+    public static void output(Iterator its) {
+        its.forEachRemaining(x -> output(x.toString()));
     }
 
     public static void output(Map map) {
@@ -127,13 +107,19 @@ public class Output extends Constant {
      *
      * @param arrays
      */
-    public static void output(Number[] nums) {
-        if (ArrayUtils.isEmpty(nums))
-            return;
-        int length = nums.length;
-        for (int i = 0; i < length; i++) {
-            output(nums[i] + "");
-        }
+    public static <T extends Number> void output(T[] nums) {
+        if (ArrayUtils.isEmpty(nums)) return;
+        Arrays.asList(nums).forEach(x -> output(x));
+    }
+
+    /**
+     * 泛型做输出数字对象
+     *
+     * @param x
+     * @param <T>
+     */
+    public static <T extends Number> void output(T x) {
+        output(x.toString());
     }
 
     public static void output(Object o) {
@@ -171,11 +157,11 @@ public class Output extends Constant {
         for (int i = 0; i < length; i++) {// 循环遍历每一个字符
             char piece = jsonStr.charAt(i);// 获取当前字符
             // 如果上一个字符是断行，则在本行开始按照level数值添加标记符，排除第一行
-            if (i != 0 && '\n' == jsonResultStr.charAt(jsonResultStr.length() - 1)) {
+            if ('\n' == jsonResultStr.charAt(jsonResultStr.length() - 1)) {
                 jsonResultStr.append(Emoji.getSerialEmoji(level) + " . ");
                 IntStream.range(0, level - 1).forEach(x -> jsonResultStr.append(". . "));//没有采用sourcecode的getmanystring
             }
-            char last = i == 0 ? ' ' : jsonStr.charAt(i - 1);
+            char last = i == 0 ? '{' : jsonStr.charAt(i - 1);
             char next = i < length - 1 ? jsonStr.charAt(i + 1) : '}';
             switch (piece) {
                 case ',':
@@ -207,8 +193,22 @@ public class Output extends Constant {
         return jsonObject;
     }
 
+    /**
+     * 格式化输出内容
+     *
+     * @param format
+     * @param o
+     */
+    public static void output(String format, Object... o) {
+        System.out.printf(format, o);
+    }
+
     public static void show(Map map) {
         new ConsoleTable(map);
+    }
+
+    public static void show(List<List<String>> rows) {
+        new ConsoleTable(rows);
     }
 
     /**
@@ -225,13 +225,13 @@ public class Output extends Constant {
         }
     }
 
-    public static void show(List<List<String>> rows) {
-        new ConsoleTable(rows);
-    }
-
     static class ConsoleTable extends SourceCode {
 
         List<Integer> rowLength = new ArrayList<>();
+
+        public static void show(Map map) {
+            new ConsoleTable(map);
+        }
 
         /**
          * 输出map
