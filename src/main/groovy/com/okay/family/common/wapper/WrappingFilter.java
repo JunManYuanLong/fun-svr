@@ -3,13 +3,10 @@ package com.okay.family.common.wapper;
 
 import com.okay.family.common.basedata.FamilyConstant;
 import com.okay.family.common.basedata.OkayConstant;
-import com.okay.family.common.code.CommonCode;
-import com.okay.family.fun.base.bean.Result;
 import com.okay.family.fun.config.Constant;
 import com.okay.family.fun.frame.Output;
 import com.okay.family.fun.utils.DecodeEncode;
 import com.okay.family.fun.utils.Time;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -48,25 +45,27 @@ public class WrappingFilter implements Filter {
         queryArgs = queryArgs == null ? DecodeEncode.unicodeToString(requestWrapper.getBody()) : queryArgs;
 
         String requestId = req.getHeader(OkayConstant.REQUEST_ID);
-        if(StringUtils.isBlank(requestId)){
-            resp.getWriter().write(Result.fail(CommonCode.REQUESTID_ERROR).toString());
-            resp.flushBuffer();
-            return;
-        }
+//        if(StringUtils.isBlank(requestId)){
+//            resp.getWriter().write(Result.fail(CommonCode.REQUESTID_ERROR).toString());
+//            resp.flushBuffer();
+//            return;
+//        }
         MDC.put("id", requestId);
         long start = Time.getTimeStamp();
         chain.doFilter(requestWrapper == null ? request : requestWrapper, responseWrapper);
         long end = Time.getTimeStamp();
         byte[] bytes = responseWrapper.getContent();
         String respContent = new String(bytes, Constant.UTF_8);
-        logger.info("请求:{},耗时:{} ms,参数:{},响应:{}", url, end - start, queryArgs, respContent);
-        try {
-            if (FamilyConstant.OUTPUT) Output.showStr(queryArgs);
-            if (FamilyConstant.OUTPUT) Output.showStr(respContent);
-        } catch (Exception e) {
+        if (!url.startsWith("/ws")) {
+            logger.info("请求:{},耗时:{} ms,参数:{},响应:{}", url, end - start, queryArgs, respContent);
+            try {
+                if (FamilyConstant.OUTPUT) Output.showStr(queryArgs);
+                if (FamilyConstant.OUTPUT) Output.showStr(respContent);
+            } catch (Exception e) {
 
+            }
+            response.getOutputStream().write(respContent.getBytes(Constant.UTF_8));
         }
-        response.getOutputStream().write(respContent.getBytes(Constant.UTF_8));
     }
 
 
