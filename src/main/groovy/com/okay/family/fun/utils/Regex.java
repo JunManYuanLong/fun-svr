@@ -1,7 +1,9 @@
 package com.okay.family.fun.utils;
 
 
+import com.okay.family.fun.base.exception.ParamException;
 import com.okay.family.fun.frame.SourceCode;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ public class Regex extends SourceCode {
      * @return
      */
     public static boolean isRegex(String text, String regex) {
+        if (StringUtils.isAnyBlank(text, regex)) ParamException.fail("正则参数错误!");
         return Pattern.compile(regex).matcher(text).find();
     }
 
@@ -36,6 +39,7 @@ public class Regex extends SourceCode {
      * @return
      */
     public static boolean isMatch(String text, String regex) {
+        if (StringUtils.isAnyBlank(text, regex)) ParamException.fail("正则参数错误!");
         return Pattern.compile(regex).matcher(text).matches();
     }
 
@@ -47,6 +51,7 @@ public class Regex extends SourceCode {
      * @return
      */
     public static List<String> regexAll(String text, String regex) {
+        if (StringUtils.isAnyBlank(text, regex)) ParamException.fail("正则参数错误!");
         List<String> result = new ArrayList<>();
         Matcher matcher = Pattern.compile(regex).matcher(text);
         while (matcher.find()) {
@@ -64,6 +69,7 @@ public class Regex extends SourceCode {
      * @return
      */
     public static String getRegex(String text, String regex) {
+        if (StringUtils.isAnyBlank(text, regex)) ParamException.fail("正则参数错误!");
         String result = EMPTY;
         try {
             result = regexAll(text, regex).get(0);
@@ -79,5 +85,6 @@ public class Regex extends SourceCode {
             return result;
         }
     }
+
 
 }
